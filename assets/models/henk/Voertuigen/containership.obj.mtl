@@ -1,0 +1,165 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.0.1270)
+
+newmtl material_0_1_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture0.jpg
+
+newmtl material_10_13_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture12.jpg
+
+newmtl material_11_14_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture13.jpg
+
+newmtl material_12_15_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture14.jpg
+
+newmtl material_1_2_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture1.jpg
+
+newmtl material_1_2_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture1.jpg
+
+newmtl material_2_3_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture2.jpg
+
+newmtl material_3_4_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture3.jpg
+
+newmtl material_4_10_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture9.jpg
+
+newmtl material_4_11_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture10.jpg
+
+newmtl material_4_5_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture4.jpg
+
+newmtl material_5_6_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture5.jpg
+
+newmtl material_5_6_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture5.jpg
+
+newmtl material_6_7_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture6.jpg
+
+newmtl material_6_7_8ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture6.jpg
+
+newmtl material_7_8_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture7.jpg
+
+newmtl material_8_9_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture8.jpg
+
+newmtl material_9_12_0ID
+kd 0.6 0.6 0.6
+ka 0 0 0
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd ../images/texture11.jpg
+

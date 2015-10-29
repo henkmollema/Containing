@@ -1,0 +1,104 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.0.1270)
+
+newmtl ID113
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/deck.jpg
+
+newmtl ID134
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/interior.bmp
+
+newmtl ID14
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/cabin.jpg
+
+newmtl ID227
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+Ns 10
+illum 2
+
+newmtl ID23
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/cabin_0.jpg
+
+newmtl ID243
+kd 1 1 1
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+
+newmtl ID276
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+Ns 10
+illum 2
+
+newmtl ID306
+kd 0 0 0
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+
+newmtl ID390
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/sides.jpg
+
+newmtl ID5
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/hull.jpg
+
+newmtl ID52
+kd 0.917647 0.760784 0.352941
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+
+newmtl ID92
+kd 0.6 0.6 0.6
+ka 0.1 0.1 0.1
+ks 0.4 0.4 0.4
+d 1
+Ns 10
+illum 2
+map_kd canal_barge/cover.jpg
+

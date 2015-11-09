@@ -7,6 +7,7 @@ import com.jme3.input.FlyByCamera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +156,11 @@ public class Main extends SimpleApplication {
     
     public static void main(String[] args) {
         Main app = new Main();
+        app.showSettings = false;
+        AppSettings settings = new AppSettings(true);
+        settings.setResolution(1280, 600);
+        settings.setBitsPerPixel(32);
+        app.setSettings(settings);
         app.start();
     }
 }

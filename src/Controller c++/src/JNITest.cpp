@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <iostream>
-#include "JNI.h"
+#include "jnitest.h"
 
 using namespace std;
 

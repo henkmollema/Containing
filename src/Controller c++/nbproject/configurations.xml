@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>src/jni.h</itemPath>
+      <itemPath>src/jnitest.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -13,7 +13,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>src/JNI.cpp</itemPath>
+      <itemPath>src/JNITest.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -27,6 +27,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>src</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="2">
@@ -38,26 +41,37 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <architecture>2</architecture>
           <incDir>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_60/include</pElem>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_60/include/win32</pElem>
+            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include</pElem>
+            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
+            <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
           <commandLine>-shared -m64</commandLine>
         </cTool>
         <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
           <incDir>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_60/include</pElem>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_60/include/win32</pElem>
+            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include</pElem>
+            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
+            <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
           <commandLine>-shared -m64</commandLine>
         </ccTool>
+        <asmTool>
+          <architecture>2</architecture>
+        </asmTool>
         <linkerTool>
-          <output>../../Controller/JNI.dll</output>
+          <output>../../Controller/JNITest.dll</output>
+          <linkerAddLib>
+            <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib</pElem>
+          </linkerAddLib>
         </linkerTool>
       </compileType>
-      <item path="src/JNI.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JNITest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/jni.h" ex="false" tool="3" flavor2="0">
+      <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -81,9 +95,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="src/JNI.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/JNITest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/jni.h" ex="false" tool="3" flavor2="0">
+      <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

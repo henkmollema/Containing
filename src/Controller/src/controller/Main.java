@@ -8,6 +8,7 @@ package controller;
  *
  * @author Dudecake
  */
+@SuppressWarnings("unused")
 public class Main
 {
 
@@ -17,7 +18,7 @@ public class Main
     public static void main(String[] args)
     {
         Main p = new Main();
-        JNI.helloFromC();
+        JNITest.helloFromC();
         // TODO code application logic here
     }
 }

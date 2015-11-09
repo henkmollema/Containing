@@ -8,8 +8,7 @@ package controller;
  *
  * @author Dudecake
  */
-public class JNI
+public class JNITest
 {
-    
     public static native void helloFromC();
 }

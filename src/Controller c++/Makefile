@@ -55,6 +55,7 @@ build: .build-post
 
 .build-pre:
 # Add your pre 'build' code here...
+#    javah -o src/JNITest.h -classpath ..\Controller\build\classes controller.JNI
 
 .build-post: .build-impl
 # Add your post 'build' code here...

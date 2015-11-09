@@ -35,37 +35,37 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/JNI.o
+	${OBJECTDIR}/src/JNITest.o
 
 
 # C Compiler Flags
-CFLAGS=-shared -m64
+CFLAGS=-m64 -shared -m64
 
 # CC Compiler Flags
-CCFLAGS=-shared -m64
-CXXFLAGS=-shared -m64
+CCFLAGS=-m64 -shared -m64
+CXXFLAGS=-m64 -shared -m64
 
 # Fortran Compiler Flags
 FFLAGS=
 
 # Assembler Flags
-ASFLAGS=
+ASFLAGS=--64
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../../Controller/JNI.dll
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../../Controller/JNITest.dll
 
-../../Controller/JNI.dll: ${OBJECTFILES}
+../../Controller/JNITest.dll: ${OBJECTFILES}
 	${MKDIR} -p ../../Controller
-	${LINK.cc} -o ../../Controller/JNI.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+	${LINK.cc} -o ../../Controller/JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
-${OBJECTDIR}/src/JNI.o: src/JNI.cpp 
+${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../../../../Program\ Files/Java/jdk1.8.0_60/include -I../../../../../../../Program\ Files/Java/jdk1.8.0_60/include/win32 -shared -m64  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNI.o src/JNI.cpp
+	$(COMPILE.cc) -g -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include/win32 -I../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared -m64  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
 
 # Subprojects
 .build-subprojects:
@@ -73,7 +73,7 @@ ${OBJECTDIR}/src/JNI.o: src/JNI.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ../../Controller/JNI.dll
+	${RM} ../../Controller/JNITest.dll
 
 # Subprojects
 .clean-subprojects:

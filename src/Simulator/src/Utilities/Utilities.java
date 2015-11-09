@@ -5,6 +5,7 @@
  */
 package Utilities;
 
+import Simulation.Mathf;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
@@ -41,5 +42,19 @@ public final class Utilities {
         }
         
         spatial.setLocalRotation(localRotation);
+    }
+
+    public static Vector3f substract(Vector3f a, Vector3f b) {
+        return new Vector3f(
+            a.x - b.x,
+            a.y - b.y,
+            a.z - b.z);
+    }
+    public static float distance(Vector3f a, Vector3f b) {
+        return Mathf.abs(substract(a, b).length());
+    }
+
+    public static float NaNSafeFloat(float f) {
+        return ((Float)f).isNaN() ? 0.0f : f;
     }
 }

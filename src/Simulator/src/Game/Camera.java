@@ -6,7 +6,6 @@
 package Game;
 
 import Simulation.Behaviour;
-import Simulation.Debug;
 import Simulation.Main;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;

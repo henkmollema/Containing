@@ -13,6 +13,8 @@ hs_err_pid*
 
 build-impl.xml
 private/
+/src/Simulator/dist/
 /src/Simulator/build/
 /src/Controller/dist/
 /src/Controller/build/
+!simple-xml-2.7.1.jar

@@ -9,6 +9,7 @@ import Utilities.Utilities;
 import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Path {
     private float m_waitTime = 0.0f;
     private LoopMode m_loopMode = LoopMode.Loop;
     private EaseType m_easeType = EaseType.Linear;
+    private Callback m_callback = null;
     
     private float m_timer = 0.0f;
     private boolean m_goBack = false;
@@ -71,8 +73,11 @@ public class Path {
     
     
     public void update() {
-        if (m_timer < 1.0f)
+        if (m_timer < 1.0f) {
             m_timer += Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes.get(m_targetNode))), 100000.0f);
+            if (m_timer >= 1.0f && m_callback != null)
+                m_callback.invoke();
+        }
         else if (m_timer < 1.0f + m_waitTime)
             m_timer += Time.deltaTime();
         else {
@@ -115,6 +120,9 @@ public class Path {
 
     public void setPosition(Vector3f position) {
         m_previousPosition = position.clone();
+    }
+    public void setCallback(Callback callback) {
+        m_callback = callback;
     }
 }
  

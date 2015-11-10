@@ -6,6 +6,7 @@
 package World;
 
 import Simulation.Behaviour;
+import Simulation.Callback;
 import Simulation.Debug;
 import Simulation.EaseType;
 import Simulation.LoopMode;
@@ -103,6 +104,11 @@ public class World extends Behaviour {
         testCube.attachChild(geoma);
         testCube2.attachChild(geoma.clone(true));
         m_testCube2Path.setPosition(testCube2.position());
+        
+        
+        m_testCube2Path.setCallback(new Callback(this, "test"));
     }
-    
+    public void test() {
+        Debug.log("This is awesome!!!");
+    }
 }

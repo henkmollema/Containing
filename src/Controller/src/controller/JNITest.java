@@ -11,4 +11,6 @@ package controller;
 public class JNITest
 {
     public static native void helloFromC();
+    
+    public static native void helloFromC(String s);
 }

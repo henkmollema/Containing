@@ -12,8 +12,16 @@ extern "C" {
  * Method:    helloFromC
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC__
   (JNIEnv *, jclass);
+
+/*
+ * Class:     controller_JNITest
+ * Method:    helloFromC
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC__Ljava_lang_String_2
+  (JNIEnv *, jclass, jstring);
 
 #ifdef __cplusplus
 }

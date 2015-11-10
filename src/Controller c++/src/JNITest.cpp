@@ -4,7 +4,12 @@
 
 using namespace std;
 
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jobject)
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass)
 {
     cout << "hello" << endl;
+}
+
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC__Ljava_lang_String_2(JNIEnv *, jclass, jstring)
+{
+    
 }

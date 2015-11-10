@@ -13,15 +13,25 @@ import java.lang.reflect.Method;
  */
 public class Callback {
     
-    private Class m_class;
-    private Object m_target;
-    private String[] m_methods;
+    private final Class m_class;
+    private final Object m_target;
+    private final String[] m_methods;
     
+    /**
+     * Constructor
+     * @param c
+     * @param methods 
+     */
     public Callback(Class c, String... methods) {
         m_class = c;
         m_target = null;
         m_methods = methods;
     }
+    /**
+     * Constructor
+     * @param target
+     * @param methods 
+     */
     public Callback(Object target, String... methods) {
         m_class = target.getClass();
         m_target = target;

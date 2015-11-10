@@ -47,7 +47,7 @@
             <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
             <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
-          <commandLine>-shared -m64</commandLine>
+          <commandLine>-Wl,--add-stdcall-alias -shared</commandLine>
         </cTool>
         <ccTool>
           <architecture>2</architecture>
@@ -57,13 +57,13 @@
             <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
             <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
-          <commandLine>-shared -m64</commandLine>
+          <commandLine>-Wl,--add-stdcall-alias -shared</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>
         </asmTool>
         <linkerTool>
-          <output>../../Controller/JNITest.dll</output>
+          <output>JNITest.dll</output>
           <linkerAddLib>
             <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib</pElem>
           </linkerAddLib>

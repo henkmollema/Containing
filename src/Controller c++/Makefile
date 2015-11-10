@@ -53,12 +53,13 @@ CCADMIN=CCadmin
 # build
 build: .build-post
 
-.build-pre:
+.build-pre: ; javah -o JNITest.h -classpath ..\Controller\build\classes controller.JNITest
 # Add your pre 'build' code here...
 #    javah -o src/JNITest.h -classpath ..\Controller\build\classes controller.JNI
 
-.build-post: .build-impl
+.build-post: .build-impl    ; mv JNITest.dll "C:\Program Files\Java\jdk1.8.0_65\bin\JNITest.dll"
 # Add your post 'build' code here...
+#    move JNITest.dll "C:\Program Files\Java\jdk1.8.0_65\bin"
 
 
 # clean

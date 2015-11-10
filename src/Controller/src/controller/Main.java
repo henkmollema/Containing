@@ -11,7 +11,10 @@ package controller;
 @SuppressWarnings("unused")
 public class Main
 {
-
+    static
+    {
+        System.loadLibrary("JNITest");
+    }
     /**
      * @param args the command line arguments
      */
@@ -19,6 +22,5 @@ public class Main
     {
         Main p = new Main();
         JNITest.helloFromC();
-        // TODO code application logic here
     }
 }

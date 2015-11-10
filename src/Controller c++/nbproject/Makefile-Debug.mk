@@ -39,11 +39,11 @@ OBJECTFILES= \
 
 
 # C Compiler Flags
-CFLAGS=-m64 -shared -m64
+CFLAGS=-m64 -Wl,--add-stdcall-alias -shared
 
 # CC Compiler Flags
-CCFLAGS=-m64 -shared -m64
-CXXFLAGS=-m64 -shared -m64
+CCFLAGS=-m64 -Wl,--add-stdcall-alias -shared
+CXXFLAGS=-m64 -Wl,--add-stdcall-alias -shared
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -56,16 +56,15 @@ LDLIBSOPTIONS=-L../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../../Controller/JNITest.dll
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk JNITest.dll
 
-../../Controller/JNITest.dll: ${OBJECTFILES}
-	${MKDIR} -p ../../Controller
-	${LINK.cc} -o ../../Controller/JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+JNITest.dll: ${OBJECTFILES}
+	${LINK.cc} -o JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
 ${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include/win32 -I../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared -m64  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
+	$(COMPILE.cc) -g -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include -I../../../../../../../Program\ Files/Java/jdk1.8.0_65/include/win32 -I../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -Wl,--add-stdcall-alias -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
 
 # Subprojects
 .build-subprojects:
@@ -73,7 +72,7 @@ ${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ../../Controller/JNITest.dll
+	${RM} JNITest.dll
 
 # Subprojects
 .clean-subprojects:

@@ -12,16 +12,48 @@ extern "C" {
  * Method:    helloFromC
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC__
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC
   (JNIEnv *, jclass);
 
 /*
  * Class:     controller_JNITest
- * Method:    helloFromC
- * Signature: (Ljava/lang/String;)V
+ * Method:    avgFromC
+ * Signature: ([I)D
  */
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC__Ljava_lang_String_2
-  (JNIEnv *, jclass, jstring);
+JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC
+  (JNIEnv *, jclass, jintArray);
+
+/*
+ * Class:     controller_JNITest
+ * Method:    intFromC
+ * Signature: ([I)I
+ */
+JNIEXPORT jint JNICALL Java_controller_JNITest_intFromC
+  (JNIEnv *, jclass, jintArray);
+
+/*
+ * Class:     controller_JNITest
+ * Method:    integerFromC
+ * Signature: (I)Ljava/lang/Integer;
+ */
+JNIEXPORT jobject JNICALL Java_controller_JNITest_integerFromC
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     controller_JNITest
+ * Method:    pointInC
+ * Signature: (II)Ljava/awt/Point;
+ */
+JNIEXPORT jobject JNICALL Java_controller_JNITest_pointInC
+  (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     controller_JNITest
+ * Method:    changeNumberInC
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_controller_JNITest_changeNumberInC
+  (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }

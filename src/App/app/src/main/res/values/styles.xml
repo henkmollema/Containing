@@ -1,0 +1,12 @@
+<resources>
+    <style name="Material" parent="Material.Base"/>
+
+    <style name="Material.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#90CAF9</item>
+        <item name="colorPrimaryDark">#64B5F6</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:textColor">#FFF</item>
+    </style>
+
+</resources>

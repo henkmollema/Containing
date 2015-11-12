@@ -2,7 +2,5 @@ package controller;
 
 public class Target
 {
-
-	private float duration;
-
+    private float duration;
 }

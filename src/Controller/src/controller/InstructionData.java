@@ -5,23 +5,18 @@ import java.util.Date;
 
 public class InstructionData implements Serializable
 {
+    private Date startTime;
+    private int a;
+    private int b;
+    private String message;
 
-	private Date startTime;
+    public InstructionData parse(String instructionData)
+    {
+        return null;
+    }
 
-	private int A;
-
-	private int B;
-
-	private String message;
-
-	public InstructionData parse(String instructionData)
-        {
-		return null;
-	}
-
-	public InstructionData createInstructionData(String data)
-        {
-		return null;
-	}
-
+    public InstructionData createInstructionData(String data)
+    {
+        return null;
+    }
 }

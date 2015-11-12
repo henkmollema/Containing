@@ -56,10 +56,11 @@ LDLIBSOPTIONS=-L../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk JNITest.dll
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../Controller/build/classes/lib/JNITest.dll
 
-JNITest.dll: ${OBJECTFILES}
-	${LINK.cc} -o JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+../Controller/build/classes/lib/JNITest.dll: ${OBJECTFILES}
+	${MKDIR} -p ../Controller/build/classes/lib
+	${LINK.cc} -o ../Controller/build/classes/lib/JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
 ${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -72,7 +73,7 @@ ${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} JNITest.dll
+	${RM} ../Controller/build/classes/lib/JNITest.dll
 
 # Subprojects
 .clean-subprojects:

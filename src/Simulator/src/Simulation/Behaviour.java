@@ -17,14 +17,14 @@ public abstract class Behaviour {
     public boolean enabled;                 // Script is enabled
 
     /**
-     * 
+     * Constructor
      */
     public Behaviour() {
         m_wasEnabled = enabled = true;
         m_initialized = false;
     }
     /**
-     * 
+     * Constructor
      * @param enabled 
      */
     public Behaviour(boolean enabled) {
@@ -38,6 +38,9 @@ public abstract class Behaviour {
     public final void _baseInit() {
         Main.Register(this);
     }
+    /**
+     * 
+     */
     public final void _baseAwake() {
         awake();
     }

@@ -41,12 +41,25 @@ public final class Interpolate {
         }
         return 0.0f;
     }
+    public static float ease(EaseType type, float start, float target, float t) {
+        return ease(type, start, target, t, 1.0f);
+    }
     
     public static Vector3f ease(EaseType type, Vector3f start, Vector3f target, float elapsedTime, float duration) {
         return new Vector3f(
             Interpolate.ease(type, start.x, target.x, elapsedTime, duration),
             Interpolate.ease(type, start.y, target.y, elapsedTime, duration),
             Interpolate.ease(type, start.z, target.z, elapsedTime, duration));
+    }
+    public static Vector3f ease(EaseType type, Vector3f start, Vector3f target, float t) {
+        return ease(type, start, target, t, 1.0f);
+    }
+    
+    public static float ease01(EaseType type, float elapsedTime, float duration) {
+        return ease(type, 0.0f, 1.0f, elapsedTime, duration);
+    }
+    public static float ease01(EaseType type, float elapsedTime) {
+        return ease(type, 0.0f, 1.0f, elapsedTime, 1.0f);
     }
     
     public static float clampTime(float elapsedTime, float duration, float maxValue) {

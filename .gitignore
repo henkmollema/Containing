@@ -1,4 +1,6 @@
 *.class
+*.o
+*.o.d
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -11,8 +13,12 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+# Don't ignore ibraries in /lib/ folder
+!simple-xml-2.7.1.jar
+
+# Build stuff
 build-impl.xml
 private/
-/src/Simulator/build/
-/src/Controller/dist/
-/src/Controller/build/
+dist/
+build/
+*.dylib

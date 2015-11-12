@@ -57,7 +57,7 @@ build: .build-post
 # Add your pre 'build' code here...
 #    javah -o src/JNITest.h -classpath ..\Controller\build\classes controller.JNI
 
-.build-post: .build-impl    ; mv JNITest.dll "C:\Program Files\Java\jdk1.8.0_65\bin\JNITest.dll"
+.build-post: .build-impl    #; mv JNITest.dll "C:\Program Files\Java\jdk1.8.0_65\bin\JNITest.dll"
 # Add your post 'build' code here...
 #    move JNITest.dll "C:\Program Files\Java\jdk1.8.0_65\bin"
 

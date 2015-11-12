@@ -1,6 +1,9 @@
 package controller;
 
-public class AGV extends ContainerHouder
+/**
+ * An Automatic Guided Vehicle.
+ *
+ */
+public class AGV extends ContainerTransporter
 {
-
 }

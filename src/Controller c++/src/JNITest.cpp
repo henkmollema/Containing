@@ -29,11 +29,7 @@ JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, 
 JNIEXPORT jint JNICALL Java_controller_JNITest_intFromC(JNIEnv *env, jclass thisCls, jintArray arr)
 {
     jmethodID methId = env->GetStaticMethodID(thisCls, "avgFromC", "([I)D");
-    if (env->ExceptionCheck())
-    {
-        //cout << "error in GetMethodID" << endl;
-        return 0;
-    }
+    if (env->ExceptionCheck()) return 0;
     jint res = env->CallStaticDoubleMethod(thisCls, methId, arr);
     return res;
 }
@@ -41,17 +37,9 @@ JNIEXPORT jint JNICALL Java_controller_JNITest_intFromC(JNIEnv *env, jclass this
 JNIEXPORT jobject JNICALL Java_controller_JNITest_integerFromC(JNIEnv *env, jclass, jint x)
 {
     jclass cls = env->FindClass("java/lang/Integer");
-    if (env->ExceptionCheck())
-    {
-        cout << "error in FindClass" << endl;
-        return NULL;
-    }
+    if (env->ExceptionCheck()) return NULL;
     jmethodID methodId = env->GetMethodID(cls, "<init>", "(I)V");
-    if (env->ExceptionCheck())
-    {
-        cout << "error in GetMethodID" << endl;
-        return 0;
-    }
+    if (env->ExceptionCheck()) return NULL;
     jobject obj = env->NewObject(cls, methodId, x);
     return obj;
 }
@@ -59,17 +47,9 @@ JNIEXPORT jobject JNICALL Java_controller_JNITest_integerFromC(JNIEnv *env, jcla
 JNIEXPORT jobject JNICALL Java_controller_JNITest_pointInC(JNIEnv *env, jclass, jint x, jint y)
 {
     jclass cls = env->FindClass("java/awt/Point");
-    if (env->ExceptionCheck())
-    {
-        cout << "error in FindClass" << endl;
-        return NULL;
-    }
+    if (env->ExceptionCheck()) return NULL;
     jmethodID methodId = env->GetMethodID(cls, "<init>", "(II)V");
-    if (env->ExceptionCheck())
-    {
-        cout << "error in GetMethodID" << endl;
-        return 0;
-    }
+    if (env->ExceptionCheck()) return NULL;
     jobject obj = env->NewObject(cls, methodId, x, y);
     return obj;
 }
@@ -77,7 +57,9 @@ JNIEXPORT jobject JNICALL Java_controller_JNITest_pointInC(JNIEnv *env, jclass, 
 JNIEXPORT void JNICALL Java_controller_JNITest_changeNumberInC(JNIEnv *env, jobject thisObj)
 {
     jclass thisClass = env->GetObjectClass(thisObj);
+    if (env->ExceptionCheck()) return;
     jfieldID fidNumber = env->GetFieldID(thisClass, "number", "I");
+    if (env->ExceptionCheck()) return;
     jint number = env->GetIntField(thisObj, fidNumber);
     cout << "In C, the int is " << number << endl;
     number = 99;

@@ -17,4 +17,8 @@
             <item android:id="@+id/menu_refresh_0" android:title="off"/>
         </menu>
     </item>
+    <item android:id="@+id/action_legend"
+        android:icon="@drawable/ic_info_outline_white"
+        android:title="Legend"
+        app:showAsAction="ifRoom"/>
 </menu>

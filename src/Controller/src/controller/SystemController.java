@@ -31,6 +31,7 @@ public class SystemController
                 if (sim.play()) {
                     String xmlString = readXml(xmlFileName);
                     RecordSet recordSet = XmlParser.parse(xmlString);
+                    System.out.println("Parsed " + recordSet.records.size() + " records");
                     for (Record record : recordSet.records) {
                         sim.processRecord(record);
                     }
@@ -44,7 +45,9 @@ public class SystemController
         String xmlString;
 
         try {
-            URI url = Main.class.getResource("XML/" + xmlFileName).toURI();
+            URL x = Main.class.getResource("XML/" + xmlFileName);
+            System.out.println("Read XML:" + x);
+            URI url = x.toURI();
             return new String(Files.readAllBytes(Paths.get(url)));
         }
         catch (Exception e) {

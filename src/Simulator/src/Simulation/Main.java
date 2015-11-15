@@ -5,6 +5,7 @@ import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.FlyByCamera;
+import com.jme3.input.InputManager;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
@@ -39,14 +40,18 @@ public class Main extends SimpleApplication {
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
     
-    // Main Behaviours
+    // Camera
     private Game.Camera m_camera;
-    
     public Game.Camera camera() {
         return m_camera;
     }
     public FlyByCamera flyCamera() {
         return flyCam;
+    }
+    
+    // Input
+    public static InputManager inputManager() {
+        return instance().inputManager;
     }
     
     /** HERE COME ALL BEHAVIOURS
@@ -56,6 +61,7 @@ public class Main extends SimpleApplication {
      * 
      */
     private void initBehaviours() {
+        
         // Init main behaviours
         m_camera = new Game.Camera();
         

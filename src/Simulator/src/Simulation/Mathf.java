@@ -143,6 +143,9 @@ public final class Mathf {
         return a;
     }
     
+    public static float sclamp(float a, float b, float c) {
+        return clamp(a, b < c ? b : c, b < c ? c : b);
+    }
     public static float clamp(float a, float min, float max) {
         return (a < min ? min : (a > max ? max : a));
     }

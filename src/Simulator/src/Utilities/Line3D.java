@@ -4,7 +4,9 @@
  */
 package Utilities;
 
+import Simulation.Main;
 import Simulation.Mathf;
+import Simulation.Transform;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
@@ -15,13 +17,15 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.util.BufferUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  * @author Jens
  */
-public class Line3D extends Node {
+public final class Line3D extends Transform {
     
     Mesh m_Mesh;
     Geometry geo;
@@ -34,16 +38,15 @@ public class Line3D extends Node {
     ColorRGBA[] colorArray;
     int[] indexArray;
     Vector2f[] uvArray;
-        
-    Camera camera;
     
     /*
      * Line3D is used to draw lines in 3D space 
      * It takes a list of Line3DNodes(Position, width, color)
      * Note that at this time the Positions are relative to the Line3D object
      */
-    public Line3D(List<Line3DNode> points, Camera cam, Material material)
+    public Line3D(List<Line3DNode> points, Material material)
     {
+        super();
         m_Mesh = new Mesh();
         mat  = material;
         
@@ -53,11 +56,29 @@ public class Line3D extends Node {
         this.attachChild(geo);
         
         lineNodes = points;
-        camera   = cam;
         
         initArrays(); //Initialize the arrays
         
-        UpdateMesh(camera);//Generate the mesh according to the given cam
+        UpdateMesh();//Generate the mesh according to the given cam
+        Main.root().attachChild(this);
+    }
+    public Line3D(Material material, Line3DNode... nodes)
+    {
+        super();
+        m_Mesh = new Mesh();
+        mat  = material;
+        
+        geo  = new Geometry();
+        geo.setMaterial(mat);
+        geo.setMesh(m_Mesh);
+        this.attachChild(geo);
+        
+        lineNodes = new ArrayList<Line3DNode>();
+        lineNodes.addAll(Arrays.asList(nodes));
+        
+        initArrays(); //Initialize the arrays
+        
+        UpdateMesh();//Generate the mesh according to the given cam
     }
    
     
@@ -113,7 +134,7 @@ public class Line3D extends Node {
      */
     public void UpdateMesh()
     {
-        UpdateMesh(camera);
+        UpdateMesh(Main.instance().getCamera());
     }
 
     /*
@@ -123,8 +144,8 @@ public class Line3D extends Node {
      */
     public void UpdateMesh(Camera aCamera)
     {
-       Vector3f localViewPos = new Vector3f();
-       this.worldToLocal(aCamera.getLocation(), localViewPos);
+       Vector3f localViewPos = Vector3f.ZERO;
+       super.worldToLocal(aCamera.getLocation(), localViewPos);
        
        Vector3f[] vertices   = this.vertexArray;
        Vector3f[] normals    = this.normalArray;

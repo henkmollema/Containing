@@ -16,4 +16,10 @@ public class Line3DNode {
     public float width          = 1f;
     public ColorRGBA color      = ColorRGBA.White;
     
+    public Line3DNode (Vector3f position, float width, ColorRGBA color) {
+        this.position = position.clone();
+        this.width = width;
+        this.color = color.clone();
+    }
+    
 }

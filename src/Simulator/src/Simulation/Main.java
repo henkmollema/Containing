@@ -1,16 +1,20 @@
 package Simulation;
 
-import Utilities.Utilities;
+import Game.Camera;
+import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,6 +44,9 @@ public class Main extends SimpleApplication {
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
     
+    // Lines
+    private static List<Line3D> m_lines;
+    
     // Camera
     private Game.Camera m_camera;
     public Game.Camera camera() {
@@ -67,7 +74,6 @@ public class Main extends SimpleApplication {
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
-            // Main
             m_camera,
             
             // Non-Main
@@ -83,7 +89,20 @@ public class Main extends SimpleApplication {
      * Create world here
      */
     private void initWorld() {
-        
+        m_lines = new ArrayList<Line3D>();
+        Line3D[] __t = new Line3D[] {
+            new Line3D(
+                MaterialCreator.diffuse(new ColorRGBA(0.4f, 0.6f, 0.8f, 1.0f)),
+                new Line3DNode(new Vector3f(0.0f, 00.0f, 00.0f), 0.1f, ColorRGBA.Blue), 
+                new Line3DNode(new Vector3f(0.0f, 10.0f, 00.0f), 1.0f, ColorRGBA.Blue),
+                new Line3DNode(new Vector3f(0.0f, 10.0f, 10.0f), 1.0f, ColorRGBA.Blue))
+        };
+        m_lines.addAll(Arrays.asList(__t));
+    }
+    private void updateWorld() {
+        for (Line3D l : m_lines) {
+            l.UpdateMesh();
+        }
     }
     
     /**
@@ -105,6 +124,7 @@ public class Main extends SimpleApplication {
         
         Time._updateTime(tpf);
         updateBehaviours();
+        updateWorld();
     }
     /**
      * Called on render

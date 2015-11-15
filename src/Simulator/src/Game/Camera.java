@@ -7,6 +7,7 @@ package Game;
 
 import Simulation.Behaviour;
 import Simulation.Main;
+import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
@@ -23,6 +24,11 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
  * @author sietse
  */
 public class Camera extends Behaviour {
+    
+    private Transform m_transform;
+    public Transform tranform() {
+        return m_transform;
+    }
     
     // 
     private final float CAMERA_SPEED = 15.0f;
@@ -52,6 +58,7 @@ public class Camera extends Behaviour {
     
     @Override
     public void awake() {
+        m_transform = new Transform();
         createSSAO();
         createFog();
         createBloom();

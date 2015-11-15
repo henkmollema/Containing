@@ -51,7 +51,7 @@ public class Main
     private static void run()
     {
         SystemController controller = new SystemController();
-        controller.run("XML/xml5.xml");
+        controller.run("xml5.xml");
     }
 
     private static void copyFileToTemp(String source, String dest) throws IOException

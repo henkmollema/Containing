@@ -10,9 +10,8 @@ public class Main
 {
     static {
         try {
-            String tempDir = System.getProperty("java.io.tmpdir");
-            File file = new File(Main.class.getResource("/lib/").toURI() + "JNITest.dll");
-            File resFile = new File(tempDir + "JNITest.dll");
+            File file = new File(Main.class.getResource("/lib/").toURI().toString(), "JNITest.dll");
+            File resFile = new File(System.getProperty("java.io.tmpdir"), "JNITest.dll");
             if (!resFile.exists()) {
                 resFile.createNewFile();
             }

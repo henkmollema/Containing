@@ -7,6 +7,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
@@ -60,7 +61,8 @@ public class Main extends SimpleApplication {
     public static InputManager inputManager() {
         return instance().inputManager;
     }
-    
+    private static float m_previousTimescale = Time.timeScale();
+    private Input m_input;
     /** HERE COME ALL BEHAVIOURS
      * 
      * 
@@ -71,10 +73,12 @@ public class Main extends SimpleApplication {
         
         // Init main behaviours
         m_camera = new Game.Camera();
+         m_input = new Input();
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
             m_camera,
+            m_input,
             
             // Non-Main
             new World(),
@@ -190,4 +194,32 @@ public class Main extends SimpleApplication {
         app.setSettings(settings);
         app.start();
     }
-}
+    
+    //Input Listeners   
+    public static ActionListener actionListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (name.equals("pause") && !keyPressed) {
+                if (Time.timeScale() < 0.001f) {
+                    Time.setTimeScale(m_previousTimescale);
+                } else {
+                    m_previousTimescale = Time.timeScale();
+                    Time.setTimeScale(0.0f);
+                }
+            } else if (name.equals("timescale-lower") && !keyPressed) {
+                float __test = 50.0f;
+                Time.setTimeScale(Time.timeScale() * (1.0f - __test * Time.unscaledDeltaTime()));
+                
+            } else if (name.equals("timescale-higher") && !keyPressed) {
+                float __test = 50.0f;
+                Time.setTimeScale(Time.timeScale() * (1.0f + __test * Time.unscaledDeltaTime()));
+                
+            } else if (name.equals("timescale-lower") && !keyPressed) {
+                float __test = 50.0f;
+                Time.setTimeScale(Time.timeScale() * (1.0f - __test * Time.unscaledDeltaTime()));
+            } /*else if (name.equals("view-switch") && !keyPressed) {
+                Main.instance().camera().viewType(Main.instance().camera().viewType() == Camera.ViewType.Fly ? Camera.ViewType.RTS : Camera.ViewType.Fly);
+            }*/
+        }
+    };
+  }

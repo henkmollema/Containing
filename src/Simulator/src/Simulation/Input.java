@@ -4,6 +4,7 @@
  */
 package Simulation;
 
+import Game.Camera;
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
@@ -121,20 +122,20 @@ public class Input extends Behaviour {
         // Clear default
         Main.inputManager().deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
         
-        // 
-        Main.inputManager().addMapping("W",     new KeyTrigger(KeyInput.KEY_W), new KeyTrigger(KeyInput.KEY_UP));
-        Main.inputManager().addMapping("S",     new KeyTrigger(KeyInput.KEY_S), new KeyTrigger(KeyInput.KEY_DOWN));
-        Main.inputManager().addMapping("A",     new KeyTrigger(KeyInput.KEY_A), new KeyTrigger(KeyInput.KEY_LEFT));
-        Main.inputManager().addMapping("D",     new KeyTrigger(KeyInput.KEY_D), new KeyTrigger(KeyInput.KEY_RIGHT));
-        Main.inputManager().addMapping("Q",     new KeyTrigger(KeyInput.KEY_Q));
-        Main.inputManager().addMapping("E",     new KeyTrigger(KeyInput.KEY_E));
-        Main.inputManager().addMapping("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT),   new KeyTrigger(KeyInput.KEY_RSHIFT));
-        Main.inputManager().addMapping("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL), new KeyTrigger(KeyInput.KEY_RCONTROL));
+        if (Main.instance().camera().viewType() == Camera.ViewType.RTS) {
+            //
+            //
+        } else {
+            //
+            //
+        }
         
-        // 
-        Main.inputManager().addMapping("R",   new KeyTrigger(KeyInput.KEY_R));
-        Main.inputManager().addMapping("T",   new KeyTrigger(KeyInput.KEY_T));
-        Main.inputManager().addMapping("Y",   new KeyTrigger(KeyInput.KEY_Y));
+        Main.inputManager().addMapping("timescale-lower",   new KeyTrigger(KeyInput.KEY_R));
+        Main.inputManager().addMapping("timescale-higher",   new KeyTrigger(KeyInput.KEY_T));
+        Main.inputManager().addMapping("pause",   new KeyTrigger(KeyInput.KEY_Y));
+        Main.inputManager().addMapping("view-switch", new KeyTrigger(KeyInput.KEY_C));
+        
+        Main.inputManager().addListener(Main.actionListener, "pause", "timescale-lower", "timescale-higher", "view-switch");
         
         //Main.inputManager().addMapping("Scroll-Up",     new KeyTrigger(KeyInput.KEY_S));
         //Main.inputManager().addMapping("Scroll-Down",   new KeyTrigger(KeyInput));

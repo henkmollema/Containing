@@ -29,6 +29,17 @@ public class Camera extends Behaviour {
     public Transform tranform() {
         return m_transform;
     }
+    public enum ViewType {
+        Fly,
+        RTS
+    }
+    private ViewType m_viewType = ViewType.Fly;
+    public ViewType viewType() {
+        return m_viewType;
+    }
+    public void viewType(ViewType type) {
+        this.m_viewType = type;
+    }
     
     // 
     private final float CAMERA_SPEED = 15.0f;

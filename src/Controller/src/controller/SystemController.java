@@ -2,6 +2,7 @@ package controller;
 
 import java.net.*;
 import java.nio.file.*;
+import java.util.HashSet;
 
 /**
  * Controller for the system.
@@ -23,20 +24,46 @@ public class SystemController
      *
      * @param xmlFileName The file name of the XML file. Format: [name].xml.
      */
-    public void run(String xmlFileName)
+    public void run(String xmlFileName) throws Exception
     {
+        RecordSet recordSet = parseXml(xmlFileName);
+
         Simulator sim = new Simulator(this);
         if (sim.start()) {
             if (sim.init(null)) {
                 if (sim.play()) {
-                    String xmlString = readXml(xmlFileName);
-                    RecordSet recordSet = XmlParser.parse(xmlString);
                     for (Record record : recordSet.records) {
                         sim.processRecord(record);
                     }
                 }
             }
         }
+    }
+    
+    private RecordSet parseXml(String xmlFileName) throws Exception
+    {        
+        String xmlString = readXml(xmlFileName);
+        RecordSet recordSet = XmlParser.parse(xmlString);
+        
+        if (hasDuplicateIds(recordSet))
+        {
+            throw new Exception("Record set contains duplicate ID's.");
+        }
+        
+        return recordSet;
+    }
+
+    private boolean hasDuplicateIds(RecordSet recordSet)
+    {
+        HashSet<String> hashSet = new HashSet<>();
+        for (Record record : recordSet.records) {
+            if (hashSet.contains(record.id))
+            {
+                return true;
+            }
+            hashSet.add(record.id);
+        }
+        return false;
     }
 
     private String readXml(String xmlFileName)

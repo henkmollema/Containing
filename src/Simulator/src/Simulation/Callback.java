@@ -13,9 +13,9 @@ import java.lang.reflect.Method;
  */
 public class Callback {
     
-    private final Class m_class;
-    private final Object m_target;
-    private final String[] m_methods;
+    private final Class m_class;        // Target class
+    private final Object m_target;      // Object
+    private final String[] m_methods;   // Selected target methods
     
     /**
      * Constructor
@@ -38,18 +38,37 @@ public class Callback {
         m_methods = methods;
     }
     
+    /**
+     * Run methods
+     */
     public void invoke() {
         Callback.invoke(m_target, m_class, m_methods);
     }
     
+    /**
+     * Run methods
+     * @param c
+     * @param methods 
+     */
     public static void invoke(Class c, String... methods) {
         Callback.invoke(null, c, methods);
     }
+    /**
+     * Run methods
+     * @param target
+     * @param methods 
+     */
     public static void invoke(Object target, String... methods) {
         try {
             Callback.invoke(target, target.getClass(), methods);
         } catch (Exception e) { }
     }
+    /**
+     * Run methods
+     * @param target
+     * @param c
+     * @param methods 
+     */
     public static void invoke(Object target, Class c, String... methods) {
         try {
             Class<?> __class = c;
@@ -57,11 +76,11 @@ public class Callback {
             
             for (Method m : __methods) {
                 for (String s : methods) {
-                    if (m.getName() == s) {
+                    if (m.getName() == null ? s == null : m.getName().equals(s)) {
                         m.invoke(target);
                     }
                 }
             }
-        } catch(Exception e){}
+        } catch(Exception e) { }
     }
 }

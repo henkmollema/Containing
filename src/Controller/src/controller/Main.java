@@ -29,7 +29,7 @@ public class Main
      */
     public static void main(String[] args)
     {
-        run();
+        //run();
         
         JNITest.helloFromC();
         int[] iA = { 5, 6, 8 };

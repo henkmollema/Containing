@@ -1,12 +1,32 @@
-#include <jni.h>
+//#include <jni.h>
 #include <iostream>
+#include"vector2.h"
+#include"road_map.h"
+#include"node.h"
 #include "JNITest.h"
 
 using namespace std;
 
+road_map roadmap;
+
 JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass)
 {
     cout << "hello" << endl;
+    roadmap = road_map({
+		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
+		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
+		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
+		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
+		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
+	});
+
+
+    vector<int> __t = roadmap.get_path(0, 0, 5.0f);
+
+    for (unsigned int i{ 0 }; i < __t.size(); ++i)
+    {
+            //cout << to_string(__t[i]) << endl;
+    }
 }
 
 JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, jintArray arr)
@@ -20,7 +40,7 @@ JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, 
     }
     //cout << "sum: " << sum << endl;
     //cout << "length: " << length << endl;
-    jdouble avg = (jdouble)avg / (jdouble)length;
+    jdouble avg = (jdouble)sum / (jdouble)length;
     //cout << "avg " << avg << endl;
     env->ReleaseIntArrayElements(arr, inCArray, 0);
     return avg;

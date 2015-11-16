@@ -19,14 +19,18 @@ vector<node> road_map::get_copy()
         vector2 pos{ m_nodes[i]->get_position() };
         temp_nodes.push_back(node(id, pos));
     }
+    int tester = 0;
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
         {
             // falls flat on its face at the second call to this
-            temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
-            cout << "currently in road_map::get_copy()" << endl;
+            tester = m_nodes[i]->get_connections()[j]->id();
+            cout << "currently in road_map::get_copy() before add_connection(node*)" << endl;
+            temp_nodes[i].add_connection(&temp_nodes[tester]);
+            cout << "currently in road_map::get_copy() after add_connection(node*)" << endl;
         }
+        cout << "currently in road_map::get_copy()" << endl;
     }
 
     return temp_nodes;
@@ -66,11 +70,8 @@ road_map::~road_map()
 vector<int> road_map::get_path(node * from, node * to, float speed)
 { // https://docs.google.com/presentation/d/1UPEAdPqTFxVzcrofAqkVdkAGtbOZBEWF_SMrrcEyVxs/edit?usp=sharing
 	// nodes
-    cout << "currently in road_map::get_path(node*, node*, float)" << endl;
     vector<node > nodes       { get_copy()       };
-    cout << "currently in road_map::get_path(node*, node*, float)" << endl;
     vector<node*> open_list   { vector<node*>(0) };
-    cout << "currently in road_map::get_path(node*, node*, float)" << endl;
     vector<node*> closed_list { vector<node*>(0) };
     
     // clone target and from
@@ -85,49 +86,49 @@ vector<int> road_map::get_path(node * from, node * to, float speed)
 
         if (current->id() == to->id())
         { // Path completed
-                vector<int> path{ vector<int>(0) };
-                while (current != NULL)
-                { // set path
-                        path.push_back(current->id());
-                        if (current->id() == from->id()) { break; }
-                        current = current->parent;
-                }
-                //delete selected;
-                //delete target;
-                //delete current;
-                //for (vector<node*>::iterator it{ open_list.begin() }; it != open_list.end(); ++it) { delete (*it); }
-                //for (vector<node*>::iterator it{ closed_list.begin() }; it != closed_list.end(); ++it) { delete (*it); }
-                return path;
+            vector<int> path{ vector<int>(0) };
+            while (current != NULL)
+            { // set path
+                path.push_back(current->id());
+                if (current->id() == from->id()) { break; }
+                current = current->parent;
+            }
+            //delete selected;
+            //delete target;
+            //delete current;
+            //for (vector<node*>::iterator it{ open_list.begin() }; it != open_list.end(); ++it) { delete (*it); }
+            //for (vector<node*>::iterator it{ closed_list.begin() }; it != closed_list.end(); ++it) { delete (*it); }
+            return path;
         }
 
         for (unsigned int i{ 0 }; i < current->get_connections().size(); ++i)
         { // expand to neighbours
-                node* selected{ current->get_connections()[i] };
+            node* selected{ current->get_connections()[i] };
 
-                // the new value the neighour gets
-                float new_value{ current->value + vector2::distance(current->get_position(), selected->get_position()) };
+            // the new value the neighour gets
+            float new_value{ current->value + vector2::distance(current->get_position(), selected->get_position()) };
 
-                if (selected->value <= 0.0f /*not visited*/|| selected->value >= new_value /*path longer than current*/)
-                { // set new value and parent
-                        selected->parent = current;
-                        selected->value = new_value;
+            if (selected->value <= 0.0f /*not visited*/|| selected->value >= new_value /*path longer than current*/)
+            { // set new value and parent
+                selected->parent = current;
+                selected->value = new_value;
 
-                        if (find(open_list.begin(), open_list.end(), selected) == open_list.end())
-                        { // neighbour not yet in open list so add it to the list
-                                open_list.push_back(selected);
-                        }
+                if (find(open_list.begin(), open_list.end(), selected) == open_list.end())
+                { // neighbour not yet in open list so add it to the list
+                    open_list.push_back(selected);
                 }
-                //delete selected;
+            }
+            //delete selected;
         }
 
         if (open_list.size() < 1)
         { // everything visited, no path
-                //delete target;
-                //delete current;
-                //for (vector<node*>::iterator it{ open_list.begin() }; it != open_list.end(); ++it) { delete (*it); }
-                //for (vector<node*>::iterator it{ closed_list.begin() }; it != closed_list.end(); ++it) { delete (*it); }
+            //delete target;
+            //delete current;
+            //for (vector<node*>::iterator it{ open_list.begin() }; it != open_list.end(); ++it) { delete (*it); }
+            //for (vector<node*>::iterator it{ closed_list.begin() }; it != closed_list.end(); ++it) { delete (*it); }
 
-                return vector<int>(0);
+            return vector<int>(0);
         }
 
         // get from open list the lowest
@@ -135,12 +136,12 @@ vector<int> road_map::get_path(node * from, node * to, float speed)
         float lowest_v{ numeric_limits<float>().max() };
         for (unsigned int i{ lowest_i }; i < open_list.size(); ++i)
         {
-                float temp_value{ open_list[i]->value + (G_MULTIPLIER * vector2::distance(open_list[i]->get_position(), to->get_position())) };
-                if (temp_value < lowest_v)
-                {
-                        lowest_v = temp_value;
-                        lowest_i = i;
-                }
+            float temp_value{ open_list[i]->value + (G_MULTIPLIER * vector2::distance(open_list[i]->get_position(), to->get_position())) };
+            if (temp_value < lowest_v)
+            {
+                lowest_v = temp_value;
+                lowest_i = i;
+            }
         }
 
         current = open_list[lowest_i];

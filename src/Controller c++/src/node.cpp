@@ -41,13 +41,13 @@ vector2 node::get_position()
 
 void node::add_connection(node* n)
 {
-    //cout << "currently in node::add_connection(node*)" << endl;
     m_connections.push_back(n);
 }
 
 vector<node*> node::get_connections()
 {
-    return this->m_connections;
+    cout << "currently in node::get::connections()" << endl;
+    return this->m_connections; // falls on its face here;
 }
 
 bool node::is_occupied_at(float t)

@@ -1,4 +1,3 @@
-//#include <jni.h>
 #include <iostream>
 #include"vector2.h"
 #include"road_map.h"
@@ -21,12 +20,12 @@ JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass)
 	});
 
 
-    vector<int> __t = roadmap.get_path(0, 0, 5.0f);
+    vector<int> __t = roadmap.get_path(0, 2, 5.0f);
 
-    for (unsigned int i{ 0 }; i < __t.size(); ++i)
+    /*for (unsigned int i{ 0 }; i < __t.size(); ++i)
     {
             //cout << to_string(__t[i]) << endl;
-    }
+    }*/
 }
 
 JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, jintArray arr)

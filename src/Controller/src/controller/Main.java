@@ -50,7 +50,12 @@ public class Main
     private static void run()
     {
         SystemController controller = new SystemController();
-        controller.run("XML/xml5.xml");
+        try {
+            controller.run("xml7.xml");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private static void copyFileToTemp(String source, String dest) throws IOException

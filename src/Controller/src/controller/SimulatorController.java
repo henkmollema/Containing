@@ -9,11 +9,11 @@ import java.util.HashSet;
  *
  * @author henkmollema
  */
-public class SystemController
+public class SimulatorController
 {
     private final Database _db;
 
-    public SystemController()
+    public SimulatorController()
     {
         _db = new Database();
     }

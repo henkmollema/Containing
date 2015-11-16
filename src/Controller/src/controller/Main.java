@@ -49,7 +49,7 @@ public class Main
      */
     private static void run()
     {
-        SystemController controller = new SystemController();
+        SimulatorController controller = new SimulatorController();
         try {
             controller.run("xml1.xml");
             controller.run("xml2.xml");

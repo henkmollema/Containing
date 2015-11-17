@@ -4,6 +4,7 @@
  */
 package Game;
 
+import Simulation.Transform;
 import java.util.List;
 
 /**
@@ -14,4 +15,11 @@ public class MovingItem extends ContainerCarrier {
     private float m_empySpeed;
     private float m_loadedSpeed;
     private List<Integer> m_nodesID;
+    
+    public MovingItem() {
+        super();
+    }
+    public MovingItem(Transform parent) {
+        super(parent);
+    }
 }

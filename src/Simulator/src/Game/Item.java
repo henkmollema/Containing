@@ -11,5 +11,10 @@ import Simulation.*;
  * @author sietse
  */
 public class Item extends Transform {
-    
+    public Item() {
+        super();
+    }
+    public Item(Transform parent) {
+        super(parent);
+    }
 }

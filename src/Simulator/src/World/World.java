@@ -34,12 +34,20 @@ public class World extends Behaviour {
     Transform testCube;
     Transform testCube2;
     Path m_testCube2Path = new Path(
-        Arrays.asList(
-                new Vector3f(-10.0f, 0.0f, 10.0f),
-                new Vector3f(-10.0f, 0.0f, -10.0f),
-                new Vector3f(10.0f, 0.0f, -10.0f),
-                new Vector3f(10.0f, 0.0f, 10.0f)),
-            8.0f, 0.3f, 0, LoopMode.PingPong, EaseType.EaseInSine);
+            null, 
+            null, 
+            false, 
+            true, 
+            8.0f, 
+            3.0f, 
+            LoopMode.Loop, 
+            EaseType.EaseInSine, 
+            null, 
+            new Vector3f(-10.0f, 0.0f, 10.0f),
+            new Vector3f(-10.0f, 0.0f, -10.0f),
+            new Vector3f(10.0f, 0.0f, -10.0f),
+            new Vector3f(10.0f, 0.0f, 10.0f)
+     );
     
     boolean goingBack;
     float prev;
@@ -53,6 +61,7 @@ public class World extends Behaviour {
         Main.instance().camera().createShadowsFiler(m_sun);
         
         createObjects();
+        Time.setFixedTimeScale(0.3f);
     }
     @Override
     public void update() {
@@ -74,6 +83,10 @@ public class World extends Behaviour {
         
         if (ppp != goingBack)
             prev = testCube.eulerAngles().x;
+    }
+    @Override
+    public void fixedUpdate() {
+        testCube.setMaterial(MaterialCreator.unshadedRandom());
     }
     
     private void createObjects() {

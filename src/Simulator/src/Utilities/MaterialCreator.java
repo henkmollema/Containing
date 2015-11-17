@@ -95,4 +95,7 @@ public final class MaterialCreator {
         return m;
     }
     
+    public static Material rope() {
+        return diffuse(ColorRGBA.Brown);
+    }
 }

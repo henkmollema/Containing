@@ -13,6 +13,7 @@ public class Client implements Runnable
 {
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 1337;
+    public static final int START_OF_HEADING = 2;
     public static final int END_OF_TRANSMISSION = 4;
     private final CommunicationProtocolClient comProtocol;
     private boolean isConnected;
@@ -38,23 +39,36 @@ public class Client implements Runnable
 
             //out.println("Client says hello!");
 
-            int lastByte;
             boolean shouldBreak = false;
             while (!shouldBreak) {
-                while ((lastByte = in.read()) > 0) {
+                int lastByte;
+                boolean reading = false;
+                while ((lastByte = in.read()) != -1) {
+                    if (!reading && lastByte == START_OF_HEADING)
+                    {
+                        reading = true;
+                        continue;
+                    }
+                    else if (!reading && lastByte == 0)
+                    {
+                        continue;
+                    }
+                    
                     if (lastByte == END_OF_TRANSMISSION) {
+                        reading = false;
+                        
                         byte[] input = buffer.toByteArray();
-                        System.out.println("Received " + input.length + " bytes");
+                        System.out.println("Received " + input.length + " bytes ");
                         byte[] response = comProtocol.processInput(input);
                         buffer.reset();
 
-                        //Send response
+                        // Send response
                         out.write(response);
                         out.write(END_OF_TRANSMISSION);
                         out.flush();
                     }
                     else {
-                        //Add current input to buffer
+                        // Add current input to buffer
                         buffer.write(lastByte);
                     }
                 }

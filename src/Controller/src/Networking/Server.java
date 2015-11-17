@@ -19,6 +19,7 @@ import java.net.Socket;
 public class Server implements Runnable
 {
     public static final int PORT = 1337;
+    public static final int START_OF_HEADING = 2;
     public static final int END_OF_TRANSMISSION = 4;
     private boolean isConnected;
     private ServerSocket serverSocket = null;
@@ -77,6 +78,8 @@ public class Server implements Runnable
 
             byte[] bytes = item.toByteArray();
             System.out.println("Sending " + bytes.length + " bytes...");
+            
+            _out.write(START_OF_HEADING);
             _out.write(bytes);
             _out.write(END_OF_TRANSMISSION);
             _out.flush();
@@ -97,8 +100,7 @@ public class Server implements Runnable
             int lastByte;
 
             while (!shouldBreak) {
-                while ((lastByte = _in.read()) > 0) {
-
+                while ((lastByte = _in.read()) != -1) {
                     if (lastByte == END_OF_TRANSMISSION) {
                         byte[] response = comProtocol.processInput(_buffer.toByteArray());
                         _buffer.reset();

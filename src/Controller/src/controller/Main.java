@@ -29,19 +29,19 @@ public class Main
      */
     public static void main(String[] args)
     {
-        run();
+        //run();
         
-//        JNITest.helloFromC();
-//        int[] iA = { 5, 6, 8 };
-//        System.out.println("average: " + JNITest.avgFromC(iA));
-//        System.out.println("average int: " + JNITest.intFromC(iA));
-//        Integer i = JNITest.integerFromC(5);
-//        System.out.println(i);
-//        Point point = JNITest.pointInC(5, 5);
-//        System.out.println("x: " + point.x + " y: " + point.y);
-//        JNITest test = new JNITest();
-//        test.changeNumberInC();
-//        System.out.println(test.getNumber());
+        JNITest.helloFromC();
+        int[] iA = { 5, 6, 8 };
+        System.out.println("average: " + JNITest.avgFromC(iA));
+        System.out.println("average int: " + JNITest.intFromC(iA));
+        Integer i = JNITest.integerFromC(5);
+        System.out.println(i);
+        Point point = JNITest.pointInC(5, 5);
+        System.out.println("x: " + point.x + " y: " + point.y);
+        JNITest test = new JNITest();
+        test.changeNumberInC();
+        System.out.println(test.getNumber());
     }
     
     /**

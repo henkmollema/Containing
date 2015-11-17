@@ -19,16 +19,12 @@ vector<node> road_map::get_copy()
         int id{ m_nodes[i]->id() };
         vector2 pos{ m_nodes[i]->get_position() };
         temp_nodes.push_back(node(id, pos));
-        cout << "node " << i << " with id " << m_nodes[i]->id() << " created" << endl;
+        cout << "node " << i << " with pntr " << m_nodes[i] << " created" << endl;
     }
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int tester = 0;
-        if (i == 1) 
-        {
-            cout << "continueing" << endl;
-            continue;
-        }
+        node* testeritis = m_nodes[i];
         cout << "currently in road_map::get_copy() before node::get_connections().size()" << endl;
         // falls flat on its face at the second call to this
         int test = m_nodes[i]->get_connections().size();

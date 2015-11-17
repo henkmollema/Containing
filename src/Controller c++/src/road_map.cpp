@@ -12,25 +12,32 @@ void road_map::reset_nodes()
 
 vector<node> road_map::get_copy()
 {
+    cout << "currently in road_map::get_copy()" << endl;
     vector<node> temp_nodes{ vector<node>(0) };
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int id{ m_nodes[i]->id() };
         vector2 pos{ m_nodes[i]->get_position() };
         temp_nodes.push_back(node(id, pos));
+        cout << "node " << i << " with id " << m_nodes[i]->id() << " created" << endl;
     }
-    int tester = 0;
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
-        for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
+        int tester = 0;
+        if (i == 1) 
         {
-            // falls flat on its face at the second call to this
-            tester = m_nodes[i]->get_connections()[j]->id();
-            cout << "currently in road_map::get_copy() before add_connection(node*)" << endl;
-            temp_nodes[i].add_connection(&temp_nodes[tester]);
-            cout << "currently in road_map::get_copy() after add_connection(node*)" << endl;
+            cout << "continueing" << endl;
+            continue;
         }
-        cout << "currently in road_map::get_copy()" << endl;
+        cout << "currently in road_map::get_copy() before node::get_connections().size()" << endl;
+        // falls flat on its face at the second call to this
+        int test = m_nodes[i]->get_connections().size();
+        cout << "currently in road_map::get_copy() after node::get_connections().size()" << endl;
+        for (unsigned int j{ 0 }; j < test; ++j)
+        {
+            tester = m_nodes[i]->get_connections(i, j)[j]->id();
+            temp_nodes[i].add_connection(&temp_nodes[tester]);
+        }
     }
 
     return temp_nodes;
@@ -57,7 +64,7 @@ road_map::road_map(vector<node_base> n)
     {
         for (unsigned int j{ 0 }; j < n[i].connections.size(); ++j)
         { // set connections
-                m_nodes[i]->add_connection(m_nodes[n[i].connections[j]]);
+            m_nodes[i]->add_connection(m_nodes[n[i].connections[j]]);
         }
     }
 }
@@ -150,6 +157,5 @@ vector<int> road_map::get_path(node * from, node * to, float speed)
 
 vector<int> road_map::get_path(int from, int to, float speed)
 {
-    cout << "currently in road_map::get_path(int, int, float)" << endl;
     return get_path(m_nodes[from], m_nodes[to], speed);
 }

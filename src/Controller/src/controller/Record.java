@@ -20,37 +20,83 @@ public class Record
      * Information about the arrival.
      */
     @Element(name = "aankomst")
-    public Arrival arrival;
-    
-    /**
-     * Information about the owner.
-     */
-    @Element(name = "eigenaar")
-    public OwnerInfo owner;
+    public Arrival arrival;  
     
     /**
      * Information about the departure.
      */
     @Element(name = "vertrek")
-    public Departure departure;
+    public Departure departure;  
     
     /**
-     * The dimensions of the container.
+     * The name of the owner.
      */
-    @Element(name = "afmetingen")
-    public Dimensions dimensions;
+    @Path("eigenaar")
+    @Element(name = "naam")
+    public String ownerName;
     
     /**
-     * The weight of the container.
+     * The number which identifies the container.
      */
-    @Element(name = "gewicht")
-    public Weight weight;
+    @Path("eigenaar")
+    @Element(name = "containernr")
+    public int containerNumber;
+    
+     /**
+     * The length element of the dimension of the container.
+     */
+    @Path("afmetingen")
+    @Element(name = "l")
+    public String length;
     
     /**
-     * The content of the container.
+     * The width element of the dimension of the container.
      */
+    @Path("afmetingen")
+    @Element(name = "b")
+    public String width;
+    
+    /**
+     * The height element of the dimension of the container.
+     */
+    @Path("afmetingen")
+    @Element(name = "h")
+    public String height;
+    
+    /**
+     * Weight of the container when it's empty.
+     */
+    @Path("gewicht")
+    @Element(name = "leeg")
+    public int weigthEmpty;
+    
+    /**
+     * Weight of the container when it's loaded.
+     */
+    @Path("gewicht")
     @Element(name = "inhoud")
-    public Content contents;
+    public int weightLoaded;
+    
+    /**
+     * The name of the content.
+     */
+    @Path("inhoud")
+    @Element(name = "naam")
+    public String content;
+    
+    /**
+     * The type of the content.
+     */
+    @Path("inhoud")
+    @Element(name = "soort")
+    public String contentType;
+    
+    /**
+     * The possible danger of the content.
+     */
+    @Path("inhoud")
+    @Element(name = "gevaar")
+    public String contentDanger;
     
     /**
      * The ISO-code of the container.

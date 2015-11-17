@@ -29,24 +29,54 @@ public class Path {
     private float m_timer = 0.0f;
     private boolean m_goBack = false;
     
+    /**
+     * Constructor
+     * @param nodes 
+     */
     public Path(List<Vector3f> nodes) {
         this.m_nodes = nodes;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed 
+     */
     public Path(List<Vector3f> nodes, float speed) {
         this.m_nodes = nodes;
         this.m_speed = speed;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed
+     * @param loopMode 
+     */
     public Path(List<Vector3f> nodes, float speed, LoopMode loopMode) {
         this.m_nodes = nodes;
         this.m_speed = speed;
         this.m_loopMode = loopMode;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed
+     * @param startTargetNode
+     * @param loopMode 
+     */
     public Path(List<Vector3f> nodes, float speed, int startTargetNode, LoopMode loopMode) {
         this.m_nodes = nodes;
         this.m_targetNode = startTargetNode;
         this.m_speed = speed;
         this.m_loopMode = loopMode;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed
+     * @param waitTime
+     * @param startTargetNode
+     * @param loopMode 
+     */
     public Path(List<Vector3f> nodes, float speed, float waitTime, int startTargetNode, LoopMode loopMode) {
         this.m_nodes = nodes;
         this.m_targetNode = startTargetNode;
@@ -54,6 +84,14 @@ public class Path {
         this.m_waitTime = waitTime;
         this.m_loopMode = loopMode;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed
+     * @param startTargetNode
+     * @param loopMode
+     * @param easeType 
+     */
     public Path(List<Vector3f> nodes, float speed, int startTargetNode, LoopMode loopMode, EaseType easeType) {
         this.m_nodes = nodes;
         this.m_targetNode = startTargetNode;
@@ -61,6 +99,15 @@ public class Path {
         this.m_loopMode = loopMode;
         this.m_easeType = easeType;
     }
+    /**
+     * Constructor
+     * @param nodes
+     * @param speed
+     * @param waitTime
+     * @param startTargetNode
+     * @param loopMode
+     * @param easeType 
+     */
     public Path(List<Vector3f> nodes, float speed, float waitTime, int startTargetNode, LoopMode loopMode, EaseType easeType) {
         this.m_nodes = nodes;
         this.m_targetNode = startTargetNode;
@@ -70,7 +117,9 @@ public class Path {
         this.m_easeType = easeType;
     }
     
-    
+    /**
+     * Update this every frame
+     */
     public void update() {
         if (m_timer < 1.0f) {
             m_timer += Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes.get(m_targetNode))), 100000.0f);
@@ -84,6 +133,9 @@ public class Path {
             m_timer -= 1.0f + m_waitTime;
         }
     }
+    /**
+     * Set target to next point
+     */
     public void next() {
         savePosition();
         
@@ -107,19 +159,38 @@ public class Path {
                 break;
         }
     }
+    /**
+     * Set target index
+     * @param target 
+     */
     public void setTarget(int target) {
         m_targetNode = target;
     }
+    /**
+     * safe position from interpolation
+     */
     private void savePosition() {
         setPosition(getPosition());
     }
+    /**
+     * Get the current positio
+     * @return 
+     */
     public Vector3f getPosition() {
         return Interpolate.ease(m_easeType, m_previousPosition, m_nodes.get(m_targetNode), m_timer);
     }
 
+    /**
+     * Set position
+     * @param position 
+     */
     public void setPosition(Vector3f position) {
         m_previousPosition = position.clone();
     }
+    /**
+     * Set the callback at wait start
+     * @param callback 
+     */
     public void setCallback(Callback callback) {
         m_callback = callback;
     }

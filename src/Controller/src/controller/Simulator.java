@@ -7,9 +7,9 @@ package controller;
  */
 public class Simulator
 {
-    private final SystemController _controller;
+    private final SimulatorController _controller;
 
-    public Simulator(SystemController controller)
+    public Simulator(SimulatorController controller)
     {
         _controller = controller;
     }

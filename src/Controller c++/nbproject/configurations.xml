@@ -5,6 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/jnitest.h</itemPath>
+      <itemPath>src/node.h</itemPath>
+      <itemPath>src/road_map.h</itemPath>
+      <itemPath>src/vector2.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,6 +17,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/JNITest.cpp</itemPath>
+      <itemPath>src/node.cpp</itemPath>
+      <itemPath>src/road_map.cpp</itemPath>
+      <itemPath>src/vector2.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -73,6 +79,18 @@
       </item>
       <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/road_map.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/road_map.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/vector2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/vector2.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
@@ -98,6 +116,18 @@
       <item path="src/JNITest.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/road_map.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/road_map.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/vector2.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/vector2.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

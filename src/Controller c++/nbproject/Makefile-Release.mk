@@ -35,7 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/JNITest.o
+	${OBJECTDIR}/src/JNITest.o \
+	${OBJECTDIR}/src/node.o \
+	${OBJECTDIR}/src/road_map.o \
+	${OBJECTDIR}/src/vector2.o
 
 
 # C Compiler Flags
@@ -66,6 +69,21 @@ ${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
+
+${OBJECTDIR}/src/node.o: src/node.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/node.o src/node.cpp
+
+${OBJECTDIR}/src/road_map.o: src/road_map.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/road_map.o src/road_map.cpp
+
+${OBJECTDIR}/src/vector2.o: src/vector2.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/vector2.o src/vector2.cpp
 
 # Subprojects
 .build-subprojects:

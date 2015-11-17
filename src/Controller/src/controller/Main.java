@@ -29,7 +29,7 @@ public class Main
      */
     public static void main(String[] args)
     {
-        run();
+        //run();
         
         JNITest.helloFromC();
         int[] iA = { 5, 6, 8 };
@@ -49,8 +49,19 @@ public class Main
      */
     private static void run()
     {
-        SystemController controller = new SystemController();
-        controller.run("XML/xml5.xml");
+        SimulatorController controller = new SimulatorController();
+        try {
+            controller.run("xml1.xml");
+            controller.run("xml2.xml");
+            controller.run("xml3.xml");
+            controller.run("xml4.xml");
+            controller.run("xml5.xml");
+            //controller.run("xml6.xml");
+            //controller.run("xml7.xml");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private static void copyFileToTemp(String source, String dest) throws IOException

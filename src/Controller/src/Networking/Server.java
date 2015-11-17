@@ -4,14 +4,13 @@
  */
 package Networking;
 
+import controller.Proto.SimulationItemProto.SimulationItem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,10 +18,8 @@ import java.util.logging.Logger;
  */
 public class Server implements Runnable
 {
-
     public static final int PORT = 1337;
     public static final int END_OF_TRANSMISSION = 4;
-
     private boolean isConnected;
     private ServerSocket serverSocket = null;
     private Socket clientSocket = null;
@@ -32,7 +29,6 @@ public class Server implements Runnable
     {
         comProtocol = new CommunicationProtocolServer();
     }
-
     private DataOutputStream _out;
     private BufferedInputStream _in;
     private ByteArrayOutputStream _buffer;
@@ -44,10 +40,8 @@ public class Server implements Runnable
      */
     public boolean Start()
     {
-        if (!isConnected)
-        {
-            try
-            {
+        if (!isConnected) {
+            try {
                 serverSocket = new ServerSocket(PORT);
                 System.out.println("Waiting for connection..");
 
@@ -59,31 +53,37 @@ public class Server implements Runnable
                 _buffer = new ByteArrayOutputStream();
 
                 isConnected = true;
+                return true;
 
             }
-            catch (Exception ex)
-            {
-                System.out.println("Error in socket connection:");
-                System.out.println(ex.getMessage());
+            catch (Exception ex) {
+                System.err.println("Error in socket connection:");
+                ex.printStackTrace();
                 return false;
             }
         }
 
-        return true;
+        return false;
     }
 
     public boolean init()
     {
-        try
-        {
-            _out.write(42);
+        try {
+            SimulationItem.Builder builder = SimulationItem.newBuilder();
+            SimulationItem item = builder
+                    .setId(java.util.UUID.randomUUID().toString())
+                    .setType(SimulationItem.SimulationItemType.PLATFORM)
+                    .build();
+
+            byte[] bytes = item.toByteArray();
+            System.out.println("Sending " + bytes.length + " bytes...");
+            _out.write(bytes);
             _out.write(END_OF_TRANSMISSION);
             _out.flush();
 
             return true;
         }
-        catch (IOException ex)
-        {
+        catch (IOException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -92,18 +92,14 @@ public class Server implements Runnable
     public boolean read()
     {
 
-        try
-        {
+        try {
             boolean shouldBreak = false;
             int lastByte;
 
-            while (!shouldBreak)
-            {
-                while ((lastByte = _in.read()) > 0)
-                {
+            while (!shouldBreak) {
+                while ((lastByte = _in.read()) > 0) {
 
-                    if (lastByte == END_OF_TRANSMISSION)
-                    {
+                    if (lastByte == END_OF_TRANSMISSION) {
                         byte[] response = comProtocol.processInput(_buffer.toByteArray());
                         _buffer.reset();
 
@@ -112,16 +108,14 @@ public class Server implements Runnable
                         _out.write(END_OF_TRANSMISSION);
                         _out.flush();
                     }
-                    else
-                    {
+                    else {
                         //Add current input to buffer
                         _buffer.write(lastByte);
                     }
                 }
             }
         }
-        catch (IOException ex)
-        {
+        catch (IOException ex) {
             ex.printStackTrace();
         }
 
@@ -131,21 +125,16 @@ public class Server implements Runnable
     @Override
     public void run()
     {
-        if (Start())
-        {
-            if (init())
-            {
-                if (read())
-                {
+        if (Start()) {
+            if (init()) {
+                if (read()) {
 
                     System.out.println("Closed peacefully");
                 }
             }
         }
-        else
-        {
+        else {
             System.out.println("Closed forcefully");
         }
     }
-
 }

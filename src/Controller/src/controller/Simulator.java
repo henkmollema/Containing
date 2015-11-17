@@ -28,9 +28,7 @@ public class Simulator
         _server = new Server();
         _thread = new Thread(_server);
         _thread.start();
-        
-        _server.init();
-        
+
         // todo
         return true;
     }

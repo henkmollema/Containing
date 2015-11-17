@@ -1,6 +1,6 @@
 package Simulation;
 
-import Game.Camera;
+import Networking.Client;
 import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
@@ -181,13 +181,14 @@ public class Main extends SimpleApplication {
         }
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
+        new Thread(new Client()).start();
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1280, 600);
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
-        app.start();
+        app.start();        
     }
 }

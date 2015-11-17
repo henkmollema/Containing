@@ -47,14 +47,14 @@ void node::add_connection(node* n)
 vector<node*> node::get_connections()
 {
     cout << "currently in node::get::connections()" << endl;
-    cout << "m_connections[0] : " << m_connections[0] << endl;
+    cout << "m_connections[0] : " << m_connections[0]->m_id << endl;
     return this->m_connections; // falls on its face here;
 }
 
 vector<node*> node::get_connections(int i, int j)
 {
     cout << "currently in node::get::connections(int, int)" << endl;
-    cout << "of m_nodes[" << i << "] " << "m_connections[" << j << "] : " << m_connections[0] << endl;
+    cout << "of m_nodes[" << i << "] " << "m_connections[" << j << "] : " << m_connections[j]->m_id << endl;
     return this->m_connections; // falls on its face here;
 }
 

@@ -1,5 +1,7 @@
 package controller;
 
+import Networking.*;
+
 /**
  * Provides interaction with the simulator.
  *
@@ -8,6 +10,8 @@ package controller;
 public class Simulator
 {
     private final SimulatorController _controller;
+    private Thread _thread;
+    private Server _server;
 
     public Simulator(SimulatorController controller)
     {
@@ -21,6 +25,12 @@ public class Simulator
      */
     public boolean start()
     {
+        _server = new Server();
+        _thread = new Thread(_server);
+        _thread.start();
+        
+        _server.init();
+        
         // todo
         return true;
     }

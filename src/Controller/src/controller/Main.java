@@ -1,5 +1,6 @@
 package controller;
 
+import controller.Proto.SimulationItemProto;
 import java.awt.Point;
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -8,18 +9,28 @@ import java.util.logging.*;
 @SuppressWarnings("all")
 public class Main
 {
-    static {
-        try {
+
+    static
+    {
+        try
+        {
+            SimulationItem.Builder d = SimulationItem.newBuilder();
+            SimulationItem item = d.setId(java.util.UUID.randomUUID().toString())
+                    .setType(SimulationItem.SimulationItemType.CRANE)
+                    .build();
+
             File file = new File(Main.class.getResource("/lib/").toURI().toString(), "JNITest.dll");
             File resFile = new File(System.getProperty("java.io.tmpdir"), "JNITest.dll");
-            if (!resFile.exists()) {
+            if (!resFile.exists())
+            {
                 resFile.createNewFile();
             }
             Main.copyFileToTemp(file.getPath().substring(5), resFile.getAbsolutePath());
             System.load(resFile.getAbsolutePath());
             //System.loadLibrary("JNITest");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -30,9 +41,12 @@ public class Main
     public static void main(String[] args)
     {
         //run();
-        
+
         JNITest.helloFromC();
-        int[] iA = { 5, 6, 8 };
+        int[] iA =
+        {
+            5, 6, 8
+        };
         System.out.println("average: " + JNITest.avgFromC(iA));
         System.out.println("average int: " + JNITest.intFromC(iA));
         Integer i = JNITest.integerFromC(5);
@@ -43,14 +57,15 @@ public class Main
         test.changeNumberInC();
         System.out.println(test.getNumber());
     }
-    
+
     /**
      * Run Forest! Run!
      */
     private static void run()
     {
         SimulatorController controller = new SimulatorController();
-        try {
+        try
+        {
             controller.run("xml1.xml");
             controller.run("xml2.xml");
             controller.run("xml3.xml");
@@ -59,7 +74,8 @@ public class Main
             //controller.run("xml6.xml");
             //controller.run("xml7.xml");
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             ex.printStackTrace();
         }
     }
@@ -68,15 +84,18 @@ public class Main
     {
         FileChannel inputChannel = null;
         FileChannel outputChannel = null;
-        try {
+        try
+        {
             inputChannel = new FileInputStream(source).getChannel();
             outputChannel = new FileOutputStream(dest).getChannel();
             outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        finally {
+        finally
+        {
             inputChannel.close();
             outputChannel.close();
         }

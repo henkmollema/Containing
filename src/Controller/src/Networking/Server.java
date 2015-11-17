@@ -5,39 +5,38 @@
 package Networking;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jens
  */
-public class Server implements Runnable{
-    
+public class Server implements Runnable
+{
+
     public static final int PORT = 1337;
-    
     public static final int END_OF_TRANSMISSION = 4;
-    
+
     private boolean isConnected;
-    
     private ServerSocket serverSocket = null;
     private Socket clientSocket = null;
-    
-    
-    
     private CommunicationProtocolServer comProtocol;
-    
-    
+
     public Server()
     {
         comProtocol = new CommunicationProtocolServer();
     }
-    
-    
+
+    private DataOutputStream _out;
+    private BufferedInputStream _in;
+    private ByteArrayOutputStream _buffer;
+
     /* Opens a serversocket and waits for a client to connect.
      * This method should be called on it's own thread as it contains an indefinite loop.
      * Returns false if setup/connection failed.
@@ -45,79 +44,108 @@ public class Server implements Runnable{
      */
     public boolean Start()
     {
-        if(!isConnected)
+        if (!isConnected)
         {
-           try{
-                
-               
+            try
+            {
                 serverSocket = new ServerSocket(PORT);
                 System.out.println("Waiting for connection..");
 
                 clientSocket = serverSocket.accept(); //This halts the thread until a connection has been accepted
                 System.out.println("Connection Accepted!");
 
-                
-                DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-                BufferedInputStream in = new BufferedInputStream(clientSocket.getInputStream());
-                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                _out = new DataOutputStream(clientSocket.getOutputStream());
+                _in = new BufferedInputStream(clientSocket.getInputStream());
+                _buffer = new ByteArrayOutputStream();
 
                 isConnected = true;
 
-                boolean shouldBreak = false;
-                int lastByte;
-                
-                out.write(42);
-                out.write(END_OF_TRANSMISSION);
-                out.flush();
-                
-                while(!shouldBreak)
-                {
-                    while((lastByte = in.read()) > 0)
-                    {
-                        
-                        if(lastByte == END_OF_TRANSMISSION)
-                        {
-                            byte[] response = comProtocol.processInput(buffer.toByteArray());
-                            buffer.reset();
-                            
-                            //Send response
-                            out.write(response);
-                            out.write(END_OF_TRANSMISSION);
-                            out.flush();
-                        }
-                        else
-                        {
-                            //Add current input to buffer
-                            buffer.write(lastByte);
-                        } 
-                    }
-                   
-                }
-
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.out.println("Error in socket connection:");
                 System.out.println(ex.getMessage());
                 return false;
             }
         }
-        
+
+        return true;
+    }
+
+    public boolean init()
+    {
+        try
+        {
+            _out.write(42);
+            _out.write(END_OF_TRANSMISSION);
+            _out.flush();
+
+            return true;
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean read()
+    {
+
+        try
+        {
+            boolean shouldBreak = false;
+            int lastByte;
+
+            while (!shouldBreak)
+            {
+                while ((lastByte = _in.read()) > 0)
+                {
+
+                    if (lastByte == END_OF_TRANSMISSION)
+                    {
+                        byte[] response = comProtocol.processInput(_buffer.toByteArray());
+                        _buffer.reset();
+
+                        //Send response
+                        _out.write(response);
+                        _out.write(END_OF_TRANSMISSION);
+                        _out.flush();
+                    }
+                    else
+                    {
+                        //Add current input to buffer
+                        _buffer.write(lastByte);
+                    }
+                }
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
         return true;
     }
 
     @Override
-    public void run() {
-        if(Start())
+    public void run()
+    {
+        if (Start())
         {
-            System.out.println("Closed peacefully");
+            if (init())
+            {
+                if (read())
+                {
+
+                    System.out.println("Closed peacefully");
+                }
+            }
         }
         else
         {
             System.out.println("Closed forcefully");
         }
     }
-    
-    
-    
+
 }

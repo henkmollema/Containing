@@ -10,14 +10,12 @@ import Simulation.Main;
 import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector2f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.post.filters.FogFilter;
 import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.shadow.DirectionalLightShadowFilter;
 import com.jme3.shadow.DirectionalLightShadowRenderer;
-
 
 /**
  *
@@ -41,8 +39,8 @@ public class Camera extends Behaviour {
         this.m_viewType = type;
     }
     
-    // 
-    private final float CAMERA_SPEED = 15.0f;
+    // Camera Speed
+    public static float CAMERA_SPEED = 15.0f;
     
     // Shadows
     private final int SHADOW_MAP_RESOLUTION = 2048;
@@ -77,7 +75,6 @@ public class Camera extends Behaviour {
     @Override
     public void start() {
         Main.view().addProcessor(postProcessor());
-        
         Main.instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
     }
     @Override

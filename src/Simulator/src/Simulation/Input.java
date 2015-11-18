@@ -5,7 +5,6 @@
 package Simulation;
 
 import Game.Camera;
-import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.math.Vector2f;
@@ -115,12 +114,13 @@ public class Input extends Behaviour {
                 Mathf.clamp(inp.x, -Mathf.abs(MOUSE_CLAMPING_X), Mathf.abs(MOUSE_CLAMPING_X)),
                 Mathf.clamp(inp.y, -Mathf.abs(MOUSE_CLAMPING_Y), Mathf.abs(MOUSE_CLAMPING_Y)));
     }
-    
+       
     //
     private void initInput() {
         
         // Clear default
-        Main.inputManager().deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
+        Main.inputManager().clearMappings();
+        Main.inputManager().clearRawInputListeners();
         
         if (Main.instance().camera().viewType() == Camera.ViewType.RTS) {
             //
@@ -130,15 +130,14 @@ public class Input extends Behaviour {
             //
         }
         
-        Main.inputManager().addMapping("timescale-lower",   new KeyTrigger(KeyInput.KEY_R));
-        Main.inputManager().addMapping("timescale-higher",   new KeyTrigger(KeyInput.KEY_T));
-        Main.inputManager().addMapping("pause",   new KeyTrigger(KeyInput.KEY_Y));
+        Main.inputManager().addMapping("timescale-lower", new KeyTrigger(KeyInput.KEY_R));
+        Main.inputManager().addMapping("timescale-higher", new KeyTrigger(KeyInput.KEY_T));
+        Main.inputManager().addMapping("pause", new KeyTrigger(KeyInput.KEY_Y));
         Main.inputManager().addMapping("view-switch", new KeyTrigger(KeyInput.KEY_C));
+        Main.inputManager().addMapping("high-speed", new KeyTrigger(KeyInput.KEY_LSHIFT));
+        Main.inputManager().addMapping("low-speed", new KeyTrigger(KeyInput.KEY_LCONTROL));
         
-        Main.inputManager().addListener(Main.actionListener, "pause", "timescale-lower", "timescale-higher", "view-switch");
-        
-        //Main.inputManager().addMapping("Scroll-Up",     new KeyTrigger(KeyInput.KEY_S));
-        //Main.inputManager().addMapping("Scroll-Down",   new KeyTrigger(KeyInput));
+        Main.inputManager().addListener(Main.instance().actionListener, "pause", "timescale-lower", "timescale-higher", "view-switch", "high-speed", "low-speed");
         
     }
     

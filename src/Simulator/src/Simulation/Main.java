@@ -1,6 +1,6 @@
 package Simulation;
 
-import Game.Camera;
+import static Game.Camera.CAMERA_SPEED;
 import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
@@ -73,7 +73,7 @@ public class Main extends SimpleApplication {
         
         // Init main behaviours
         m_camera = new Game.Camera();
-         m_input = new Input();
+        m_input = new Input();
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
@@ -196,7 +196,7 @@ public class Main extends SimpleApplication {
     }
     
     //Input Listeners   
-    public static ActionListener actionListener = new ActionListener() {
+    public ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (name.equals("pause") && !keyPressed) {
@@ -207,19 +207,28 @@ public class Main extends SimpleApplication {
                     Time.setTimeScale(0.0f);
                 }
             } else if (name.equals("timescale-lower") && !keyPressed) {
-                float __test = 50.0f;
-                Time.setTimeScale(Time.timeScale() * (1.0f - __test * Time.unscaledDeltaTime()));
-                
+                Time.setTimeScale(Time.timeScale() / 2);
             } else if (name.equals("timescale-higher") && !keyPressed) {
-                float __test = 50.0f;
-                Time.setTimeScale(Time.timeScale() * (1.0f + __test * Time.unscaledDeltaTime()));
-                
-            } else if (name.equals("timescale-lower") && !keyPressed) {
-                float __test = 50.0f;
-                Time.setTimeScale(Time.timeScale() * (1.0f - __test * Time.unscaledDeltaTime()));
-            } /*else if (name.equals("view-switch") && !keyPressed) {
-                Main.instance().camera().viewType(Main.instance().camera().viewType() == Camera.ViewType.Fly ? Camera.ViewType.RTS : Camera.ViewType.Fly);
-            }*/
-        }
+                Time.setTimeScale(Time.timeScale() * 2);
+            } else if (name.equals("view-switch") && !keyPressed) {
+                //
+            } else if (name.equals("high-speed") && keyPressed) {
+                Game.Camera.CAMERA_SPEED = 30f;
+                System.out.println(Game.Camera.CAMERA_SPEED);
+                instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
+            } else if (name.equals("high-speed") && !keyPressed) {
+                Game.Camera.CAMERA_SPEED = 15f;
+                System.out.println(Game.Camera.CAMERA_SPEED);
+                instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
+            } else if (name.equals("low-speed") && keyPressed) {
+                Game.Camera.CAMERA_SPEED = 7.5f;
+                System.out.println(Game.Camera.CAMERA_SPEED);
+                instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
+            } else if (name.equals("low-speed") && !keyPressed) {
+                Game.Camera.CAMERA_SPEED = 15f;
+                System.out.println(Game.Camera.CAMERA_SPEED);
+                instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
+            }
+            }
+        };
     };
-  }

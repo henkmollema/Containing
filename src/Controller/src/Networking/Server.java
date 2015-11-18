@@ -4,7 +4,7 @@
  */
 package Networking;
 
-import controller.Proto.SimulationItemProto.SimulationItem;
+import networking.Proto.SimulationItemProto.SimulationItem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

@@ -27,7 +27,7 @@ public class Client implements Runnable
     /* Try's to connect   
      * 
      */
-    public boolean Connect()
+    public boolean connect()
     {
         try {
             socket = new Socket(HOST, PORT);
@@ -37,26 +37,20 @@ public class Client implements Runnable
             DataInputStream in = new DataInputStream(socket.getInputStream());
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-            //out.println("Client says hello!");
-
             boolean shouldBreak = false;
             while (!shouldBreak) {
                 int lastByte;
-                boolean reading = false;
+                boolean write = false;
                 while ((lastByte = in.read()) != -1) {
-                    if (!reading && lastByte == START_OF_HEADING)
-                    {
-                        reading = true;
+                    if (!write && lastByte == START_OF_HEADING) {
+                        write = true;
                         continue;
                     }
-                    else if (!reading && lastByte == 0)
-                    {
+                    else if (!write && lastByte == 0) {
                         continue;
                     }
-                    
+
                     if (lastByte == END_OF_TRANSMISSION) {
-                        reading = false;
-                        
                         byte[] input = buffer.toByteArray();
                         System.out.println("Received " + input.length + " bytes ");
                         byte[] response = comProtocol.processInput(input);
@@ -66,6 +60,9 @@ public class Client implements Runnable
                         out.write(response);
                         out.write(END_OF_TRANSMISSION);
                         out.flush();
+
+                        // Stop writing
+                        write = false;
                     }
                     else {
                         // Add current input to buffer
@@ -76,7 +73,7 @@ public class Client implements Runnable
         }
         catch (Exception ex) {
             System.out.println("Can't connect to controller:");
-            System.out.println(ex.toString() + "||" + ex.getMessage());
+            ex.printStackTrace();
 
             return false;
         }
@@ -85,14 +82,36 @@ public class Client implements Runnable
         return true;
     }
 
+    private boolean sendSimulatorMetadata()
+    {
+        return true;
+    }
+
+    private boolean read()
+    {
+        return false;
+    }
+
     @Override
     public void run()
     {
-        if (Connect()) {
-            System.out.println("Closed peacefully");
+        if (connect()) {
+            if (sendSimulatorMetadata()) {
+                if (read()) {
+                    System.out.println("Closed peacefully");
+                }
+                else
+                {
+                    System.out.println("Reading stopped");
+                }
+            }
+            else
+            {
+                System.out.println("Failed ssending simulator metadata.");
+            }
         }
         else {
-            System.out.println("Closed forcefully");
+            System.out.println("Closed forcefully when connecting with the controller.");
         }
     }
 }

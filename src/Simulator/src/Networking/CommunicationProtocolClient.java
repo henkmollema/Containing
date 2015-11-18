@@ -1,8 +1,7 @@
 package Networking;
 
-import Networking.SimulationItemProto.SimulationItem;
+import networking.Proto.SimulationItemProto.SimulationItem;
 import com.google.protobuf.*;
-import java.lang.reflect.*;
 
 /**
  *

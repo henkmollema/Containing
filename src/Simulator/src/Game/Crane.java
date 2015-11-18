@@ -20,13 +20,15 @@ public abstract class Crane extends MovingItem {
     private final String MODEL_PATH_BASE = "models/henk/Cranes/";
     
     private Path m_cranePath;
-    private float m_hookHeightUp;
+    private CraneHook m_hook;
+    private Line3D m_rope;
     
     private Spatial m_craneSpatial;
     private Spatial m_hookSpatial;
     
-    public Crane(Transform parent, float hookHeightUp) {
+    public Crane(Transform parent, CraneHook craneHook) {
         super(parent);
+        init(craneHook, Vector3f.ZERO);
     }
     
     /**
@@ -34,14 +36,16 @@ public abstract class Crane extends MovingItem {
      * @param hookHeight
      * @param position
      */
-    private void init(float hookHeight, Vector3f position) {
+    private void init(CraneHook hook, Vector3f position) {
         m_craneSpatial = Main.assets().loadModel(craneModelPath());
         m_craneSpatial.setMaterial(craneModelMaterial());
         attachChild(m_craneSpatial);
         
+        m_hook = hook;
         m_hookSpatial = Main.assets().loadModel(hookModelPath());
         m_hookSpatial.setMaterial(hookModelMaterial());
-        attachChild(m_hookSpatial);
+        m_hook.attachChild(m_hookSpatial);
+        attachChild(m_hook);
         
         localPosition(position);
         m_cranePath = getCranePath();
@@ -49,9 +53,12 @@ public abstract class Crane extends MovingItem {
     }
     
     public final void _update() {
+        if (m_cranePath != null)
+            m_cranePath.update();
+        if (m_hook != null)
+            m_hook._update();
         update();
     }
-    
     
     private String craneModelPath() {
         return MODEL_PATH_BASE + craneModelName();

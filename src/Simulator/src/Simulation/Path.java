@@ -71,14 +71,14 @@ public class Path {
         this.m_easeType = easeType == null ? EaseType.Linear : easeType;
         this.m_callback = callback;
         
-        setPath(new Vector3f(currentPosition == null ? (nodes.length < 1 ? Vector3f.ZERO : nodes[0]) : currentPosition), nodes);
+        setPathf(new Vector3f(currentPosition == null ? (nodes.length < 1 ? Vector3f.ZERO : nodes[0]) : currentPosition), nodes);
         this.m_targetNode = startNode == null ? 0 : startNode;
     }
     
-    public void setPath(Vector3f nodes) {
-        setPath(getPosition(), nodes);
+    public void setPath(Vector3f... nodes) {
+        setPathf(getPosition(), nodes);
     }
-    public void setPath(Vector3f from, Vector3f... nodes) {
+    public void setPathf(Vector3f from, Vector3f... nodes) {
         setPosition(from);
         
         this.m_timer = 0.0f;
@@ -97,7 +97,7 @@ public class Path {
      */
     public void update() {
         if (m_timer < 1.0f) {
-            m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 100000.0f);
+            m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 100000.0f);
             if (m_timer >= 1.0f && m_callback != null)
                 m_callback.invoke();
         }
@@ -174,6 +174,27 @@ public class Path {
      */
     public void setCallback(Callback callback) {
         m_callback = callback;
+    }
+    public void setSpeed(float speed) {
+        this.m_speed = speed;
+    }
+    public boolean atFirst() {
+        return atFirst(0.001f);
+    }
+    public boolean atFirst(float range) {
+        return (new Vector3f(m_nodes[0]).distanceSquared(getPosition()) < range * range);
+    }
+    public boolean atLast() {
+        return atLast(0.001f);
+    }
+    public boolean atLast(float range) {
+        return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
+    }
+    public int getTargetIndex() {
+        return m_targetNode;
+    }
+    public boolean finishedWaiting() {
+        return m_timer >= 1.0f + m_waitTime;
     }
 }
  

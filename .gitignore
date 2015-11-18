@@ -22,3 +22,7 @@ private/
 dist/
 build/
 *.dylib
+[Dd]ebug/
+[Oo]bj/
+*.suo
+src/Pathfinding/Pathfinding Containing/Pathfinding Containing.sdf

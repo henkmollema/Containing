@@ -4,7 +4,6 @@
  */
 package Networking;
 
-import networking.Proto.SimulationItemProto.SimulationItem;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -70,23 +69,23 @@ public class Server implements Runnable
     public boolean init()
     {
         try {
-            SimulationItem.Builder builder = SimulationItem.newBuilder();
-            SimulationItem item = builder
-                    .setId(java.util.UUID.randomUUID().toString())
-                    .setType(SimulationItem.SimulationItemType.PLATFORM)
-                    .build();
-
-            byte[] bytes = item.toByteArray();
-            System.out.println("Sending " + bytes.length + " bytes...");
-            
-            _out.write(START_OF_HEADING);
-            _out.write(bytes);
-            _out.write(END_OF_TRANSMISSION);
-            _out.flush();
+//            SimulationItem.Builder builder = SimulationItem.newBuilder();
+//            SimulationItem item = builder
+//                    .setId(java.util.UUID.randomUUID().toString())
+//                    .setType(SimulationItem.SimulationItemType.PLATFORM)
+//                    .build();
+//
+//            byte[] bytes = item.toByteArray();
+//            System.out.println("Sending " + bytes.length + " bytes...");
+//            
+//            _out.write(START_OF_HEADING);
+//            _out.write(bytes);
+//            _out.write(END_OF_TRANSMISSION);
+//            _out.flush();
 
             return true;
         }
-        catch (IOException ex) {
+        catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }

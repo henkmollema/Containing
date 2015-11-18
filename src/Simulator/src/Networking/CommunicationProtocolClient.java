@@ -1,6 +1,5 @@
 package Networking;
 
-import networking.Proto.SimulationItemProto.SimulationItem;
 import com.google.protobuf.*;
 
 /**
@@ -12,16 +11,12 @@ public class CommunicationProtocolClient
     public byte[] processInput(byte[] in)
     {
         try {
-            SimulationItem item = SimulationItem.parseFrom(in);
-
-            System.out.println("Client recieved complete message");
-            System.out.println("Simulation item ID: " + item.getId());
-            System.out.println("Simulation item type: " + item.getType().toString());
+            System.out.println("Client recieved complete message. Length: " + in.length);
 
             byte[] response = { 0 };
             return response;
         }
-        catch (InvalidProtocolBufferException ex) {
+        catch (Exception ex) {
             ex.printStackTrace();
         }
 

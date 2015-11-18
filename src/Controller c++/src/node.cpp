@@ -31,7 +31,7 @@ node::~node()
 
 int node::id()
 {
-    return m_id;
+    return this->m_id;
 }
 
 vector2 node::get_position()
@@ -46,7 +46,11 @@ void node::add_connection(node* n)
 
 vector<node*> node::get_connections()
 {
-    cout << "currently in node::get::connections()" << endl;
+    return this->m_connections; // falls on its face here;
+}
+
+vector<node*> node::get_connections(int i, int j)
+{
     return this->m_connections; // falls on its face here;
 }
 

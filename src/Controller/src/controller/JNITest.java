@@ -6,6 +6,7 @@ package controller;
 
 import java.awt.Point;
 
+
 /**
  *
  * @author Dudecake
@@ -19,6 +20,8 @@ public class JNITest
         return number;
     }
     
+    public static native void initPath();
+    
     public static native void helloFromC();
     
     public static native double avgFromC(int[] x);
@@ -30,4 +33,6 @@ public class JNITest
     public static native Point pointInC(int x, int y);
     
     public native void changeNumberInC();
+    
+    public static native void cleanup();
 }

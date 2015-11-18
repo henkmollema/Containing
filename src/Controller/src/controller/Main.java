@@ -29,8 +29,18 @@ public class Main
      */
     public static void main(String[] args)
     {
+        Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+			@Override
+			public void run()
+			{
+				JNITest.cleanup();
+				System.out.println("exit");
+			}
+		});
         //run();
         
+        JNITest.initPath();
         JNITest.helloFromC();
         int[] iA = { 5, 6, 8 };
         System.out.println("average: " + JNITest.avgFromC(iA));

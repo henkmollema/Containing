@@ -6,26 +6,28 @@
 
 using namespace std;
 
-road_map roadmap;
+road_map* roadmap;
 
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass)
+JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *env, jclass thisCls)
 {
-    cout << "hello" << endl;
-    roadmap = road_map({
+    roadmap = new road_map({
 		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
 		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
 		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
 		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
 		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
-	});
+    });
+    vector<int> __t = roadmap->get_path(0, 2, 5.0f);
 
-
-    vector<int> __t = roadmap.get_path(0, 2, 5.0f);
-
-    /*for (unsigned int i{ 0 }; i < __t.size(); ++i)
+    for (unsigned int i{ 0 }; i < __t.size(); ++i)
     {
-            //cout << to_string(__t[i]) << endl;
-    }*/
+            cout << __t[i] << endl;
+    }
+}
+
+JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass )
+{
+    cout << "hello" << endl;
 }
 
 JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, jintArray arr)
@@ -37,10 +39,7 @@ JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, 
     {
         sum += inCArray[i];
     }
-    //cout << "sum: " << sum << endl;
-    //cout << "length: " << length << endl;
     jdouble avg = (jdouble)sum / (jdouble)length;
-    //cout << "avg " << avg << endl;
     env->ReleaseIntArrayElements(arr, inCArray, 0);
     return avg;
 }
@@ -83,4 +82,9 @@ JNIEXPORT void JNICALL Java_controller_JNITest_changeNumberInC(JNIEnv *env, jobj
     cout << "In C, the int is " << number << endl;
     number = 99;
     env->SetIntField(thisObj, fidNumber, number);
+}
+
+JNIEXPORT void JNICALL Java_controller_JNITest_cleanup(JNIEnv *, jclass)
+{
+    delete roadmap;
 }

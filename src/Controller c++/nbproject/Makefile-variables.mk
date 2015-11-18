@@ -7,21 +7,21 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW_5.2.0-Windows
+CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=../Controller/build/classes/lib
 CND_ARTIFACT_NAME_Debug=JNITest.dll
 CND_ARTIFACT_PATH_Debug=../Controller/build/classes/lib/JNITest.dll
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_5.2.0-Windows/package
-CND_PACKAGE_NAME_Debug=libControllerc++.dll.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_5.2.0-Windows/package/libControllerc++.dll.tar
+CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
+CND_PACKAGE_NAME_Debug=libControllerc++.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/libControllerc++.so.tar
 # Release configuration
-CND_PLATFORM_Release=MinGW_5.2.0-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW_5.2.0-Windows
-CND_ARTIFACT_NAME_Release=libController_c__.dll
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW_5.2.0-Windows/libController_c__.dll
-CND_PACKAGE_DIR_Release=dist/Release/MinGW_5.2.0-Windows/package
-CND_PACKAGE_NAME_Release=libControllerc++.dll.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW_5.2.0-Windows/package/libControllerc++.dll.tar
+CND_PLATFORM_Release=GNU-Linux-x86
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
+CND_ARTIFACT_NAME_Release=libController_c__.so
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/libController_c__.so
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
+CND_PACKAGE_NAME_Release=libControllerc++.so.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/libControllerc++.so.tar
 #
 # include compiler specific variables
 #

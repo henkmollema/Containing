@@ -1,6 +1,6 @@
 package Simulation;
 
-import Networking.Client;
+import Networking.SimulatorClient;
 import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
@@ -182,7 +182,7 @@ public class Main extends SimpleApplication {
     }
     
     public static void main(String[] args) {        
-        new Thread(new Client()).start();
+        new Thread(new SimulatorClient()).start();
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);

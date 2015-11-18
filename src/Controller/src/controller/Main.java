@@ -1,7 +1,10 @@
 package controller;
 
 import java.awt.Point;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.logging.*;
 
@@ -30,17 +33,23 @@ public class Main
     public static void main(String[] args)
     {
         Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-			@Override
-			public void run()
-			{
-				JNITest.cleanup();
-				System.out.println("exit");
-			}
-		});
+        {
+            @Override
+            public void run()
+            {
+                JNITest.cleanup();
+                System.out.println("exit");
+            }
+        });
         //run();
         
         JNITest.initPath();
+        int[] path = JNITest.getPath(0, 4, 5.0f);
+        for (int i : path)
+        {
+            System.out.println("node " + i);
+        }
+        /*
         JNITest.helloFromC();
         int[] iA = { 5, 6, 8 };
         System.out.println("average: " + JNITest.avgFromC(iA));
@@ -52,6 +61,7 @@ public class Main
         JNITest test = new JNITest();
         test.changeNumberInC();
         System.out.println(test.getNumber());
+        */
     }
     
     /**
@@ -62,7 +72,7 @@ public class Main
         SystemController controller = new SystemController();
         controller.run("XML/xml5.xml");
     }
-
+    
     private static void copyFileToTemp(String source, String dest) throws IOException
     {
         FileChannel inputChannel = null;

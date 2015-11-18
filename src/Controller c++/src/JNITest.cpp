@@ -8,7 +8,7 @@ using namespace std;
 
 road_map* roadmap;
 
-JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *env, jclass thisCls)
+JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *, jclass)
 {
     roadmap = new road_map({
 		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
@@ -17,14 +17,22 @@ JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *env, jclass this
 		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
 		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
     });
-    vector<int> __t = roadmap->get_path(0, 2, 5.0f);
-
-    for (unsigned int i{ 0 }; i < __t.size(); ++i)
-    {
-            cout << __t[i] << endl;
-    }
 }
 
+vector<int> getPath(int from, int to, float speed)
+{
+    return roadmap->get_path(from, to, speed);
+}
+
+JNIEXPORT jintArray JNICALL Java_controller_JNITest_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
+{
+    vector<int> tempVec = getPath(from, to, speed);
+    jintArray res = env->NewIntArray(tempVec.size());
+    env->SetIntArrayRegion(res, 0, tempVec.size(), &tempVec[0]);
+    return res;
+}
+
+/*
 JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC(JNIEnv *, jclass )
 {
     cout << "hello" << endl;
@@ -43,7 +51,7 @@ JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC(JNIEnv *env, jclass, 
     env->ReleaseIntArrayElements(arr, inCArray, 0);
     return avg;
 }
-/**/
+
 JNIEXPORT jint JNICALL Java_controller_JNITest_intFromC(JNIEnv *env, jclass thisCls, jintArray arr)
 {
     jmethodID methId = env->GetStaticMethodID(thisCls, "avgFromC", "([I)D");
@@ -83,7 +91,7 @@ JNIEXPORT void JNICALL Java_controller_JNITest_changeNumberInC(JNIEnv *env, jobj
     number = 99;
     env->SetIntField(thisObj, fidNumber, number);
 }
-
+*/
 JNIEXPORT void JNICALL Java_controller_JNITest_cleanup(JNIEnv *, jclass)
 {
     delete roadmap;

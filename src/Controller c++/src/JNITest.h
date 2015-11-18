@@ -17,51 +17,11 @@ JNIEXPORT void JNICALL Java_controller_JNITest_initPath
 
 /*
  * Class:     controller_JNITest
- * Method:    helloFromC
- * Signature: ()V
+ * Method:    getPath
+ * Signature: (IIF)[I
  */
-JNIEXPORT void JNICALL Java_controller_JNITest_helloFromC
-  (JNIEnv *, jclass);
-
-/*
- * Class:     controller_JNITest
- * Method:    avgFromC
- * Signature: ([I)D
- */
-JNIEXPORT jdouble JNICALL Java_controller_JNITest_avgFromC
-  (JNIEnv *, jclass, jintArray);
-
-/*
- * Class:     controller_JNITest
- * Method:    intFromC
- * Signature: ([I)I
- */
-JNIEXPORT jint JNICALL Java_controller_JNITest_intFromC
-  (JNIEnv *, jclass, jintArray);
-
-/*
- * Class:     controller_JNITest
- * Method:    integerFromC
- * Signature: (I)Ljava/lang/Integer;
- */
-JNIEXPORT jobject JNICALL Java_controller_JNITest_integerFromC
-  (JNIEnv *, jclass, jint);
-
-/*
- * Class:     controller_JNITest
- * Method:    pointInC
- * Signature: (II)Ljava/awt/Point;
- */
-JNIEXPORT jobject JNICALL Java_controller_JNITest_pointInC
-  (JNIEnv *, jclass, jint, jint);
-
-/*
- * Class:     controller_JNITest
- * Method:    changeNumberInC
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_controller_JNITest_changeNumberInC
-  (JNIEnv *, jobject);
+JNIEXPORT jintArray JNICALL Java_controller_JNITest_getPath
+  (JNIEnv *, jclass, jint, jint, jfloat);
 
 /*
  * Class:     controller_JNITest

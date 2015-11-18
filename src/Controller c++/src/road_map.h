@@ -13,7 +13,7 @@ private:
 	vector<node*> m_nodes;
 	void reset_nodes();
 	vector<node> get_copy();
-	bool node_is_blocked(int i);
+	bool node_is_blocked(int);
 
 public:
 	struct node_base
@@ -30,10 +30,10 @@ public:
 	};
         
         road_map();
-	road_map(vector<node_base> n);
+	road_map(vector<node_base>);
 	~road_map();
 
-	vector<int> get_path(node* from, node* to, float speed);
-	vector<int> get_path(int from, int to, float speed);
+	vector<int> get_path(node*, node*, float);
+	vector<int> get_path(int, int, float);
 };
 

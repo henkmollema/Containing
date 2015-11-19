@@ -6,6 +6,7 @@
 package Game;
 
 import Simulation.Behaviour;
+import Simulation.Debug;
 import Simulation.Main;
 import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
@@ -115,5 +116,9 @@ public class Camera extends Behaviour {
         bloomFilter.setBloomIntensity(m_bloomIntensity);
         
         postProcessor().addFilter(bloomFilter);
+    }
+    
+    public void toggleCameraMode() {
+        Debug.log("asdfasdf");
     }
 }

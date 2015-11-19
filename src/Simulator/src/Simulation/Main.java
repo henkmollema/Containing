@@ -29,16 +29,8 @@ public class Main extends SimpleApplication {
         return m_instance;
     }
 
-    // Something
-    public static AssetManager assets() {
-        return instance().assetManager;
-    }
-    public static Node root() {
-        return instance().rootNode;
-    }
-    public static ViewPort view() {
-        return instance().viewPort;
-    }
+    // 
+    private float m_previousTimeScale = 1.0f;
     
     // Behaviours
     private static List<Behaviour> m_behaviours;
@@ -46,6 +38,8 @@ public class Main extends SimpleApplication {
     
     // Lines
     private static List<Line3D> m_lines;
+    
+    private Input m_input;
     
     // Camera
     private Game.Camera m_camera;
@@ -56,9 +50,18 @@ public class Main extends SimpleApplication {
         return flyCam;
     }
     
-    // Input
+    // 
     public static InputManager inputManager() {
         return instance().inputManager;
+    }
+    public static AssetManager assets() {
+        return instance().assetManager;
+    }
+    public static Node root() {
+        return instance().rootNode;
+    }
+    public static ViewPort view() {
+        return instance().viewPort;
     }
     
     /** HERE COME ALL BEHAVIOURS
@@ -71,10 +74,12 @@ public class Main extends SimpleApplication {
         
         // Init main behaviours
         m_camera = new Game.Camera();
+        m_input = new Input();
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
             m_camera,
+            m_input,
             
             // Non-Main
             new World(),
@@ -125,6 +130,7 @@ public class Main extends SimpleApplication {
         Time._updateTime(tpf);
         updateBehaviours();
         updateWorld();
+        updateTimescale();
     }
     /**
      * Called on render
@@ -189,5 +195,34 @@ public class Main extends SimpleApplication {
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
         app.start();
+    }
+    
+    public void togglePause() {
+        if (Time.timeScale() < 0.001f) {
+            // unpause
+            Time.setTimeScale(m_previousTimeScale);
+        } else {
+            m_previousTimeScale = Time.timeScale();
+            Time.setTimeScale(0.0f);
+        }
+    }
+    public void updateTimescale() {
+        float __temp = 10.0f * Time.deltaTime();
+        
+        if (m_input.getButton("R").isDown())
+            __temp = -__temp;
+        else if (!m_input.getButton("T").isDown())
+            return;
+        
+        __temp += Time.timeScale();
+        __temp = Mathf.clamp(__temp, 0.1f, 200.0f);
+        Time.setTimeScale(__temp);
+    }
+    public void resetTimescale() {
+        Time.setTimeScale(1.0f);
+    }
+    public void exit() {
+        Debug.log("TEST");
+        instance().stop();
     }
 }

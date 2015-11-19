@@ -4,12 +4,17 @@
  */
 package Simulation;
 
-import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseAxisTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
+import Utilities.Utilities;
 
 /**
  *
@@ -50,7 +55,23 @@ public class Input extends Behaviour {
     private Transform m_doubleClickTarget;
     
     // 
-    private Transform m_target;
+    //private Transform m_target;
+    private final InternalListener m_listener = new InternalListener();
+    private static List<String> m_mappings = new ArrayList<String>();
+    
+    private Button[] m_buttons;
+    
+    /**
+     *
+     * @param button
+     * @return
+     */
+    public final Button getButton(String button) {
+        for (Button b : m_buttons)
+            if (b.isButton(button))
+                return b;
+        return null;
+    }
     
     @Override
     public void awake() {
@@ -119,33 +140,198 @@ public class Input extends Behaviour {
     private void initInput() {
         
         // Clear default
-        Main.inputManager().deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
+        Main.inputManager().clearMappings();
+        Main.inputManager().clearRawInputListeners();
+        //Main.inputManager().deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
         
-        // 
-        Main.inputManager().addMapping("W",     new KeyTrigger(KeyInput.KEY_W), new KeyTrigger(KeyInput.KEY_UP));
-        Main.inputManager().addMapping("S",     new KeyTrigger(KeyInput.KEY_S), new KeyTrigger(KeyInput.KEY_DOWN));
-        Main.inputManager().addMapping("A",     new KeyTrigger(KeyInput.KEY_A), new KeyTrigger(KeyInput.KEY_LEFT));
-        Main.inputManager().addMapping("D",     new KeyTrigger(KeyInput.KEY_D), new KeyTrigger(KeyInput.KEY_RIGHT));
-        Main.inputManager().addMapping("Q",     new KeyTrigger(KeyInput.KEY_Q));
-        Main.inputManager().addMapping("E",     new KeyTrigger(KeyInput.KEY_E));
-        Main.inputManager().addMapping("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT),   new KeyTrigger(KeyInput.KEY_RSHIFT));
-        Main.inputManager().addMapping("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL), new KeyTrigger(KeyInput.KEY_RCONTROL));
+        m_buttons = new Button[] {
+            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
+            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),          //  1
+            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),          //  2
+            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                //  3
+            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),          //  4
+            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                //  5
+            new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),           //  6
+            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),         //  7
+            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),          //  8
+            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                //  9
+            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                // 10
+            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                // 11
+            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                // 12
+            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE))            // 13
+        };
         
-        // 
-        Main.inputManager().addMapping("R",   new KeyTrigger(KeyInput.KEY_R));
-        Main.inputManager().addMapping("T",   new KeyTrigger(KeyInput.KEY_T));
-        Main.inputManager().addMapping("Y",   new KeyTrigger(KeyInput.KEY_Y));
+        m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
+        m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"));
+        m_buttons[12].setOnDownCallback(new Callback(Main.instance().camera(), "toggleCameraMode"));
+        m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"));
         
-        //Main.inputManager().addMapping("Scroll-Up",     new KeyTrigger(KeyInput.KEY_S));
-        //Main.inputManager().addMapping("Scroll-Down",   new KeyTrigger(KeyInput));
+        Main.inputManager().addMapping("-Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
+        Main.inputManager().addMapping("+Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
+
+        Main.inputManager().addMapping("-MouseX", new MouseAxisTrigger(MouseInput.AXIS_X, false));
+        Main.inputManager().addMapping("+MouseX", new MouseAxisTrigger(MouseInput.AXIS_X, true));
+        Main.inputManager().addMapping("-MouseY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+        Main.inputManager().addMapping("+MouseY", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+
+        Main.inputManager().addMapping("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+        Main.inputManager().addMapping("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
+        Main.inputManager().addMapping("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
         
+        Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
     }
     
-    
-    
-    
-    public enum CameraViewType {
-        Fly,
-        RTS
+    private class InternalListener implements ActionListener, AnalogListener {
+        @Override
+        public void onAction(String name, boolean isPressed, float tpf) {
+            for (Button b : m_buttons)
+                b.safeSet(name, isPressed);
+        }
+
+        @Override
+        public void onAnalog(String name, float value, float tpf) {
+            /*
+            if (!isEnabled()) {
+                return;
+            }
+
+            if (!name.contains("WHEEL") && !name.contains("MOUSE")) {
+                return;
+            }
+
+            char sign = name.charAt(0);
+            if (sign == '-') {
+                value = -value;
+            } else if (sign != '+') {
+                return;
+            }
+
+            if (name.contains("Wheel")) {
+                if (!wheelEnabled) {
+                    return;
+                }
+                float speed = maxSpeedPerSecondOfAccell[DISTANCE] * maxAccellPeriod[DISTANCE] * WHEEL_SPEED;
+                offsetMoves[DISTANCE] += value * speed;
+            } else if (name.contains("MOUSE")) {
+                if (mouseRotation) {
+                    int direction;
+                    if (name.endsWith("X")) {
+                        direction = ROTATE;
+                        if ( up == UpVector.Z_UP ) {
+                            value = -value;
+                        }
+                    } else {
+                        direction = TILT;
+                    }
+                    offsetMoves[direction] += value;
+                } else if (mouseDrag) {
+                    int direction;
+                    if (name.endsWith("X")) {
+                        direction = SIDE;
+                        if ( up == UpVector.Z_UP ) {
+                            value = -value;
+                        }
+                    } else {
+                        direction = FWD;
+                        value = -value;
+                    }
+                    offsetMoves[direction] += value * maxSpeedPerSecondOfAccell[direction] * maxAccellPeriod[direction];
+                }
+            }
+            */
+        }
+    }
+    public class Button {
+        public String name;
+        public KeyTrigger trigger;
+        public boolean isNegative;
+        
+        private boolean m_isDown = false;
+        private Callback m_onDownCallback;
+        private Callback m_onUpCallback;
+        
+        public Button(String name, KeyTrigger trigger) {
+            this.name = name;
+            this.trigger = trigger;
+            this.isNegative = false;
+            init();
+        }
+        public Button(String name, KeyTrigger trigger, boolean isNegative) {
+            this.name = name;
+            this.trigger = trigger;
+            this.isNegative = isNegative;
+            init();
+        }
+        
+        public final void safeSet(String name, boolean isDown) {
+            if(isButton(name)) {
+                set(isDown);
+            }
+                
+        }
+        public final void set(boolean isDown) {
+            if (isDown && !m_isDown)
+                onDown();
+            else if (!isDown && m_isDown)
+                onUp();
+            onSet(isDown);
+            m_isDown = isDown;
+        }
+        protected void onSet(boolean isDown) { }
+        protected void onDown() { 
+            if (m_onDownCallback != null)
+                m_onDownCallback.invoke();
+        }
+        protected void onUp() { 
+            if (m_onUpCallback != null)
+                m_onUpCallback.invoke();
+        }
+        
+        public final void setOnDownCallback(Callback c) {
+            m_onDownCallback = c;
+        }
+        public final void setOnUpCallback(Callback c) {
+            m_onUpCallback = c;
+        }
+        
+        public final void init() {
+            if (!Utilities.nullOrEmpty(name) && trigger != null) {
+                Main.inputManager().addMapping(name, trigger);
+                m_mappings.add(name);
+            }
+                
+        }
+        public final float isButtonf(String name) {
+            return isButton(name) ? (isNegative ? -1.0f : 1.0f) : 0.0f;
+        }
+        public final boolean isButton(String s) {
+            return !Utilities.nullOrEmpty(name) && s.equals(name);
+        }
+        
+        public final boolean isDown() {
+            return m_isDown;
+        }
+    }
+    public class Toggle extends Button {
+        private boolean m_isActive;
+        
+        public Toggle(String name, KeyTrigger trigger) {
+            super(name, trigger, false);
+            m_isActive = false;
+        }
+        public Toggle(String name, KeyTrigger trigger, boolean startValue) {
+            super(name, trigger, false);
+            m_isActive = startValue;
+        }
+        
+        @Override
+        protected void onDown() {
+            super.onDown();
+            m_isActive = !m_isActive;
+        }
+        
+        public boolean isActive() {
+            return m_isActive;
+        }
     }
 }

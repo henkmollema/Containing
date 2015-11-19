@@ -57,4 +57,8 @@ public final class Utilities {
     public static float NaNSafeFloat(float f) {
         return ((Float)f).isNaN() ? 0.0f : f;
     }
+    
+    public static boolean nullOrEmpty(String s) {
+        return (s == null || s.length() < 1);
+    }
 }

@@ -65,7 +65,7 @@
             <pElem>C:/Program Files/Java/jdk1.8.0_65/include/win32</pElem>
             <pElem>C:/Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
-          <commandLine>-shared</commandLine>
+          <commandLine>-Wwrite-strings -shared</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>

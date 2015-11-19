@@ -10,13 +10,34 @@ road_map* roadmap;
 
 JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *, jclass)
 {
-    roadmap = new road_map({
+    vector<road_map::node_base> temp = {
 		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
 		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
 		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
 		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
 		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
-    });
+    };
+    temp.clear();
+    //vector<road_map::node_base> temp = vector<road_map::node_base>(0);
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            vector<int> conn = vector<int>(0);
+            if (i != 0) conn.push_back(i - 1);
+            if (j != 0) conn.push_back(j - 1);
+            if (i != 100 - 1) conn.push_back(i + 1);
+            if (j != 100 - 1) conn.push_back(j + 1);
+            temp.push_back(road_map::node_base(vector2((float)i, (float)j), conn));
+        }
+    }
+    roadmap = new road_map(temp);/*{
+		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
+		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
+		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
+		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
+		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
+    });*/
 }
 
 vector<int> getPath(int from, int to, float speed)
@@ -24,11 +45,36 @@ vector<int> getPath(int from, int to, float speed)
     return roadmap->get_path(from, to, speed);
 }
 
+void throw_java_exception(JNIEnv *env, char *className, char *message)
+{
+    jclass ex = env->FindClass(className);
+    env->ThrowNew(ex, message);
+}
+
 JNIEXPORT jintArray JNICALL Java_controller_JNITest_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
 {
+    if (from < 0 || from > roadmap->size())
+    {
+        char* className = "java/lang/IllegalArgumentException";
+        char* message = "origin is not in the roadmap";
+        throw_java_exception(env, className, message);
+        return NULL;
+    }
+    if (to < 0 || to > roadmap->size())
+    {
+        char* className = "java/lang/IllegalArgumentException";
+        char* message = "destination is not in the roadmap";
+        throw_java_exception(env, className, message);
+        return NULL;
+    }
     vector<int> tempVec = getPath(from, to, speed);
+    jint temp[tempVec.size()];
     jintArray res = env->NewIntArray(tempVec.size());
-    env->SetIntArrayRegion(res, 0, tempVec.size(), &tempVec[0]);
+    for (int i = 0; i < tempVec.size(); i++)
+    {
+        temp[i] = tempVec[i];
+    }
+    env->SetIntArrayRegion(res, 0, tempVec.size(), temp);
     return res;
 }
 

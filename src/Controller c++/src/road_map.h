@@ -32,7 +32,8 @@ public:
         road_map();
 	road_map(vector<node_base>);
 	~road_map();
-
+        
+        int size();
 	vector<int> get_path(node*, node*, float);
 	vector<int> get_path(int, int, float);
 };

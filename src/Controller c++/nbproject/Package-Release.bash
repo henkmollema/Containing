@@ -6,16 +6,16 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=MinGW_5.2.0-Windows
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
-CND_DLIB_EXT=so
+CND_DLIB_EXT=dll
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
 OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libController_c__.${CND_DLIB_EXT}
 OUTPUT_BASENAME=libController_c__.${CND_DLIB_EXT}
-PACKAGE_TOP_DIR=libControllerc++.so/
+PACKAGE_TOP_DIR=libControllerc++.dll/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/libControllerc++.so/lib"
+makeDirectory "${NBTMPDIR}/libControllerc++.dll/lib"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}" 0644
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libControllerc++.so.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libControllerc++.dll.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libControllerc++.so.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libControllerc++.dll.tar *
 checkReturnCode
 
 # Cleanup

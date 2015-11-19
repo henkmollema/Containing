@@ -64,6 +64,11 @@ road_map::~road_map()
     for (vector<node*>::iterator it{ m_nodes.begin() }; it != m_nodes.end(); ++it) { delete (*it); }
 }
 
+int road_map::size()
+{
+    return m_nodes.size();
+}
+
 vector<int> road_map::get_path(node * from, node * to, float speed)
 { // https://docs.google.com/presentation/d/1UPEAdPqTFxVzcrofAqkVdkAGtbOZBEWF_SMrrcEyVxs/edit?usp=sharing
 	// nodes

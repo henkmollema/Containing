@@ -10,15 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <!-- The main content view -->
-    <RelativeLayout
-        android:id="@+id/mainContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <com.jjoe64.graphview.GraphView
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/graph" />
-    </RelativeLayout>
+            android:layout_height="match_parent">
+        </FrameLayout>
 
     <!-- The navigation drawer -->
     <RelativeLayout

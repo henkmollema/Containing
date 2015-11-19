@@ -1,10 +1,11 @@
 package nhl.containing.managmentinterface;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -22,11 +23,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.jjoe64.graphview.*;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.*;
-
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import nhl.containing.managmentinterface.navigationdrawer.*;
 
@@ -43,12 +42,11 @@ public class MainActivity extends ActionBarActivity
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     //end navigation drawer
 
-    private boolean isRefreshing = false;
-    //private Thread test;
-    //private AutoRefreshRunnable refreshThread;
     private Menu menu;
-    private GraphView graph;
-    //private int refreshTime = 0;
+    private volatile Fragment fragment;
+    private volatile int refreshTime = 0;
+    private AutoRefreshRunnable autorefreshRunnable;
+    private ExecutorService executer = Executors.newSingleThreadExecutor();
 
     /**
      * Creates the Activity
@@ -84,7 +82,7 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-
+                completeRefresh.run();
                 invalidateOptionsMenu();
             }
 
@@ -101,15 +99,16 @@ public class MainActivity extends ActionBarActivity
                 mDrawerToggle.syncState();
             }
         });
+
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //end navigationdrawer
-
-        graph = (GraphView) findViewById(R.id.graph);
-        //refreshThread = new AutoRefreshRunnable();
-        //test = new Thread(refreshThread);
-        setUpGraph();
-        createGraph();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        GraphFragment gf = new GraphFragment();
+        fragment = gf;
+        ft.replace(R.id.frame, gf);
+        ft.commit();
     }
 
     /**
@@ -137,6 +136,7 @@ public class MainActivity extends ActionBarActivity
         menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
         menu.findItem(R.id.action_refresh_time).setVisible(!drawerOpen);
         menu.findItem(R.id.action_legend).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_legend).setVisible(fragment instanceof GraphFragment);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -160,23 +160,44 @@ public class MainActivity extends ActionBarActivity
                 refresh();
                 break;
             case R.id.menu_refresh_0:
-                //refreshTime = 0;
-                //refreshThread.stop();
+                refreshTime = 0;
+                if(autorefreshRunnable != null)
+                    autorefreshRunnable.stop();
+                if(!executer.isShutdown())
+                    executer.shutdown();
+                autorefreshRunnable = null;
+                break;
+            case R.id.menu_refresh_5:
+                refreshTime = 5;
+                if(autorefreshRunnable == null)
+                {
+                    autorefreshRunnable = new AutoRefreshRunnable();
+                    executer.submit(autorefreshRunnable);
+                }
                 break;
             case R.id.menu_refresh_10:
-                //refreshTime = 10;
-                //if(!refreshThread.isRunning)
-                //    test.run();
+                refreshTime = 10;
+                if(autorefreshRunnable == null)
+                {
+                    autorefreshRunnable = new AutoRefreshRunnable();
+                    executer.submit(autorefreshRunnable);
+                }
                 break;
             case R.id.menu_refresh_20:
-                //refreshTime = 20;
-                //if(!refreshThread.isRunning)
-                //    test.run();
+                refreshTime = 20;
+                if(autorefreshRunnable != null)
+                {
+                    autorefreshRunnable = new AutoRefreshRunnable();
+                    executer.submit(autorefreshRunnable);
+                }
                 break;
             case R.id.menu_refresh_30:
-                //refreshTime = 30;
-                //if(!refreshThread.isRunning)
-                //    test.run();
+                refreshTime = 30;
+                if(autorefreshRunnable != null)
+                {
+                    autorefreshRunnable = new AutoRefreshRunnable();
+                    executer.submit(autorefreshRunnable);
+                }
                 break;
             case R.id.action_legend:
                 showLegend();
@@ -203,69 +224,57 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * Setup the Graph
-     */
-    private void setUpGraph()
-    {
-        StaticLabelsFormatter slf = new StaticLabelsFormatter(graph);
-        slf.setHorizontalLabels(new String[]{"Tra", "Tru", "Sea", "Inl", "Sto", "AGV", "Rem"});
-        graph.getGridLabelRenderer().setLabelFormatter(slf);
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(-0.5);
-        graph.getViewport().setMaxX(6.5);
-    }
-
-    /**
-     * Makes the graph
-     */
-    private void createGraph()
-    {
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-             new DataPoint(0,10),
-             new DataPoint(1,50),
-             new DataPoint(2,5),
-             new DataPoint(3,100),
-             new DataPoint(4,50),
-             new DataPoint(5,0),
-             new DataPoint(6,65)
-        });
-        graph.addSeries(series);
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX() * 255 / 4, (int) Math.abs(data.getY() * 255 / 6), 100);
-            }
-        });
-        series.setSpacing(20);
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
-    }
-
-    /**
      * complete the refresh
      */
-    private void completeRefresh()
-    {
-        MenuItem ri =  menu.findItem(R.id.action_refresh);
-        ri.getActionView().clearAnimation();
-        ri.setActionView(null);
-        isRefreshing = false;
-    }
+    private Runnable completeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            MenuItem ri =  menu.findItem(R.id.action_refresh);
+            if(ri.getActionView() != null)
+            {
+                ri.getActionView().clearAnimation();
+                ri.setActionView(null);
+            }
+        }
+    };
 
     /**
      * refresh the graph
      */
     private void refresh()
     {
-        isRefreshing = true;
         LayoutInflater inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView iv = (ImageView) inflater.inflate(R.layout.rotaterefresh, null);
         Animation rotate = AnimationUtils.loadAnimation(getApplication(),R.anim.rotate);
         rotate.setRepeatCount(Animation.INFINITE);
         iv.startAnimation(rotate);
-        iv.setOnClickListener(refreshlistener);
         menu.findItem(R.id.action_refresh).setActionView(iv);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(fragment!= null && fragment instanceof GraphFragment)
+                {
+                    GraphFragment gf = (GraphFragment)fragment;
+                    try{
+                        Thread.sleep(2000);
+                    }
+                    catch (Exception e){}
+                    gf.setData();
+                }
+                runOnUiThread(completeRefresh);
+            }
+        }).start();
     }
+
+    /**
+     * Runnable for refreshing
+     */
+    private Runnable refreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            refresh();
+        }
+    };
 
     /**
      * Select item from the navigation drawer
@@ -273,35 +282,98 @@ public class MainActivity extends ActionBarActivity
      */
     private void selectItemFromDrawer(int position)
     {
+        Fragment f;
         switch (position)
         {
             case 0:
+                f = getSupportFragmentManager().findFragmentByTag("Graph_one");
+                if(f == null || !f.isVisible())
+                {
+                    if(autorefreshRunnable != null)
+                        autorefreshRunnable.stop();
+                    if(executer.isShutdown())
+                        executer.shutdown();
+                    autorefreshRunnable = null;
+                    GraphFragment gf = new GraphFragment();
+                    fragment = gf;
+                    Bundle b = new Bundle();
+                    b.putInt("graphID",position);
+                    gf.setArguments(b);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_one").commit();
+                }
                 mDrawerLayout.closeDrawers();
                 break;
+            case 1:
+                f = getSupportFragmentManager().findFragmentByTag("Graph_two");
+                if(f == null || !f.isVisible())
+                {
+                    if(autorefreshRunnable != null)
+                        autorefreshRunnable.stop();
+                    if(executer.isShutdown())
+                        executer.shutdown();
+                    autorefreshRunnable = null;
+                    GraphFragment gf = new GraphFragment();
+                    fragment = gf;
+                    Bundle b = new Bundle();
+                    b.putInt("graphID",position);
+                    gf.setArguments(b);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_two").commit();
+                }
+                mDrawerLayout.closeDrawers();
+                break;
+            case 2:
+                f = getSupportFragmentManager().findFragmentByTag("Graph_three");
+                if(f == null || !f.isVisible())
+                {
+                    if(autorefreshRunnable != null)
+                        autorefreshRunnable.stop();
+                    if(executer.isShutdown())
+                        executer.shutdown();
+                    autorefreshRunnable = null;
+                    GraphFragment gf = new GraphFragment();
+                    fragment = gf;
+                    Bundle b = new Bundle();
+                    b.putInt("graphID",position);
+                    gf.setArguments(b);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_three").commit();
+                }
+                mDrawerLayout.closeDrawers();
+                break;
+            case 3:
+                f = getSupportFragmentManager().findFragmentByTag("Graph_four");
+                if(f == null || !f.isVisible())
+                {
+                    if(autorefreshRunnable != null)
+                        autorefreshRunnable.stop();
+                    if(executer.isShutdown())
+                        executer.shutdown();
+                    autorefreshRunnable = null;
+                    GraphFragment gf = new GraphFragment();
+                    fragment = gf;
+                    Bundle b = new Bundle();
+                    b.putInt("graphID",position);
+                    gf.setArguments(b);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_four").commit();
+                }
+                mDrawerLayout.closeDrawers();
+                break;
+            case 4:
+                //add listfragment
+                break;
+
         }
     }
 
     /**
-     * listens to a click on the refreshanimation
+     * Runnable for autorefreshing datat
      */
-    private View.OnClickListener refreshlistener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            //stoprefresh
-            completeRefresh();
-        }
-    };
-
-    /*
     private class AutoRefreshRunnable implements Runnable
     {
-        private Calendar refreshDate;
-        private volatile boolean stopped = false;
-        private volatile boolean isRunning = false;
+        private volatile boolean isRunning = true;
+
         @Override
         public void run() {
-            isRunning = true;
-            while(!stopped) {
+            while(isRunning){
                 doJob();
             }
         }
@@ -310,28 +382,15 @@ public class MainActivity extends ActionBarActivity
         {
             if(refreshTime == 0)
                 return;
-            if(refreshDate == null)
-            {
-                refreshDate = Calendar.getInstance();
-                refreshDate.add(Calendar.SECOND,refreshTime);
-            }
-            if(refreshDate.getTime().after(Calendar.getInstance().getTime()))
-            {
-                refresh();
-                try{
-                    wait(1000);
-                }
-                catch (Exception e){}
-                completeRefresh();
-                refreshDate = Calendar.getInstance();
-                refreshDate.add(Calendar.SECOND,refreshTime);
-            }
+            runOnUiThread(refreshRunnable);
+            try{
+                Thread.sleep(refreshTime * 1000);
+            }catch (Exception e){}
         }
 
         public void stop()
         {
-            this.stopped = true;
-            this.isRunning = false;
+            isRunning = false;
         }
-    }*/
+    }
 }

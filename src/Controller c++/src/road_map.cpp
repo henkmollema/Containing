@@ -21,13 +21,10 @@ vector<node> road_map::get_copy()
     }
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
-        int tester = 0;
         // falls flat on its face at the fifth call to this
-        int test = m_nodes[i]->get_connections().size();
-        for (unsigned int j{ 0 }; j < test; ++j)
+        for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
         {
-            tester = m_nodes[i]->get_connections()[j]->id();
-            temp_nodes[i].add_connection(&temp_nodes[tester]);
+            temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
         }
     }
     return temp_nodes;

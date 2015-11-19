@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     controller_JNITest
  * Method:    initPath
- * Signature: ()V
+ * Signature: (Ljava/awt/Dimension;)V
  */
 JNIEXPORT void JNICALL Java_controller_JNITest_initPath
-  (JNIEnv *, jclass);
+  (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     controller_JNITest

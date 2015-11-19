@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,9 +43,8 @@ public class Main
             }
         });
         //run();
-        
-        JNITest.initPath();
-        int[] path = JNITest.getPath(0, 4, 5.0f);
+        JNITest.initPath(new Dimension(25, 25));
+        int[] path = JNITest.getPath(0, 130, 5.0f);
         for (int i : path)
         {
             System.out.println("node " + i);

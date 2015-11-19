@@ -8,27 +8,29 @@ using namespace std;
 
 road_map* roadmap;
 
-JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *, jclass)
+JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *env, jclass, jobject dimension)
 {
-    vector<road_map::node_base> temp = {
-		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
-		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
-		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
-		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
-		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
-    };
-    temp.clear();
-    //vector<road_map::node_base> temp = vector<road_map::node_base>(0);
-    for (int i = 0; i < 5; i++)
+    vector<road_map::node_base> temp = { };
+    jclass dimensionCls = env->FindClass("java/awt/Dimension");
+    if (env->ExceptionCheck()) return;
+    jfieldID dimensionXField = env->GetFieldID(dimensionCls, "width", "I");
+    jfieldID dimensionYField = env->GetFieldID(dimensionCls, "height", "I");
+    if (env->ExceptionCheck()) return;
+    int dimensionX = env->GetIntField(dimension, dimensionXField);
+    int dimensionY = env->GetIntField(dimension, dimensionYField);
+    long dinges = 0;
+    for (int i = 0; i < dimensionX; i++)
     {
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < dimensionY; j++)
         {
             vector<int> conn = vector<int>(0);
-            if (i != 0) conn.push_back(i - 1);
-            if (j != 0) conn.push_back(j - 1);
-            if (i != 100 - 1) conn.push_back(i + 1);
-            if (j != 100 - 1) conn.push_back(j + 1);
+            if (i > 0) conn.push_back(((i - 1) * dimensionY) + j);
+            if (j > 0) conn.push_back(i * dimensionY + (j - 1));
+            if (i < dimensionX - 1) conn.push_back(((i + 1) * dimensionY) + j);
+            if (j < dimensionY - 1) conn.push_back(i * dimensionY + (j + 1));
             temp.push_back(road_map::node_base(vector2((float)i, (float)j), conn));
+            dinges++;
+            //cout << "node " << dinges << " created" << endl;
         }
     }
     roadmap = new road_map(temp);/*{
@@ -53,14 +55,14 @@ void throw_java_exception(JNIEnv *env, char *className, char *message)
 
 JNIEXPORT jintArray JNICALL Java_controller_JNITest_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
 {
-    if (from < 0 || from > roadmap->size())
+    if (from < 0 || from >= roadmap->size())
     {
         char* className = "java/lang/IllegalArgumentException";
         char* message = "origin is not in the roadmap";
         throw_java_exception(env, className, message);
         return NULL;
     }
-    if (to < 0 || to > roadmap->size())
+    if (to < 0 || to >= roadmap->size())
     {
         char* className = "java/lang/IllegalArgumentException";
         char* message = "destination is not in the roadmap";

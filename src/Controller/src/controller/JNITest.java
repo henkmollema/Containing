@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.awt.Dimension;
 import java.awt.Point;
 
 /**
@@ -19,7 +20,7 @@ public class JNITest
         return number;
     }
     
-    public static native void initPath();
+    public static native void initPath(Dimension dimension);
     
     public static native int[] getPath(int from, int to, float speed);
     /*

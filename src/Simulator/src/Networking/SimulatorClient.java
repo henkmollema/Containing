@@ -1,8 +1,6 @@
 package Networking;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 import networking.Proto.PlatformProto.*;
@@ -14,13 +12,20 @@ import networking.Proto.PlatformProto.*;
  */
 public class SimulatorClient implements Runnable
 {
+    // Statics
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 1337;
     public static final int START_OF_HEADING = 2;
     public static final int END_OF_TRANSMISSION = 4;
+    
+    // Communication
     private final CommunicationProtocolClient comProtocol;
-    private boolean isConnected;
+    
+    // Socket fields    
     private Socket socket;
+    private InputStream _inputStream;
+    private OutputStream _outputStream;
+    private boolean isConnected;
 
     public SimulatorClient()
     {
@@ -28,16 +33,21 @@ public class SimulatorClient implements Runnable
     }
 
     /**
-     * Tries to connect with the controller.
+     * Connects to the controller.
      *
      * @return true if the connection succeded; otherwise, false.
      */
     public boolean connect()
     {
+        p("run()");
         try
         {
             socket = new Socket(HOST, PORT);
+            _inputStream = socket.getInputStream();
+            _outputStream = socket.getOutputStream();
+
             isConnected = true;
+            p("connected with the controller");
             return true;
         }
         catch (Exception ex)
@@ -56,20 +66,62 @@ public class SimulatorClient implements Runnable
      */
     private boolean sendSimulatorMetadata()
     {
-        Platform.Builder platformBuilder = Platform.newBuilder();
-        platformBuilder
-                .setId(newUUID())
-                .setType(Platform.PlatformType.SeaShip)
-                .addCranes(Platform.Crane.newBuilder()
-                .setId(newUUID())
-                .setType(Platform.Crane.CraneType.Rails))
-                .addCranes(Platform.Crane.newBuilder()
-                .setId(newUUID())
-                .setType(Platform.Crane.CraneType.Rails));
+        p("sendSimulatorMetadata()");
 
-        Platform platform = platformBuilder.build();
+        DataOutputStream out;
+        BufferedReader reader = null;
+        try
+        {
+            Platform.Builder platformBuilder = Platform.newBuilder();
+            platformBuilder
+                    .setId(newUUID())
+                    .setType(Platform.PlatformType.SeaShip)
+                    .addCranes(Platform.Crane.newBuilder()
+                    .setId(newUUID())
+                    .setType(Platform.Crane.CraneType.Rails))
+                    .addCranes(Platform.Crane.newBuilder()
+                    .setId(newUUID())
+                    .setType(Platform.Crane.CraneType.Rails));
 
-        return true;
+            Platform platform = platformBuilder.build();
+
+            out = new DataOutputStream(_outputStream);
+
+            byte[] message = platform.toByteArray();
+            System.out.println("Sending " + message.length + " bytes...");
+
+            // Write the object to the socket.
+            out.write(START_OF_HEADING);
+            out.write(message);
+            out.write(END_OF_TRANSMISSION);
+            out.flush();
+
+            p("Message sent to controller, start reading input..");
+
+            reader = new BufferedReader(new InputStreamReader(_inputStream));
+            String result = reader.readLine();
+
+            if (result == null || result.equals(""))
+            {
+                System.err.println("No result of sendSimulatorMetadata().");
+                return false;
+            }
+
+            if (result.equalsIgnoreCase("ok"))
+            {
+                p("result is " + result);
+                return true;
+            }
+
+            p("result is " + result);
+            return false;
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -80,10 +132,12 @@ public class SimulatorClient implements Runnable
      */
     private boolean startLoop()
     {
+        p("startLoop()");
+        
         try
         {
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(_outputStream);
+            DataInputStream in = new DataInputStream(_inputStream);
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
             boolean shouldBreak = false;
@@ -106,7 +160,8 @@ public class SimulatorClient implements Runnable
                     if (lastByte == END_OF_TRANSMISSION)
                     {
                         byte[] input = buffer.toByteArray();
-                        System.out.println("Received " + input.length + " bytes ");
+                        p("Received " + input.length + " bytes ");
+                        
                         byte[] response = comProtocol.processInput(input);
                         buffer.reset();
 
@@ -128,7 +183,7 @@ public class SimulatorClient implements Runnable
         }
         catch (Exception ex)
         {
-            System.out.println("Can't connect to controller:");
+            System.err.println("Can't connect to controller");
             ex.printStackTrace();
 
             return false;
@@ -144,6 +199,7 @@ public class SimulatorClient implements Runnable
     @Override
     public void run()
     {
+        p("run()");
         if (connect())
         {
             if (sendSimulatorMetadata())
@@ -166,5 +222,10 @@ public class SimulatorClient implements Runnable
         {
             System.out.println("Closed forcefully when connecting with the controller.");
         }
+    }
+
+    private static void p(String s)
+    {
+        System.out.println("SimulatorClient: " + s);
     }
 }

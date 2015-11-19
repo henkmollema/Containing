@@ -4,12 +4,10 @@
  */
 package Networking;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import networking.Proto.PlatformProto;
 
 /**
  *
@@ -22,41 +20,42 @@ public class Server implements Runnable
     public static final int END_OF_TRANSMISSION = 4;
     private boolean isConnected;
     private ServerSocket serverSocket = null;
-    private Socket clientSocket = null;
+    private Socket _socket = null;
     private CommunicationProtocolServer comProtocol;
 
     public Server()
     {
         comProtocol = new CommunicationProtocolServer();
     }
-    private DataOutputStream _out;
-    private BufferedInputStream _in;
-    private ByteArrayOutputStream _buffer;
 
-    /* Opens a serversocket and waits for a client to connect.
-     * This method should be called on it's own thread as it contains an indefinite loop.
+    /**
+     * Opens a serversocket and waits for a client to connect.
+     * This method should be called on it's own thread as it contains an
+     * indefinite loop.
      * Returns false if setup/connection failed.
      * Returns true if connection was successfull and closed peacefuly
      */
-    public boolean Start()
-    {
-        if (!isConnected) {
-            try {
+    public boolean start()
+    {        
+        p("start start()");
+        
+        if (!isConnected)
+        {
+            try
+            {
                 serverSocket = new ServerSocket(PORT);
-                System.out.println("Waiting for connection..");
+                p("Waiting for connection..");
 
-                clientSocket = serverSocket.accept(); //This halts the thread until a connection has been accepted
-                System.out.println("Connection Accepted!");
-
-                _out = new DataOutputStream(clientSocket.getOutputStream());
-                _in = new BufferedInputStream(clientSocket.getInputStream());
-                _buffer = new ByteArrayOutputStream();
+                // Halt the thread until a connection has been accepted
+                _socket = serverSocket.accept(); 
+                p("Connection Accepted!");
 
                 isConnected = true;
                 return true;
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 System.err.println("Error in socket connection:");
                 ex.printStackTrace();
                 return false;
@@ -68,24 +67,58 @@ public class Server implements Runnable
 
     public boolean init()
     {
-        try {
-//            SimulationItem.Builder builder = SimulationItem.newBuilder();
-//            SimulationItem item = builder
-//                    .setId(java.util.UUID.randomUUID().toString())
-//                    .setType(SimulationItem.SimulationItemType.PLATFORM)
-//                    .build();
-//
-//            byte[] bytes = item.toByteArray();
-//            System.out.println("Sending " + bytes.length + " bytes...");
-//            
-//            _out.write(START_OF_HEADING);
-//            _out.write(bytes);
-//            _out.write(END_OF_TRANSMISSION);
-//            _out.flush();
+        p("init()");
+        try
+        {
+            PlatformProto.Platform platform = null;
+            BufferedInputStream in = new BufferedInputStream(_socket.getInputStream());
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-            return true;
+            int lastByte;
+            boolean write = false;
+            while ((lastByte = in.read()) != -1)
+            {
+                if (!write && lastByte == START_OF_HEADING)
+                {
+                    write = true;
+                    continue;
+                }
+                else if (!write && lastByte == 0)
+                {
+                    continue;
+                }
+
+                if (lastByte != END_OF_TRANSMISSION)
+                {
+                    // Add current input to buffer
+                    buffer.write(lastByte);
+                }
+                else
+                {
+                    // We received the last byte, parse the protobuf item and
+                    // break out of the loop.
+                    byte[] input = buffer.toByteArray();
+                    platform = PlatformProto.Platform.parseFrom(input);
+                    break;
+                }
+            }
+
+            PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
+            if (platform != null)
+            {
+                p("ok");
+                out.println("ok");
+                return true;
+            }
+            else
+            {
+                p("error");
+                out.println("error");
+                return false;
+            }
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             ex.printStackTrace();
             return false;
         }
@@ -93,30 +126,40 @@ public class Server implements Runnable
 
     public boolean read()
     {
-
-        try {
+        p("read()");
+        try
+        {
+            BufferedInputStream in = new BufferedInputStream(_socket.getInputStream());
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(_socket.getOutputStream());;
+            
             boolean shouldBreak = false;
             int lastByte;
 
-            while (!shouldBreak) {
-                while ((lastByte = _in.read()) != -1) {
-                    if (lastByte == END_OF_TRANSMISSION) {
-                        byte[] response = comProtocol.processInput(_buffer.toByteArray());
-                        _buffer.reset();
+            while (!shouldBreak)
+            {
+                while ((lastByte = in.read()) != -1)
+                {
+                    if (lastByte == END_OF_TRANSMISSION)
+                    {
+                        byte[] response = comProtocol.processInput(buffer.toByteArray());
+                        buffer.reset();
 
                         //Send response
-                        _out.write(response);
-                        _out.write(END_OF_TRANSMISSION);
-                        _out.flush();
+                        out.write(response);
+                        out.write(END_OF_TRANSMISSION);
+                        out.flush();
                     }
-                    else {
+                    else
+                    {
                         //Add current input to buffer
-                        _buffer.write(lastByte);
+                        buffer.write(lastByte);
                     }
                 }
             }
         }
-        catch (IOException ex) {
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
 
@@ -126,16 +169,25 @@ public class Server implements Runnable
     @Override
     public void run()
     {
-        if (Start()) {
-            if (init()) {
-                if (read()) {
+        if (start())
+        {
+            if (init())
+            {
+                if (read())
+                {
 
-                    System.out.println("Closed peacefully");
+                    p("Closed peacefully");
                 }
             }
         }
-        else {
-            System.out.println("Closed forcefully");
+        else
+        {
+            p("Closed forcefully");
         }
+    }
+    
+    private static void p(String s)
+    {
+        System.out.println("Server: " + s);
     }
 }

@@ -16,9 +16,10 @@ import com.jme3.system.AppSettings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.*;
 
 /**
- * test
+ * 
  * @author sietse
  */
 public class Main extends SimpleApplication {
@@ -181,7 +182,8 @@ public class Main extends SimpleApplication {
         }
     }
     
-    public static void main(String[] args) {        
+    public static void main(String[] args) {     
+        Logger.getLogger("").setLevel(Level.SEVERE);
         new Thread(new SimulatorClient()).start();
         Main app = new Main();
         app.showSettings = false;
@@ -189,6 +191,6 @@ public class Main extends SimpleApplication {
         settings.setResolution(1280, 600);
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
-        app.start();        
+        app.start();
     }
 }

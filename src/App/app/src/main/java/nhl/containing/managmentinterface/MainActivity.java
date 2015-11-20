@@ -32,7 +32,7 @@ import nhl.containing.managmentinterface.navigationdrawer.*;
 /**
  * Main activity for the app
  */
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends ActionBarActivity implements ContainersFragment.OnFragmentInteractionListener
 {
     //navigation drawer
     ListView mDrawerList;
@@ -60,7 +60,16 @@ public class MainActivity extends ActionBarActivity
         if(toolbar == null)
             this.finishAffinity();
         setSupportActionBar(toolbar);
-        //navigation drawer
+        setupNavDrawer(toolbar);
+        setupHomeFragment();
+    }
+
+    /**
+     * Setup the nav drawer
+     * @param toolbar toolbar
+     */
+    private void setupNavDrawer(Toolbar toolbar)
+    {
         mNavItems.add(new NavItem("Per Category", "Numbers per category", R.drawable.ic_home_black));
         mNavItems.add(new NavItem("Graph2", "Unknown", R.drawable.ic_poll_black));
         mNavItems.add(new NavItem("Graph3", "Unknown", R.drawable.ic_poll_black));
@@ -102,7 +111,13 @@ public class MainActivity extends ActionBarActivity
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //end navigationdrawer
+    }
+
+    /**
+     * Setup the home fragment
+     */
+    private void setupHomeFragment()
+    {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         GraphFragment gf = new GraphFragment();
@@ -358,10 +373,27 @@ public class MainActivity extends ActionBarActivity
                 mDrawerLayout.closeDrawers();
                 break;
             case 4:
-                //add listfragment
+                f = getSupportFragmentManager().findFragmentByTag("Container_list");
+                if(f == null || !f.isVisible())
+                {
+                    if(autorefreshRunnable != null)
+                        autorefreshRunnable.stop();
+                    if(executer.isShutdown())
+                        executer.shutdown();
+                    autorefreshRunnable = null;
+                    ContainersFragment cf = new ContainersFragment();
+                    fragment = cf;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,"Container_list").commit();
+                }
+                mDrawerLayout.closeDrawers();
                 break;
 
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+
     }
 
     /**

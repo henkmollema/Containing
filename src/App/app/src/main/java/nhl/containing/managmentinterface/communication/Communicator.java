@@ -13,14 +13,14 @@ public class Communicator
 {
     public static String test()
     {
-        ContainerList list = ContainerList.newBuilder()
-                .addContainers(ContainerData.newBuilder().setAantal(10).setCategory(ContainerCategory.TRAIN).build())
-                .addContainers(ContainerData.newBuilder().setAantal(5).setCategory(ContainerCategory.TRUCK).build())
-                .addContainers(ContainerData.newBuilder().setAantal(20).setCategory(ContainerCategory.SEASHIP).build())
-                .addContainers(ContainerData.newBuilder().setAantal(3).setCategory(ContainerCategory.INLINESHIP).build())
-                .addContainers(ContainerData.newBuilder().setAantal(9).setCategory(ContainerCategory.STORAGE).build())
-                .addContainers(ContainerData.newBuilder().setAantal(12).setCategory(ContainerCategory.AGV).build())
-                .addContainers(ContainerData.newBuilder().setAantal(50).setCategory(ContainerCategory.REMAINDER).build())
+        ContainerGraphList list = ContainerGraphList.newBuilder()
+                .addContainers(ContainerGraphData.newBuilder().setAantal(10).setCategory(ContainerCategory.TRAIN).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(5).setCategory(ContainerCategory.TRUCK).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(20).setCategory(ContainerCategory.SEASHIP).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(3).setCategory(ContainerCategory.INLINESHIP).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(9).setCategory(ContainerCategory.STORAGE).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(12).setCategory(ContainerCategory.AGV).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(50).setCategory(ContainerCategory.REMAINDER).build())
                 .build();
 
         return list.toByteString().toStringUtf8();
@@ -28,14 +28,14 @@ public class Communicator
 
     public static String test1()
     {
-        ContainerList list = ContainerList.newBuilder()
-                .addContainers(ContainerData.newBuilder().setAantal(15).setCategory(ContainerCategory.TRAIN).build())
-                .addContainers(ContainerData.newBuilder().setAantal(20).setCategory(ContainerCategory.TRUCK).build())
-                .addContainers(ContainerData.newBuilder().setAantal(80).setCategory(ContainerCategory.SEASHIP).build())
-                .addContainers(ContainerData.newBuilder().setAantal(33).setCategory(ContainerCategory.INLINESHIP).build())
-                .addContainers(ContainerData.newBuilder().setAantal(91).setCategory(ContainerCategory.STORAGE).build())
-                .addContainers(ContainerData.newBuilder().setAantal(69).setCategory(ContainerCategory.AGV).build())
-                .addContainers(ContainerData.newBuilder().setAantal(15).setCategory(ContainerCategory.REMAINDER).build())
+        ContainerGraphList list = ContainerGraphList.newBuilder()
+                .addContainers(ContainerGraphData.newBuilder().setAantal(15).setCategory(ContainerCategory.TRAIN).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(20).setCategory(ContainerCategory.TRUCK).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(80).setCategory(ContainerCategory.SEASHIP).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(33).setCategory(ContainerCategory.INLINESHIP).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(91).setCategory(ContainerCategory.STORAGE).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(69).setCategory(ContainerCategory.AGV).build())
+                .addContainers(ContainerGraphData.newBuilder().setAantal(15).setCategory(ContainerCategory.REMAINDER).build())
                 .build();
 
         return list.toByteString().toStringUtf8();
@@ -54,10 +54,10 @@ public class Communicator
                 received = ByteString.copyFromUtf8(test1()); //make communication method
                 break;
         }
-        ContainerList list;
+        ContainerGraphList list;
         try
         {
-             list = ContainerList.parseFrom(received);
+             list = ContainerGraphList.parseFrom(received);
         }
         catch (Exception e)
         {
@@ -66,7 +66,7 @@ public class Communicator
         DataPoint[] returnlist = new DataPoint[list.getContainersList().size()];
         for(int i = 0; i < list.getContainersList().size();i++)
         {
-            ContainerData data = list.getContainersList().get(i);
+            ContainerGraphData data = list.getContainersList().get(i);
             DataPoint point = new DataPoint(data.getCategory().getNumber(),data.getAantal());
             returnlist[i] = point;
         }

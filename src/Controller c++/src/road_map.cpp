@@ -48,6 +48,11 @@ road_map::road_map()
     
 }
 
+road_map::size()
+{
+    return m_nodes.size();
+}
+
 road_map::road_map(vector<node_base> n)
 {
     cout << "currently in road_map::road_map(vector<node_base>" << endl;

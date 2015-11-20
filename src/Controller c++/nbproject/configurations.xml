@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>src/jnitest.h</itemPath>
+      <itemPath>src/JNITest.h</itemPath>
       <itemPath>src/node.h</itemPath>
       <itemPath>src/road_map.h</itemPath>
       <itemPath>src/vector2.h</itemPath>
@@ -41,7 +41,7 @@
     <conf name="Debug" type="2">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
-        <compilerSet>MinGW_5.2.0|MinGW</compilerSet>
+        <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -49,9 +49,9 @@
         <cTool>
           <architecture>2</architecture>
           <incDir>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include</pElem>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
-            <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
+            <pElem>"C:/Program Files/Java/jdk1.8.0_65/include"</pElem>
+            <pElem>C:/Program Files/Java/jdk1.8.0_65/include/win32</pElem>
+            <pElem>C:/Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
           <commandLine>-Wl,--add-stdcall-alias -shared</commandLine>
         </cTool>
@@ -59,11 +59,13 @@
           <architecture>2</architecture>
           <standard>8</standard>
           <incDir>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include</pElem>
-            <pElem>../../../../../../../Program Files/Java/jdk1.8.0_65/include/win32</pElem>
-            <pElem>../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
+            <pElem>/usr/lib/jvm/default/include</pElem>
+            <pElem>/usr/lib/jvm/default/include/linux</pElem>
+            <pElem>C:/Program Files/Java/jdk1.8.0_65/include</pElem>
+            <pElem>C:/Program Files/Java/jdk1.8.0_65/include/win32</pElem>
+            <pElem>C:/Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
-          <commandLine>-Wl,--add-stdcall-alias -shared</commandLine>
+          <commandLine>-Wwrite-strings -shared</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>
@@ -77,7 +79,7 @@
       </compileType>
       <item path="src/JNITest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JNITest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -115,7 +117,7 @@
       </compileType>
       <item path="src/JNITest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/jnitest.h" ex="false" tool="3" flavor2="0">
+      <item path="src/JNITest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
       </item>

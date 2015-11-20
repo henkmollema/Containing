@@ -22,6 +22,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import java.util.Arrays;
 
@@ -107,6 +108,13 @@ public class World extends Behaviour {
         
         
         m_testCube2Path.setCallback(new Callback(this, "test"));
+        
+        Spatial kraan = Main.assets().loadModel("models/hidde/ContainerKraan.obj");
+        kraan.scale(0.6f, 0.6f, 0.6f);
+        kraan.rotate(0.0f, 0.0f, 0.0f);
+        kraan.setLocalTranslation(0.0f, -10.0f, 0.0f);
+        Main.root().attachChild(kraan);
+        
     }
     public void test() {
         Debug.log("This is awesome!!!");

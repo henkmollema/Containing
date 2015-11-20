@@ -1,10 +1,12 @@
 package Simulation;
 
 import static Game.Camera.CAMERA_SPEED;
+import Game.GUI;
 import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapFont;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.controls.ActionListener;
@@ -40,7 +42,21 @@ public class Main extends SimpleApplication {
     public static ViewPort view() {
         return instance().viewPort;
     }
-    
+    public static Node guiNode() {
+        return instance().guiNode;
+    }
+    public static BitmapFont guiFont() {
+        return instance().guiFont;
+    }
+    public static void guiFont(BitmapFont font) {
+        instance().guiFont = font;
+    }
+    public static ViewPort guiViewPort() {
+        return instance().guiViewPort;
+    }
+    public static AppSettings settings() {
+        return instance().settings;
+    }
     // Behaviours
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
@@ -75,12 +91,14 @@ public class Main extends SimpleApplication {
         m_camera = new Game.Camera();
         m_input = new Input();
         
+        
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
             m_camera,
             m_input,
             
             // Non-Main
+            new GUI(),
             new World(),
             new TestBehaviour()
         };
@@ -185,12 +203,16 @@ public class Main extends SimpleApplication {
         }
     }
     
+    public static final int WINDOW_WIDTH = 1920;
+    public static final int WINDOW_HEIGHT = 1000;
+    
     public static void main(String[] args) {
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(1280, 600);
-        settings.setBitsPerPixel(32);
+        settings.setResolution(WINDOW_WIDTH, WINDOW_HEIGHT);
+        settings.setBitsPerPixel(24);
+        settings.setVSync(false);
         app.setSettings(settings);
         app.start();
     }

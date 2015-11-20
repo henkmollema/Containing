@@ -43,8 +43,8 @@ public class Camera extends Behaviour {
     public static float CAMERA_SPEED = 15.0f;
     
     // Shadows
-    private final int SHADOW_MAP_RESOLUTION = 2048;
-    private final float SHADOW_INTENSITY = 0.4f;
+    private final int SHADOW_MAP_RESOLUTION = 1024;
+    private final float SHADOW_INTENSITY = 0.3f;
     
     // SSAO
     
@@ -68,9 +68,9 @@ public class Camera extends Behaviour {
     @Override
     public void awake() {
         m_transform = new Transform();
-        createSSAO();
+        //createSSAO();
         createFog();
-        createBloom();
+        //createBloom();
     }
     @Override
     public void start() {

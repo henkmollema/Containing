@@ -8,10 +8,14 @@ package Game;
 import Simulation.Behaviour;
 import Simulation.Debug;
 import Simulation.Main;
+import Simulation.Mathf;
+import Simulation.Time;
+import Utilities.Utilities;
 import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
 import com.jme3.post.filters.BloomFilter;
 import com.jme3.post.filters.FogFilter;
@@ -31,8 +35,33 @@ public class Camera extends Behaviour {
         return m_transform;
     }
     
+    private Transform m_target;
+    private Vector3f m_previousTargetPosition = Utilities.zero();
+    public void setTarget(Transform t) {
+        m_target = t;
+        m_previousTargetPosition = t.position();
+    }
+    
+    private CameraMode m_cameraMode = CameraMode.RTS;
+    
     // 
     private final float CAMERA_SPEED = 15.0f;
+    
+    // RTS
+    private final float RTS_CAMERA_SPEED_DEFAULT = 15.0f;
+    private final float RTS_CAMERA_SPEED_FAST = 30.0f;
+    private final float RTS_CAMERA_SPEED_SLOW = 8.0f;
+    private final float RTS_CAMERA_ROTATION_SPEED = 50.0f;
+    private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;
+    private final float RTS_CAMERA_SMOOTH = 0.02f;
+    private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;
+    private final float RTS_MIN_CAMERA_DISTANCE = 10.0f;
+    private final float RTS_MAX_CAMERA_DISTANCE = 40.0f;
+    private float m_rtsCameraRotation = 0.0f;
+    private float m_rtsCameraTargetDistance = 25.0f;
+    private float m_rtsCameraCurrentDistance = 25.0f;
+    private Float m_rtsCameraDistanceVelocity = 0.0f;
+    private Vector2f m_rtsPositionVelocity = new Vector2f();
     
     // Shadows
     private final int SHADOW_MAP_RESOLUTION = 2048;
@@ -67,18 +96,17 @@ public class Camera extends Behaviour {
     @Override
     public void start() {
         Main.view().addProcessor(postProcessor());
-        
-        Main.instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
+        //Main.instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
     }
     @Override
     public void update() {
-        
+        onUpdateFly();
+        onUpdateRTS();
     }
     @Override
     public void fixedUpdate() {
         
     }
-    
     
     public void createShadowsFiler(DirectionalLight sun) {
         
@@ -118,7 +146,90 @@ public class Camera extends Behaviour {
         postProcessor().addFilter(bloomFilter);
     }
     
+    public CameraMode cameraMode() {
+        return m_cameraMode;
+    }
     public void toggleCameraMode() {
-        Debug.log("asdfasdf");
+        if (m_cameraMode == CameraMode.Fly) {
+            m_cameraMode = CameraMode.RTS;
+            onStartRTS();
+        } else {
+            m_cameraMode = CameraMode.Fly;
+            onStartFly();
+        }
+    }
+    public void zoom(float amount) {
+        m_rtsCameraTargetDistance += amount * RTS_CAMERA_ZOOM_SPEED;
+        m_rtsCameraTargetDistance = Mathf.clamp(m_rtsCameraTargetDistance, RTS_MIN_CAMERA_DISTANCE, RTS_MAX_CAMERA_DISTANCE);
+    }
+    
+    public void onStartRTS() {
+        //Main.instance().flyCamera().setEnabled(false);
+    }
+    public void onUpdateRTS() {
+        m_rtsCameraCurrentDistance = Mathf.smoothdamp(
+                m_rtsCameraCurrentDistance, 
+                m_rtsCameraTargetDistance, 
+                m_rtsCameraDistanceVelocity, 
+                RTS_CAMERA_ZOOM_SMOOTH, 
+                1000.0f, Time.unscaledDeltaTime());
+        
+        
+        if (m_cameraMode != CameraMode.RTS) {
+            return;
+        }
+            
+        Vector3f newPosition = new Vector3f();
+        newPosition = newPosition.add(Main.instance().cam().getUp().add(Main.instance().cam().getDirection()).mult(Main.input().rawInputAxis().y));
+        newPosition = newPosition.add(Main.instance().cam().getLeft().mult(-Main.input().rawInputAxis().x));
+        newPosition = Utilities.Horizontal(newPosition);
+        
+        if (newPosition.lengthSquared() < 0.001f) {
+            newPosition = new Vector3f();
+        } else {
+            newPosition = newPosition.normalize().mult(Time.unscaledDeltaTime());
+            newPosition = newPosition.mult((Main.input().getButton("Shift").isDown() ? RTS_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? RTS_CAMERA_SPEED_SLOW : RTS_CAMERA_SPEED_DEFAULT)));
+        }
+        
+        newPosition = newPosition.add(Main.instance().cam().getLocation());
+        newPosition.y = m_rtsCameraCurrentDistance;
+        
+        Vector2f __t = new Vector2f(newPosition.x, newPosition.z);
+        Vector2f __f = new Vector2f(
+                Main.instance().cam().getLocation().x,
+                Main.instance().cam().getLocation().z);
+        
+        __f = Mathf.smoothdamp(
+                __f, 
+                __t, 
+                m_rtsPositionVelocity,
+                RTS_CAMERA_SMOOTH, 1000.0f, Time.unscaledDeltaTime());
+        newPosition = new Vector3f(__f.x, newPosition.y, __f.y);
+        
+        if (Main.input().getButton("E").isDown())
+            m_rtsCameraRotation -= RTS_CAMERA_ROTATION_SPEED * Time.unscaledDeltaTime();
+        else if (Main.input().getButton("Q").isDown())
+            m_rtsCameraRotation += RTS_CAMERA_ROTATION_SPEED * Time.unscaledDeltaTime();
+        m_rtsCameraRotation %= 360.0f;
+        
+        
+        if (m_target == null) {
+            Main.instance().cam().setLocation(newPosition);
+            Main.instance().cam().lookAt(Utilities.rotateY(new Vector3f(10.0f, -5.0f, 10.0f), m_rtsCameraRotation).add(Utilities.Horizontal(newPosition)), Vector3f.UNIT_Y);
+        } else {
+            Main.instance().cam().setLocation(newPosition.add(m_target.position().subtract(m_previousTargetPosition)));
+            Main.instance().cam().lookAt(m_target.position(), Utilities.up());
+            m_previousTargetPosition = m_target.position();
+        }
+        
+        
+    }
+    
+    public void onStartFly() {
+        //Main.instance().flyCamera().setEnabled(true);
+        
+    }
+    public void onUpdateFly() {
+        
     }
 }

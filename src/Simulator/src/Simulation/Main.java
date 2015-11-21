@@ -43,6 +43,9 @@ public class Main extends SimpleApplication {
     
     // Camera
     private Game.Camera m_camera;
+    public com.jme3.renderer.Camera cam() {
+        return cam;
+    }
     public Game.Camera camera() {
         return m_camera;
     }
@@ -63,6 +66,9 @@ public class Main extends SimpleApplication {
     public static ViewPort view() {
         return instance().viewPort;
     }
+    public static Input input() {
+        return instance().m_input;
+    }
     
     /** HERE COME ALL BEHAVIOURS
      * 
@@ -71,15 +77,14 @@ public class Main extends SimpleApplication {
      * 
      */
     private void initBehaviours() {
-        
         // Init main behaviours
         m_camera = new Game.Camera();
         m_input = new Input();
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
-            m_camera,
             m_input,
+            m_camera,
             
             // Non-Main
             new World(),

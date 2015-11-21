@@ -395,4 +395,47 @@ public final class Mathf {
     public static boolean inRange(float a, float b, float t) {
         return delta(a, b) < t;
     }
+    
+    /**
+     * http://answers.unity3d.com/questions/24756/formula-behind-smoothdamp.html
+     * @param current
+     * @param target
+     * @param velocity
+     * @param smoothTime
+     * @param maxSpeed
+     * @param deltaTime
+     * @return 
+     */
+    public static float smoothdamp(float current, float target, Float velocity, float smoothTime, float maxSpeed, float deltaTime) {
+        smoothTime = max(0.0001f, smoothTime);
+        float num = 2f / smoothTime;
+        float num2 = num * deltaTime;
+        float num3 = 1f / (1f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
+        float num4 = current - target;
+        float num5 = target;
+        float num6 = maxSpeed * smoothTime;
+        num4 = clamp (num4, -num6, num6);
+        target = current - num4;
+        float num7 = (velocity + num * num4) * deltaTime;
+        velocity = (velocity - num * num7) * num3;
+        float num8 = target + (num4 + num7) * num3;
+        if (num5 - current > 0f == num8 > num5)
+        {
+            num8 = num5;
+            velocity = (num8 - num5) / deltaTime;
+        }
+        return num8;
+    }
+    public static Vector2f smoothdamp(Vector2f current, Vector2f target, Vector2f velocity, float smoothTime, float maxSpeed, float deltaTime) {
+        Vector2f __new = new Vector2f();
+        Float num0 = velocity.x;
+        Float num1 = velocity.y;
+        
+        __new.x = smoothdamp(current.x, target.x, num0, smoothTime, maxSpeed, deltaTime);
+        __new.y = smoothdamp(current.y, target.y, num1, smoothTime, maxSpeed, deltaTime);
+        
+        velocity = new Vector2f(num0, num1);
+        
+        return __new;
+    }
 }

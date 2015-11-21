@@ -4,6 +4,8 @@
  */
 package Simulation;
 
+import Game.Camera;
+import Game.CameraMode;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
@@ -45,6 +47,7 @@ public class Input extends Behaviour {
     public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.5f);
     
     // 
+    private Vector2f        m_tempRawMouseMove = Vector2f.ZERO;
     private Vector2f        m_rawMouseMove = Vector2f.ZERO;
     private Vector2f        m_mouseMove = Vector2f.ZERO;
     private List<Vector2f>  m_mouseSmoothBuffer;
@@ -76,8 +79,15 @@ public class Input extends Behaviour {
     @Override
     public void awake() {
         m_mouseSmoothBuffer = new ArrayList<Vector2f>(MOUSE_MAX_SMOOTH_BUFFER);
+        
+    }
+    
+    @Override
+    public void start() {
+        
         initInput();
     }
+    
     @Override
     public void update() {
         m_rawMouseMove = getRawMouseInput();
@@ -90,6 +100,11 @@ public class Input extends Behaviour {
         m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);
         m_mouseMove = getMouseAcceleration(m_mouseMove);
         m_mouseMove = getClampedInput(m_mouseMove);
+        
+        
+        if (getButton("Button1").isDown()) {
+            Debug.log("adfasdfasdfasfasfasfasfasfadfasfasfasfasf");
+        }
     }
     
     // 
@@ -99,7 +114,21 @@ public class Input extends Behaviour {
     public Vector2f mouseMove() {
         return m_mouseMove.clone();
     }
-    
+    public Vector2f rawInputAxis() {
+        Vector2f __axis = new Vector2f(0.0f, 0.0f);
+        
+        if (getButton("D").isDown())
+            __axis.x = 1.0f;
+        else if (getButton("A").isDown())
+            __axis.x = -1.0f;
+        
+        if (getButton("W").isDown())
+            __axis.y = 1.0f;
+        else if (getButton("S").isDown())
+            __axis.y = -1.0f;
+        
+        return __axis;
+    }
     // 
     private Vector2f getRawMouseInput() {
         return Vector2f.ZERO;
@@ -142,23 +171,27 @@ public class Input extends Behaviour {
         // Clear default
         Main.inputManager().clearMappings();
         Main.inputManager().clearRawInputListeners();
-        //Main.inputManager().deleteMapping(SimpleApplication.INPUT_MAPPING_MEMORY);
+        
         
         m_buttons = new Button[] {
-            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
-            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),          //  1
-            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),          //  2
-            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                //  3
-            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),          //  4
-            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                //  5
-            new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),           //  6
-            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),         //  7
-            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),          //  8
-            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                //  9
-            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                // 10
-            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                // 11
-            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                // 12
-            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE))            // 13
+            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                    //  0
+            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),              //  1
+            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),              //  2
+            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                    //  3
+            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),              //  4
+            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                    //  5
+            new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),               //  6
+            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),             //  7
+            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),              //  8
+            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                    //  9
+            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                    // 10
+            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                    // 11
+            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                    // 12
+            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),               // 13
+                
+            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),  // 14
+            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),// 15
+            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))  // 16
         };
         
         m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
@@ -173,10 +206,8 @@ public class Input extends Behaviour {
         Main.inputManager().addMapping("+MouseX", new MouseAxisTrigger(MouseInput.AXIS_X, true));
         Main.inputManager().addMapping("-MouseY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
         Main.inputManager().addMapping("+MouseY", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
-
-        Main.inputManager().addMapping("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
-        Main.inputManager().addMapping("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
-        Main.inputManager().addMapping("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
+        
+        Utilities.addAll(m_mappings, new String[]{"-Wheel", "+Wheel", "-MouseX", "+MouseX", "-MouseY", "+MouseY"});
         
         Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
     }
@@ -190,12 +221,8 @@ public class Input extends Behaviour {
 
         @Override
         public void onAnalog(String name, float value, float tpf) {
-            /*
-            if (!isEnabled()) {
-                return;
-            }
-
-            if (!name.contains("WHEEL") && !name.contains("MOUSE")) {
+            
+            if (!name.contains("Wheel") && !name.contains("Mouse")) {
                 return;
             }
 
@@ -207,12 +234,18 @@ public class Input extends Behaviour {
             }
 
             if (name.contains("Wheel")) {
-                if (!wheelEnabled) {
+                if (Main.instance().camera().cameraMode() != CameraMode.RTS) {
                     return;
                 }
-                float speed = maxSpeedPerSecondOfAccell[DISTANCE] * maxAccellPeriod[DISTANCE] * WHEEL_SPEED;
-                offsetMoves[DISTANCE] += value * speed;
-            } else if (name.contains("MOUSE")) {
+                Main.instance().camera().zoom(value);
+            } else if (name.contains("Mouse")) {
+                //m_tempRawMouseMove
+                
+                if (getButton("Button1").isDown()) {
+                    Debug.log("ASDFasdfafafsasdfasdfafasfasfasdf");
+                }
+                
+                /*
                 if (mouseRotation) {
                     int direction;
                     if (name.endsWith("X")) {
@@ -226,24 +259,17 @@ public class Input extends Behaviour {
                     offsetMoves[direction] += value;
                 } else if (mouseDrag) {
                     int direction;
-                    if (name.endsWith("X")) {
-                        direction = SIDE;
-                        if ( up == UpVector.Z_UP ) {
-                            value = -value;
-                        }
-                    } else {
-                        direction = FWD;
-                        value = -value;
-                    }
+                    
                     offsetMoves[direction] += value * maxSpeedPerSecondOfAccell[direction] * maxAccellPeriod[direction];
-                }
+                }*/
             }
-            */
         }
     }
     public class Button {
         public String name;
         public KeyTrigger trigger;
+        public MouseButtonTrigger mouseTrigger;
+        
         public boolean isNegative;
         
         private boolean m_isDown = false;
@@ -253,15 +279,32 @@ public class Input extends Behaviour {
         public Button(String name, KeyTrigger trigger) {
             this.name = name;
             this.trigger = trigger;
+            this.mouseTrigger = null;
             this.isNegative = false;
             init();
         }
         public Button(String name, KeyTrigger trigger, boolean isNegative) {
             this.name = name;
             this.trigger = trigger;
+            this.mouseTrigger = null;
             this.isNegative = isNegative;
             init();
         }
+        public Button(String name, MouseButtonTrigger trigger) {
+            this.name = name;
+            this.trigger = null;
+            this.mouseTrigger = trigger;
+            this.isNegative = false;
+            init();
+        }
+        public Button(String name, MouseButtonTrigger trigger, boolean isNegative) {
+            this.name = name;
+            this.trigger = null;
+            this.mouseTrigger = trigger;
+            this.isNegative = isNegative;
+            init();
+        }
+        
         
         public final void safeSet(String name, boolean isDown) {
             if(isButton(name)) {
@@ -295,8 +338,16 @@ public class Input extends Behaviour {
         }
         
         public final void init() {
-            if (!Utilities.nullOrEmpty(name) && trigger != null) {
-                Main.inputManager().addMapping(name, trigger);
+            if (!Utilities.nullOrEmpty(name)) {
+                
+                if (trigger != null) {
+                    Main.inputManager().addMapping(name, trigger);
+                } else if (mouseTrigger != null) {
+                    Main.inputManager().addMapping(name, mouseTrigger);
+                } else {
+                    return;
+                }
+                
                 m_mappings.add(name);
             }
                 
@@ -310,28 +361,6 @@ public class Input extends Behaviour {
         
         public final boolean isDown() {
             return m_isDown;
-        }
-    }
-    public class Toggle extends Button {
-        private boolean m_isActive;
-        
-        public Toggle(String name, KeyTrigger trigger) {
-            super(name, trigger, false);
-            m_isActive = false;
-        }
-        public Toggle(String name, KeyTrigger trigger, boolean startValue) {
-            super(name, trigger, false);
-            m_isActive = startValue;
-        }
-        
-        @Override
-        protected void onDown() {
-            super.onDown();
-            m_isActive = !m_isActive;
-        }
-        
-        public boolean isActive() {
-            return m_isActive;
         }
     }
 }

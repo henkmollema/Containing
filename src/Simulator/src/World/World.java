@@ -144,7 +144,7 @@ public class World extends Behaviour {
         m_testCube2Path.setCallback(new Callback(this, "test"));
         
         
-        
+        Main.instance().camera().setTarget(testCube2);
     }
     public void test() {
         Debug.log("This is awesome!!!");

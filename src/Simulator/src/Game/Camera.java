@@ -14,6 +14,7 @@ import Utilities.Utilities;
 import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.post.FilterPostProcessor;
@@ -44,8 +45,10 @@ public class Camera extends Behaviour {
     
     private CameraMode m_cameraMode = CameraMode.RTS;
     
-    // 
-    private final float CAMERA_SPEED = 15.0f;
+    // Fly
+    private final float FLY_CAMERA_SPEED_DEFAULT = 15.0f;
+    private final float FLY_CAMERA_SPEED_FAST = 30.0f;
+    private final float FLY_CAMERA_SPEED_SLOW = 8.0f;
     
     // RTS
     private final float RTS_CAMERA_SPEED_DEFAULT = 15.0f;
@@ -96,6 +99,8 @@ public class Camera extends Behaviour {
     @Override
     public void start() {
         Main.view().addProcessor(postProcessor());
+        onStartRTS();
+        onStartFly();
         //Main.instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
     }
     @Override
@@ -164,7 +169,10 @@ public class Camera extends Behaviour {
     }
     
     public void onStartRTS() {
-        //Main.instance().flyCamera().setEnabled(false);
+        if (m_cameraMode != CameraMode.RTS)
+            return;
+        Main.instance().showCursor(true);
+        
     }
     public void onUpdateRTS() {
         m_rtsCameraCurrentDistance = Mathf.smoothdamp(
@@ -226,10 +234,43 @@ public class Camera extends Behaviour {
     }
     
     public void onStartFly() {
-        //Main.instance().flyCamera().setEnabled(true);
+        if (m_cameraMode != CameraMode.Fly)
+            return;
+        Main.instance().showCursor(false);
         
     }
     public void onUpdateFly() {
         
+        if (m_cameraMode != CameraMode.Fly)
+            return;
+            
+        Vector3f newPosition = Utilities.zero();
+        newPosition = Main.instance().cam().getDirection().mult(Main.input().rawInputAxis().y);
+        newPosition = newPosition.subtract(Main.instance().cam().getLeft().mult(Main.input().rawInputAxis().x));
+        
+        if (Main.input().getButton("E").isDown()) {
+            newPosition = newPosition.add(Utilities.up());
+        } else if (Main.input().getButton("Q").isDown()) {
+            newPosition = newPosition.add(Utilities.down());
+        }
+        
+        if (newPosition.lengthSquared() < 0.01f) {
+            newPosition = Utilities.zero();
+        } else {
+            newPosition = newPosition.normalize();
+            newPosition = newPosition.mult(Time.unscaledDeltaTime() * (Main.input().getButton("Shift").isDown() ? FLY_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? FLY_CAMERA_SPEED_SLOW : FLY_CAMERA_SPEED_DEFAULT)));
+        }
+        
+        newPosition = newPosition.add(Main.instance().cam().getLocation());
+        Main.instance().cam().setLocation(newPosition);
+        
+        float[] __rot = Main.instance().cam().getRotation().toAngles(null);
+        __rot[0] += Main.input().mouseMove().y;
+        __rot[1] -= Main.input().mouseMove().x;
+        
+        Quaternion __q = Quaternion.IDENTITY;
+        __q = __q.fromAngles(__rot);
+        
+        Main.instance().cam().setAxes(__q);
     }
 }

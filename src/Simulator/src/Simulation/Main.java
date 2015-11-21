@@ -8,6 +8,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -52,6 +53,13 @@ public class Main extends SimpleApplication {
     public FlyByCamera flyCamera() {
         return flyCam;
     }
+    public void showCursor(boolean show) {
+        inputManager.setCursorVisible(show);
+    }
+    public Vector2f cursorPosition() {
+        return inputManager.getCursorPosition();
+    }
+    
     
     // 
     public static InputManager inputManager() {

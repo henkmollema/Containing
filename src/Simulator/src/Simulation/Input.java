@@ -26,7 +26,7 @@ public class Input extends Behaviour {
     
     // Smoothing
     public final float      MOUSE_SENSITIVITY_X         = 5.0f;
-    public final float      MOUSE_SENSITIVITY_Y         = 5.0f;
+    public final float      MOUSE_SENSITIVITY_Y         = -5.0f;
     public final int        MOUSE_SMOOTH_CHECKS         = 10;
     
     // Acceleration
@@ -48,6 +48,7 @@ public class Input extends Behaviour {
     
     // 
     private Vector2f        m_tempRawMouseMove = Vector2f.ZERO;
+    private Vector2f        m_previousMousePosition = Vector2f.ZERO;
     private Vector2f        m_rawMouseMove = Vector2f.ZERO;
     private Vector2f        m_mouseMove = Vector2f.ZERO;
     private List<Vector2f>  m_mouseSmoothBuffer;
@@ -100,7 +101,7 @@ public class Input extends Behaviour {
         m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);
         m_mouseMove = getMouseAcceleration(m_mouseMove);
         m_mouseMove = getClampedInput(m_mouseMove);
-        
+        m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime() * 0.4f);
         
         if (getButton("Button1").isDown()) {
             Debug.log("adfasdfasdfasfasfasfasfasfadfasfasfasfasf");
@@ -131,7 +132,9 @@ public class Input extends Behaviour {
     }
     // 
     private Vector2f getRawMouseInput() {
-        return Vector2f.ZERO;
+        Vector2f pos = new Vector2f(Main.instance().cursorPosition()).subtract(m_previousMousePosition);
+        m_previousMousePosition = new Vector2f(Main.instance().cursorPosition());
+        return pos;
     }
     private Vector2f getSmoothMouseInput(int checks) {
         checks = Mathf.clamp(checks, 0, MOUSE_MAX_SMOOTH_BUFFER);
@@ -171,7 +174,7 @@ public class Input extends Behaviour {
         // Clear default
         Main.inputManager().clearMappings();
         Main.inputManager().clearRawInputListeners();
-        
+        Main.instance().flyCamera().setEnabled(false);
         
         m_buttons = new Button[] {
             new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                    //  0

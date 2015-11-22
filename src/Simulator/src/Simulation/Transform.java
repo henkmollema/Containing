@@ -17,12 +17,15 @@ import com.jme3.scene.Spatial;
  */
 public class Transform extends Node {
     
+    protected final long m_id;
+    
     /**
      * Constructor
      * Sets node to root node
      */
     public Transform() {
         Main.root().attachChild(this);
+        m_id = Main.register(this);
     }
     /**
      * Constructor
@@ -33,6 +36,8 @@ public class Transform extends Node {
             Main.root().attachChild(this);
         else
             parent.attachChild(this);
+        
+        m_id = Main.register(this);
     }
     
     /**
@@ -251,5 +256,16 @@ public class Transform extends Node {
     @Override
     public Spatial rotate(float x, float y, float z) {
         return super.rotate(x * Mathf.Deg2Rad, y * Mathf.Deg2Rad, z * Mathf.Deg2Rad);
+    }
+    
+    
+    @Override
+    public int attachChild(Spatial spatial) {
+        spatial.setUserData(Main.TRANSFORM_ID_KEY, m_id);
+        return super.attachChild(spatial);
+    }
+    
+    public long getID() {
+        return m_id + 0;
     }
 }

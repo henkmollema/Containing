@@ -39,8 +39,18 @@ public class Camera extends Behaviour {
     private Transform m_target;
     private Vector3f m_previousTargetPosition = Utilities.zero();
     public void setTarget(Transform t) {
+        
+        if (t == null) {
+            if (m_target == null)
+                return;
+            m_rtsCameraRotation = Main.instance().cam().getRotation().toAngles(null)[1] * Mathf.Rad2Deg;
+            m_previousTargetPosition = Utilities.zero();
+            
+        } else {
+            m_previousTargetPosition = t.position();
+        }
+        
         m_target = t;
-        m_previousTargetPosition = t.position();
     }
     
     private CameraMode m_cameraMode = CameraMode.RTS;

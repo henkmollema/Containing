@@ -17,6 +17,9 @@ import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 import Utilities.Utilities;
+import com.jme3.collision.CollisionResults;
+import com.jme3.math.Ray;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -103,9 +106,6 @@ public class Input extends Behaviour {
         m_mouseMove = getClampedInput(m_mouseMove);
         m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime() * 0.4f);
         
-        if (getButton("Button1").isDown()) {
-            Debug.log("adfasdfasdfasfasfasfasfasfadfasfasfasfasf");
-        }
     }
     
     // 
@@ -177,30 +177,31 @@ public class Input extends Behaviour {
         Main.instance().flyCamera().setEnabled(false);
         
         m_buttons = new Button[] {
-            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                    //  0
-            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),              //  1
-            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),              //  2
-            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                    //  3
-            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),              //  4
-            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                    //  5
+            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
+            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),             //  1
+            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),             //  2
+            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                 //  3
+            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),             //  4
+            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                 //  5
             new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),               //  6
-            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),             //  7
-            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),              //  8
-            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                    //  9
-            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                    // 10
-            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                    // 11
-            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                    // 12
-            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),               // 13
+            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),            //  7
+            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),             //  8
+            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                 //  9
+            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                 // 10
+            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                 // 11
+            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                // 12
+            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),             // 13
                 
-            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),  // 14
-            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),// 15
-            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))  // 16
+            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),    // 14
+            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),  // 15
+            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))   // 16
         };
         
         m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
         m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"));
         m_buttons[12].setOnDownCallback(new Callback(Main.instance().camera(), "toggleCameraMode"));
         m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"));
+        m_buttons[14].setOnDownCallback(new Callback(this, "pickObject"));
         
         Main.inputManager().addMapping("-Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         Main.inputManager().addMapping("+Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
@@ -213,6 +214,45 @@ public class Input extends Behaviour {
         Utilities.addAll(m_mappings, new String[]{"-Wheel", "+Wheel", "-MouseX", "+MouseX", "-MouseY", "+MouseY"});
         
         Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
+    }
+    public void pickObject() {
+        
+        CollisionResults hit = new CollisionResults();
+        
+        Vector2f _mousePosition = Main.inputManager().getCursorPosition();
+        Vector3f from = Main.instance().cam().getWorldCoordinates(new Vector2f(_mousePosition), 0f).clone();
+        Vector3f direction = Main.instance().cam().getWorldCoordinates(new Vector2f(_mousePosition), 1.0f).subtractLocal(from).normalizeLocal();
+        
+        Ray ray = new Ray(from, direction);
+        
+        Main.root().collideWith(ray, hit);
+        
+        int lowestIndex = -1;
+        Long transformID = null;
+        float lowestDistance = Float.MAX_VALUE;
+        for (int i = 0; i < hit.size(); ++i) {
+            
+            Long o = hit.getCollision(i).getGeometry().getUserData(Main.TRANSFORM_ID_KEY);
+            
+            if (o == null)
+                continue;
+            
+            float __dist = hit.getCollision(i).getDistance();
+            if (__dist < lowestDistance) {
+               lowestDistance = __dist;
+               lowestIndex = i;
+               transformID = o + 0;
+            }
+        }
+        
+        if (lowestIndex < 0) {
+            Main.instance().camera().setTarget(null);
+            return;
+        }
+        
+        Main.instance().camera().setTarget(Main.getTransform(transformID));
+        
+        
     }
     
     private class InternalListener implements ActionListener, AnalogListener {

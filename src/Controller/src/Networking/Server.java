@@ -7,18 +7,19 @@ package Networking;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import networking.Messaging.*;
+import networking.Messaging.MessageReader;
 import networking.Proto.PlatformProto;
 import networking.protocol.CommunicationProtocol;
 
 /**
+ * Providers interaction with the client.
  *
  * @author Jens
  */
 public class Server implements Runnable
 {
     public static final int PORT = 1337;
-    public static final int START_OF_HEADING = 2;
-    public static final int END_OF_TRANSMISSION = 4;
     private boolean isConnected;
     private ServerSocket serverSocket = null;
     private Socket _socket = null;
@@ -37,9 +38,9 @@ public class Server implements Runnable
      * Returns true if connection was successfull and closed peacefuly
      */
     public boolean start()
-    {        
+    {
         p("start start()");
-        
+
         if (!isConnected)
         {
             try
@@ -48,7 +49,7 @@ public class Server implements Runnable
                 p("Waiting for connection..");
 
                 // Halt the thread until a connection has been accepted
-                _socket = serverSocket.accept(); 
+                _socket = serverSocket.accept();
                 p("Connection Accepted!");
 
                 isConnected = true;
@@ -71,38 +72,8 @@ public class Server implements Runnable
         p("init()");
         try
         {
-            PlatformProto.Platform platform = null;
-            BufferedInputStream in = new BufferedInputStream(_socket.getInputStream());
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-            int lastByte;
-            boolean write = false;
-            while ((lastByte = in.read()) != -1)
-            {
-                if (!write && lastByte == START_OF_HEADING)
-                {
-                    write = true;
-                    continue;
-                }
-                else if (!write && lastByte == 0)
-                {
-                    continue;
-                }
-
-                if (lastByte != END_OF_TRANSMISSION)
-                {
-                    // Add current input to buffer
-                    buffer.write(lastByte);
-                }
-                else
-                {
-                    // We received the last byte, parse the protobuf item and
-                    // break out of the loop.
-                    byte[] input = buffer.toByteArray();
-                    platform = PlatformProto.Platform.parseFrom(input);
-                    break;
-                }
-            }
+            byte[] data = MessageReader.readByteArray(_socket.getInputStream());
+            PlatformProto.Platform platform = PlatformProto.Platform.parseFrom(data);
 
             PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
             if (platform != null)
@@ -130,33 +101,19 @@ public class Server implements Runnable
         p("read()");
         try
         {
-            BufferedInputStream in = new BufferedInputStream(_socket.getInputStream());
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            DataOutputStream out = new DataOutputStream(_socket.getOutputStream());;
-            
-            boolean shouldBreak = false;
-            int lastByte;
+            BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
+            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            OutputStream output = _socket.getOutputStream();
 
+            boolean shouldBreak = false;
             while (!shouldBreak)
             {
-                while ((lastByte = in.read()) != -1)
-                {
-                    if (lastByte == END_OF_TRANSMISSION)
-                    {
-                        byte[] response = comProtocol.processInput(buffer.toByteArray());
-                        buffer.reset();
+                // Re-use streams for more efficiency.
+                byte[] data = MessageReader.readByteArray(input, dataStream);
+                dataStream.reset();
+                byte[] response = comProtocol.processInput(data);
 
-                        //Send response
-                        out.write(response);
-                        out.write(END_OF_TRANSMISSION);
-                        out.flush();
-                    }
-                    else
-                    {
-                        //Add current input to buffer
-                        buffer.write(lastByte);
-                    }
-                }
+                MessageWriter.writeMessage(output, response);
             }
         }
         catch (IOException ex)
@@ -176,7 +133,6 @@ public class Server implements Runnable
             {
                 if (read())
                 {
-
                     p("Closed peacefully");
                 }
             }
@@ -186,7 +142,7 @@ public class Server implements Runnable
             p("Closed forcefully");
         }
     }
-    
+
     private static void p(String s)
     {
         System.out.println("Server: " + s);

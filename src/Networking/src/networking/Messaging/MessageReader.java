@@ -49,7 +49,9 @@ public class MessageReader
             {
                 // We received the last byte, parse the protobuf item and
                 // break out of the loop.
-                return output.toByteArray();
+                byte[] bytes =  output.toByteArray();
+                output.reset();
+                return bytes;
             }
         }
 

@@ -120,7 +120,6 @@ public class Server implements Runnable
             {
                 // Re-use streams for more efficiency.
                 byte[] data = MessageReader.readByteArray(input, dataStream);
-                dataStream.reset();
                 byte[] response = comProtocol.processInput(data);
 
                 MessageWriter.writeMessage(output, response);

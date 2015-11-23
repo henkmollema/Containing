@@ -8,17 +8,11 @@ import java.io.Serializable;
  */
 public class Instruction implements Serializable
 {
-    enum instructionCode{
-        
-    }
-
     private int instructionID;
-
-    private instructionCode intructionCode;
-
+    private InstructionCode intructionCode;
     private InstructionData data;
 
-    public instructionCode getCode()
+    public InstructionCode getCode()
     {
         return this.intructionCode;
     }
@@ -30,7 +24,6 @@ public class Instruction implements Serializable
 
     public Instruction parse(String instruction)
     {
-            return null;
+        return null;
     }
-
 }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
 import networking.Proto.PlatformProto.*;
+import networking.protocol.CommunicationProtocol;
 
 /**
  * The client which connects to the controller through a socket.
@@ -19,7 +20,7 @@ public class SimulatorClient implements Runnable
     public static final int END_OF_TRANSMISSION = 4;
     
     // Communication
-    private final CommunicationProtocolClient comProtocol;
+    private final CommunicationProtocol comProtocol;
     
     // Socket fields    
     private Socket socket;
@@ -29,7 +30,7 @@ public class SimulatorClient implements Runnable
 
     public SimulatorClient()
     {
-        comProtocol = new CommunicationProtocolClient();
+        comProtocol = new CommunicationProtocol();
     }
 
     /**

@@ -1,4 +1,4 @@
-package controller;
+package networking.protocol;
 
 import java.io.Serializable;
 import java.util.Date;

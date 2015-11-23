@@ -2,19 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Networking;
-
-import java.io.BufferedInputStream;
+package networking.protocol;
 
 /**
  *
  * @author Jens
  */
-public class CommunicationProtocolServer {
+public class CommunicationProtocol {
+    private InstructionDispatcher dispatcher;
     
-    
-    
-    
+    public void setDispatcher(InstructionDispatcher _dispatcher)
+    {
+        this.dispatcher = _dispatcher;
+    }
     
     public byte[] processInput(byte[] in)
     {
@@ -22,5 +22,4 @@ public class CommunicationProtocolServer {
         byte[] response = {0};
         return response;
     }
-    
 }

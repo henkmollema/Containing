@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import networking.Proto.PlatformProto;
+import networking.protocol.CommunicationProtocol;
 
 /**
  *
@@ -21,11 +22,11 @@ public class Server implements Runnable
     private boolean isConnected;
     private ServerSocket serverSocket = null;
     private Socket _socket = null;
-    private CommunicationProtocolServer comProtocol;
+    private CommunicationProtocol comProtocol;
 
     public Server()
     {
-        comProtocol = new CommunicationProtocolServer();
+        comProtocol = new CommunicationProtocol();
     }
 
     /**

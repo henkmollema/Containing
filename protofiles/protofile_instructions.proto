@@ -1,0 +1,25 @@
+package data;
+
+option java_package = "";
+option java_outer_classname = "InstructionProtos";
+
+message Instruction{
+	required int32 instructionID = 1;
+	required int32 instructionCOde = 2;
+	required
+}
+
+message InstructionData{
+	required int64 date = 1;
+	required int32 A = 2;
+	required int32 B = 3;
+	required string message = 4;
+	
+	message Point{
+		required int32 x = 1;
+		required int32 y = 2;
+		required int32 z = 3;
+	}
+	
+	optional Point punt = 5;
+}

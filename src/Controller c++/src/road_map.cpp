@@ -12,22 +12,18 @@ void road_map::reset_nodes()
 
 vector<node> road_map::get_copy()
 {
-    cout << "currently in road_map::get_copy()" << endl;
     vector<node> temp_nodes{ vector<node>(0) };
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int id{ m_nodes[i]->id() };
         vector2 pos{ m_nodes[i]->get_position() };
         temp_nodes.push_back(node(id, pos));
-        cout << "node " << i << " with id " << m_nodes[i]->id() << " copied" << endl;
     }
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int tester = 0;
-        cout << "currently in road_map::get_copy() before node::get_connections().size()" << endl;
         // falls flat on its face at the fifth call to this
         int test = m_nodes[i]->get_connections().size();
-        cout << "currently in road_map::get_copy() after node::get_connections().size()" << endl;
         for (unsigned int j{ 0 }; j < test; ++j)
         {
             tester = m_nodes[i]->get_connections(i, j)[j]->id();
@@ -55,22 +51,18 @@ road_map::size()
 
 road_map::road_map(vector<node_base> n)
 {
-    cout << "currently in road_map::road_map(vector<node_base>" << endl;
     m_nodes = vector<node*>(0);
     for (unsigned int i{ 0 }; i < n.size(); ++i)
     { // set nodes
         m_nodes.push_back(new node(i, n[i].position));
-        cout << "node " << i << " with id " << m_nodes[i]->id() << " created" << endl;
     }
     for (unsigned int i{ 0 }; i < n.size(); ++i)
     {
         for (unsigned int j{ 0 }; j < n[i].connections.size(); ++j)
         { // set connections
             m_nodes[i]->add_connection(m_nodes[n[i].connections[j]]);
-            cout << "node id " << n[i].connections[j] << " added to node id " << m_nodes[i]->id() << endl;
         }
     }
-    // borked pointers?
 }
 
 road_map::~road_map()

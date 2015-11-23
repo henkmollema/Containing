@@ -30,16 +30,9 @@ JNIEXPORT void JNICALL Java_controller_JNITest_initPath(JNIEnv *env, jclass, job
             if (j < dimensionY - 1) conn.push_back(i * dimensionY + (j + 1));
             temp.push_back(road_map::node_base(vector2((float)i, (float)j), conn));
             dinges++;
-            //cout << "node " << dinges << " created" << endl;
         }
     }
-    roadmap = new road_map(temp);/*{
-		road_map::node_base(vector2(0.0f, 0.0f),{ 1, 2 }),
-		road_map::node_base(vector2(1.0f, 0.0f),{ 0, 2 }),
-		road_map::node_base(vector2(1.0f, 1.0f),{ 0, 1, 3, 4 }),
-		road_map::node_base(vector2(2.0f, 2.0f),{ 2, 4 }),
-		road_map::node_base(vector2(0.0f, 4.0f),{ 2, 3 })
-    });*/
+    roadmap = new road_map(temp);
 }
 
 vector<int> getPath(int from, int to, float speed)

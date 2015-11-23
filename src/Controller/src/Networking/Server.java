@@ -31,6 +31,16 @@ public class Server implements Runnable
     }
 
     /**
+     * Gets the communication protocol of the server.
+     *
+     * @return The communication protocol.
+     */
+    public CommunicationProtocol getComProtocol()
+    {
+        return comProtocol;
+    }
+
+    /**
      * Opens a serversocket and waits for a client to connect.
      * This method should be called on it's own thread as it contains an
      * indefinite loop.

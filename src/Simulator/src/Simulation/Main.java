@@ -1,6 +1,7 @@
 package Simulation;
 
-import Game.Camera;
+import Networking.InstructionDispatcherSimulator;
+import Networking.SimulatorClient;
 import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
@@ -17,9 +18,10 @@ import com.jme3.system.AppSettings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.*;
 
 /**
- * test
+ * 
  * @author sietse
  */
 public class Main extends SimpleApplication {
@@ -60,8 +62,16 @@ public class Main extends SimpleApplication {
         return inputManager.getCursorPosition();
     }
     
+    //Networking
+    SimulatorClient _simClient;
+    InstructionDispatcherSimulator _dispatcher;
     
-    // 
+    public SimulatorClient simClient()
+    {
+        return _simClient;
+    }
+    
+    // Input
     public static InputManager inputManager() {
         return instance().inputManager;
     }
@@ -200,7 +210,8 @@ public class Main extends SimpleApplication {
         }
     }
     
-    public static void main(String[] args) {
+    public static void main(String[] args) {     
+        Logger.getLogger("").setLevel(Level.SEVERE);
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
@@ -208,6 +219,12 @@ public class Main extends SimpleApplication {
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
         app.start();
+        
+        //Init networking
+        app._simClient = new SimulatorClient();
+        app._dispatcher = new InstructionDispatcherSimulator(app);
+        app._simClient.getComProtocol().setDispatcher(app._dispatcher);
+        new Thread(app._simClient).start();
     }
     
     public void togglePause() {

@@ -1,5 +1,9 @@
 package controller;
 
+import Networking.*;
+import networking.protocol.CommunicationProtocol;
+import networking.protocol.InstructionDispatcher;
+
 /**
  * Provides interaction with the simulator.
  *
@@ -8,10 +12,26 @@ package controller;
 public class Simulator
 {
     private final SimulatorController _controller;
+    private Thread _thread;
+    private Server _server;
+    private InstructionDispatcher _instructionDispatcher;
+    
+    public InstructionDispatcher instructionDispatcher()
+    {
+        return _instructionDispatcher;
+    }
+    
+    public CommunicationProtocol communication()
+    {
+        return _server.getComProtocol();
+    }
+    
 
     public Simulator(SimulatorController controller)
     {
         _controller = controller;
+        _instructionDispatcher = new InstructionDispatcherController(this);
+       
     }
 
     /**
@@ -21,6 +41,12 @@ public class Simulator
      */
     public boolean start()
     {
+        _server = new Server();
+        _server.getComProtocol().setDispatcher(_instructionDispatcher);
+        
+        _thread = new Thread(_server);
+        _thread.start();
+
         // todo
         return true;
     }
@@ -59,5 +85,19 @@ public class Simulator
         // todo: send to simulator.
 
         _controller.markAsProcessed(record);
+    }
+    
+    /**
+     * Processes a (console)command given to the controller by the simulator.
+     *
+     * @param command The command string to process.
+     */
+    public String parseCommand(String command)
+    {
+        String result;
+        //.. do something with command string
+        
+        result = "Parsed command '"+command+"'";
+        return result;
     }
 }

@@ -15,6 +15,7 @@ hs_err_pid*
 
 # Don't ignore ibraries in /lib/ folder
 !simple-xml-2.7.1.jar
+!protobuf-java-2.5.0.jar
 
 # Build stuff
 build-impl.xml

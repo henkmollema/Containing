@@ -1,0 +1,32 @@
+package networking.Proto;
+
+option java_outer_classname = "InstructionProto";
+
+message datablock {
+	repeated Instruction instructions = 1;
+	repeated InstructionResponse responses = 2;	
+
+}
+
+
+message InstructionData{
+		optional int64 time = 1;
+		optional int32 a = 2;
+		optional int32 b = 3;
+		optional string message = 4;	
+}
+
+message Instruction
+{
+	required string id = 1;
+	required int32 instructionType = 2;
+	optional InstructionData data = 3;
+}
+
+message InstructionResponse
+{
+	required string id = 1;
+	required string instructionId = 2;
+		
+	required InstructionData data = 4;
+}

@@ -1,0 +1,30 @@
+package nhl.containing.networking.protobuf;
+
+option java_outer_classname = "PlatformProto";
+
+message Platform {
+	required string id = 1;
+
+	enum PlatformType {
+		SeaShip = 0;
+		InlandShip = 1;
+                Truck = 2;
+                Train = 3;
+                Deposit = 4;
+	}
+
+	required PlatformType type = 2;
+
+        message Crane {
+            required string id = 1;
+
+            enum CraneType {
+                Rails = 0;
+                Free = 1;
+            }
+
+            required CraneType type = 2;
+        }
+
+        repeated Crane cranes = 3;
+}

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Utilities;
+package Simulation;
 
 import Simulation.Mathf;
 import com.jme3.math.Quaternion;

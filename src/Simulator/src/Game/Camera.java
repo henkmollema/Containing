@@ -6,11 +6,10 @@
 package Game;
 
 import Simulation.Behaviour;
-import Simulation.Debug;
 import Simulation.Main;
 import Simulation.Mathf;
 import Simulation.Time;
-import Utilities.Utilities;
+import Simulation.Utilities;
 import Simulation.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
@@ -26,7 +25,36 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 
 
 /**
- *
+ * Camera controller:
+ * 
+ * RTS Controller
+ *  Controls (all)
+ *      Scroll: zoom
+ *      Left Mouse button: select object to follow (when clicked but no valid object, object to follow is null)
+ * 
+ *  Controls (when no object is selected)
+ *      A: move left horizontal
+ *      S: move backwards horizontal
+ *      D: move right horizontal
+ *      W: move forward horizontal
+ *      Q: rotate counter clockwhise
+ *      R: rotate clockwhise
+ *  Controls (when object is selected)
+ *      A: rotate around object clockwhise
+ *      S: move away from object
+ *      D: rotate around object counterclockwhise
+ *      W: move towards
+ * 
+ * Fly Controller
+ *  Controls
+ *      A: move left
+ *      S: move backwards
+ *      D: move right
+ *      W: move forwards
+ *      Q: move down
+ *      E: move up
+ *      Mousemove: look
+ * 
  * @author sietse
  */
 public class Camera extends Behaviour {
@@ -43,7 +71,7 @@ public class Camera extends Behaviour {
         if (t == null) {
             if (m_target == null)
                 return;
-            m_rtsCameraRotation = Main.instance().cam().getRotation().toAngles(null)[1] * Mathf.Rad2Deg;
+            m_rtsCameraRotation = Main.cam().getRotation().toAngles(null)[1] * Mathf.Rad2Deg;
             m_previousTargetPosition = Utilities.zero();
             
         } else {
@@ -68,8 +96,8 @@ public class Camera extends Behaviour {
     private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;
     private final float RTS_CAMERA_SMOOTH = 0.02f;
     private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;
-    private final float RTS_MIN_CAMERA_DISTANCE = 10.0f;
-    private final float RTS_MAX_CAMERA_DISTANCE = 40.0f;
+    private final float RTS_MIN_CAMERA_DISTANCE = 3.0f;
+    private final float RTS_MAX_CAMERA_DISTANCE = 80.0f;
     private float m_rtsCameraRotation = 0.0f;
     private float m_rtsCameraTargetDistance = 25.0f;
     private float m_rtsCameraCurrentDistance = 25.0f;
@@ -83,7 +111,7 @@ public class Camera extends Behaviour {
     // SSAO
     
     // FOG
-    private final float FOG_DENSITY = 10.0f;
+    private final float FOG_DENSITY = 2.0f;
     private final ColorRGBA FOG_COLOR = new ColorRGBA(0.6f, 0.7f, 0.9f, 1.0f);
     
     // Bloom
@@ -98,7 +126,6 @@ public class Camera extends Behaviour {
             m_postProcessor = new FilterPostProcessor(Main.assets());
         return m_postProcessor;
     }
-    
     @Override
     public void awake() {
         m_transform = new Transform();
@@ -111,16 +138,11 @@ public class Camera extends Behaviour {
         Main.view().addProcessor(postProcessor());
         onStartRTS();
         onStartFly();
-        //Main.instance().flyCamera().setMoveSpeed(CAMERA_SPEED);
     }
     @Override
-    public void update() {
+    public void rawUpdate() {
         onUpdateFly();
         onUpdateRTS();
-    }
-    @Override
-    public void fixedUpdate() {
-        
     }
     
     public void createShadowsFiler(DirectionalLight sun) {
@@ -181,8 +203,7 @@ public class Camera extends Behaviour {
     public void onStartRTS() {
         if (m_cameraMode != CameraMode.RTS)
             return;
-        Main.instance().showCursor(true);
-        
+        Main.inputManager().setCursorVisible(true);
     }
     public void onUpdateRTS() {
         m_rtsCameraCurrentDistance = Mathf.smoothdamp(
@@ -198,8 +219,8 @@ public class Camera extends Behaviour {
         }
             
         Vector3f newPosition = new Vector3f();
-        newPosition = newPosition.add(Main.instance().cam().getUp().add(Main.instance().cam().getDirection()).mult(Main.input().rawInputAxis().y));
-        newPosition = newPosition.add(Main.instance().cam().getLeft().mult(-Main.input().rawInputAxis().x));
+        newPosition = newPosition.add(Main.cam().getUp().add(Main.cam().getDirection()).mult(Main.input().rawInputAxis().y));
+        newPosition = newPosition.add(Main.cam().getLeft().mult(-Main.input().rawInputAxis().x));
         newPosition = Utilities.Horizontal(newPosition);
         
         if (newPosition.lengthSquared() < 0.001f) {
@@ -209,13 +230,13 @@ public class Camera extends Behaviour {
             newPosition = newPosition.mult((Main.input().getButton("Shift").isDown() ? RTS_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? RTS_CAMERA_SPEED_SLOW : RTS_CAMERA_SPEED_DEFAULT)));
         }
         
-        newPosition = newPosition.add(Main.instance().cam().getLocation());
+        newPosition = newPosition.add(Main.cam().getLocation());
         newPosition.y = m_rtsCameraCurrentDistance;
         
         Vector2f __t = new Vector2f(newPosition.x, newPosition.z);
         Vector2f __f = new Vector2f(
-                Main.instance().cam().getLocation().x,
-                Main.instance().cam().getLocation().z);
+                Main.cam().getLocation().x,
+                Main.cam().getLocation().z);
         
         __f = Mathf.smoothdamp(
                 __f, 
@@ -232,11 +253,11 @@ public class Camera extends Behaviour {
         
         
         if (m_target == null) {
-            Main.instance().cam().setLocation(newPosition);
-            Main.instance().cam().lookAt(Utilities.rotateY(new Vector3f(10.0f, -5.0f, 10.0f), m_rtsCameraRotation).add(Utilities.Horizontal(newPosition)), Vector3f.UNIT_Y);
+            Main.cam().setLocation(newPosition);
+            Main.cam().lookAt(Utilities.rotateY(new Vector3f(10.0f, -5.0f, 10.0f), m_rtsCameraRotation).add(Utilities.Horizontal(newPosition)), Vector3f.UNIT_Y);
         } else {
-            Main.instance().cam().setLocation(newPosition.add(m_target.position().subtract(m_previousTargetPosition)));
-            Main.instance().cam().lookAt(m_target.position(), Utilities.up());
+            Main.cam().setLocation(newPosition.add(m_target.position().subtract(m_previousTargetPosition)));
+            Main.cam().lookAt(m_target.position(), Utilities.up());
             m_previousTargetPosition = m_target.position();
         }
         
@@ -246,17 +267,15 @@ public class Camera extends Behaviour {
     public void onStartFly() {
         if (m_cameraMode != CameraMode.Fly)
             return;
-        Main.instance().showCursor(false);
-        
+        Main.inputManager().setCursorVisible(false);
     }
     public void onUpdateFly() {
         
         if (m_cameraMode != CameraMode.Fly)
             return;
             
-        Vector3f newPosition = Utilities.zero();
-        newPosition = Main.instance().cam().getDirection().mult(Main.input().rawInputAxis().y);
-        newPosition = newPosition.subtract(Main.instance().cam().getLeft().mult(Main.input().rawInputAxis().x));
+        Vector3f newPosition = Main.cam().getDirection().mult(Main.input().rawInputAxis().y);
+        newPosition = newPosition.subtract(Main.cam().getLeft().mult(Main.input().rawInputAxis().x));
         
         if (Main.input().getButton("E").isDown()) {
             newPosition = newPosition.add(Utilities.up());
@@ -271,16 +290,16 @@ public class Camera extends Behaviour {
             newPosition = newPosition.mult(Time.unscaledDeltaTime() * (Main.input().getButton("Shift").isDown() ? FLY_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? FLY_CAMERA_SPEED_SLOW : FLY_CAMERA_SPEED_DEFAULT)));
         }
         
-        newPosition = newPosition.add(Main.instance().cam().getLocation());
-        Main.instance().cam().setLocation(newPosition);
+        newPosition = newPosition.add(Main.cam().getLocation());
+        Main.cam().setLocation(newPosition);
         
-        float[] __rot = Main.instance().cam().getRotation().toAngles(null);
+        float[] __rot = Main.cam().getRotation().toAngles(null);
         __rot[0] += Main.input().mouseMove().y;
         __rot[1] -= Main.input().mouseMove().x;
         
         Quaternion __q = Quaternion.IDENTITY;
         __q = __q.fromAngles(__rot);
         
-        Main.instance().cam().setAxes(__q);
+        Main.cam().setAxes(__q);
     }
 }

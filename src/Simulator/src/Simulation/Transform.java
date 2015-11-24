@@ -5,7 +5,7 @@
  */
 package Simulation;
 
-import Utilities.Utilities;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -18,6 +18,7 @@ import com.jme3.scene.Spatial;
 public class Transform extends Node {
     
     protected final long m_id;
+    private Vector3f m_boundExtends = null;
     
     /**
      * Constructor
@@ -25,6 +26,7 @@ public class Transform extends Node {
      */
     public Transform() {
         Main.root().attachChild(this);
+        this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
     }
     /**
@@ -37,7 +39,12 @@ public class Transform extends Node {
         else
             parent.attachChild(this);
         
+        this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
+    }
+    
+    public long id() {
+        return m_id + 0;
     }
     
     /**
@@ -258,14 +265,25 @@ public class Transform extends Node {
         return super.rotate(x * Mathf.Deg2Rad, y * Mathf.Deg2Rad, z * Mathf.Deg2Rad);
     }
     
-    
     @Override
     public int attachChild(Spatial spatial) {
         spatial.setUserData(Main.TRANSFORM_ID_KEY, m_id);
         return super.attachChild(spatial);
     }
     
-    public long getID() {
-        return m_id + 0;
+    // Occlusion culling
+    public final boolean isOnScreen(boolean set) {
+        
+        
+        if (!isOnScreenFast()) {
+            return false;
+        }
+            
+        return true;
     }
+    /**
+     * When the return value is false, the more expenive check is not called.
+     * @return 
+     */
+    protected boolean isOnScreenFast() { return true; }
 }

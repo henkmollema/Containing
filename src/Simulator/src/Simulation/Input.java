@@ -16,7 +16,6 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
-import Utilities.Utilities;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
@@ -28,9 +27,9 @@ import com.jme3.math.Vector3f;
 public class Input extends Behaviour {
     
     // Smoothing
-    public final float      MOUSE_SENSITIVITY_X         = 5.0f;
-    public final float      MOUSE_SENSITIVITY_Y         = -5.0f;
-    public final int        MOUSE_SMOOTH_CHECKS         = 10;
+    public final float      MOUSE_SENSITIVITY_X         = 3.0f;
+    public final float      MOUSE_SENSITIVITY_Y         = -3.0f;
+    public final int        MOUSE_SMOOTH_CHECKS         = 20;
     
     // Acceleration
     public final boolean    MOUSE_ACCELERATION_ACTIVE   = true;
@@ -47,7 +46,7 @@ public class Input extends Behaviour {
     public final Vector2f   MOUSE_SENSITIVITY           = new Vector2f(MOUSE_SENSITIVITY_X, MOUSE_SENSITIVITY_Y);
     public final int        MOUSE_SMOOTH_BUFFER         = 6;
     public final int        MOUSE_MAX_SMOOTH_BUFFER     = Mathf.max(1, MOUSE_SMOOTH_CHECKS);
-    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.5f);
+    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.0f);
     
     // 
     private Vector2f        m_tempRawMouseMove = Vector2f.ZERO;
@@ -132,8 +131,8 @@ public class Input extends Behaviour {
     }
     // 
     private Vector2f getRawMouseInput() {
-        Vector2f pos = new Vector2f(Main.instance().cursorPosition()).subtract(m_previousMousePosition);
-        m_previousMousePosition = new Vector2f(Main.instance().cursorPosition());
+        Vector2f pos = new Vector2f(Main.inputManager().getCursorPosition()).subtract(m_previousMousePosition);
+        m_previousMousePosition = new Vector2f(Main.inputManager().getCursorPosition());
         return pos;
     }
     private Vector2f getSmoothMouseInput(int checks) {
@@ -174,7 +173,6 @@ public class Input extends Behaviour {
         // Clear default
         Main.inputManager().clearMappings();
         Main.inputManager().clearRawInputListeners();
-        Main.instance().flyCamera().setEnabled(false);
         
         m_buttons = new Button[] {
             new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
@@ -220,8 +218,8 @@ public class Input extends Behaviour {
         CollisionResults hit = new CollisionResults();
         
         Vector2f _mousePosition = Main.inputManager().getCursorPosition();
-        Vector3f from = Main.instance().cam().getWorldCoordinates(new Vector2f(_mousePosition), 0f).clone();
-        Vector3f direction = Main.instance().cam().getWorldCoordinates(new Vector2f(_mousePosition), 1.0f).subtractLocal(from).normalizeLocal();
+        Vector3f from = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 0f).clone();
+        Vector3f direction = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 1.0f).subtractLocal(from).normalizeLocal();
         
         Ray ray = new Ray(from, direction);
         
@@ -246,11 +244,11 @@ public class Input extends Behaviour {
         }
         
         if (lowestIndex < 0) {
-            Main.instance().camera().setTarget(null);
+            Main.camera().setTarget(null);
             return;
         }
         
-        Main.instance().camera().setTarget(Main.getTransform(transformID));
+        Main.camera().setTarget(Main.getTransform(transformID));
         
         
     }
@@ -277,34 +275,12 @@ public class Input extends Behaviour {
             }
 
             if (name.contains("Wheel")) {
-                if (Main.instance().camera().cameraMode() != CameraMode.RTS) {
+                if (Main.camera().cameraMode() != CameraMode.RTS) {
                     return;
                 }
-                Main.instance().camera().zoom(value);
+                Main.camera().zoom(value);
             } else if (name.contains("Mouse")) {
-                //m_tempRawMouseMove
                 
-                if (getButton("Button1").isDown()) {
-                    Debug.log("ASDFasdfafafsasdfasdfafasfasfasdf");
-                }
-                
-                /*
-                if (mouseRotation) {
-                    int direction;
-                    if (name.endsWith("X")) {
-                        direction = ROTATE;
-                        if ( up == UpVector.Z_UP ) {
-                            value = -value;
-                        }
-                    } else {
-                        direction = TILT;
-                    }
-                    offsetMoves[direction] += value;
-                } else if (mouseDrag) {
-                    int direction;
-                    
-                    offsetMoves[direction] += value * maxSpeedPerSecondOfAccell[direction] * maxAccellPeriod[direction];
-                }*/
             }
         }
     }

@@ -5,8 +5,10 @@
  */
 package World;
 
+import Game.ContainerCarrier;
 import Game.CraneHook;
 import Game.RailCrane;
+import Game.StoragePlatform;
 import Simulation.Behaviour;
 import Simulation.Callback;
 import Simulation.Debug;
@@ -15,15 +17,16 @@ import Simulation.LoopMode;
 import Simulation.Main;
 import Simulation.Mathf;
 import Simulation.Path;
+import Simulation.Point3;
 import Simulation.Time;
 import Simulation.Transform;
-import Utilities.MaterialCreator;
-import Utilities.Utilities;
+import Simulation.Utilities;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import java.util.Arrays;
 
@@ -32,8 +35,47 @@ import java.util.Arrays;
  * @author sietse
  */
 public class World extends Behaviour {
+    public static final Vector3f containerSize() {
+        return new Vector3f(2.438f, 2.438f, 12.192f);
+    }
     
-    Transform testCube;
+    
+    // Main
+    private DirectionalLight m_sun;
+    
+    // World
+    
+    
+    // External
+    
+    
+    @Override
+    public void awake() {
+        m_sun = LightCreator.createSun(ColorRGBA.White, new Vector3f(-0.5f, -0.5f, -0.5f));
+        LightCreator.createAmbient(new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f));
+        Main.camera().createShadowsFiler(m_sun);
+        
+        createObjects();
+        //Time.setFixedTimeScale(0.3f);
+    }
+    
+    private void createObjects() {
+        Vector3f offset = Utilities.zero();
+        for (int i = 0; i < 12; ++i) {
+            new StoragePlatform(offset);
+            offset.x += containerSize().x * 6 + 15.0f;
+        }
+        
+        
+        
+    }
+    private void createStorage(Vector3f position) {
+        Transform t = new Transform();
+        t.position(position);
+        ContainerCarrier carrier = new ContainerCarrier(t, new Point3(6, 6, 14));
+    }
+    /*
+     * Transform testCube;
     Transform testCube2;
     Path m_testCube2Path = new Path(
             null, 
@@ -56,19 +98,7 @@ public class World extends Behaviour {
     
     boolean goingBack;
     float prev;
-    
-    private DirectionalLight m_sun;
-    
-    @Override
-    public void awake() {
-        m_sun = LightCreator.createSun(ColorRGBA.White, new Vector3f(-0.5f, -0.5f, -0.5f));
-        LightCreator.createAmbient(new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f));
-        Main.instance().camera().createShadowsFiler(m_sun);
-        
-        createObjects();
-        Time.setFixedTimeScale(0.3f);
-    }
-    @Override
+     * @Override
     public void update() {
         testCube.move(testCube.forward(), Time.deltaTime() * 3.0f);
         m_testCube2Path.update();
@@ -150,4 +180,7 @@ public class World extends Behaviour {
         Debug.log("This is awesome!!!");
         m_testHook.moveUp(false);
     }
+     * 
+     */
+    
 }

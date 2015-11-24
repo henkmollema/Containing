@@ -1,9 +1,11 @@
 package Simulation;
 
-import Utilities.*;
+import World.MaterialCreator;
+import GUI.GUI;
 import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapFont;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.math.ColorRGBA;
@@ -24,14 +26,16 @@ import java.util.List;
  */
 public class Main extends SimpleApplication {
 
-    public static String TRANSFORM_ID_KEY = "TRANSFORM_KEY";
+    public static final String TRANSFORM_ID_KEY = "TRANSFORM_KEY";
+    public static final float MIN_TIME_SCALE = 0.001f;
+    public static final float MAX_TIME_SCALE = 100.0f;
     
     // Singleton
     private static Main m_instance;
-
     public static Main instance() {
         return m_instance;
     }
+    
     // 
     private float m_previousTimeScale = 1.0f;
     // Behaviours
@@ -41,52 +45,53 @@ public class Main extends SimpleApplication {
     private static long m_transformID = 0;
     private static List<Transform> m_transforms = new ArrayList<Transform>();
     // Lines
-    private static List<Line3D> m_lines;
+    private static List<Line3D> m_lines = new ArrayList<Line3D>();
     private Input m_input;
+    private GUI m_gui;
     // Camera
     private Game.Camera m_camera;
 
-    public com.jme3.renderer.Camera cam() {
-        return cam;
+    public static com.jme3.renderer.Camera cam() {
+        return instance().cam;
     }
 
-    public Game.Camera camera() {
-        return m_camera;
+    public static Game.Camera camera() {
+        return instance().m_camera;
     }
-
-    public FlyByCamera flyCamera() {
-        return flyCam;
-    }
-
-    public void showCursor(boolean show) {
-        inputManager.setCursorVisible(show);
-    }
-
-    public Vector2f cursorPosition() {
-        return inputManager.getCursorPosition();
-    }
-
+    
     // 
-    public static InputManager inputManager() {
-        return instance().inputManager;
+    public static AppSettings settings() {
+        return instance().settings;
     }
-
     public static AssetManager assets() {
         return instance().assetManager;
     }
-
-    public static Node root() {
-        return instance().rootNode;
+    public static BitmapFont guiFont() {
+        return instance().guiFont;
     }
-
-    public static ViewPort view() {
-        return instance().viewPort;
+    public static BitmapFont guiFont(BitmapFont font) {
+        return instance().guiFont = font;
     }
-
     public static Input input() {
         return instance().m_input;
     }
-
+    public static InputManager inputManager() {
+        return instance().inputManager;
+    }
+    public static Node root() {
+        return instance().rootNode;
+    }
+    public static Node guiRoot() {
+        return instance().guiNode;
+    }
+    public static RenderManager renderer() {
+        return instance().renderManager;
+    }
+    public static ViewPort view() {
+        return instance().viewPort;
+    }
+    
+    
     /**
      * HERE COME ALL BEHAVIOURS
      *
@@ -98,10 +103,12 @@ public class Main extends SimpleApplication {
         // Init main behaviours
         m_camera = new Game.Camera();
         m_input = new Input();
+        m_gui = new GUI();
 
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[]{
             m_input,
+            m_gui,
             m_camera,
             // Non-Main
             new World(),
@@ -117,8 +124,9 @@ public class Main extends SimpleApplication {
      * Create world here
      */
     private void initWorld() {
+        
         m_lines = new ArrayList<Line3D>();
-        Line3D[] __t = new Line3D[]{
+        /*Line3D[] __t = new Line3D[]{
             new Line3D(
             MaterialCreator.diffuse(new ColorRGBA(0.4f, 0.6f, 0.8f, 1.0f)),
             new Line3DNode(new Vector3f(0.0f, 00.0f, 00.0f), 0.1f, ColorRGBA.Blue),
@@ -126,6 +134,7 @@ public class Main extends SimpleApplication {
             new Line3DNode(new Vector3f(0.0f, 10.0f, 10.0f), 1.0f, ColorRGBA.Blue))
         };
         m_lines.addAll(Arrays.asList(__t));
+        * */
     }
 
     private void updateWorld() {
@@ -143,6 +152,7 @@ public class Main extends SimpleApplication {
         m_behaviours = new ArrayList<Behaviour>();
         initBehaviours();
         initWorld();
+        flyCam.setEnabled(false);
     }
 
     /**
@@ -192,6 +202,10 @@ public class Main extends SimpleApplication {
         return -1;
     }
     
+    public static void register(Line3D line) {
+        m_lines.add(line);
+    }
+    
     /**
      * Unregister behaviour
      * @param behaviour behaviour to unregister
@@ -206,7 +220,7 @@ public class Main extends SimpleApplication {
     
     public static Transform getTransform(long id) {
         for (Transform t : m_transforms) {
-            if (t.getID() == id)
+            if (t.id() == id)
                 return t;
         }
         return null;
@@ -241,7 +255,7 @@ public class Main extends SimpleApplication {
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
-        settings.setResolution(1280, 600);
+        settings.setResolution(1920, 1080);
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
         app.start();
@@ -267,7 +281,7 @@ public class Main extends SimpleApplication {
         }
 
         __temp += Time.timeScale();
-        __temp = Mathf.clamp(__temp, 0.1f, 200.0f);
+        __temp = Mathf.clamp(__temp, MIN_TIME_SCALE, MAX_TIME_SCALE);
         Time.setTimeScale(__temp);
     }
 
@@ -276,7 +290,7 @@ public class Main extends SimpleApplication {
     }
 
     public void exit() {
-        Debug.log("TEST");
+        
         instance().stop();
     }
 }

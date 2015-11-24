@@ -1,33 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Networking;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.UUID;
-import networking.Proto.PlatformProto.*;
+import networking.Messaging.*;
+import networking.Messaging.MessageReader;
+import networking.Proto.PlatformProto;
 import networking.protocol.CommunicationProtocol;
 
 /**
- * The client which connects to the controller through a socket.
+ * Providers interaction with the client.
  *
  * @author Jens
  */
 public class SimulatorClient implements Runnable
 {
-    // Statics
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 1337;
-    public static final int START_OF_HEADING = 2;
-    public static final int END_OF_TRANSMISSION = 4;
-    
-    // Communication
-    private final CommunicationProtocol comProtocol;
-    
-    // Socket fields    
-    private Socket socket;
-    private InputStream _inputStream;
-    private OutputStream _outputStream;
     private boolean isConnected;
-    
+    private boolean shouldRun;
+    private Socket _socket = null;
+    private CommunicationProtocol comProtocol;
+
+    public SimulatorClient()
+    {
+        comProtocol = new CommunicationProtocol();
+    }
+
     /**
      * Gets the communication protocol of the server.
      *
@@ -38,79 +40,77 @@ public class SimulatorClient implements Runnable
         return comProtocol;
     }
 
-    public SimulatorClient()
-    {
-        comProtocol = new CommunicationProtocol();
-    }
-
     /**
-     * Connects to the controller.
-     *
-     * @return true if the connection succeded; otherwise, false.
+     * Opens a serversocket and waits for a client to connect.
+     * This method should be called on it's own thread as it contains an
+     * indefinite loop.
+     * Returns false if setup/connection failed.
+     * Returns true if connection was successfull and closed peacefuly
      */
-    public boolean connect()
+    public boolean start()
     {
-        p("run()");
-        try
-        {
-            socket = new Socket(HOST, PORT);
-            _inputStream = socket.getInputStream();
-            _outputStream = socket.getOutputStream();
+        p("start()");
 
-            isConnected = true;
-            p("connected with the controller");
-            return true;
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Can't connect to controller:");
-            ex.printStackTrace();
+        if (!isConnected)
+        {           
+            
+            try
+            {
+                // Halt the thread until a connection has been accepted
+                _socket = new Socket(HOST, PORT);
+                
+                p("Connected to server!");
 
-            return false;
+                isConnected = true;
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                p("Connection refused..");
+                //ex.printStackTrace();
+                return false;
+            }
         }
+
+        return false;
     }
-
-    /**
-     * Sends metadata of the simulator to the controller.
-     *
-     * @return true if sending the metadata succeeded; otherwise, false.
-     */
+    
     private boolean sendSimulatorMetadata()
     {
         p("sendSimulatorMetadata()");
 
-        DataOutputStream out;
-        BufferedReader reader = null;
         try
         {
-            Platform.Builder platformBuilder = Platform.newBuilder();
+            
+        BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
+        ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+        OutputStream output = _socket.getOutputStream();
+        
+        
+            PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();
             platformBuilder
-                    .setId(newUUID())
-                    .setType(Platform.PlatformType.SeaShip)
-                    .addCranes(Platform.Crane.newBuilder()
-                    .setId(newUUID())
-                    .setType(Platform.Crane.CraneType.Rails))
-                    .addCranes(Platform.Crane.newBuilder()
-                    .setId(newUUID())
-                    .setType(Platform.Crane.CraneType.Rails));
+                    .setId(CommunicationProtocol.newUUID())
+                    .setType(PlatformProto.Platform.PlatformType.SeaShip)
+                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
+                    .setId(CommunicationProtocol.newUUID())
+                    .setType(PlatformProto.Platform.Crane.CraneType.Rails))
+                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
+                    .setId(CommunicationProtocol.newUUID())
+                    .setType(PlatformProto.Platform.Crane.CraneType.Rails));
 
-            Platform platform = platformBuilder.build();
+            PlatformProto.Platform platform = platformBuilder.build();
 
-            out = new DataOutputStream(_outputStream);
+           
 
             byte[] message = platform.toByteArray();
             System.out.println("Sending " + message.length + " bytes...");
 
-            // Write the object to the socket.
-            out.write(START_OF_HEADING);
-            out.write(message);
-            out.write(END_OF_TRANSMISSION);
-            out.flush();
+            MessageWriter.writeMessage(output, message);
 
             p("Message sent to controller, start reading input..");
 
-            reader = new BufferedReader(new InputStreamReader(_inputStream));
-            String result = reader.readLine();
+            String result = new String(MessageReader.readByteArray(input, dataStream), "UTF-8");
 
             if (result == null || result.equals(""))
             {
@@ -135,110 +135,82 @@ public class SimulatorClient implements Runnable
         return false;
     }
 
-    /**
-     * Starts the loop of reading instructions and writing the results over the
-     * socket.
-     *
-     * @return The result of the loop.
-     */
-    private boolean startLoop()
+    public boolean read()
     {
-        p("startLoop()");
-        
+        p("read()");
         try
         {
-            DataOutputStream out = new DataOutputStream(_outputStream);
-            DataInputStream in = new DataInputStream(_inputStream);
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
+            BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
+            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            OutputStream output = _socket.getOutputStream();
+            
+            //Send empty message to start conversation..
+            MessageWriter.writeMessage(output, new byte[]{0});
+            
             boolean shouldBreak = false;
             while (!shouldBreak)
             {
-                int lastByte;
-                boolean write = false;
-                while ((lastByte = in.read()) != -1)
-                {
-                    if (!write && lastByte == START_OF_HEADING)
-                    {
-                        write = true;
-                        continue;
-                    }
-                    else if (!write && lastByte == 0)
-                    {
-                        continue;
-                    }
+                // Re-use streams for more efficiency.
+                byte[] data = MessageReader.readByteArray(input, dataStream);
+                byte[] response = comProtocol.processInput(data);
 
-                    if (lastByte == END_OF_TRANSMISSION)
-                    {
-                        byte[] input = buffer.toByteArray();
-                        
-                        if(input.length > 0) p("Received " + input.length + " bytes ");
-                        
-                        byte[] response = comProtocol.processInput(input);
-                        buffer.reset();
-
-                        // Send response
-                        out.write(START_OF_HEADING);
-                        out.write(response);
-                        out.write(END_OF_TRANSMISSION);
-                        out.flush();
-
-                        // Stop writing
-                        write = false;
-                    }
-                    else
-                    {
-                        // Add current input to buffer
-                        buffer.write(lastByte);
-                    }
-                }
+                MessageWriter.writeMessage(output, response);
             }
         }
-        catch (Exception ex)
+        catch (IOException ex)
         {
-            System.err.println("Can't connect to controller");
             ex.printStackTrace();
-
             return false;
         }
-        return true;
-    }
 
-    private static String newUUID()
-    {
-        return UUID.randomUUID().toString();
+        return true;
     }
 
     @Override
     public void run()
     {
-        p("run()");
-        if (connect())
+        shouldRun = true;
+        
+        while(shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
-            if (sendSimulatorMetadata())
+            if (start())
             {
-                if (startLoop())
+                if (sendSimulatorMetadata())
                 {
-                    System.out.println("Closed peacefully");
+                    if (read())
+                    {
+                        p("Closed peacefully");
+                    }
+                    else
+                    {
+                       p("Lost connection during instructionloop"); 
+                    }
                 }
                 else
                 {
-                    System.out.println("Reading stopped");
+                    p("Error while initialising connection..");
                 }
             }
             else
             {
-                System.out.println("Failed ssending simulator metadata.");
+                p("Closed forcefully");
             }
-        }
-        else
-        {
-            System.out.println("Closed forcefully when connecting with the controller.");
+            
+            try //Clean 
+            {               
+                if(_socket != null) _socket.close();
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+            
+            isConnected = false;
         }
     }
 
     private static void p(String s)
     {
-        System.out.println("SimulatorClient: " + s);
+        System.out.println("Server: " + s);
     }
 }

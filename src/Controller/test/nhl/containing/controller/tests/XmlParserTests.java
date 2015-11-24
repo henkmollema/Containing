@@ -1,11 +1,9 @@
 package nhl.containing.controller.tests;
 
-import nhl.containing.controller.RecordSet;
-import nhl.containing.controller.Main;
-import nhl.containing.controller.XmlParser;
 import static org.junit.Assert.*;
 import java.net.*;
 import java.nio.file.*;
+import nhl.containing.controller.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

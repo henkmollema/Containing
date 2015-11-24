@@ -1,20 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.controller.networking;
 
-import nhl.containing.networking.messaging.MessageWriter;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import nhl.containing.networking.messaging.MessageReader;
-import nhl.containing.networking.protobuf.PlatformProto;
-import nhl.containing.networking.protocol.CommunicationProtocol;
-import nhl.containing.networking.protocol.InstructionDispatcher;
+import nhl.containing.networking.messaging.*;
+import nhl.containing.networking.protobuf.*;
+import nhl.containing.networking.protocol.*;
 
 /**
- * Providers interaction with the client.
+ * Provides interaction with the client.
  *
  * @author Jens
  */

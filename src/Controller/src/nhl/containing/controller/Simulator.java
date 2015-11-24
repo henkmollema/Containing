@@ -1,9 +1,7 @@
 package nhl.containing.controller;
 
-import nhl.containing.controller.networking.InstructionDispatcherController;
-import nhl.containing.controller.networking.Server;
-import nhl.containing.networking.protocol.CommunicationProtocol;
-import nhl.containing.networking.protocol.InstructionDispatcher;
+import nhl.containing.controller.networking.*;
+import nhl.containing.networking.protocol.*;
 
 /**
  * Provides interaction with the simulator.

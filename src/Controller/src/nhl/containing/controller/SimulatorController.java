@@ -1,10 +1,8 @@
 package nhl.containing.controller;
 
-import nhl.containing.controller.networking.InstructionDispatcherController;
 import java.net.*;
 import java.nio.file.*;
 import java.util.HashSet;
-import nhl.containing.networking.protocol.InstructionDispatcher;
 
 /**
  * Controller for the system.
@@ -14,20 +12,18 @@ import nhl.containing.networking.protocol.InstructionDispatcher;
 public class SimulatorController
 {
     private final Database _db;
-    
 
     public SimulatorController()
     {
         _db = new Database();
     }
-    
-    
 
     /**
      * Starts running the simulator using the data in the specified XML file
      * name.
      *
      * @param xmlFileName The file name of the XML file. Format: [name].xml.
+     *
      * @throws java.lang.Exception when serialization fails.
      */
     public void run(String xmlFileName) throws Exception
@@ -54,7 +50,7 @@ public class SimulatorController
     {
         String xmlString = readXml(xmlFileName);
         RecordSet recordSet = XmlParser.parse(xmlString);
-        
+
         if (recordSet == null)
         {
             throw new Exception("Something went wrong when deserializing the XML file. ");

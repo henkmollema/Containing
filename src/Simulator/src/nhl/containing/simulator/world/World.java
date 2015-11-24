@@ -1,33 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.world;
 
-import nhl.containing.simulator.game.CraneHook;
-import nhl.containing.simulator.game.RailCrane;
-import nhl.containing.simulator.simulation.Behaviour;
-import nhl.containing.simulator.simulation.Callback;
-import nhl.containing.simulator.simulation.Debug;
-import nhl.containing.simulator.simulation.EaseType;
-import nhl.containing.simulator.simulation.LoopMode;
-import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Mathf;
-import nhl.containing.simulator.simulation.Path;
-import nhl.containing.simulator.simulation.Time;
-import nhl.containing.simulator.simulation.Transform;
-import nhl.containing.simulator.utils.MaterialCreator;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import java.util.Arrays;
 import java.util.UUID;
-import nhl.containing.networking.protobuf.InstructionProto;
-import nhl.containing.networking.protobuf.InstructionProto.Instruction;
+import nhl.containing.simulator.game.*;
+import nhl.containing.simulator.simulation.*;
+import nhl.containing.simulator.utils.*;
+import nhl.containing.networking.protobuf.*;
+import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.InstructionType;
 
 /**

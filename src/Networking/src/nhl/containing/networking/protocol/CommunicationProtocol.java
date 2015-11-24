@@ -1,80 +1,80 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.networking.protocol;
 
-import nhl.containing.networking.protobuf.InstructionProto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 
 /**
  *
  * @author Jens
  */
-public class CommunicationProtocol {
+public class CommunicationProtocol
+{
     private InstructionDispatcher _dispatcher;
-    
-    private List<Instruction> instructionQueue;
-    private List<InstructionResponse> responseQueue;
-    
+    private final List<Instruction> instructionQueue;
+    private final List<InstructionResponse> responseQueue;
+
     public CommunicationProtocol()
     {
-        instructionQueue = new ArrayList<Instruction>();
-        responseQueue = new ArrayList<InstructionResponse>();
+        instructionQueue = new ArrayList<>();
+        responseQueue = new ArrayList<>();
     }
-    
+
     public static String newUUID()
     {
         return UUID.randomUUID().toString();
     }
-    
+
     public InstructionDispatcher dispatcher()
     {
         return _dispatcher;
     }
-    
+
     //TODO: Make thread safe
     public void sendInstruction(Instruction i)
     {
-        if(i != null && instructionQueue != null)
+        if (i != null && instructionQueue != null)
+        {
             instructionQueue.add(i);
+        }
     }
-    
+
     //TODO: Make thread safe
     public void sendResponse(InstructionResponse r)
     {
-        if(r != null && responseQueue != null)
+        if (r != null && responseQueue != null)
+        {
             responseQueue.add(r);
+        }
     }
-    
+
     public byte[] processInput(byte[] in)
     {
         InstructionProto.datablock dbRecieved = null;
-        if(in != null && in.length > 3) //If we're not getting an empty message.
+        if (in != null && in.length > 3) //If we're not getting an empty message.
         {
             try
             {
                 //Try to parse the incomming data into a datablock
                 dbRecieved = InstructionProto.datablock.parseFrom(in);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.printStackTrace();
             }
 
-            if(dbRecieved != null)
+            if (dbRecieved != null)
             {
                 //Instructions and responses are forwarded into the simulator
-                
-                for(Instruction i : dbRecieved.getInstructionsList())
+
+                for (Instruction i : dbRecieved.getInstructionsList())
                 {
                     this._dispatcher.forwardInstruction(i);
                 }
 
-                for(InstructionResponse r : dbRecieved.getResponsesList())
+                for (InstructionResponse r : dbRecieved.getResponsesList())
                 {
                     this._dispatcher.forwardResponse(r);
                 }
@@ -85,35 +85,35 @@ public class CommunicationProtocol {
         //flushDataBlock will generate a datablock object using the Queues and clear the local copies.
         return flushDataBlock().toByteArray();
     }
-    
-    /** setDispatcher sets the dispatcher used to forward instructions into the system.
-     * This is set in the Simulator class, as the instance of the dispatcher 
+
+    /**
+     * setDispatcher sets the dispatcher used to forward instructions into the
+     * system.
+     * This is set in the Simulator class, as the instance of the dispatcher
      * lives there.
      */
     public void setDispatcher(InstructionDispatcher dispatcher)
     {
         this._dispatcher = dispatcher;
     }
-    
-    
+
     //TODO: Make thread safe
     public InstructionProto.datablock flushDataBlock()
     {
         datablock.Builder dbBuilder = datablock.newBuilder();
-        
-        if(instructionQueue != null)
+
+        if (instructionQueue != null)
         {
             dbBuilder.addAllInstructions(instructionQueue);
             instructionQueue.clear();
         }
-        
-        if(responseQueue != null)
+
+        if (responseQueue != null)
         {
             dbBuilder.addAllResponses(responseQueue);
             responseQueue.clear();
         }
-        
+
         return dbBuilder.build();
     }
-   
 }

@@ -18,16 +18,14 @@ public class XmlParser
      *
      * @return A record set with a collection of records.
      */
-    public static RecordSet parse(String xmlString)
+    public static RecordSet parse(String xmlString) throws Exception
     {
         try {
             Serializer serializer = new Persister();
             return serializer.read(RecordSet.class, xmlString);
         }
         catch (Exception ex) {
-            Logger.getLogger(XmlParser.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception("Error when parsing the XML file. It's probably invalid.", ex);
         }
-
-        return null;
     }
 }

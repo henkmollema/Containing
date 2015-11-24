@@ -11,6 +11,7 @@ import networking.Messaging.*;
 import networking.Messaging.MessageReader;
 import networking.Proto.PlatformProto;
 import networking.protocol.CommunicationProtocol;
+import networking.protocol.InstructionDispatcher;
 
 /**
  * Providers interaction with the client.
@@ -21,6 +22,7 @@ public class Server implements Runnable
 {
     public static final int PORT = 1337;
     private boolean isConnected;
+    private boolean shouldRun;
     private ServerSocket serverSocket = null;
     private Socket _socket = null;
     private CommunicationProtocol comProtocol;
@@ -52,7 +54,8 @@ public class Server implements Runnable
         p("start start()");
 
         if (!isConnected)
-        {
+        {           
+            
             try
             {
                 serverSocket = new ServerSocket(PORT);
@@ -85,17 +88,17 @@ public class Server implements Runnable
             byte[] data = MessageReader.readByteArray(_socket.getInputStream());
             PlatformProto.Platform platform = PlatformProto.Platform.parseFrom(data);
 
-            PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
+            //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
             if (platform != null)
             {
                 p("ok");
-                out.println("ok");
+                MessageWriter.writeMessage(_socket.getOutputStream(), "ok".getBytes());
                 return true;
             }
             else
             {
                 p("error");
-                out.println("error");
+                MessageWriter.writeMessage(_socket.getOutputStream(), "error".getBytes());
                 return false;
             }
         }
@@ -117,7 +120,7 @@ public class Server implements Runnable
             
             //Send empty message to start conversation..
             MessageWriter.writeMessage(output, new byte[]{0});
-
+            
             boolean shouldBreak = false;
             while (!shouldBreak)
             {
@@ -131,6 +134,7 @@ public class Server implements Runnable
         catch (IOException ex)
         {
             ex.printStackTrace();
+            return false;
         }
 
         return true;
@@ -139,19 +143,45 @@ public class Server implements Runnable
     @Override
     public void run()
     {
-        if (start())
+        shouldRun = true;
+        
+        while(shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
-            if (init())
+            if (start())
             {
-                if (read())
+                if (init())
                 {
-                    p("Closed peacefully");
+                    if (read())
+                    {
+                        p("Closed peacefully");
+                    }
+                    else
+                    {
+                       p("Lost connection during instructionloop"); 
+                    }
+                }
+                else
+                {
+                    p("Error while initialising connection..");
                 }
             }
-        }
-        else
-        {
-            p("Closed forcefully");
+            else
+            {
+                p("Closed forcefully");
+            }
+            
+            try //Clean 
+            {
+                serverSocket.close();
+               
+                _socket.close();
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+            
+            isConnected = false;
         }
     }
 

@@ -1,8 +1,10 @@
 package controller;
 
+import Networking.InstructionDispatcherController;
 import java.net.*;
 import java.nio.file.*;
 import java.util.HashSet;
+import networking.protocol.InstructionDispatcher;
 
 /**
  * Controller for the system.
@@ -12,11 +14,14 @@ import java.util.HashSet;
 public class SimulatorController
 {
     private final Database _db;
+    
 
     public SimulatorController()
     {
         _db = new Database();
     }
+    
+    
 
     /**
      * Starts running the simulator using the data in the specified XML file

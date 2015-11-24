@@ -2,6 +2,9 @@ package Simulation;
 
 import World.MaterialCreator;
 import GUI.GUI;
+import Networking.InstructionDispatcherSimulator;
+import Networking.SimulatorClient;
+import Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
@@ -18,10 +21,12 @@ import com.jme3.system.AppSettings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.*;
 
 /**
  * test
  *
+ * 
  * @author sietse
  */
 public class Main extends SimpleApplication {
@@ -58,10 +63,23 @@ public class Main extends SimpleApplication {
     public static Game.Camera camera() {
         return instance().m_camera;
     }
-    
+
     // 
     public static AppSettings settings() {
         return instance().settings;
+	}
+    //Networking
+    SimulatorClient _simClient;
+    InstructionDispatcherSimulator _dispatcher;
+    
+    public SimulatorClient simClient()
+    {
+        return _simClient;
+    }
+    
+    // Input
+    public static InputManager inputManager() {
+        return instance().inputManager;
     }
     public static AssetManager assets() {
         return instance().assetManager;
@@ -125,7 +143,7 @@ public class Main extends SimpleApplication {
      */
     private void initWorld() {
         
-        m_lines = new ArrayList<Line3D>();
+        //m_lines = new ArrayList<Line3D>();
         /*Line3D[] __t = new Line3D[]{
             new Line3D(
             MaterialCreator.diffuse(new ColorRGBA(0.4f, 0.6f, 0.8f, 1.0f)),
@@ -251,7 +269,8 @@ public class Main extends SimpleApplication {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {     
+        Logger.getLogger("").setLevel(Level.SEVERE);
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
@@ -259,6 +278,12 @@ public class Main extends SimpleApplication {
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
         app.start();
+        
+        //Init networking
+        app._simClient = new SimulatorClient();
+        app._dispatcher = new InstructionDispatcherSimulator(app);
+        app._simClient.getComProtocol().setDispatcher(app._dispatcher);
+        new Thread(app._simClient).start();
     }
 
     public void togglePause() {

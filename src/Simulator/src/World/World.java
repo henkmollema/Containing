@@ -20,7 +20,11 @@ import Simulation.Path;
 import Simulation.Point3;
 import Simulation.Time;
 import Simulation.Transform;
+<<<<<<< HEAD
 import Simulation.Utilities;
+=======
+import Utilities.MaterialCreator;
+>>>>>>> origin/dev
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -29,6 +33,10 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import java.util.Arrays;
+import java.util.UUID;
+import networking.Proto.InstructionProto;
+import networking.Proto.InstructionProto.Instruction;
+import networking.protocol.InstructionType;
 
 /**
  *
@@ -178,6 +186,12 @@ public class World extends Behaviour {
     }
     public void test() {
         Debug.log("This is awesome!!!");
+        Instruction i = Instruction.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setInstructionType(InstructionType.CONSOLE_COMMAND)
+                .setData(InstructionProto.InstructionData.newBuilder().setTime(0l).setMessage("test command").build())
+                .build();
+        Main.instance().simClient().getComProtocol().sendInstruction(i);
         m_testHook.moveUp(false);
     }
      * 

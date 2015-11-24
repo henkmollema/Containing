@@ -15,9 +15,13 @@ hs_err_pid*
 
 # Don't ignore ibraries in /lib/ folder
 !simple-xml-2.7.1.jar
+!protobuf-java-2.5.0.jar
+!junit-4.12.jar
+!hamcrest-core-1.3.jar
 
 # Build stuff
 build-impl.xml
+build-impl.xml~
 private/
 dist/
 build/
@@ -25,4 +29,4 @@ build/
 [Dd]ebug/
 [Oo]bj/
 *.suo
-src/Pathfinding/Pathfinding Containing/Pathfinding Containing.sdf
+*.sdf

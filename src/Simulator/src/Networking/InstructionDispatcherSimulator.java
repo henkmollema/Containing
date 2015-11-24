@@ -4,22 +4,20 @@
  */
 package Networking;
 
-import controller.Simulator;
-import controller.SimulatorController;
+import Simulation.Main;
 import networking.Proto.InstructionProto;
 import networking.protocol.InstructionType;
-import static networking.protocol.InstructionType.CONSOLE_COMMAND;
 import networking.protocol.InstructionDispatcher;
 
 /**
  *
  * @author Jens
  */
-public class InstructionDispatcherController implements InstructionDispatcher {
+public class InstructionDispatcherSimulator implements InstructionDispatcher {
     
-    Simulator _sim;
+    Main _sim;
     
-    public InstructionDispatcherController(Simulator sim)
+    public InstructionDispatcherSimulator(Main sim)
     {
         _sim = sim;
     }
@@ -35,16 +33,19 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     @Override
     public void forwardInstruction(InstructionProto.Instruction inst)
      {
+         InstructionProto.InstructionResponse.Builder responseBuilder = InstructionProto.InstructionResponse.newBuilder();
+         
          switch(inst.getInstructionType())
          {
-             case InstructionType.CONSOLE_COMMAND:
-                 String message = inst.getData().getMessage();
-                    System.out.println("GOT CONSOLECOMAND: " + message);
-                    _sim.parseCommand(message);
+             case InstructionType.MOVE_AGV:
+                    System.out.println("Got MOVE AGV instruction");
+                    
                  break;
                  
                  //More instruction types here..
-         }
+         } 
+         
+         _sim.simClient().getComProtocol().sendResponse(responseBuilder.build());
      }
 
     @Override

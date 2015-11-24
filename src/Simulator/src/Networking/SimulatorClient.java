@@ -27,6 +27,16 @@ public class SimulatorClient implements Runnable
     private InputStream _inputStream;
     private OutputStream _outputStream;
     private boolean isConnected;
+    
+    /**
+     * Gets the communication protocol of the server.
+     *
+     * @return The communication protocol.
+     */
+    public CommunicationProtocol getComProtocol()
+    {
+        return comProtocol;
+    }
 
     public SimulatorClient()
     {
@@ -161,12 +171,14 @@ public class SimulatorClient implements Runnable
                     if (lastByte == END_OF_TRANSMISSION)
                     {
                         byte[] input = buffer.toByteArray();
-                        p("Received " + input.length + " bytes ");
+                        
+                        if(input.length > 0) p("Received " + input.length + " bytes ");
                         
                         byte[] response = comProtocol.processInput(input);
                         buffer.reset();
 
                         // Send response
+                        out.write(START_OF_HEADING);
                         out.write(response);
                         out.write(END_OF_TRANSMISSION);
                         out.flush();

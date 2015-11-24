@@ -1,5 +1,6 @@
 package Simulation;
 
+import Networking.InstructionDispatcherSimulator;
 import Networking.SimulatorClient;
 import Utilities.*;
 import World.*;
@@ -55,6 +56,15 @@ public class Main extends SimpleApplication {
     }
     public FlyByCamera flyCamera() {
         return flyCam;
+    }
+    
+    //Networking
+    SimulatorClient _simClient;
+    InstructionDispatcherSimulator _dispatcher;
+    
+    public SimulatorClient simClient()
+    {
+        return _simClient;
     }
     
     // Input
@@ -184,7 +194,6 @@ public class Main extends SimpleApplication {
     
     public static void main(String[] args) {     
         Logger.getLogger("").setLevel(Level.SEVERE);
-        new Thread(new SimulatorClient()).start();
         Main app = new Main();
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
@@ -192,5 +201,11 @@ public class Main extends SimpleApplication {
         settings.setBitsPerPixel(32);
         app.setSettings(settings);
         app.start();
+        
+        //Init networking
+        app._simClient = new SimulatorClient();
+        app._dispatcher = new InstructionDispatcherSimulator(app);
+        app._simClient.getComProtocol().setDispatcher(app._dispatcher);
+        new Thread(app._simClient).start();
     }
 }

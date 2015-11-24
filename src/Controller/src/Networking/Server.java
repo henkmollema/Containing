@@ -114,6 +114,9 @@ public class Server implements Runnable
             BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = _socket.getOutputStream();
+            
+            //Send empty message to start conversation..
+            MessageWriter.writeMessage(output, new byte[]{0});
 
             boolean shouldBreak = false;
             while (!shouldBreak)

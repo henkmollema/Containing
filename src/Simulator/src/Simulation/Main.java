@@ -4,7 +4,7 @@ import World.MaterialCreator;
 import GUI.GUI;
 import Networking.InstructionDispatcherSimulator;
 import Networking.SimulatorClient;
-import Utilities.*;
+import Simulation.Utilities.*;
 import World.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
@@ -92,9 +92,6 @@ public class Main extends SimpleApplication {
     }
     public static Input input() {
         return instance().m_input;
-    }
-    public static InputManager inputManager() {
-        return instance().inputManager;
     }
     public static Node root() {
         return instance().rootNode;

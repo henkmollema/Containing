@@ -20,11 +20,7 @@ import Simulation.Path;
 import Simulation.Point3;
 import Simulation.Time;
 import Simulation.Transform;
-<<<<<<< HEAD
 import Simulation.Utilities;
-=======
-import Utilities.MaterialCreator;
->>>>>>> origin/dev
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;

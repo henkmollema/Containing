@@ -1,4 +1,4 @@
-package data;
+package app;
 
 option java_package = "";
 option java_outer_classname = "InstructionProtos";

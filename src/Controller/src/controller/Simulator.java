@@ -1,6 +1,7 @@
 package controller;
 
 import Networking.*;
+import networking.protocol.CommunicationProtocol;
 import networking.protocol.InstructionDispatcher;
 
 /**
@@ -14,6 +15,16 @@ public class Simulator
     private Thread _thread;
     private Server _server;
     private InstructionDispatcher _instructionDispatcher;
+    
+    public InstructionDispatcher instructionDispatcher()
+    {
+        return _instructionDispatcher;
+    }
+    
+    public CommunicationProtocol communication()
+    {
+        return _server.getComProtocol();
+    }
     
 
     public Simulator(SimulatorController controller)

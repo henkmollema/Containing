@@ -5,10 +5,11 @@
 package Networking;
 
 import controller.Simulator;
-import controller.SimulatorController;
+import java.util.UUID;
 import networking.Proto.InstructionProto;
+import networking.Proto.InstructionProto.InstructionData;
+import networking.Proto.InstructionProto.InstructionResponse;
 import networking.protocol.InstructionType;
-import static networking.protocol.InstructionType.CONSOLE_COMMAND;
 import networking.protocol.InstructionDispatcher;
 
 /**
@@ -35,16 +36,28 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     @Override
     public void forwardInstruction(InstructionProto.Instruction inst)
      {
+         
+         InstructionData.Builder rdataBuilder = InstructionData.newBuilder();
+         
          switch(inst.getInstructionType())
          {
              case InstructionType.CONSOLE_COMMAND:
                  String message = inst.getData().getMessage();
                     System.out.println("GOT CONSOLECOMAND: " + message);
-                    _sim.parseCommand(message);
+                    rdataBuilder.setMessage(_sim.parseCommand(message));
                  break;
                  
                  //More instruction types here..
          }
+         
+         InstructionResponse.Builder rbuilder = InstructionResponse.newBuilder();
+         rbuilder.setData(rdataBuilder.build());
+         rbuilder.setInstructionId(inst.getId());
+         rbuilder.setId(UUID.randomUUID().toString());
+         InstructionResponse response = rbuilder.build();
+         
+         _sim.communication().sendResponse(response);
+         
      }
 
     @Override

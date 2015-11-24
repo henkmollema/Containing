@@ -12,23 +12,18 @@ void road_map::reset_nodes()
 
 vector<node> road_map::get_copy()
 {
-    cout << "currently in road_map::get_copy()" << endl;
     vector<node> temp_nodes{ vector<node>(0) };
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int id{ m_nodes[i]->id() };
         vector2 pos{ m_nodes[i]->get_position() };
         temp_nodes.push_back(node(id, pos));
-        cout << "node " << i << " with pntr " << m_nodes[i] << " created" << endl;
     }
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
         int tester = 0;
-        node* testeritis = m_nodes[i];
-        cout << "currently in road_map::get_copy() before node::get_connections().size()" << endl;
-        // falls flat on its face at the second call to this
+        // falls flat on its face at the fifth call to this
         int test = m_nodes[i]->get_connections().size();
-        cout << "currently in road_map::get_copy() after node::get_connections().size()" << endl;
         for (unsigned int j{ 0 }; j < test; ++j)
         {
             tester = m_nodes[i]->get_connections(i, j)[j]->id();
@@ -47,6 +42,11 @@ bool road_map::node_is_blocked(int i)
 road_map::road_map()
 {
     
+}
+
+road_map::size()
+{
+    return m_nodes.size();
 }
 
 road_map::road_map(vector<node_base> n)

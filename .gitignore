@@ -19,7 +19,12 @@ hs_err_pid*
 
 # Build stuff
 build-impl.xml
+build-impl.xml~
 private/
 dist/
 build/
 *.dylib
+[Dd]ebug/
+[Oo]bj/
+*.suo
+src/Pathfinding/Pathfinding Containing/Pathfinding Containing.sdf

@@ -9,6 +9,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
@@ -31,16 +32,8 @@ public class Main extends SimpleApplication {
         return m_instance;
     }
 
-    // Something
-    public static AssetManager assets() {
-        return instance().assetManager;
-    }
-    public static Node root() {
-        return instance().rootNode;
-    }
-    public static ViewPort view() {
-        return instance().viewPort;
-    }
+    // 
+    private float m_previousTimeScale = 1.0f;
     
     // Behaviours
     private static List<Behaviour> m_behaviours;
@@ -49,13 +42,24 @@ public class Main extends SimpleApplication {
     // Lines
     private static List<Line3D> m_lines;
     
+    private Input m_input;
+    
     // Camera
     private Game.Camera m_camera;
+    public com.jme3.renderer.Camera cam() {
+        return cam;
+    }
     public Game.Camera camera() {
         return m_camera;
     }
     public FlyByCamera flyCamera() {
         return flyCam;
+    }
+    public void showCursor(boolean show) {
+        inputManager.setCursorVisible(show);
+    }
+    public Vector2f cursorPosition() {
+        return inputManager.getCursorPosition();
     }
     
     //Networking
@@ -71,6 +75,18 @@ public class Main extends SimpleApplication {
     public static InputManager inputManager() {
         return instance().inputManager;
     }
+    public static AssetManager assets() {
+        return instance().assetManager;
+    }
+    public static Node root() {
+        return instance().rootNode;
+    }
+    public static ViewPort view() {
+        return instance().viewPort;
+    }
+    public static Input input() {
+        return instance().m_input;
+    }
     
     /** HERE COME ALL BEHAVIOURS
      * 
@@ -79,12 +95,13 @@ public class Main extends SimpleApplication {
      * 
      */
     private void initBehaviours() {
-        
         // Init main behaviours
         m_camera = new Game.Camera();
+        m_input = new Input();
         
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[] {
+            m_input,
             m_camera,
             
             // Non-Main
@@ -136,6 +153,7 @@ public class Main extends SimpleApplication {
         Time._updateTime(tpf);
         updateBehaviours();
         updateWorld();
+        updateTimescale();
     }
     /**
      * Called on render
@@ -207,5 +225,34 @@ public class Main extends SimpleApplication {
         app._dispatcher = new InstructionDispatcherSimulator(app);
         app._simClient.getComProtocol().setDispatcher(app._dispatcher);
         new Thread(app._simClient).start();
+    }
+    
+    public void togglePause() {
+        if (Time.timeScale() < 0.001f) {
+            // unpause
+            Time.setTimeScale(m_previousTimeScale);
+        } else {
+            m_previousTimeScale = Time.timeScale();
+            Time.setTimeScale(0.0f);
+        }
+    }
+    public void updateTimescale() {
+        float __temp = 10.0f * Time.deltaTime();
+        
+        if (m_input.getButton("R").isDown())
+            __temp = -__temp;
+        else if (!m_input.getButton("T").isDown())
+            return;
+        
+        __temp += Time.timeScale();
+        __temp = Mathf.clamp(__temp, 0.1f, 200.0f);
+        Time.setTimeScale(__temp);
+    }
+    public void resetTimescale() {
+        Time.setTimeScale(1.0f);
+    }
+    public void exit() {
+        Debug.log("TEST");
+        instance().stop();
     }
 }

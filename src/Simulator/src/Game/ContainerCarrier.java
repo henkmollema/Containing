@@ -13,5 +13,10 @@ import Simulation.*;
 public class ContainerCarrier extends Item {
     private Point3 m_stacks;
     
-    
+    public ContainerCarrier() {
+        super();
+    }
+    public ContainerCarrier(Transform parent) {
+        super(parent);
+    }
 }

@@ -9,6 +9,8 @@ import Simulation.Mathf;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -57,4 +59,24 @@ public final class Utilities {
     public static float NaNSafeFloat(float f) {
         return ((Float)f).isNaN() ? 0.0f : f;
     }
+    
+    public static boolean nullOrEmpty(String s) {
+        return (s == null || s.length() < 1);
+    }
+    
+    
+    public static <T> List<T> addAll(List<T> base, T[] added) {
+        base.addAll(Arrays.asList(added));
+        return base;
+    }
+    
+    public static Vector3f rotateY(Vector3f cur, float rotation) {
+        Vector3f __new = zero();
+        __new.x = cur.z * Mathf.sin(Mathf.Deg2Rad * rotation) - cur.x * Mathf.cos(Mathf.Deg2Rad * rotation);
+        __new.y = cur.y;
+        __new.z = cur.z * Mathf.cos(Mathf.Deg2Rad * rotation) + cur.x * Mathf.sin(Mathf.Deg2Rad * rotation);
+        
+        return __new;
+    }
+
 }

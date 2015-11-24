@@ -5,6 +5,8 @@
  */
 package World;
 
+import Game.CraneHook;
+import Game.RailCrane;
 import Simulation.Behaviour;
 import Simulation.Callback;
 import Simulation.Debug;
@@ -37,12 +39,23 @@ public class World extends Behaviour {
     Transform testCube;
     Transform testCube2;
     Path m_testCube2Path = new Path(
-        Arrays.asList(
-                new Vector3f(-10.0f, 0.0f, 10.0f),
-                new Vector3f(-10.0f, 0.0f, -10.0f),
-                new Vector3f(10.0f, 0.0f, -10.0f),
-                new Vector3f(10.0f, 0.0f, 10.0f)),
-            8.0f, 0.3f, 0, LoopMode.PingPong, EaseType.EaseInSine);
+            null, 
+            null, 
+            false, 
+            true, 
+            8.0f, 
+            3.0f, 
+            LoopMode.Loop, 
+            EaseType.EaseInSine, 
+            null, 
+            new Vector3f(-10.0f, 0.0f, 10.0f),
+            new Vector3f(-10.0f, 0.0f, -10.0f),
+            new Vector3f(10.0f, 0.0f, -10.0f),
+            new Vector3f(10.0f, 0.0f, 10.0f)
+     );
+    
+    CraneHook m_testHook;
+    RailCrane m_testCrane;
     
     boolean goingBack;
     float prev;
@@ -56,13 +69,17 @@ public class World extends Behaviour {
         Main.instance().camera().createShadowsFiler(m_sun);
         
         createObjects();
+        Time.setFixedTimeScale(0.3f);
     }
     @Override
     public void update() {
-        
         testCube.move(testCube.forward(), Time.deltaTime() * 3.0f);
         m_testCube2Path.update();
         testCube2.position(m_testCube2Path.getPosition());
+        m_testCrane._update();
+        if (m_testHook.finishedWaiting())
+            m_testHook.moveDown(false, -7f);
+        
         
         boolean ppp = goingBack;
         if (!Mathf.inRange(Mathf.delta(prev, testCube.eulerAngles().x), Mathf.deltaAngle(prev, testCube.eulerAngles().x), 10.0f))
@@ -77,6 +94,10 @@ public class World extends Behaviour {
         
         if (ppp != goingBack)
             prev = testCube.eulerAngles().x;
+    }
+    @Override
+    public void fixedUpdate() {
+        testCube.setMaterial(MaterialCreator.unshadedRandom());
     }
     
     private void createObjects() {
@@ -104,21 +125,38 @@ public class World extends Behaviour {
         geoma.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         geoma.setMaterial(MaterialCreator.diffuse());
         
+        Box bc = new Box(1, 1, 1);
+        Geometry geomc = new Geometry("Box", bc);
+        geomc.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        geomc.setMaterial(MaterialCreator.diffuse());
+        
+        m_testHook = new CraneHook(testCube2, 2.0f, 3.0f, 1.0f, new Vector3f(0.0f, -1.0f, 0.0f));
+        m_testCrane = new RailCrane(null, m_testHook);
+        //m_testHook.attachChild(geomc);
+        
+        
+        m_testHook.moveDown(false, -10.0f);
+        
+        
+        
         testCube.attachChild(geoma);
         testCube2.attachChild(geoma.clone(true));
         m_testCube2Path.setPosition(testCube2.position());
         
         
         m_testCube2Path.setCallback(new Callback(this, "test"));
+        
+        
+        Main.instance().camera().setTarget(testCube2);
     }
     public void test() {
         Debug.log("This is awesome!!!");
-        
         Instruction i = Instruction.newBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setInstructionType(InstructionType.CONSOLE_COMMAND)
                 .setData(InstructionProto.InstructionData.newBuilder().setTime(0l).setMessage("test command").build())
                 .build();
         Main.instance().simClient().getComProtocol().sendInstruction(i);
+        m_testHook.moveUp(false);
     }
 }

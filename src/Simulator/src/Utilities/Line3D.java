@@ -80,7 +80,24 @@ public final class Line3D extends Transform {
         
         UpdateMesh();//Generate the mesh according to the given cam
     }
-   
+   public Line3D(Transform parent, Material material, Line3DNode... nodes)
+    {
+        super(parent);
+        m_Mesh = new Mesh();
+        mat  = material;
+        
+        geo  = new Geometry();
+        geo.setMaterial(mat);
+        geo.setMesh(m_Mesh);
+        this.attachChild(geo);
+        
+        lineNodes = new ArrayList<Line3DNode>();
+        lineNodes.addAll(Arrays.asList(nodes));
+        
+        initArrays(); //Initialize the arrays
+        
+        UpdateMesh();//Generate the mesh according to the given cam
+    }
     
     /*
      * Initializes the vertex, normal, color, index, and textcoord arrays.

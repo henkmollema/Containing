@@ -11,7 +11,6 @@ package Simulation;
  */
 public enum LoopMode {
     Once,
-    Manual,
     PingPong,
     Loop
 }

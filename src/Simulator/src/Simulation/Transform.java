@@ -29,7 +29,10 @@ public class Transform extends Node {
      * @param parent parent node
      */
     public Transform(Node parent) {
-        parent.attachChild(this);
+        if (parent == null)
+            Main.root().attachChild(this);
+        else
+            parent.attachChild(this);
     }
     
     /**

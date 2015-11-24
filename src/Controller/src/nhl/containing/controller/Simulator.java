@@ -44,6 +44,8 @@ public class Simulator
         _server.getComProtocol().setDispatcher(_instructionDispatcher);
         
         _thread = new Thread(_server);
+        _thread.setName("Networking Controller");
+        //_thread.setDaemon(true);
         _thread.start();
 
         // todo

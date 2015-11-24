@@ -39,6 +39,16 @@ public class SimulatorClient implements Runnable
     {
         return comProtocol;
     }
+    
+    public boolean isConnected()
+    {
+        return isConnected;
+    }
+    
+    public void stop()
+    {
+        shouldRun = false;
+    }
 
     /**
      * Opens a serversocket and waits for a client to connect.
@@ -147,8 +157,7 @@ public class SimulatorClient implements Runnable
             //Send empty message to start conversation..
             MessageWriter.writeMessage(output, new byte[]{0});
             
-            boolean shouldBreak = false;
-            while (!shouldBreak)
+            while (shouldRun)
             {
                 // Re-use streams for more efficiency.
                 byte[] data = MessageReader.readByteArray(input, dataStream);
@@ -211,6 +220,6 @@ public class SimulatorClient implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("Server: " + s);
+        System.out.println("Simulator: " + s);
     }
 }

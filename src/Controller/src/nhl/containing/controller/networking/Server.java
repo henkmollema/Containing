@@ -35,6 +35,16 @@ public class Server implements Runnable
     {
         return comProtocol;
     }
+    
+    public boolean isConnected()
+    {
+        return isConnected;
+    }
+    
+    public void stop()
+    {
+        shouldRun = false;
+    }
 
     /**
      * Opens a serversocket and waits for a client to connect.
@@ -46,7 +56,7 @@ public class Server implements Runnable
     public boolean start()
     {
         p("start start()");
-
+        
         if (!isConnected)
         {
 
@@ -118,8 +128,7 @@ public class Server implements Runnable
                 0
             });
 
-            boolean shouldBreak = false;
-            while (!shouldBreak)
+            while (shouldRun)
             {
                 // Re-use streams for more efficiency.
                 byte[] data = MessageReader.readByteArray(input, dataStream);
@@ -184,6 +193,6 @@ public class Server implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("Server: " + s);
+        System.out.println("Controller: " + s);
     }
 }

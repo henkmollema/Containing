@@ -16,7 +16,9 @@ import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
-import Utilities.Utilities;
+import com.jme3.collision.CollisionResults;
+import com.jme3.math.Ray;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -25,9 +27,9 @@ import Utilities.Utilities;
 public class Input extends Behaviour {
     
     // Smoothing
-    public final float      MOUSE_SENSITIVITY_X         = 5.0f;
-    public final float      MOUSE_SENSITIVITY_Y         = -5.0f;
-    public final int        MOUSE_SMOOTH_CHECKS         = 10;
+    public final float      MOUSE_SENSITIVITY_X         = 3.0f;
+    public final float      MOUSE_SENSITIVITY_Y         = -3.0f;
+    public final int        MOUSE_SMOOTH_CHECKS         = 20;
     
     // Acceleration
     public final boolean    MOUSE_ACCELERATION_ACTIVE   = true;
@@ -44,7 +46,7 @@ public class Input extends Behaviour {
     public final Vector2f   MOUSE_SENSITIVITY           = new Vector2f(MOUSE_SENSITIVITY_X, MOUSE_SENSITIVITY_Y);
     public final int        MOUSE_SMOOTH_BUFFER         = 6;
     public final int        MOUSE_MAX_SMOOTH_BUFFER     = Mathf.max(1, MOUSE_SMOOTH_CHECKS);
-    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.5f);
+    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.0f);
     
     // 
     private Vector2f        m_tempRawMouseMove = Vector2f.ZERO;
@@ -103,9 +105,6 @@ public class Input extends Behaviour {
         m_mouseMove = getClampedInput(m_mouseMove);
         m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime() * 0.4f);
         
-        if (getButton("Button1").isDown()) {
-            Debug.log("adfasdfasdfasfasfasfasfasfadfasfasfasfasf");
-        }
     }
     
     // 
@@ -132,8 +131,8 @@ public class Input extends Behaviour {
     }
     // 
     private Vector2f getRawMouseInput() {
-        Vector2f pos = new Vector2f(Main.instance().cursorPosition()).subtract(m_previousMousePosition);
-        m_previousMousePosition = new Vector2f(Main.instance().cursorPosition());
+        Vector2f pos = new Vector2f(Main.inputManager().getCursorPosition()).subtract(m_previousMousePosition);
+        m_previousMousePosition = new Vector2f(Main.inputManager().getCursorPosition());
         return pos;
     }
     private Vector2f getSmoothMouseInput(int checks) {
@@ -174,33 +173,33 @@ public class Input extends Behaviour {
         // Clear default
         Main.inputManager().clearMappings();
         Main.inputManager().clearRawInputListeners();
-        Main.instance().flyCamera().setEnabled(false);
         
         m_buttons = new Button[] {
-            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                    //  0
-            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),              //  1
-            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),              //  2
-            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                    //  3
-            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),              //  4
-            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                    //  5
+            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
+            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),             //  1
+            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),             //  2
+            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                 //  3
+            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),             //  4
+            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                 //  5
             new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),               //  6
-            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),             //  7
-            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),              //  8
-            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                    //  9
-            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                    // 10
-            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                    // 11
-            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                    // 12
-            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),               // 13
+            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),            //  7
+            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),             //  8
+            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                 //  9
+            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                 // 10
+            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                 // 11
+            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                // 12
+            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),             // 13
                 
-            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),  // 14
-            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),// 15
-            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))  // 16
+            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),    // 14
+            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),  // 15
+            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))   // 16
         };
         
         m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
         m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"));
         m_buttons[12].setOnDownCallback(new Callback(Main.instance().camera(), "toggleCameraMode"));
         m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"));
+        m_buttons[14].setOnDownCallback(new Callback(this, "pickObject"));
         
         Main.inputManager().addMapping("-Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         Main.inputManager().addMapping("+Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
@@ -213,6 +212,45 @@ public class Input extends Behaviour {
         Utilities.addAll(m_mappings, new String[]{"-Wheel", "+Wheel", "-MouseX", "+MouseX", "-MouseY", "+MouseY"});
         
         Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
+    }
+    public void pickObject() {
+        
+        CollisionResults hit = new CollisionResults();
+        
+        Vector2f _mousePosition = Main.inputManager().getCursorPosition();
+        Vector3f from = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 0f).clone();
+        Vector3f direction = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 1.0f).subtractLocal(from).normalizeLocal();
+        
+        Ray ray = new Ray(from, direction);
+        
+        Main.root().collideWith(ray, hit);
+        
+        int lowestIndex = -1;
+        Long transformID = null;
+        float lowestDistance = Float.MAX_VALUE;
+        for (int i = 0; i < hit.size(); ++i) {
+            
+            Long o = hit.getCollision(i).getGeometry().getUserData(Main.TRANSFORM_ID_KEY);
+            
+            if (o == null)
+                continue;
+            
+            float __dist = hit.getCollision(i).getDistance();
+            if (__dist < lowestDistance) {
+               lowestDistance = __dist;
+               lowestIndex = i;
+               transformID = o + 0;
+            }
+        }
+        
+        if (lowestIndex < 0) {
+            Main.camera().setTarget(null);
+            return;
+        }
+        
+        Main.camera().setTarget(Main.getTransform(transformID));
+        
+        
     }
     
     private class InternalListener implements ActionListener, AnalogListener {
@@ -237,34 +275,12 @@ public class Input extends Behaviour {
             }
 
             if (name.contains("Wheel")) {
-                if (Main.instance().camera().cameraMode() != CameraMode.RTS) {
+                if (Main.camera().cameraMode() != CameraMode.RTS) {
                     return;
                 }
-                Main.instance().camera().zoom(value);
+                Main.camera().zoom(value);
             } else if (name.contains("Mouse")) {
-                //m_tempRawMouseMove
                 
-                if (getButton("Button1").isDown()) {
-                    Debug.log("ASDFasdfafafsasdfasdfafasfasfasdf");
-                }
-                
-                /*
-                if (mouseRotation) {
-                    int direction;
-                    if (name.endsWith("X")) {
-                        direction = ROTATE;
-                        if ( up == UpVector.Z_UP ) {
-                            value = -value;
-                        }
-                    } else {
-                        direction = TILT;
-                    }
-                    offsetMoves[direction] += value;
-                } else if (mouseDrag) {
-                    int direction;
-                    
-                    offsetMoves[direction] += value * maxSpeedPerSecondOfAccell[direction] * maxAccellPeriod[direction];
-                }*/
             }
         }
     }

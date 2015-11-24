@@ -36,7 +36,7 @@ public abstract class Behaviour {
      * Registers the script to main
      */
     public final void _baseInit() {
-        Main.Register(this);
+        Main.register(this);
     }
     /**
      * 

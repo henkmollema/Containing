@@ -6,7 +6,7 @@ package Game;
 
 import Simulation.Path;
 import Simulation.Transform;
-import Utilities.MaterialCreator;
+import World.MaterialCreator;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -20,7 +20,9 @@ public class RailCrane extends Crane {
     public RailCrane(Transform parent, CraneHook hook) {
         super(parent, hook);
     }
-    
+    public RailCrane(Transform parent, CraneHook hook, Vector3f v) {
+        super(parent, hook, v);
+    }
     @Override
     protected String craneModelName() {
         return "TrainCrane.obj";

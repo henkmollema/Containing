@@ -79,4 +79,8 @@ public class CraneHook extends MovingItem{
     public boolean finishedWaiting() {
         return path().finishedWaiting();
     }
+    
+    public void setAngles(Vector3f v) {
+        this.eulerAngles(v);
+    }
 }

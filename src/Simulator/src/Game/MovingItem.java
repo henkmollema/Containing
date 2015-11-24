@@ -5,6 +5,7 @@
 package Game;
 
 import Simulation.Path;
+import Simulation.Point3;
 import Simulation.Transform;
 
 /**
@@ -21,15 +22,15 @@ public class MovingItem extends ContainerCarrier {
         super();
     }
     public MovingItem(Transform parent) {
-        super(parent);
+        super(parent, Point3.one());
     }
     public MovingItem(Transform parent, float loadedSpeed, float emptySpeed) {
-        super(parent);
+        super(parent,  Point3.one());
         this.m_empySpeed = emptySpeed;
         this.m_loadedSpeed = loadedSpeed;
     }
     public MovingItem(Transform parent, float loadedSpeed, float emptySpeed, Path path) {
-        super(parent);
+        super(parent, Point3.one());
         this.m_empySpeed = emptySpeed;
         this.m_loadedSpeed = loadedSpeed;
     }

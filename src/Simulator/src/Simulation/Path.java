@@ -5,7 +5,6 @@
  */
 package Simulation;
 
-import Utilities.Utilities;
 import com.jme3.math.Vector3f;
 
 /**

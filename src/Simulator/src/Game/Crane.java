@@ -7,10 +7,17 @@ package Game;
 import Simulation.Main;
 import Simulation.Path;
 import Simulation.Transform;
-import Utilities.Line3D;
+import Simulation.Line3D;
+import Simulation.Line3DNode;
+import Simulation.Mathf;
+import Simulation.Utilities;
+import World.MaterialCreator;
 import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,6 +37,10 @@ public abstract class Crane extends MovingItem {
         super(parent);
         init(craneHook, Vector3f.ZERO);
     }
+    public Crane(Transform parent, CraneHook craneHook, Vector3f offset) {
+        super(parent);
+        init(craneHook, offset);
+    }
     
     /**
      * Constructor extention for reducing code
@@ -39,13 +50,27 @@ public abstract class Crane extends MovingItem {
     private void init(CraneHook hook, Vector3f position) {
         m_craneSpatial = Main.assets().loadModel(craneModelPath());
         m_craneSpatial.setMaterial(craneModelMaterial());
+        m_craneSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
+        m_craneSpatial.scale(1.5f);
         attachChild(m_craneSpatial);
         
         m_hook = hook;
         m_hookSpatial = Main.assets().loadModel(hookModelPath());
         m_hookSpatial.setMaterial(hookModelMaterial());
+        m_hookSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
         m_hook.attachChild(m_hookSpatial);
+        m_hook.setLocalTranslation(0.0f, 0.0f, 0.0f);
         attachChild(m_hook);
+        
+        List<Line3DNode> lineNodes = new ArrayList<Line3DNode>(0);
+        lineNodes.add(new Line3DNode(Utilities.zero(), 1.0f, ColorRGBA.White));
+        lineNodes.add(new Line3DNode(Utilities.zero(), 1.0f, ColorRGBA.White));
+        
+        m_rope = new Line3D(lineNodes, MaterialCreator.rope());
+        m_rope.SetPosition(0, m_hook.position());
+        m_rope.SetPosition(1, this.position().add(new Vector3f(0.0f, 5.0f, 0.0f)));
+        Main.register(m_rope);
+        
         
         localPosition(position);
         m_cranePath = getCranePath();

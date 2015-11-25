@@ -86,6 +86,58 @@ public class World extends Behaviour {
         t.position(position);
         StoragePlatform plat = new StoragePlatform(t, Utilities.zero());
     }
+    
+    void test() {
+        /*
+         * mo 24-11-2015
+         * expected:
+            * a 6 x 6 x 22 containers where only the outer visible containers are visible where the offset is equal to the input
+         * 
+         * actual result:
+            * a 6 x 6 x 22 containers where only the outer visible containers are visible where the offset is equal to the input
+         * 
+         * pass/fail:
+            * pass
+         * 
+         */
+        new StoragePlatform(Utilities.zero());
+        
+        
+        /*
+         * mo 24-11-2015
+         * expected:
+            * Transform whit box
+         * 
+         * actual result:
+            * Transform whit box
+         * 
+         * pass/fail
+            * pass
+         */
+        Transform t = ContainerPool.get();
+        
+        /*
+         * mo 24-11-2015
+         * expected:
+            * input trasform disapears and stored
+            * return value TRUE
+         * 
+         * actual result:
+            * input transform disapears and stored
+            * return value TRUE
+         * 
+         * pass/fail:
+            * pass
+         * 
+         * comments:
+            * when putting null or any other transform that is not the pool trasform
+            * FALSE will return
+         */
+        ContainerPool.dispose(t);
+        ContainerPool.dispose(null);
+        ContainerPool.dispose(new Transform());
+    }
+    
     /*
      * Transform testCube;
     Transform testCube2;

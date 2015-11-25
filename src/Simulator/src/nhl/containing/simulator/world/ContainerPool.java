@@ -4,7 +4,6 @@
  */
 package nhl.containing.simulator.world;
 
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import nhl.containing.simulator.simulation.Transform;
 import java.util.ArrayList;

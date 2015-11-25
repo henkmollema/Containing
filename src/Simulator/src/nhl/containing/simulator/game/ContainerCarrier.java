@@ -8,7 +8,7 @@ import nhl.containing.simulator.simulation.Utilities;
 import nhl.containing.simulator.simulation.Point3;
 import nhl.containing.simulator.simulation.Transform;
 import nhl.containing.simulator.world.World;
-import nhl.containing.simulator.world.WorldCreator;
+import nhl.containing.simulator.world.ContainerPool;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 
@@ -20,10 +20,9 @@ public class ContainerCarrier extends Item {
     public class ContainerSpot {
         public Container container = null;
         public Transform transform = null;
-        public Geometry geometry = null;
         
         public ContainerSpot(ContainerCarrier carrier) {
-            transform = new Transform(carrier);
+            transform = ContainerPool.get();
         }
     }
     
@@ -70,7 +69,6 @@ public class ContainerCarrier extends Item {
                     m_containerSpots[i][j][k].transform.localPosition(new Vector3f(i, j, k).mult(World.containerSize().add(m_containerOffset)));
                     
                     m_containerSpots[i][j][k].container = new Container();
-                    m_containerSpots[i][j][k].geometry = WorldCreator.createBox(m_containerSpots[i][j][k].transform);
                 }
             }
         }
@@ -79,31 +77,33 @@ public class ContainerCarrier extends Item {
         for (int x = 0; x < m_containerSpots.length; ++x) {
             for (int y = 0; y < m_containerSpots[x].length; ++y) {
                 for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
-                    if (m_containerSpots[x][y][z].container == null) {
-                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Always);
-                        continue;
-                    }
-                    
-                    if (
-                            x == 0 || x == m_containerSpots.length - 1 ||
-                            y == m_containerSpots[x].length - 1 ||
-                            z == 0 || z == m_containerSpots[x][y].length - 1) {
-                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Dynamic);
-                    } else if (y == 0) {
-                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Always);
-                    } else if (
-                            m_containerSpots[x - 1][y][z].container != null && 
-                            m_containerSpots[x + 1][y][z].container != null &&
-                            m_containerSpots[x][y - 1][z].container != null && 
-                            m_containerSpots[x][y + 1][z].container != null && 
-                            m_containerSpots[x][y][z - 1].container != null && 
-                            m_containerSpots[x][y][z + 1].container != null) {
-                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Always);
+                    if (isOuter(x, y, z)) {
+                        if (m_containerSpots[x][y][z].transform == null)
+                            m_containerSpots[x][y][z].transform = ContainerPool.get();
                     } else {
-                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Dynamic);
+                        if (m_containerSpots[x][y][z].transform != null) {
+                            ContainerPool.dispose(m_containerSpots[x][y][z].transform);
+                            m_containerSpots[x][y][z].transform = null;
+                        }
                     }
                 }
             }
         }
+    }
+    private final boolean isOuter(int x, int y, int z) {
+        if (m_containerSpots[x][y][z].container == null)
+            return false;
+        if (x == 0 || x == m_containerSpots.length - 1 || y == m_containerSpots[x].length - 1 || z == 0 || z == m_containerSpots[x][y].length - 1)
+            return true;
+        if (y == 0)
+            return false;
+        
+        return 
+            m_containerSpots[x - 1][y][z].container == null ||        
+            m_containerSpots[x + 1][y][z].container == null ||
+            m_containerSpots[x][y - 1][z].container == null ||
+            m_containerSpots[x][y + 1][z].container == null ||
+            m_containerSpots[x][y][z - 1].container == null ||
+            m_containerSpots[x][y][z + 1].container == null;
     }
 }

@@ -18,7 +18,7 @@ import com.jme3.scene.Spatial;
 public class Transform extends Node {
     
     protected final long m_id;
-    private Vector3f m_boundExtends = null;
+    //private Vector3f m_boundExtends = null;
     
     /**
      * Constructor
@@ -59,7 +59,7 @@ public class Transform extends Node {
      * @param p 
      */
     public void position(Vector3f p) {
-        Vector3f pos = p.clone();
+        Vector3f pos = p == null ? Utilities.zero() : p.clone();
         move(pos.subtract(position()));
     }
     
@@ -75,7 +75,7 @@ public class Transform extends Node {
      * @param p 
      */
     public void localPosition(Vector3f p) {
-        Vector3f pos = p.clone();
+        Vector3f pos = p == null ? Utilities.zero() : p.clone();
         move(pos.subtract(localPosition()));
     }
     
@@ -91,7 +91,7 @@ public class Transform extends Node {
      * @param q 
      */
     public void rotation(Quaternion q) {
-        Utilities.setWorldRotation(this, q.clone());
+        Utilities.setWorldRotation(this, q == null ? Quaternion.IDENTITY : q.clone());
     }
     
     /**
@@ -106,7 +106,7 @@ public class Transform extends Node {
      * @param q 
      */
     public void localRotation(Quaternion q) {
-        setLocalRotation(q.clone());
+        setLocalRotation(q == null ? Quaternion.IDENTITY : q.clone());
     }
     
     /**
@@ -123,8 +123,9 @@ public class Transform extends Node {
      * @param a 
      */
     public void eulerAngles(Vector3f a) {
+        Vector3f b = a == null ? Utilities.zero() : a.clone();
         Quaternion q = Quaternion.IDENTITY;
-        q.fromAngles(a.x, a.y, a.z);
+        q.fromAngles(b.x, b.y, b.z);
         rotation(q);
     }
     
@@ -142,8 +143,9 @@ public class Transform extends Node {
      * @param a 
      */
     public void localEulerAngles(Vector3f a) {
+        Vector3f b = a == null ? Utilities.zero() : a.clone();
         Quaternion q = Quaternion.IDENTITY;
-        q.fromAngles(a.x, a.y, a.z);
+        q.fromAngles(b.x, b.y, b.z);
         localRotation(q);
     }
     
@@ -235,6 +237,8 @@ public class Transform extends Node {
      * @param speed 
      */
     public void move(Vector3f direction, float speed) {
+        if (direction == null)
+            return;
         this.move(direction.clone().mult(speed));
     }
     /**
@@ -242,6 +246,8 @@ public class Transform extends Node {
      * @param direction 
      */
     public void scaledMove(Vector3f direction) {
+        if (direction == null)
+            return;
         move(direction, Time.deltaTime());
     }
     /**
@@ -250,6 +256,8 @@ public class Transform extends Node {
      * @param speed 
      */
     public void scaledMove(Vector3f direction, float speed) {
+        if (direction == null)
+            return;
         move(direction, speed * Time.deltaTime());
     }
     
@@ -267,23 +275,9 @@ public class Transform extends Node {
     
     @Override
     public int attachChild(Spatial spatial) {
+        if (spatial == null)
+            return - 1;
         spatial.setUserData(Main.TRANSFORM_ID_KEY, m_id);
         return super.attachChild(spatial);
     }
-    
-    // Occlusion culling
-    public final boolean isOnScreen(boolean set) {
-        
-        
-        if (!isOnScreenFast()) {
-            return false;
-        }
-            
-        return true;
-    }
-    /**
-     * When the return value is false, the more expenive check is not called.
-     * @return 
-     */
-    protected boolean isOnScreenFast() { return true; }
 }

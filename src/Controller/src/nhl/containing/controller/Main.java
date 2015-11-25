@@ -17,14 +17,14 @@ public class Main
     {
         try
         {
-//            File file = new File(Main.class.getResource("/lib/").toURI().toString(), "JNITest.dll");
-//            File resFile = new File(System.getProperty("java.io.tmpdir"), "JNITest.dll");
-//            if (!resFile.exists())
-//            {
-//                resFile.createNewFile();
-//            }
-//            Main.copyFileToTemp(file.getPath().substring(5), resFile.getAbsolutePath());
-//            System.load(resFile.getAbsolutePath());
+            File file = new File(Main.class.getResource("/lib/").toURI().toString(), "JNITest.dll");
+            File resFile = new File(System.getProperty("java.io.tmpdir"), "JNITest.dll");
+            if (!resFile.exists())
+            {
+                resFile.createNewFile();
+            }
+            Main.copyFileToTemp(file.getPath().substring(5), resFile.getAbsolutePath());
+            System.load(resFile.getAbsolutePath());
         }
         catch (Exception ex)
         {

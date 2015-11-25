@@ -63,7 +63,7 @@ public class Path {
     private void init(Vector3f currentPosition, Integer startNode, boolean manual, boolean useSpeed, float speed, Float waitTime, LoopMode loopMode, EaseType easeType, Callback callback, Vector3f... nodes) {
         
         this.m_manual = manual;
-        this.m_useTimeInsteadOfSpeed = useSpeed;
+        this.m_useTimeInsteadOfSpeed = !useSpeed;
         this.m_speed = speed;
         this.m_waitTime = waitTime == null ? 0.0f : waitTime;
         this.m_loopMode = loopMode == null ? LoopMode.PingPong : loopMode;
@@ -96,7 +96,7 @@ public class Path {
      */
     public void update() {
         if (m_timer < 1.0f) {
-            m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 100000.0f);
+            m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 1.0f);
             if (m_timer >= 1.0f && m_callback != null)
                 m_callback.invoke();
         }
@@ -106,7 +106,7 @@ public class Path {
         else {
             if (!m_manual) {
                 next();
-                m_timer -= 1.0f + m_waitTime;
+                m_timer -= (1.0f + m_waitTime);
             }
         }
     }

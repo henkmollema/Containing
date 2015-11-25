@@ -37,7 +37,7 @@ public class MovingItem extends ContainerCarrier {
     protected void path(Path path) {
         m_path = path;
     }
-    protected Path path() {
+    public Path path() {
         return m_path;
     }
 }

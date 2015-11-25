@@ -10,6 +10,7 @@ import nhl.containing.simulator.world.MaterialCreator;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.LoopMode;
 
 /**
  *
@@ -17,11 +18,11 @@ import com.jme3.math.Vector3f;
  */
 public class RailCrane extends Crane {
 
-    public RailCrane(Transform parent, CraneHook hook) {
-        super(parent, hook);
+    public RailCrane(Transform parent) {
+        super(parent);
     }
-    public RailCrane(Transform parent, CraneHook hook, Vector3f v) {
-        super(parent, hook, v);
+    public RailCrane(Transform parent, Vector3f v) {
+        super(parent, v);
     }
     @Override
     protected String craneModelName() {
@@ -45,7 +46,12 @@ public class RailCrane extends Crane {
 
     @Override
     protected Path getCranePath() {
-        return new Path(null, null, false, true, 3.0f, 1.0f, null, null, null, new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(20.0f, 0.0f, 0.0f));
+        return new Path(null, null, false, true, 3.0f, 1.0f, LoopMode.Once, null, null, m_base, m_base);
+    }
+
+    @Override
+    protected float attachTime() {
+        return 2.0f;
     }
     
 }

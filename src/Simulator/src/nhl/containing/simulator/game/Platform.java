@@ -5,6 +5,7 @@
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Bounds;
+import nhl.containing.simulator.simulation.Transform;
 
 /**
  *
@@ -14,4 +15,11 @@ public abstract class Platform extends ContainerCarrier {
     private Bounds m_bounds;
     
     abstract void createPlatform();
+    
+    public Platform() {
+        super();
+    }
+    public Platform(Transform parent) {
+        super(parent);
+    }
 }

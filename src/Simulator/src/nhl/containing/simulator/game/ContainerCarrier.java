@@ -33,11 +33,32 @@ public class ContainerCarrier extends Item {
     public ContainerCarrier() {
         super();
     }
+    public ContainerCarrier(Transform parent) {
+        super(parent);
+    }
     public ContainerCarrier(Transform parent, Point3 stack) {
         super(parent);
         initSpots(stack);
         updateOuter();
     }
+    
+    public Container getContainer(Point3 p) {
+        return getContainer(p.x, p.y, p.z);
+    }
+    public Container getContainer(int x, int y, int z) {
+        if (x < 0 || x >= m_containerSpots.length)
+            return null;
+        if (y < 0 || y >= m_containerSpots[x].length)
+            return null;
+        if (z < 0 || z >= m_containerSpots[x][y].length)
+            return null;
+        if (m_containerSpots[x][y][z] == null)
+            return null;
+        
+        return m_containerSpots[x][y][z].container;
+    }
+    
+    
     protected final void initSpots(Point3 stack) {
         m_containerSpots = new ContainerSpot[stack.x][][];
         for (int i = 0; i < m_containerSpots.length; ++i) {
@@ -58,8 +79,10 @@ public class ContainerCarrier extends Item {
         for (int x = 0; x < m_containerSpots.length; ++x) {
             for (int y = 0; y < m_containerSpots[x].length; ++y) {
                 for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
-                    //if (m_containerSpots[x][y][z].container == null)
-                    //    continue;
+                    if (m_containerSpots[x][y][z].container == null) {
+                        m_containerSpots[x][y][z].geometry.setCullHint(CullHint.Always);
+                        continue;
+                    }
                     
                     if (
                             x == 0 || x == m_containerSpots.length - 1 ||

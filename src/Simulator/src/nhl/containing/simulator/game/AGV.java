@@ -8,10 +8,8 @@ package nhl.containing.simulator.game;
  *
  * @author sietse
  */
-public class ParkingSpot {
-    private AGV m_agv;
+public class AGV {
+    private boolean m_waiting = false;
     
-    public AGV agv() {
-        return m_agv;
-    }
+    
 }

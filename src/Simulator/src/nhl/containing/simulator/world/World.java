@@ -6,7 +6,6 @@
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.game.ContainerCarrier;
-import nhl.containing.simulator.game.CraneHook;
 import nhl.containing.simulator.game.RailCrane;
 import nhl.containing.simulator.game.StoragePlatform;
 import nhl.containing.simulator.simulation.Behaviour;
@@ -28,7 +27,9 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
@@ -39,7 +40,7 @@ import nhl.containing.networking.protocol.InstructionType;
  * @author sietse
  */
 public class World extends Behaviour {
-    public static final Vector3f containerSize() {
+    public static Vector3f containerSize() {
         return new Vector3f(2.438f, 2.438f, 12.192f);
     }
     
@@ -48,7 +49,7 @@ public class World extends Behaviour {
     private DirectionalLight m_sun;
     
     // World
-    
+    private List<StoragePlatform> m_storages = new ArrayList<StoragePlatform>(0);
     
     // External
     
@@ -63,20 +64,27 @@ public class World extends Behaviour {
         //Time.setFixedTimeScale(0.3f);
     }
     
+    @Override
+    public void update() {
+        for(StoragePlatform s : m_storages)
+            s.update();
+    }
     private void createObjects() {
         Vector3f offset = Utilities.zero();
-        for (int i = 0; i < 12; ++i) {
-            new StoragePlatform(offset);
+        for (int i = 0; i < 1; ++i) {
+            m_storages.add(new StoragePlatform(offset));
             offset.x += containerSize().x * 6 + 15.0f;
         }
         
+        Geometry g = WorldCreator.createBox(null, new Vector3f(500.0f, 1.0f, 500.0f));
+        g.setLocalTranslation(0.0f, -1.0f, 0.0f);
         
         
     }
     private void createStorage(Vector3f position) {
         Transform t = new Transform();
         t.position(position);
-        ContainerCarrier carrier = new ContainerCarrier(t, new Point3(6, 6, 14));
+        StoragePlatform plat = new StoragePlatform(t, Utilities.zero());
     }
     /*
      * Transform testCube;

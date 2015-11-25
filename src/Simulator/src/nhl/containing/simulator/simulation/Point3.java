@@ -128,46 +128,51 @@ public class Point3 {
      * 
      * @param v 
      */
-    public void add(Point3 v) {
+    public Point3 add(Point3 v) {
         this.x += v.x;
         this.y += v.y;
         this.z += v.z;
+        return this;
     }
     /**
      * 
      * @param v 
      */
-    public void sbstract(Point3 v) {
+    public Point3 sbstract(Point3 v) {
         this.x -= v.x;
         this.y -= v.y;
         this.z -= v.z;
+        return this;
     }
     /**
      * 
      * @param v 
      */
-    public void scale(Point3 v) {
+    public Point3 scale(Point3 v) {
         this.x *= v.x;
         this.y *= v.y;
         this.z *= v.z;
+        return this;
     }
     /**
      * 
      * @param i 
      */
-    public void multiply(int i) {
+    public Point3 multiply(int i) {
         this.x *= i;
         this.y *= i;
         this.z *= i;
+        return this;
     }
     /**
      * 
      * @param i 
      */
-    public void devide(int i) {
+    public Point3 devide(int i) {
         this.x /= i;
         this.y /= i;
         this.z /= i;
+        return this;
     }
     
     /**

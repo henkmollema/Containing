@@ -78,4 +78,8 @@ public final class Time {
     public static float fixedDeltaTime() {
         return (m_fixedTimeScale * m_timeScale);
     }
+    
+    public static float time() {
+        return m_time;
+    }
 }

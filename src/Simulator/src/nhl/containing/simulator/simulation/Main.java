@@ -1,8 +1,6 @@
 package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.world.TestBehaviour;
 import nhl.containing.simulator.world.World;
-import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.networking.InstructionDispatcherSimulator;
 import nhl.containing.simulator.networking.SimulatorClient;
@@ -10,17 +8,12 @@ import nhl.containing.simulator.simulation.Utilities.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
-import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
-import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector2f;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.*;
 
@@ -68,7 +61,7 @@ public class Main extends SimpleApplication {
     // 
     public static AppSettings settings() {
         return instance().settings;
-	}
+    }
     //Networking
     SimulatorClient _simClient;
     InstructionDispatcherSimulator _dispatcher;
@@ -127,8 +120,7 @@ public class Main extends SimpleApplication {
             m_gui,
             m_camera,
             // Non-Main
-            new World(),
-            new TestBehaviour()
+            new World(), // Here we create a new world without any help of "the Creator".
         };
         // Init all behaviours
         for (Behaviour behaviour : behaviours) {

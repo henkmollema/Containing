@@ -12,8 +12,8 @@ import nhl.containing.networking.protocol.*;
  *
  * @author Jens
  */
-public class Server implements Runnable
-{
+public class Server implements Runnable {
+
     public static final int PORT = 1337;
     private boolean isConnected;
     private boolean shouldRun;
@@ -21,8 +21,7 @@ public class Server implements Runnable
     private Socket _socket = null;
     private CommunicationProtocol comProtocol;
 
-    public Server()
-    {
+    public Server() {
         comProtocol = new CommunicationProtocol();
     }
 
@@ -31,37 +30,30 @@ public class Server implements Runnable
      *
      * @return The communication protocol.
      */
-    public CommunicationProtocol getComProtocol()
-    {
+    public CommunicationProtocol getComProtocol() {
         return comProtocol;
     }
-    
-    public boolean isConnected()
-    {
+
+    public boolean isConnected() {
         return isConnected;
     }
-    
-    public void stop()
-    {
+
+    public void stop() {
         shouldRun = false;
     }
 
     /**
-     * Opens a serversocket and waits for a client to connect.
-     * This method should be called on it's own thread as it contains an
-     * indefinite loop.
-     * Returns false if setup/connection failed.
-     * Returns true if connection was successfull and closed peacefuly
+     * Opens a serversocket and waits for a client to connect. This method
+     * should be called on it's own thread as it contains an indefinite loop.
+     * Returns false if setup/connection failed. Returns true if connection was
+     * successfull and closed peacefuly
      */
-    public boolean start()
-    {
+    public boolean start() {
         p("start start()");
-        
-        if (!isConnected)
-        {
 
-            try
-            {
+        if (!isConnected) {
+
+            try {
                 serverSocket = new ServerSocket(PORT);
                 p("Waiting for connection..");
 
@@ -72,9 +64,7 @@ public class Server implements Runnable
                 isConnected = true;
                 return true;
 
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 System.err.println("Error in socket connection:");
                 ex.printStackTrace();
                 return false;
@@ -84,61 +74,48 @@ public class Server implements Runnable
         return false;
     }
 
-    public boolean init()
-    {
+    public boolean init() {
         p("init()");
-        try
-        {
+        try {
             byte[] data = MessageReader.readByteArray(_socket.getInputStream());
             PlatformProto.Platform platform = PlatformProto.Platform.parseFrom(data);
 
             //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
-            if (platform != null)
-            {
+            if (platform != null) {
                 p("ok");
                 MessageWriter.writeMessage(_socket.getOutputStream(), "ok".getBytes());
                 return true;
-            }
-            else
-            {
+            } else {
                 p("error");
                 MessageWriter.writeMessage(_socket.getOutputStream(), "error".getBytes());
                 return false;
             }
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
     }
 
-    public boolean read()
-    {
+    public boolean read() {
         p("read()");
-        try
-        {
+        try {
             BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = _socket.getOutputStream();
 
             //Send empty message to start conversation..
-            MessageWriter.writeMessage(output, new byte[]
-            {
+            MessageWriter.writeMessage(output, new byte[]{
                 0
             });
 
-            while (shouldRun)
-            {
+            while (shouldRun) {
                 // Re-use streams for more efficiency.
                 byte[] data = MessageReader.readByteArray(input, dataStream);
                 byte[] response = comProtocol.processInput(data);
 
                 MessageWriter.writeMessage(output, response);
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -147,32 +124,22 @@ public class Server implements Runnable
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         shouldRun = true;
 
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
-            if (start())
-            {
-                if (init())
-                {
-                    if (read())
-                    {
+            if (start()) {
+                if (init()) {
+                    if (read()) {
                         p("Closed peacefully");
-                    }
-                    else
-                    {
+                    } else {
                         p("Lost connection during instructionloop");
                     }
-                }
-                else
-                {
+                } else {
                     p("Error while initialising connection..");
                 }
-            }
-            else
-            {
+            } else {
                 p("Closed forcefully");
             }
 
@@ -181,9 +148,7 @@ public class Server implements Runnable
                 serverSocket.close();
 
                 _socket.close();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
@@ -191,8 +156,7 @@ public class Server implements Runnable
         }
     }
 
-    private static void p(String s)
-    {
+    private static void p(String s) {
         System.out.println("Controller: " + s);
     }
 }

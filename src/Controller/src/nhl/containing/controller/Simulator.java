@@ -8,29 +8,25 @@ import nhl.containing.networking.protocol.*;
  *
  * @author henkmollema
  */
-public class Simulator
-{
+public class Simulator {
+
     private final SimulatorController _controller;
     private Thread _thread;
     private Server _server;
     private InstructionDispatcher _instructionDispatcher;
-    
-    public InstructionDispatcher instructionDispatcher()
-    {
+
+    public InstructionDispatcher instructionDispatcher() {
         return _instructionDispatcher;
     }
-    
-    public CommunicationProtocol communication()
-    {
+
+    public CommunicationProtocol communication() {
         return _server.getComProtocol();
     }
-    
 
-    public Simulator(SimulatorController controller)
-    {
+    public Simulator(SimulatorController controller) {
         _controller = controller;
         _instructionDispatcher = new InstructionDispatcherController(this);
-       
+
     }
 
     /**
@@ -38,11 +34,10 @@ public class Simulator
      *
      * @return true if the simulator initialized successfully; otherwise, false.
      */
-    public boolean start()
-    {
+    public boolean start() {
         _server = new Server();
         _server.getComProtocol().setDispatcher(_instructionDispatcher);
-        
+
         _thread = new Thread(_server);
         _thread.setName("Networking Controller");
         //_thread.setDaemon(true);
@@ -59,8 +54,7 @@ public class Simulator
      *
      * @return true if the simulator initialized successfully; otherwise, false.
      */
-    public boolean init(Object config)
-    {
+    public boolean init(Object config) {
         // todo
         return true;
     }
@@ -70,8 +64,7 @@ public class Simulator
      *
      * @return true if playing started successfully; otherwhise, false.
      */
-    public boolean play()
-    {
+    public boolean play() {
         // todo
         return true;
     }
@@ -81,24 +74,22 @@ public class Simulator
      *
      * @param record The record object to process.
      */
-    public void processRecord(Record record)
-    {
+    public void processRecord(Record record) {
         // todo: send to simulator.
 
         _controller.markAsProcessed(record);
     }
-    
+
     /**
      * Processes a (console)command given to the controller by the simulator.
      *
      * @param command The command string to process.
      */
-    public String parseCommand(String command)
-    {
+    public String parseCommand(String command) {
         String result;
         //.. do something with command string
-        
-        result = "Parsed command '"+command+"'";
+
+        result = "Parsed command '" + command + "'";
         return result;
     }
 }

@@ -8,71 +8,67 @@ import nhl.containing.networking.protobuf.InstructionProto.*;
 
 /**
  * The communication protocol.
- * 
+ *
  * @author Jens
  */
 public class CommunicationProtocol {
+
     private InstructionDispatcher _dispatcher;
-    
     private List<Instruction> instructionQueue;
     private List<InstructionResponse> responseQueue;
-    
-    public CommunicationProtocol()
-    {
+
+    public CommunicationProtocol() {
         instructionQueue = new ArrayList<>();
         responseQueue = new ArrayList<>();
     }
-    
-    public static String newUUID()
-    {
+
+    public static String newUUID() {
         return UUID.randomUUID().toString();
     }
-    
-    public InstructionDispatcher dispatcher()
-    {
+
+    public InstructionDispatcher dispatcher() {
         return _dispatcher;
     }
-    
+
     //TODO: Make thread safe
-    public void sendInstruction(Instruction i)
-    {
-        if(i != null && instructionQueue != null)
-            instructionQueue.add(i);
+    public void sendInstruction(Instruction i) {
+        if (i != null && instructionQueue != null) {
+            synchronized (instructionQueue) {
+                instructionQueue.add(i);
+            }
+        }
+
     }
-    
+
     //TODO: Make thread safe
-    public void sendResponse(InstructionResponse r)
-    {
-        if(r != null && responseQueue != null)
-            responseQueue.add(r);
+    public void sendResponse(InstructionResponse r) {
+        if (r != null && responseQueue != null) {
+            synchronized (responseQueue) {
+                responseQueue.add(r);
+            }
+        }
+
     }
-    
-    public byte[] processInput(byte[] in)
-    {
+
+    public byte[] processInput(byte[] in) {
         InstructionProto.datablock dbRecieved = null;
-        if(in != null && in.length > 3) //If we're not getting an empty message.
+        if (in != null && in.length > 3) //If we're not getting an empty message.
         {
-            try
-            {
+            try {
                 //Try to parse the incomming data into a datablock
                 dbRecieved = InstructionProto.datablock.parseFrom(in);
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
-            if(dbRecieved != null)
-            {
+            if (dbRecieved != null) {
                 //Instructions and responses are forwarded into the simulator
-                
-                for(Instruction i : dbRecieved.getInstructionsList())
-                {
+
+                for (Instruction i : dbRecieved.getInstructionsList()) {
                     this._dispatcher.forwardInstruction(i);
                 }
 
-                for(InstructionResponse r : dbRecieved.getResponsesList())
-                {
+                for (InstructionResponse r : dbRecieved.getResponsesList()) {
                     this._dispatcher.forwardResponse(r);
                 }
             }
@@ -82,35 +78,37 @@ public class CommunicationProtocol {
         //flushDataBlock will generate a datablock object using the Queues and clear the local copies.
         return flushDataBlock().toByteArray();
     }
-    
-    /** setDispatcher sets the dispatcher used to forward instructions into the system.
-     * This is set in the Simulator class, as the instance of the dispatcher 
-     * lives there.
+
+    /**
+     * setDispatcher sets the dispatcher used to forward instructions into the
+     * system. This is set in the Simulator class, as the instance of the
+     * dispatcher lives there.
      */
-    public void setDispatcher(InstructionDispatcher dispatcher)
-    {
+    public void setDispatcher(InstructionDispatcher dispatcher) {
         this._dispatcher = dispatcher;
     }
-    
-    
+
     //TODO: Make thread safe
-    public InstructionProto.datablock flushDataBlock()
-    {
+    public InstructionProto.datablock flushDataBlock() {
         datablock.Builder dbBuilder = datablock.newBuilder();
-        
-        if(instructionQueue != null)
-        {
-            dbBuilder.addAllInstructions(instructionQueue);
-            instructionQueue.clear();
+
+
+
+        if (instructionQueue != null) {
+            synchronized (instructionQueue) {
+                dbBuilder.addAllInstructions(instructionQueue);
+                instructionQueue.clear();
+            }
         }
-        
-        if(responseQueue != null)
-        {
-            dbBuilder.addAllResponses(responseQueue);
-            responseQueue.clear();
+
+
+        if (responseQueue != null) {
+            synchronized (responseQueue) {
+                dbBuilder.addAllResponses(responseQueue);
+                responseQueue.clear();
+            }
         }
-        
+
         return dbBuilder.build();
     }
-   
 }

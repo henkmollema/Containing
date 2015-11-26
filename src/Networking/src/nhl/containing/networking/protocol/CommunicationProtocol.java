@@ -17,7 +17,7 @@ public class CommunicationProtocol {
     private List<Instruction> instructionQueue;
     private List<InstructionResponse> responseQueue;
     
-    boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
+    boolean safeMode = true; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     
     final List<String> pendingAcknowelegeInst;
     final List<String> pendingAcknowelegeResp;

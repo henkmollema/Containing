@@ -19,7 +19,14 @@ import nhl.containing.simulator.simulation.LoopMode;
 public class RailCrane extends Crane {
 
     public RailCrane(Transform parent) {
-        super(parent);
+        super(
+                parent, 
+                new Vector3f(),         // base
+                new Vector3f(),               // crane offset
+                new Vector3f(),           // hook offset
+                new Vector3f(0.0f, -4.5f, 0.0f),          // contianer offset
+                new Vector3f(),          // crane spatial offset
+                new Vector3f(3.0f, -12.5f, 0.0f));              // hook spatial offset
     }
     public RailCrane(Transform parent, Vector3f v) {
         super(parent, v);

@@ -31,7 +31,7 @@ public abstract class Crane extends MovingItem {
     
     private Line3D m_rope;
     private Transform m_hook;
-    private Transform m_container;
+    private Container m_container;
     private Timer m_attachTimer = new Timer(attachTime());
     private float m_ropeHeight = 22.0f;
     
@@ -109,7 +109,7 @@ public abstract class Crane extends MovingItem {
     }
     
     public final void _update() {
-        m_rope.SetPosition(1, m_hook.position().add(new Vector3f(0.0f, 14.5f, 0.0f)));
+        m_rope.SetPosition(1, m_hook.position());
         m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(0.0f, m_ropeHeight, 0.0f)));
         
         if (path() != null) {
@@ -133,6 +133,7 @@ public abstract class Crane extends MovingItem {
             newPos.z += _z;
             localPosition(newPos);
             
+            // Line
             
         }
         
@@ -176,5 +177,13 @@ public abstract class Crane extends MovingItem {
             new Vector3f(path.x, path.y, path.z)    // Go down
         };
         path().setPath(newPath);
+    }
+    
+    public Container attachedContainer() {
+        return m_container;
+    }
+    public void attachedContainer(Container c) {
+        m_container = c;
+        c.localPosition(m_containerOffset);
     }
 }

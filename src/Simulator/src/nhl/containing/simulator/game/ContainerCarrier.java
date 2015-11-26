@@ -57,7 +57,6 @@ public class ContainerCarrier extends Item {
         return m_containerSpots[x][y][z].container;
     }
     
-    
     protected final void initSpots(Point3 stack) {
         m_containerSpots = new ContainerSpot[stack.x][][];
         for (int i = 0; i < m_containerSpots.length; ++i) {
@@ -66,9 +65,9 @@ public class ContainerCarrier extends Item {
                 m_containerSpots[i][j] = new ContainerSpot[stack.z];
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     m_containerSpots[i][j][k] = new ContainerSpot(this);
+                    this.attachChild(m_containerSpots[i][j][k].transform);
                     m_containerSpots[i][j][k].transform.localPosition(new Vector3f(i, j, k).mult(World.containerSize().add(m_containerOffset)));
-                    
-                    m_containerSpots[i][j][k].container = new Container();
+                    m_containerSpots[i][j][k].container = new Container(new RFID());
                 }
             }
         }
@@ -78,8 +77,11 @@ public class ContainerCarrier extends Item {
             for (int y = 0; y < m_containerSpots[x].length; ++y) {
                 for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
                     if (isOuter(x, y, z)) {
-                        if (m_containerSpots[x][y][z].transform == null)
+                        if (m_containerSpots[x][y][z].transform == null) {
                             m_containerSpots[x][y][z].transform = ContainerPool.get();
+                            m_containerSpots[x][y][z].container.attachChild(m_containerSpots[x][y][z].transform);
+                            m_containerSpots[x][y][z].transform.localPosition(Container.OFFSET);
+                        }
                     } else {
                         if (m_containerSpots[x][y][z].transform != null) {
                             ContainerPool.dispose(m_containerSpots[x][y][z].transform);

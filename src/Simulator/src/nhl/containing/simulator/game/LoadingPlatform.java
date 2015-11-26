@@ -22,9 +22,9 @@ public abstract class LoadingPlatform extends Platform {
     
     protected Crane m_crane;
     protected ParkingSpot[] m_parkingSpots;
-    protected CraneAction currentAction;
     
-    private List<CraneAction> queue = new ArrayList<CraneAction>();
+    private List<CraneAction> m_queue = new ArrayList<CraneAction>();
+    protected CraneAction m_currentAction;
     private boolean m_firstFrame = true;
     
     public LoadingPlatform() {
@@ -47,7 +47,6 @@ public abstract class LoadingPlatform extends Platform {
         }
         
         if (m_crane != null) {
-            
             m_crane._update();
         }
     }
@@ -61,8 +60,6 @@ public abstract class LoadingPlatform extends Platform {
         }
         
         replace(new Point3(p).add(Point3.up()));
-        
-        
     }
     public void place(int parkingSpot, Point3 p) {
         
@@ -78,24 +75,48 @@ public abstract class LoadingPlatform extends Platform {
         // Do here replacement things
     }
     public void onCrane() {
-        currentAction = null;
-        if (queue.size() > 0) {
-            queue.get(0).start();
-            queue.remove(0);
+        Debug.log("op 1");
+        if (m_currentAction != null) {
+            if (m_crane.attachedContainer() == null) {
+                attach2Crane();
+            } else if (m_crane.attachedContainer() == m_currentAction.target) {
+                crane2carrier();
+            } else {
+                Debug.error("ASDF");
+            }
+        }
+        
+        // Get new
+        m_currentAction = null;
+        if (m_queue.size() > 0) {
+            m_queue.get(0).start();
+            m_queue.remove(0);
         } else {
             m_crane.setPath();
         }
     }
+    private void attach2Crane() {
+        m_crane.attachedContainer(m_currentAction.target);
+    }
+    private void crane2carrier() {
+        m_crane.attachedContainer();
+    }
     
+    private CraneAction baseAction() {
+        return null;
+    }
     private class CraneAction {
-        public final Vector3f target;
+        public final ContainerCarrier holder;
+        public final Container target; // 
         
-        public CraneAction(Vector3f target) {
+        public CraneAction(Container target) {
             this.target = target;
+            this.holder = null;
         }
         
         public void start() {
-            m_crane.setPath(target);
+            m_currentAction = this;
+            m_crane.setPath(target.position());
         }
     }
 }

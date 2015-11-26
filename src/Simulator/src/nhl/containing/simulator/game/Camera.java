@@ -138,6 +138,7 @@ public class Camera extends Behaviour {
         Main.view().addProcessor(postProcessor());
         onStartRTS();
         onStartFly();
+        Main.cam().setFrustumFar(100.0f);
     }
     @Override
     public void rawUpdate() {

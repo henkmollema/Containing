@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class GUI extends Behaviour{
     
-    public static final float DEFAULT_TEXT_SIZE = 80.0f;
+    public static final int DEFAULT_TEXT_SIZE = 170;
     
     // Singleton
     private static GUI m_instance;
@@ -57,7 +57,16 @@ public class GUI extends Behaviour{
     }
     @Override
     public void start() {
-        
+                /** Write text on the screen (HUD) */
+        /*Main.guiRoot().detachAllChildren();
+        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
+        Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
+        BitmapText helloText = new BitmapText(Main.guiFont(), false);
+        helloText.setSize(Main.guiFont().getCharSet().getRenderedSize() * 2);
+        helloText.setText("Hello World");
+        helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
+        Main.guiRoot().attachChild(helloText);*/
+ 
     }
     @Override
     public void rawUpdate() {

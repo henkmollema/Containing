@@ -33,7 +33,12 @@ public final class WorldCreator {
         Box boxMesh = new Box(size.x, size.y, size.z); 
         Geometry boxGeo = new Geometry("Colored Box", boxMesh);
         //boxGeo.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
-        boxGeo.setMaterial(MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f)); 
+        //boxGeo.setMaterial(MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f)); 
+        
+        
+        boxGeo.setShadowMode(RenderQueue.ShadowMode.Off);
+        boxGeo.setMaterial(MaterialCreator.unshadedRandom());
+        
         parent.attachChild(boxGeo);
         return boxGeo;
     }

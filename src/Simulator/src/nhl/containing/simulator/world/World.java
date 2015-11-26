@@ -34,12 +34,16 @@ import java.util.UUID;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.simulator.simulation.Point2;
 
 /**
  *
  * @author sietse
  */
 public class World extends Behaviour {
+    public static final Point2 STORAGE_SIZE = new Point2(12, 1); // x = containers length per storage; y = storage amount
+    
+    
     public static Vector3f containerSize() {
         return new Vector3f(2.438f, 2.438f, 12.192f);
     }
@@ -66,77 +70,28 @@ public class World extends Behaviour {
     
     @Override
     public void update() {
-        for(StoragePlatform s : m_storages)
-            s.update();
+        for(StoragePlatform s : m_storages) s.update();
     }
     private void createObjects() {
-        Vector3f offset = Utilities.zero();
-        for (int i = 0; i < 1; ++i) {
-            m_storages.add(new StoragePlatform(offset));
+        Vector3f offset = Utilities.up();
+        for (int i = 0; i < STORAGE_SIZE.y; ++i) {
+            createStorage(offset);
             offset.x += containerSize().x * 6 + 15.0f;
         }
         
         Geometry g = WorldCreator.createBox(null, new Vector3f(500.0f, 1.0f, 500.0f));
         g.setLocalTranslation(0.0f, -1.0f, 0.0f);
-        
-        
     }
     private void createStorage(Vector3f position) {
         Transform t = new Transform();
-        t.position(position);
         StoragePlatform plat = new StoragePlatform(t, Utilities.zero());
+        t.attachChild(plat);
+        plat.localPosition(Utilities.zero());
+        t.position(position);
+        m_storages.add(plat);
     }
     
-    void test() {
-        /*
-         * mo 24-11-2015
-         * expected:
-            * a 6 x 6 x 22 containers where only the outer visible containers are visible where the offset is equal to the input
-         * 
-         * actual result:
-            * a 6 x 6 x 22 containers where only the outer visible containers are visible where the offset is equal to the input
-         * 
-         * pass/fail:
-            * pass
-         * 
-         */
-        new StoragePlatform(Utilities.zero());
-        
-        
-        /*
-         * mo 24-11-2015
-         * expected:
-            * Transform whit box
-         * 
-         * actual result:
-            * Transform whit box
-         * 
-         * pass/fail
-            * pass
-         */
-        Transform t = ContainerPool.get();
-        
-        /*
-         * mo 24-11-2015
-         * expected:
-            * input trasform disapears and stored
-            * return value TRUE
-         * 
-         * actual result:
-            * input transform disapears and stored
-            * return value TRUE
-         * 
-         * pass/fail:
-            * pass
-         * 
-         * comments:
-            * when putting null or any other transform that is not the pool trasform
-            * FALSE will return
-         */
-        ContainerPool.dispose(t);
-        ContainerPool.dispose(null);
-        ContainerPool.dispose(new Transform());
-    }
+    
     
     /*
      * Transform testCube;

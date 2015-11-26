@@ -8,65 +8,105 @@ public final class InstructionProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface datablockOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:networking.Proto.datablock)
-      com.google.protobuf.MessageOrBuilder {
+  public interface datablockOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> 
         getInstructionsList();
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.Instruction getInstructions(int index);
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     int getInstructionsCount();
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder> 
         getInstructionsOrBuilderList();
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder getInstructionsOrBuilder(
         int index);
 
+    // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> 
         getResponsesList();
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionResponse getResponses(int index);
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     int getResponsesCount();
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder> 
         getResponsesOrBuilderList();
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder getResponsesOrBuilder(
         int index);
+
+    // repeated string recievedInstructionUUIDs = 3;
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    java.util.List<java.lang.String>
+    getRecievedInstructionUUIDsList();
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    int getRecievedInstructionUUIDsCount();
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    java.lang.String getRecievedInstructionUUIDs(int index);
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getRecievedInstructionUUIDsBytes(int index);
+
+    // repeated string recievedResponseUUIDs = 4;
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    java.util.List<java.lang.String>
+    getRecievedResponseUUIDsList();
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    int getRecievedResponseUUIDsCount();
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    java.lang.String getRecievedResponseUUIDs(int index);
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getRecievedResponseUUIDsBytes(int index);
   }
   /**
-   * Protobuf type {@code networking.Proto.datablock}
+   * Protobuf type {@code nhl.containing.networking.protobuf.datablock}
    */
   public static final class datablock extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:networking.Proto.datablock)
-      datablockOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements datablockOrBuilder {
     // Use datablock.newBuilder() to construct.
     private datablock(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -128,6 +168,22 @@ public final class InstructionProto {
               responses_.add(input.readMessage(nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.PARSER, extensionRegistry));
               break;
             }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                recievedInstructionUUIDs_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              recievedInstructionUUIDs_.add(input.readBytes());
+              break;
+            }
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                recievedResponseUUIDs_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              recievedResponseUUIDs_.add(input.readBytes());
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -142,18 +198,24 @@ public final class InstructionProto {
         if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           responses_ = java.util.Collections.unmodifiableList(responses_);
         }
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          recievedInstructionUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(recievedInstructionUUIDs_);
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          recievedResponseUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(recievedResponseUUIDs_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_datablock_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_datablock_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               nhl.containing.networking.protobuf.InstructionProto.datablock.class, nhl.containing.networking.protobuf.InstructionProto.datablock.Builder.class);
     }
@@ -173,85 +235,148 @@ public final class InstructionProto {
       return PARSER;
     }
 
+    // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
     public static final int INSTRUCTIONS_FIELD_NUMBER = 1;
     private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> instructions_;
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> getInstructionsList() {
       return instructions_;
     }
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder> 
         getInstructionsOrBuilderList() {
       return instructions_;
     }
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     public int getInstructionsCount() {
       return instructions_.size();
     }
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.Instruction getInstructions(int index) {
       return instructions_.get(index);
     }
     /**
-     * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder getInstructionsOrBuilder(
         int index) {
       return instructions_.get(index);
     }
 
+    // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
     public static final int RESPONSES_FIELD_NUMBER = 2;
     private java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> responses_;
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     public java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> getResponsesList() {
       return responses_;
     }
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder> 
         getResponsesOrBuilderList() {
       return responses_;
     }
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     public int getResponsesCount() {
       return responses_.size();
     }
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse getResponses(int index) {
       return responses_.get(index);
     }
     /**
-     * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder getResponsesOrBuilder(
         int index) {
       return responses_.get(index);
     }
 
+    // repeated string recievedInstructionUUIDs = 3;
+    public static final int RECIEVEDINSTRUCTIONUUIDS_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList recievedInstructionUUIDs_;
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    public java.util.List<java.lang.String>
+        getRecievedInstructionUUIDsList() {
+      return recievedInstructionUUIDs_;
+    }
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    public int getRecievedInstructionUUIDsCount() {
+      return recievedInstructionUUIDs_.size();
+    }
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    public java.lang.String getRecievedInstructionUUIDs(int index) {
+      return recievedInstructionUUIDs_.get(index);
+    }
+    /**
+     * <code>repeated string recievedInstructionUUIDs = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRecievedInstructionUUIDsBytes(int index) {
+      return recievedInstructionUUIDs_.getByteString(index);
+    }
+
+    // repeated string recievedResponseUUIDs = 4;
+    public static final int RECIEVEDRESPONSEUUIDS_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList recievedResponseUUIDs_;
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    public java.util.List<java.lang.String>
+        getRecievedResponseUUIDsList() {
+      return recievedResponseUUIDs_;
+    }
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    public int getRecievedResponseUUIDsCount() {
+      return recievedResponseUUIDs_.size();
+    }
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    public java.lang.String getRecievedResponseUUIDs(int index) {
+      return recievedResponseUUIDs_.get(index);
+    }
+    /**
+     * <code>repeated string recievedResponseUUIDs = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRecievedResponseUUIDsBytes(int index) {
+      return recievedResponseUUIDs_.getByteString(index);
+    }
+
     private void initFields() {
       instructions_ = java.util.Collections.emptyList();
       responses_ = java.util.Collections.emptyList();
+      recievedInstructionUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      recievedResponseUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getInstructionsCount(); i++) {
         if (!getInstructions(i).isInitialized()) {
@@ -278,6 +403,12 @@ public final class InstructionProto {
       for (int i = 0; i < responses_.size(); i++) {
         output.writeMessage(2, responses_.get(i));
       }
+      for (int i = 0; i < recievedInstructionUUIDs_.size(); i++) {
+        output.writeBytes(3, recievedInstructionUUIDs_.getByteString(i));
+      }
+      for (int i = 0; i < recievedResponseUUIDs_.size(); i++) {
+        output.writeBytes(4, recievedResponseUUIDs_.getByteString(i));
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -294,6 +425,24 @@ public final class InstructionProto {
       for (int i = 0; i < responses_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, responses_.get(i));
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < recievedInstructionUUIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(recievedInstructionUUIDs_.getByteString(i));
+        }
+        size += dataSize;
+        size += 1 * getRecievedInstructionUUIDsList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < recievedResponseUUIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(recievedResponseUUIDs_.getByteString(i));
+        }
+        size += dataSize;
+        size += 1 * getRecievedResponseUUIDsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -374,25 +523,24 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code networking.Proto.datablock}
+     * Protobuf type {@code nhl.containing.networking.protobuf.datablock}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:networking.Proto.datablock)
-        nhl.containing.networking.protobuf.InstructionProto.datablockOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.InstructionProto.datablockOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_datablock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_datablock_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 nhl.containing.networking.protobuf.InstructionProto.datablock.class, nhl.containing.networking.protobuf.InstructionProto.datablock.Builder.class);
       }
 
-      // Construct using networking.Proto.InstructionProto.datablock.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.datablock.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -426,6 +574,10 @@ public final class InstructionProto {
         } else {
           responsesBuilder_.clear();
         }
+        recievedInstructionUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        recievedResponseUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -435,7 +587,7 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_datablock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
       }
 
       public nhl.containing.networking.protobuf.InstructionProto.datablock getDefaultInstanceForType() {
@@ -471,6 +623,18 @@ public final class InstructionProto {
         } else {
           result.responses_ = responsesBuilder_.build();
         }
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          recievedInstructionUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              recievedInstructionUUIDs_);
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.recievedInstructionUUIDs_ = recievedInstructionUUIDs_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          recievedResponseUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              recievedResponseUUIDs_);
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.recievedResponseUUIDs_ = recievedResponseUUIDs_;
         onBuilt();
         return result;
       }
@@ -538,6 +702,26 @@ public final class InstructionProto {
             }
           }
         }
+        if (!other.recievedInstructionUUIDs_.isEmpty()) {
+          if (recievedInstructionUUIDs_.isEmpty()) {
+            recievedInstructionUUIDs_ = other.recievedInstructionUUIDs_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureRecievedInstructionUUIDsIsMutable();
+            recievedInstructionUUIDs_.addAll(other.recievedInstructionUUIDs_);
+          }
+          onChanged();
+        }
+        if (!other.recievedResponseUUIDs_.isEmpty()) {
+          if (recievedResponseUUIDs_.isEmpty()) {
+            recievedResponseUUIDs_ = other.recievedResponseUUIDs_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureRecievedResponseUUIDsIsMutable();
+            recievedResponseUUIDs_.addAll(other.recievedResponseUUIDs_);
+          }
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -577,6 +761,7 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
+      // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
       private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> instructions_ =
         java.util.Collections.emptyList();
       private void ensureInstructionsIsMutable() {
@@ -590,7 +775,7 @@ public final class InstructionProto {
           nhl.containing.networking.protobuf.InstructionProto.Instruction, nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder> instructionsBuilder_;
 
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> getInstructionsList() {
         if (instructionsBuilder_ == null) {
@@ -600,7 +785,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public int getInstructionsCount() {
         if (instructionsBuilder_ == null) {
@@ -610,7 +795,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Instruction getInstructions(int index) {
         if (instructionsBuilder_ == null) {
@@ -620,7 +805,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder setInstructions(
           int index, nhl.containing.networking.protobuf.InstructionProto.Instruction value) {
@@ -637,7 +822,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder setInstructions(
           int index, nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder builderForValue) {
@@ -651,7 +836,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder addInstructions(nhl.containing.networking.protobuf.InstructionProto.Instruction value) {
         if (instructionsBuilder_ == null) {
@@ -667,7 +852,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder addInstructions(
           int index, nhl.containing.networking.protobuf.InstructionProto.Instruction value) {
@@ -684,7 +869,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder addInstructions(
           nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder builderForValue) {
@@ -698,7 +883,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder addInstructions(
           int index, nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder builderForValue) {
@@ -712,14 +897,13 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder addAllInstructions(
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.Instruction> values) {
         if (instructionsBuilder_ == null) {
           ensureInstructionsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, instructions_);
+          super.addAll(values, instructions_);
           onChanged();
         } else {
           instructionsBuilder_.addAllMessages(values);
@@ -727,7 +911,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder clearInstructions() {
         if (instructionsBuilder_ == null) {
@@ -740,7 +924,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public Builder removeInstructions(int index) {
         if (instructionsBuilder_ == null) {
@@ -753,14 +937,14 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder getInstructionsBuilder(
           int index) {
         return getInstructionsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder getInstructionsOrBuilder(
           int index) {
@@ -770,7 +954,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder> 
            getInstructionsOrBuilderList() {
@@ -781,14 +965,14 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder addInstructionsBuilder() {
         return getInstructionsFieldBuilder().addBuilder(
             nhl.containing.networking.protobuf.InstructionProto.Instruction.getDefaultInstance());
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder addInstructionsBuilder(
           int index) {
@@ -796,7 +980,7 @@ public final class InstructionProto {
             index, nhl.containing.networking.protobuf.InstructionProto.Instruction.getDefaultInstance());
       }
       /**
-       * <code>repeated .networking.Proto.Instruction instructions = 1;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder> 
            getInstructionsBuilderList() {
@@ -817,6 +1001,7 @@ public final class InstructionProto {
         return instructionsBuilder_;
       }
 
+      // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
       private java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> responses_ =
         java.util.Collections.emptyList();
       private void ensureResponsesIsMutable() {
@@ -830,7 +1015,7 @@ public final class InstructionProto {
           nhl.containing.networking.protobuf.InstructionProto.InstructionResponse, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder> responsesBuilder_;
 
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> getResponsesList() {
         if (responsesBuilder_ == null) {
@@ -840,7 +1025,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public int getResponsesCount() {
         if (responsesBuilder_ == null) {
@@ -850,7 +1035,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse getResponses(int index) {
         if (responsesBuilder_ == null) {
@@ -860,7 +1045,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder setResponses(
           int index, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse value) {
@@ -877,7 +1062,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder setResponses(
           int index, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder builderForValue) {
@@ -891,7 +1076,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder addResponses(nhl.containing.networking.protobuf.InstructionProto.InstructionResponse value) {
         if (responsesBuilder_ == null) {
@@ -907,7 +1092,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder addResponses(
           int index, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse value) {
@@ -924,7 +1109,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder addResponses(
           nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder builderForValue) {
@@ -938,7 +1123,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder addResponses(
           int index, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder builderForValue) {
@@ -952,14 +1137,13 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder addAllResponses(
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> values) {
         if (responsesBuilder_ == null) {
           ensureResponsesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, responses_);
+          super.addAll(values, responses_);
           onChanged();
         } else {
           responsesBuilder_.addAllMessages(values);
@@ -967,7 +1151,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder clearResponses() {
         if (responsesBuilder_ == null) {
@@ -980,7 +1164,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public Builder removeResponses(int index) {
         if (responsesBuilder_ == null) {
@@ -993,14 +1177,14 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder getResponsesBuilder(
           int index) {
         return getResponsesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder getResponsesOrBuilder(
           int index) {
@@ -1010,7 +1194,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder> 
            getResponsesOrBuilderList() {
@@ -1021,14 +1205,14 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder addResponsesBuilder() {
         return getResponsesFieldBuilder().addBuilder(
             nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.getDefaultInstance());
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder addResponsesBuilder(
           int index) {
@@ -1036,7 +1220,7 @@ public final class InstructionProto {
             index, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.getDefaultInstance());
       }
       /**
-       * <code>repeated .networking.Proto.InstructionResponse responses = 2;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder> 
            getResponsesBuilderList() {
@@ -1057,7 +1241,193 @@ public final class InstructionProto {
         return responsesBuilder_;
       }
 
-      // @@protoc_insertion_point(builder_scope:networking.Proto.datablock)
+      // repeated string recievedInstructionUUIDs = 3;
+      private com.google.protobuf.LazyStringList recievedInstructionUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureRecievedInstructionUUIDsIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          recievedInstructionUUIDs_ = new com.google.protobuf.LazyStringArrayList(recievedInstructionUUIDs_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public java.util.List<java.lang.String>
+          getRecievedInstructionUUIDsList() {
+        return java.util.Collections.unmodifiableList(recievedInstructionUUIDs_);
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public int getRecievedInstructionUUIDsCount() {
+        return recievedInstructionUUIDs_.size();
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public java.lang.String getRecievedInstructionUUIDs(int index) {
+        return recievedInstructionUUIDs_.get(index);
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRecievedInstructionUUIDsBytes(int index) {
+        return recievedInstructionUUIDs_.getByteString(index);
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public Builder setRecievedInstructionUUIDs(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedInstructionUUIDsIsMutable();
+        recievedInstructionUUIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public Builder addRecievedInstructionUUIDs(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedInstructionUUIDsIsMutable();
+        recievedInstructionUUIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public Builder addAllRecievedInstructionUUIDs(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureRecievedInstructionUUIDsIsMutable();
+        super.addAll(values, recievedInstructionUUIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public Builder clearRecievedInstructionUUIDs() {
+        recievedInstructionUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedInstructionUUIDs = 3;</code>
+       */
+      public Builder addRecievedInstructionUUIDsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedInstructionUUIDsIsMutable();
+        recievedInstructionUUIDs_.add(value);
+        onChanged();
+        return this;
+      }
+
+      // repeated string recievedResponseUUIDs = 4;
+      private com.google.protobuf.LazyStringList recievedResponseUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureRecievedResponseUUIDsIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          recievedResponseUUIDs_ = new com.google.protobuf.LazyStringArrayList(recievedResponseUUIDs_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public java.util.List<java.lang.String>
+          getRecievedResponseUUIDsList() {
+        return java.util.Collections.unmodifiableList(recievedResponseUUIDs_);
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public int getRecievedResponseUUIDsCount() {
+        return recievedResponseUUIDs_.size();
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public java.lang.String getRecievedResponseUUIDs(int index) {
+        return recievedResponseUUIDs_.get(index);
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRecievedResponseUUIDsBytes(int index) {
+        return recievedResponseUUIDs_.getByteString(index);
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public Builder setRecievedResponseUUIDs(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedResponseUUIDsIsMutable();
+        recievedResponseUUIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public Builder addRecievedResponseUUIDs(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedResponseUUIDsIsMutable();
+        recievedResponseUUIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public Builder addAllRecievedResponseUUIDs(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureRecievedResponseUUIDsIsMutable();
+        super.addAll(values, recievedResponseUUIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public Builder clearRecievedResponseUUIDs() {
+        recievedResponseUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string recievedResponseUUIDs = 4;</code>
+       */
+      public Builder addRecievedResponseUUIDsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureRecievedResponseUUIDsIsMutable();
+        recievedResponseUUIDs_.add(value);
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.datablock)
     }
 
     static {
@@ -1065,13 +1435,13 @@ public final class InstructionProto {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:networking.Proto.datablock)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.datablock)
   }
 
-  public interface InstructionDataOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:networking.Proto.InstructionData)
-      com.google.protobuf.MessageOrBuilder {
+  public interface InstructionDataOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional int64 time = 1;
     /**
      * <code>optional int64 time = 1;</code>
      */
@@ -1081,6 +1451,7 @@ public final class InstructionProto {
      */
     long getTime();
 
+    // optional int32 a = 2;
     /**
      * <code>optional int32 a = 2;</code>
      */
@@ -1090,6 +1461,7 @@ public final class InstructionProto {
      */
     int getA();
 
+    // optional int32 b = 3;
     /**
      * <code>optional int32 b = 3;</code>
      */
@@ -1099,6 +1471,7 @@ public final class InstructionProto {
      */
     int getB();
 
+    // optional string message = 4;
     /**
      * <code>optional string message = 4;</code>
      */
@@ -1114,12 +1487,11 @@ public final class InstructionProto {
         getMessageBytes();
   }
   /**
-   * Protobuf type {@code networking.Proto.InstructionData}
+   * Protobuf type {@code nhl.containing.networking.protobuf.InstructionData}
    */
   public static final class InstructionData extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:networking.Proto.InstructionData)
-      InstructionDataOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements InstructionDataOrBuilder {
     // Use InstructionData.newBuilder() to construct.
     private InstructionData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1181,9 +1553,8 @@ public final class InstructionProto {
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              message_ = bs;
+              message_ = input.readBytes();
               break;
             }
           }
@@ -1200,12 +1571,12 @@ public final class InstructionProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionData_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionData_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               nhl.containing.networking.protobuf.InstructionProto.InstructionData.class, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder.class);
     }
@@ -1226,6 +1597,7 @@ public final class InstructionProto {
     }
 
     private int bitField0_;
+    // optional int64 time = 1;
     public static final int TIME_FIELD_NUMBER = 1;
     private long time_;
     /**
@@ -1241,6 +1613,7 @@ public final class InstructionProto {
       return time_;
     }
 
+    // optional int32 a = 2;
     public static final int A_FIELD_NUMBER = 2;
     private int a_;
     /**
@@ -1256,6 +1629,7 @@ public final class InstructionProto {
       return a_;
     }
 
+    // optional int32 b = 3;
     public static final int B_FIELD_NUMBER = 3;
     private int b_;
     /**
@@ -1271,6 +1645,7 @@ public final class InstructionProto {
       return b_;
     }
 
+    // optional string message = 4;
     public static final int MESSAGE_FIELD_NUMBER = 4;
     private java.lang.Object message_;
     /**
@@ -1322,8 +1697,7 @@ public final class InstructionProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
@@ -1448,25 +1822,24 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code networking.Proto.InstructionData}
+     * Protobuf type {@code nhl.containing.networking.protobuf.InstructionData}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:networking.Proto.InstructionData)
-        nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionData_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionData_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 nhl.containing.networking.protobuf.InstructionProto.InstructionData.class, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder.class);
       }
 
-      // Construct using networking.Proto.InstructionProto.InstructionData.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.InstructionData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1503,7 +1876,7 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionData_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
       }
 
       public nhl.containing.networking.protobuf.InstructionProto.InstructionData getDefaultInstanceForType() {
@@ -1595,6 +1968,7 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
+      // optional int64 time = 1;
       private long time_ ;
       /**
        * <code>optional int64 time = 1;</code>
@@ -1627,6 +2001,7 @@ public final class InstructionProto {
         return this;
       }
 
+      // optional int32 a = 2;
       private int a_ ;
       /**
        * <code>optional int32 a = 2;</code>
@@ -1659,6 +2034,7 @@ public final class InstructionProto {
         return this;
       }
 
+      // optional int32 b = 3;
       private int b_ ;
       /**
        * <code>optional int32 b = 3;</code>
@@ -1691,6 +2067,7 @@ public final class InstructionProto {
         return this;
       }
 
+      // optional string message = 4;
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 4;</code>
@@ -1704,12 +2081,9 @@ public final class InstructionProto {
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            message_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          message_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1767,7 +2141,7 @@ public final class InstructionProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:networking.Proto.InstructionData)
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionData)
     }
 
     static {
@@ -1775,13 +2149,13 @@ public final class InstructionProto {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:networking.Proto.InstructionData)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionData)
   }
 
-  public interface InstructionOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:networking.Proto.Instruction)
-      com.google.protobuf.MessageOrBuilder {
+  public interface InstructionOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -1796,6 +2170,7 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required int32 instructionType = 2;
     /**
      * <code>required int32 instructionType = 2;</code>
      */
@@ -1805,26 +2180,26 @@ public final class InstructionProto {
      */
     int getInstructionType();
 
+    // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     boolean hasData();
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionData getData();
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder();
   }
   /**
-   * Protobuf type {@code networking.Proto.Instruction}
+   * Protobuf type {@code nhl.containing.networking.protobuf.Instruction}
    */
   public static final class Instruction extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:networking.Proto.Instruction)
-      InstructionOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements InstructionOrBuilder {
     // Use Instruction.newBuilder() to construct.
     private Instruction(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1871,9 +2246,8 @@ public final class InstructionProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 16: {
@@ -1908,12 +2282,12 @@ public final class InstructionProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_Instruction_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_Instruction_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               nhl.containing.networking.protobuf.InstructionProto.Instruction.class, nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder.class);
     }
@@ -1934,6 +2308,7 @@ public final class InstructionProto {
     }
 
     private int bitField0_;
+    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -1976,6 +2351,7 @@ public final class InstructionProto {
       }
     }
 
+    // required int32 instructionType = 2;
     public static final int INSTRUCTIONTYPE_FIELD_NUMBER = 2;
     private int instructionType_;
     /**
@@ -1991,22 +2367,23 @@ public final class InstructionProto {
       return instructionType_;
     }
 
+    // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
     public static final int DATA_FIELD_NUMBER = 3;
     private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_;
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     public boolean hasData() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
       return data_;
     }
     /**
-     * <code>optional .networking.Proto.InstructionData data = 3;</code>
+     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
       return data_;
@@ -2020,8 +2397,7 @@ public final class InstructionProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -2147,25 +2523,24 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code networking.Proto.Instruction}
+     * Protobuf type {@code nhl.containing.networking.protobuf.Instruction}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:networking.Proto.Instruction)
-        nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_Instruction_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_Instruction_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 nhl.containing.networking.protobuf.InstructionProto.Instruction.class, nhl.containing.networking.protobuf.InstructionProto.Instruction.Builder.class);
       }
 
-      // Construct using networking.Proto.InstructionProto.Instruction.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.Instruction.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2205,7 +2580,7 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_Instruction_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
       }
 
       public nhl.containing.networking.protobuf.InstructionProto.Instruction getDefaultInstanceForType() {
@@ -2302,6 +2677,7 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
+      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -2315,12 +2691,9 @@ public final class InstructionProto {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2378,6 +2751,7 @@ public final class InstructionProto {
         return this;
       }
 
+      // required int32 instructionType = 2;
       private int instructionType_ ;
       /**
        * <code>required int32 instructionType = 2;</code>
@@ -2410,17 +2784,18 @@ public final class InstructionProto {
         return this;
       }
 
+      // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
       private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> dataBuilder_;
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public boolean hasData() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
         if (dataBuilder_ == null) {
@@ -2430,7 +2805,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public Builder setData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
         if (dataBuilder_ == null) {
@@ -2446,7 +2821,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public Builder setData(
           nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder builderForValue) {
@@ -2460,7 +2835,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public Builder mergeData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
         if (dataBuilder_ == null) {
@@ -2479,7 +2854,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public Builder clearData() {
         if (dataBuilder_ == null) {
@@ -2492,7 +2867,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder getDataBuilder() {
         bitField0_ |= 0x00000004;
@@ -2500,7 +2875,7 @@ public final class InstructionProto {
         return getDataFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
         if (dataBuilder_ != null) {
@@ -2510,7 +2885,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>optional .networking.Proto.InstructionData data = 3;</code>
+       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> 
@@ -2518,7 +2893,7 @@ public final class InstructionProto {
         if (dataBuilder_ == null) {
           dataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder>(
-                  getData(),
+                  data_,
                   getParentForChildren(),
                   isClean());
           data_ = null;
@@ -2526,7 +2901,7 @@ public final class InstructionProto {
         return dataBuilder_;
       }
 
-      // @@protoc_insertion_point(builder_scope:networking.Proto.Instruction)
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.Instruction)
     }
 
     static {
@@ -2534,13 +2909,13 @@ public final class InstructionProto {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:networking.Proto.Instruction)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.Instruction)
   }
 
-  public interface InstructionResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:networking.Proto.InstructionResponse)
-      com.google.protobuf.MessageOrBuilder {
+  public interface InstructionResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -2555,6 +2930,7 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getIdBytes();
 
+    // required string instructionId = 2;
     /**
      * <code>required string instructionId = 2;</code>
      */
@@ -2569,26 +2945,26 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getInstructionIdBytes();
 
+    // required .nhl.containing.networking.protobuf.InstructionData data = 4;
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     boolean hasData();
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionData getData();
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder();
   }
   /**
-   * Protobuf type {@code networking.Proto.InstructionResponse}
+   * Protobuf type {@code nhl.containing.networking.protobuf.InstructionResponse}
    */
   public static final class InstructionResponse extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:networking.Proto.InstructionResponse)
-      InstructionResponseOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements InstructionResponseOrBuilder {
     // Use InstructionResponse.newBuilder() to construct.
     private InstructionResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2635,15 +3011,13 @@ public final class InstructionProto {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              instructionId_ = bs;
+              instructionId_ = input.readBytes();
               break;
             }
             case 34: {
@@ -2673,12 +3047,12 @@ public final class InstructionProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionResponse_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionResponse_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.class, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder.class);
     }
@@ -2699,6 +3073,7 @@ public final class InstructionProto {
     }
 
     private int bitField0_;
+    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -2741,6 +3116,7 @@ public final class InstructionProto {
       }
     }
 
+    // required string instructionId = 2;
     public static final int INSTRUCTIONID_FIELD_NUMBER = 2;
     private java.lang.Object instructionId_;
     /**
@@ -2783,22 +3159,23 @@ public final class InstructionProto {
       }
     }
 
+    // required .nhl.containing.networking.protobuf.InstructionData data = 4;
     public static final int DATA_FIELD_NUMBER = 4;
     private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_;
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     public boolean hasData() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
       return data_;
     }
     /**
-     * <code>required .networking.Proto.InstructionData data = 4;</code>
+     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
       return data_;
@@ -2812,8 +3189,7 @@ public final class InstructionProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -2943,25 +3319,24 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code networking.Proto.InstructionResponse}
+     * Protobuf type {@code nhl.containing.networking.protobuf.InstructionResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:networking.Proto.InstructionResponse)
-        nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionResponse_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionResponse_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.class, nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.Builder.class);
       }
 
-      // Construct using networking.Proto.InstructionProto.InstructionResponse.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.InstructionResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3001,7 +3376,7 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_networking_Proto_InstructionResponse_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
       }
 
       public nhl.containing.networking.protobuf.InstructionProto.InstructionResponse getDefaultInstanceForType() {
@@ -3104,6 +3479,7 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
+      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -3117,12 +3493,9 @@ public final class InstructionProto {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          id_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3180,6 +3553,7 @@ public final class InstructionProto {
         return this;
       }
 
+      // required string instructionId = 2;
       private java.lang.Object instructionId_ = "";
       /**
        * <code>required string instructionId = 2;</code>
@@ -3193,12 +3567,9 @@ public final class InstructionProto {
       public java.lang.String getInstructionId() {
         java.lang.Object ref = instructionId_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            instructionId_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          instructionId_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3256,17 +3627,18 @@ public final class InstructionProto {
         return this;
       }
 
+      // required .nhl.containing.networking.protobuf.InstructionData data = 4;
       private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> dataBuilder_;
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public boolean hasData() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
         if (dataBuilder_ == null) {
@@ -3276,7 +3648,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public Builder setData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
         if (dataBuilder_ == null) {
@@ -3292,7 +3664,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public Builder setData(
           nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder builderForValue) {
@@ -3306,7 +3678,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public Builder mergeData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
         if (dataBuilder_ == null) {
@@ -3325,7 +3697,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public Builder clearData() {
         if (dataBuilder_ == null) {
@@ -3338,7 +3710,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder getDataBuilder() {
         bitField0_ |= 0x00000004;
@@ -3346,7 +3718,7 @@ public final class InstructionProto {
         return getDataFieldBuilder().getBuilder();
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
         if (dataBuilder_ != null) {
@@ -3356,7 +3728,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>required .networking.Proto.InstructionData data = 4;</code>
+       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
           nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> 
@@ -3364,7 +3736,7 @@ public final class InstructionProto {
         if (dataBuilder_ == null) {
           dataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder>(
-                  getData(),
+                  data_,
                   getParentForChildren(),
                   isClean());
           data_ = null;
@@ -3372,7 +3744,7 @@ public final class InstructionProto {
         return dataBuilder_;
       }
 
-      // @@protoc_insertion_point(builder_scope:networking.Proto.InstructionResponse)
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionResponse)
     }
 
     static {
@@ -3380,29 +3752,29 @@ public final class InstructionProto {
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:networking.Proto.InstructionResponse)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionResponse)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_networking_Proto_datablock_descriptor;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_networking_Proto_datablock_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_networking_Proto_InstructionData_descriptor;
+      internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_networking_Proto_InstructionData_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_networking_Proto_Instruction_descriptor;
+      internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_networking_Proto_Instruction_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_networking_Proto_InstructionResponse_descriptor;
+      internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_networking_Proto_InstructionResponse_fieldAccessorTable;
+      internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3412,55 +3784,59 @@ public final class InstructionProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\021Instruction.proto\022\020networking.Proto\"z\n" +
-      "\tdatablock\0223\n\014instructions\030\001 \003(\0132\035.netwo" +
-      "rking.Proto.Instruction\0228\n\tresponses\030\002 \003" +
-      "(\0132%.networking.Proto.InstructionRespons" +
-      "e\"F\n\017InstructionData\022\014\n\004time\030\001 \001(\003\022\t\n\001a\030" +
-      "\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\"c\n\013Ins" +
-      "truction\022\n\n\002id\030\001 \002(\t\022\027\n\017instructionType\030" +
-      "\002 \002(\005\022/\n\004data\030\003 \001(\0132!.networking.Proto.I" +
-      "nstructionData\"i\n\023InstructionResponse\022\n\n" +
-      "\002id\030\001 \002(\t\022\025\n\rinstructionId\030\002 \002(\t\022/\n\004data",
-      "\030\004 \002(\0132!.networking.Proto.InstructionDat" +
-      "aB\022B\020InstructionProto"
+      "\n\021Instruction.proto\022\"nhl.containing.netw" +
+      "orking.protobuf\"\337\001\n\tdatablock\022E\n\014instruc" +
+      "tions\030\001 \003(\0132/.nhl.containing.networking." +
+      "protobuf.Instruction\022J\n\tresponses\030\002 \003(\0132" +
+      "7.nhl.containing.networking.protobuf.Ins" +
+      "tructionResponse\022 \n\030recievedInstructionU" +
+      "UIDs\030\003 \003(\t\022\035\n\025recievedResponseUUIDs\030\004 \003(" +
+      "\t\"F\n\017InstructionData\022\014\n\004time\030\001 \001(\003\022\t\n\001a\030" +
+      "\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\"u\n\013Ins" +
+      "truction\022\n\n\002id\030\001 \002(\t\022\027\n\017instructionType\030",
+      "\002 \002(\005\022A\n\004data\030\003 \001(\01323.nhl.containing.net" +
+      "working.protobuf.InstructionData\"{\n\023Inst" +
+      "ructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\rinstructi" +
+      "onId\030\002 \002(\t\022A\n\004data\030\004 \002(\01323.nhl.containin" +
+      "g.networking.protobuf.InstructionDataB\022B" +
+      "\020InstructionProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_nhl_containing_networking_protobuf_datablock_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_nhl_containing_networking_protobuf_datablock_descriptor,
+              new java.lang.String[] { "Instructions", "Responses", "RecievedInstructionUUIDs", "RecievedResponseUUIDs", });
+          internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor,
+              new java.lang.String[] { "Time", "A", "B", "Message", });
+          internal_static_nhl_containing_networking_protobuf_Instruction_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_nhl_containing_networking_protobuf_Instruction_descriptor,
+              new java.lang.String[] { "Id", "InstructionType", "Data", });
+          internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor,
+              new java.lang.String[] { "Id", "InstructionId", "Data", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_networking_Proto_datablock_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_networking_Proto_datablock_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_networking_Proto_datablock_descriptor,
-        new java.lang.String[] { "Instructions", "Responses", });
-    internal_static_networking_Proto_InstructionData_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_networking_Proto_InstructionData_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_networking_Proto_InstructionData_descriptor,
-        new java.lang.String[] { "Time", "A", "B", "Message", });
-    internal_static_networking_Proto_Instruction_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_networking_Proto_Instruction_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_networking_Proto_Instruction_descriptor,
-        new java.lang.String[] { "Id", "InstructionType", "Data", });
-    internal_static_networking_Proto_InstructionResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_networking_Proto_InstructionResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_networking_Proto_InstructionResponse_descriptor,
-        new java.lang.String[] { "Id", "InstructionId", "Data", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

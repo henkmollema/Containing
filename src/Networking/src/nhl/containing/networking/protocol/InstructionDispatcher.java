@@ -12,6 +12,5 @@ import nhl.containing.networking.protobuf.InstructionProto;
 public interface InstructionDispatcher {
 
     public void forwardInstruction(InstructionProto.Instruction inst);
-
-    public void forwardResponse(InstructionProto.InstructionResponse inst);
+    public void forwardResponse(InstructionProto.InstructionResponse resp);
 }

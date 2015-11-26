@@ -86,12 +86,13 @@ public class CommunicationTests {
 
                 controller.getComProtocol().sendResponse(response);
 
-                System.out.println("instruction recieved");
+                System.out.println("instruction recieved: "+ inst.getId());
             }
 
             @Override
-            public void forwardResponse(InstructionProto.InstructionResponse inst) {
+            public void forwardResponse(InstructionProto.InstructionResponse resp) {
                 CommunicationTests.this.hasRecievedResponse = true;
+                System.out.println("response recieved for: "+ resp.getInstructionId());
             }
         };
 
@@ -146,7 +147,7 @@ public class CommunicationTests {
 
         instructionsRecieved = 0;
         repsonsesRecieved = 0;
-        int instructionsToSend = 1000; //These will be sent twice, in batches of this number
+        int instructionsToSend = 100; //These will be sent twice, in batches of this number
         //When instructionsToSend is around 10 000 the TCP write and read buffer will fill up and hang the program TODO: Find a fix, or make sure the batches are less than 10 000 in size
 
         System.out.println("===== instructionResponseBatchTest =====");
@@ -170,13 +171,13 @@ public class CommunicationTests {
                         .build();
 
                 controller.getComProtocol().sendResponse(response);
-
-                //System.out.println("instruction recieved");
+                System.out.println("instruction recieved: " + inst.getId());
             }
 
             @Override
-            public void forwardResponse(InstructionProto.InstructionResponse inst) {
+            public void forwardResponse(InstructionProto.InstructionResponse resp) {
                 repsonsesRecieved++;
+                System.out.println("Response recieved for : " + resp.getInstructionId());
             }
         };
 
@@ -205,9 +206,11 @@ public class CommunicationTests {
                     .build();
 
             simulator.getComProtocol().sendInstruction(instruction);
+             
+            instructionsToSend *= 2;
         }
 
-        instructionsToSend *= 2;
+        
 
         while (instructionsRecieved != instructionsToSend || repsonsesRecieved != instructionsToSend) {
             System.out.println("Controller Recieved " + instructionsRecieved + " instructions");

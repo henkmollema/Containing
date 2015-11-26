@@ -1,11 +1,12 @@
-package networking.Proto;
+package nhl.containing.networking.protobuf;
 
 option java_outer_classname = "InstructionProto";
 
 message datablock {
 	repeated Instruction instructions = 1;
 	repeated InstructionResponse responses = 2;	
-
+        repeated string recievedInstructionUUIDs = 3;
+        repeated string recievedResponseUUIDs = 4;
 }
 
 

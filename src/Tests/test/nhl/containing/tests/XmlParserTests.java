@@ -1,10 +1,8 @@
-package controller.Tests;
+package nhl.containing.tests;
 
-import controller.*;
 import static org.junit.Assert.*;
 import java.net.*;
 import java.nio.file.*;
-import nhl.containing.controller.Main;
 import nhl.containing.controller.RecordSet;
 import nhl.containing.controller.XmlParser;
 import org.junit.Rule;
@@ -52,21 +50,11 @@ public class XmlParserTests
         assertEquals(recordSet.records.size(), 10);
     }
 
-    @Test
-    public void parsesXmlFile5() throws Exception
-    {
-        String xml = readXml("xml5.xml");
-        assertNotNull("The XML is null", xml);
-
-        RecordSet recordSet = XmlParser.parse(xml);
-        assertEquals(recordSet.records.size(), 3230);
-    }
-
     private static String readXml(String xmlFileName)
     {
         try
         {
-            URI url = Main.class.getResource("XML/" + xmlFileName).toURI();
+            URI url = XmlParserTests.class.getResource("xml/" + xmlFileName).toURI();
             return new String(Files.readAllBytes(Paths.get(url)));
         }
         catch (Exception e)

@@ -1,6 +1,5 @@
-package controller.Tests;
+package nhl.containing.tests;
 
-import controller.*;
 import java.awt.Dimension;
 import java.io.File;
 import static org.junit.Assert.*;

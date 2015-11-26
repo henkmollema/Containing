@@ -1,4 +1,4 @@
-package controller.Tests;
+package nhl.containing.tests;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

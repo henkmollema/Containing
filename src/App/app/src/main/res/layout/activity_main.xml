@@ -10,15 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <!-- The main content view -->
-        <FrameLayout
-            android:id="@+id/frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-
+            <FrameLayout
+                android:id="@+id/frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </FrameLayout>
     <!-- The navigation drawer -->
     <RelativeLayout
-        android:layout_width="280dp"
+        android:layout_width="280dip"
         android:layout_height="match_parent"
         android:id="@+id/drawerPane"
         android:layout_gravity="start">
@@ -28,22 +27,22 @@
         <RelativeLayout
             android:id="@+id/profileBox"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="100dip"
             android:background="@color/material_blue_grey_800"
             android:padding="8dp" >
 
             <ImageView
                 android:id="@+id/avatar"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
                 android:src="@mipmap/ic_launcher"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="15dip" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="42dp"
+                android:layout_height="42dip"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="15dip"
                 android:layout_toRightOf="@+id/avatar"
                 android:orientation="vertical" >
 
@@ -61,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="4dip"
                     android:text="Project Containing"
                     android:textColor="#fff"
                     android:textSize="12sp" />
@@ -71,7 +70,7 @@
         <!-- List of Actions (pages) -->
         <ListView
             android:id="@+id/navList"
-            android:layout_width="280dp"
+            android:layout_width="280dip"
             android:layout_height="match_parent"
             android:layout_below="@+id/profileBox"
             android:choiceMode="singleChoice"

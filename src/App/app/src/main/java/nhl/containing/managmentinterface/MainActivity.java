@@ -1,23 +1,27 @@
 package nhl.containing.managmentinterface;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
+
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,19 +36,19 @@ import nhl.containing.managmentinterface.navigationdrawer.*;
 /**
  * Main activity for the app
  */
-public class MainActivity extends ActionBarActivity implements ContainersFragment.OnFragmentInteractionListener
+public class MainActivity extends AppCompatActivity implements ContainersFragment.OnFragmentInteractionListener
 {
     //navigation drawer
-    ListView mDrawerList;
-    RelativeLayout mDrawerPane;
+    public ListView mDrawerList;
+    public RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    public  ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     //end navigation drawer
 
-    private Menu menu;
-    private volatile Fragment fragment;
-    private volatile int refreshTime = 0;
+    public Menu menu;
+    public volatile Fragment fragment;
+    public volatile int refreshTime = 0;
     private AutoRefreshRunnable autorefreshRunnable;
     private ExecutorService executer = Executors.newSingleThreadExecutor();
 
@@ -70,9 +74,9 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
      */
     private void setupNavDrawer(Toolbar toolbar)
     {
-        mNavItems.add(new NavItem("Per Category", "Numbers per category", R.drawable.ic_home_black));
-        mNavItems.add(new NavItem("Graph2", "Unknown", R.drawable.ic_poll_black));
-        mNavItems.add(new NavItem("Graph3", "Unknown", R.drawable.ic_poll_black));
+        mNavItems.add(new NavItem("Current Numbers", "Current numbers per category", R.drawable.ic_home_black));
+        mNavItems.add(new NavItem("In", "Ingoing numbers", R.drawable.ic_poll_black));
+        mNavItems.add(new NavItem("Out", "Outgoing numbers", R.drawable.ic_poll_black));
         mNavItems.add(new NavItem("Graph4", "Unknown", R.drawable.ic_poll_black));
         mNavItems.add(new NavItem("Containers","List with actual container stats",R.drawable.ic_list_black));
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
@@ -150,8 +154,7 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(GravityCompat.START);
         menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
         menu.findItem(R.id.action_refresh_time).setVisible(!drawerOpen);
-        menu.findItem(R.id.action_legend).setVisible(!drawerOpen);
-        menu.findItem(R.id.action_legend).setVisible(fragment instanceof GraphFragment);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -169,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
         switch (id)
         {
             case R.id.action_settings:
-
+                startActivity(new Intent(this,SettingsActivity.class));
                 break;
             case R.id.action_refresh:
                 refresh();
@@ -214,28 +217,8 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
                     executer.submit(autorefreshRunnable);
                 }
                 break;
-            case R.id.action_legend:
-                showLegend();
-                break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Shows a legend for the graph
-     */
-    private void showLegend()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
-        builder.setTitle("Legend");
-        builder.setMessage("Tra = Train\nTru = Truck\nSea = Seaship\nInl = Inlineship\nSto = Storage\nAGV = Automatic Guided Vehicles\nRem = Remaining");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
     }
 
     /**
@@ -275,6 +258,14 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
                     }
                     catch (Exception e){}
                     gf.setData();
+                }
+                else if(fragment != null && fragment instanceof ContainersFragment)
+                {
+                    ContainersFragment cf = (ContainersFragment)fragment;
+                    try{
+                        Thread.sleep(2000);
+                    }catch (Exception e){}
+                    cf.setData();
                 }
                 runOnUiThread(completeRefresh);
             }
@@ -392,8 +383,10 @@ public class MainActivity extends ActionBarActivity implements ContainersFragmen
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
-
+    public void onFragmentInteraction(int id) {
+        Intent i = new Intent(this,ContainerActivity.class);
+        i.putExtra("ID",id);
+        startActivity(i);
     }
 
     /**

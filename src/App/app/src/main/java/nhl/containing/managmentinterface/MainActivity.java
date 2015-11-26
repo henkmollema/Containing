@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     public volatile Fragment fragment;
     public volatile int refreshTime = 0;
     private AutoRefreshRunnable autorefreshRunnable;
+    private volatile boolean isRefreshing = false;
     private ExecutorService executer = Executors.newSingleThreadExecutor();
 
     /**
@@ -190,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 if(autorefreshRunnable == null)
                 {
                     autorefreshRunnable = new AutoRefreshRunnable();
+                    executer = Executors.newSingleThreadExecutor();
                     executer.submit(autorefreshRunnable);
                 }
                 break;
@@ -198,22 +200,25 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 if(autorefreshRunnable == null)
                 {
                     autorefreshRunnable = new AutoRefreshRunnable();
+                    executer = Executors.newSingleThreadExecutor();
                     executer.submit(autorefreshRunnable);
                 }
                 break;
             case R.id.menu_refresh_20:
                 refreshTime = 20;
-                if(autorefreshRunnable != null)
+                if(autorefreshRunnable == null)
                 {
                     autorefreshRunnable = new AutoRefreshRunnable();
+                    executer = Executors.newSingleThreadExecutor();
                     executer.submit(autorefreshRunnable);
                 }
                 break;
             case R.id.menu_refresh_30:
                 refreshTime = 30;
-                if(autorefreshRunnable != null)
+                if(autorefreshRunnable == null)
                 {
                     autorefreshRunnable = new AutoRefreshRunnable();
+                    executer = Executors.newSingleThreadExecutor();
                     executer.submit(autorefreshRunnable);
                 }
                 break;
@@ -227,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     private Runnable completeRefresh = new Runnable() {
         @Override
         public void run() {
+            isRefreshing = false;
             MenuItem ri =  menu.findItem(R.id.action_refresh);
             if(ri.getActionView() != null)
             {
@@ -241,6 +247,10 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
      */
     private void refresh()
     {
+        if(isRefreshing){
+            return;
+        }
+        isRefreshing = true;
         LayoutInflater inflater = (LayoutInflater) getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView iv = (ImageView) inflater.inflate(R.layout.rotaterefresh, null);
         Animation rotate = AnimationUtils.loadAnimation(getApplication(),R.anim.rotate);
@@ -283,6 +293,19 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     };
 
     /**
+     * Stops the autorefresh function
+     */
+    private void stopAutoRefresh()
+    {
+        if(autorefreshRunnable != null)
+            autorefreshRunnable.stop();
+        if(executer.isShutdown())
+            executer.shutdown();
+        autorefreshRunnable = null;
+        isRefreshing = false;
+    }
+
+    /**
      * Select item from the navigation drawer
      * @param position the position of the item
      */
@@ -295,11 +318,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 f = getSupportFragmentManager().findFragmentByTag("Graph_one");
                 if(f == null || !f.isVisible())
                 {
-                    if(autorefreshRunnable != null)
-                        autorefreshRunnable.stop();
-                    if(executer.isShutdown())
-                        executer.shutdown();
-                    autorefreshRunnable = null;
+                    stopAutoRefresh();
                     GraphFragment gf = new GraphFragment();
                     fragment = gf;
                     Bundle b = new Bundle();
@@ -313,11 +332,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 f = getSupportFragmentManager().findFragmentByTag("Graph_two");
                 if(f == null || !f.isVisible())
                 {
-                    if(autorefreshRunnable != null)
-                        autorefreshRunnable.stop();
-                    if(executer.isShutdown())
-                        executer.shutdown();
-                    autorefreshRunnable = null;
+                    stopAutoRefresh();
                     GraphFragment gf = new GraphFragment();
                     fragment = gf;
                     Bundle b = new Bundle();
@@ -331,11 +346,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 f = getSupportFragmentManager().findFragmentByTag("Graph_three");
                 if(f == null || !f.isVisible())
                 {
-                    if(autorefreshRunnable != null)
-                        autorefreshRunnable.stop();
-                    if(executer.isShutdown())
-                        executer.shutdown();
-                    autorefreshRunnable = null;
+                    stopAutoRefresh();
                     GraphFragment gf = new GraphFragment();
                     fragment = gf;
                     Bundle b = new Bundle();
@@ -349,11 +360,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 f = getSupportFragmentManager().findFragmentByTag("Graph_four");
                 if(f == null || !f.isVisible())
                 {
-                    if(autorefreshRunnable != null)
-                        autorefreshRunnable.stop();
-                    if(executer.isShutdown())
-                        executer.shutdown();
-                    autorefreshRunnable = null;
+                    stopAutoRefresh();
                     GraphFragment gf = new GraphFragment();
                     fragment = gf;
                     Bundle b = new Bundle();
@@ -367,11 +374,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 f = getSupportFragmentManager().findFragmentByTag("Container_list");
                 if(f == null || !f.isVisible())
                 {
-                    if(autorefreshRunnable != null)
-                        autorefreshRunnable.stop();
-                    if(executer.isShutdown())
-                        executer.shutdown();
-                    autorefreshRunnable = null;
+                    stopAutoRefresh();
                     ContainersFragment cf = new ContainersFragment();
                     fragment = cf;
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,"Container_list").commit();

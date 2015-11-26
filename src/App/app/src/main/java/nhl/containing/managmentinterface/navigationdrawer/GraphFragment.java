@@ -1,5 +1,6 @@
 package nhl.containing.managmentinterface.navigationdrawer;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class GraphFragment extends Fragment {
     }
 
     /**
-     * [TESTING]
+     * Setting up the graph/ chart
      */
     private void setupChart()
     {
@@ -68,6 +69,9 @@ public class GraphFragment extends Fragment {
             list.add(new ChartDataPoint("AGV", 0));
             list.add(new ChartDataPoint("Rem", 0));
             PieSeries pieSeries = new PieSeries();
+            pieSeries.getDataMarker().setShowLabel(true);
+            pieSeries.getDataMarker().setLabelContent(LabelContent.YValue);
+            pieSeries.getDataMarker().getLabelStyle().setBackgroundColor(Color.TRANSPARENT);
             pieSeries.setDataSource(list);
             chart.getSeries().add(pieSeries);
             chart.getLegend().setVisibility(Visibility.Visible);
@@ -92,6 +96,10 @@ public class GraphFragment extends Fragment {
         }
     }
 
+    /**
+     * Update the Graph / chart
+     * @param data update data
+     */
     private void updateChart(final List<Integer> data)
     {
         getActivity().runOnUiThread(new Runnable() {
@@ -117,7 +125,7 @@ public class GraphFragment extends Fragment {
     }
 
     /**
-     * Update the graph
+     * Gets new data and starts updating the graph
      */
     public void setData()
     {
@@ -125,12 +133,15 @@ public class GraphFragment extends Fragment {
             updateChart(Communicator.getData(graphID));
         }
         catch (Exception e){
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-            });
+            try{
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            catch (Exception e1){}
         }
     }
 

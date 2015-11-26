@@ -3,6 +3,7 @@ package nhl.containing.controller;
 import java.net.*;
 import java.nio.file.*;
 import java.util.HashSet;
+import nhl.containing.controller.simulation.SimulationContext;
 
 /**
  * Controller for the system.
@@ -12,10 +13,16 @@ import java.util.HashSet;
 public class SimulatorController
 {
     private final Database _db;
+    private SimulationContext _context;
 
     public SimulatorController()
     {
         _db = new Database();
+    }
+
+    public SimulationContext getSimulationContext()
+    {
+        return _context;
     }
 
     /**
@@ -29,6 +36,13 @@ public class SimulatorController
     public void run(String xmlFileName) throws Exception
     {
         RecordSet recordSet = parseXml(xmlFileName);
+        p("Analyzing XML data...");
+        long start = System.currentTimeMillis();
+        _context = SimulationContext.fromRecordSet(recordSet);
+        long elapsed = System.currentTimeMillis() - start;
+        p("Analyzed XML data. Elapsed: " + elapsed + "ms");
+
+        writeAnalyzeResults();
 
         Simulator sim = new Simulator(this);
         if (sim.start())
@@ -44,6 +58,21 @@ public class SimulatorController
                 }
             }
         }
+    }
+
+    private void writeAnalyzeResults()
+    {
+        p("| Type | Inkomend | Uitgaand | Totaal |");
+        p("| --- | --- | --- | --- |");
+        p("| Zeeschip | " + _context.getSeaShips(true).size() + " | " + _context.getSeaShips(false).size() + " | " + _context.getSeaShips(null).size() + " |");
+        p("| Binnenschip | " + _context.getInlandShips(true).size() + " | " + _context.getInlandShips(false).size() + " | " + _context.getInlandShips(null).size() + " |");
+        p("| Vrachtwagen | " + _context.getTrucks(true).size() + " | " + _context.getTrucks(false).size() + " | " + _context.getTrucks(null).size() + " |");
+        p("| Trein | " + _context.getTrains(true).size() + " | " + _context.getTrains(false).size() + " | " + _context.getTrains(null).size() + " |");
+    }
+
+    private static void p(String s)
+    {
+        System.out.println(s);
     }
 
     private RecordSet parseXml(String xmlFileName) throws Exception

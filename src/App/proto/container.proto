@@ -19,21 +19,23 @@ message ContainerDataList{
 
 message ContainerInfo{
 	required int32 ID = 1;
-	optional int64 binnenkomstDatum = 2;
-	optional ContainerCategory vervoerBinnenkomst = 3;
-	optional string aanvoerMaatschappij = 4;
-	optional string eigenaar = 5;
-	optional int64 vertrekDatum = 6;
-	optional ContainerCategory vervoerVertrek = 7;
-	optional string afvoerMaatschappij = 8;
-	optional float gewicht = 9;
-	optional string inhoud = 10;
+	required int64 binnenkomstDatum = 2;
+	required ContainerCategory vervoerBinnenkomst = 3;
+	required string aanvoerMaatschappij = 4;
+	required string eigenaar = 5;
+	required int64 vertrekDatum = 6;
+	required ContainerCategory vervoerVertrek = 7;
+	required string afvoerMaatschappij = 8;
+	required int32 gewichtLeeg = 9;
+	required int32 gewichtVol = 10;
+	required string inhoud = 11;
 	
 }
 
 message ContainerDataListItem{
 	required int32 ID = 1;
 	required string eigenaar = 2;
+	required ContainerCategory category = 3;
 }
 
 enum ContainerCategory{

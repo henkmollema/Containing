@@ -1,17 +1,16 @@
 package nhl.containing.managmentinterface.navigationdrawer;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.ValueDependentColor;
-import com.jjoe64.graphview.helper.StaticLabelsFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
+import com.syncfusion.charts.*;
+import com.syncfusion.charts.enums.*;
+
+import java.util.List;
 
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
@@ -21,9 +20,9 @@ import nhl.containing.managmentinterface.communication.Communicator;
  */
 public class GraphFragment extends Fragment {
 
-    private GraphView graph;
+    private SfChart chart;
     private int graphID;
-    private static BarGraphSeries<DataPoint> series;
+    private ObservableArrayList list;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -46,10 +45,75 @@ public class GraphFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.graphfragment, container, false);
-        graph = (GraphView)view.findViewById(R.id.graph);
-        setUpGraph(graph);
+        chart = (SfChart)view.findViewById(R.id.graph);
+        //setUpGraph(graph);
+        setupChart();
         setData();
         return view;
+    }
+
+    /**
+     * [TESTING]
+     */
+    private void setupChart()
+    {
+        list = new ObservableArrayList();
+        if(graphID == 0)
+        {
+            list.add(new ChartDataPoint("Tra", 0));
+            list.add(new ChartDataPoint("Tru", 0));
+            list.add(new ChartDataPoint("Sea", 0));
+            list.add(new ChartDataPoint("Inl", 0));
+            list.add(new ChartDataPoint("Sto", 0));
+            list.add(new ChartDataPoint("AGV", 0));
+            list.add(new ChartDataPoint("Rem", 0));
+            PieSeries pieSeries = new PieSeries();
+            pieSeries.setDataSource(list);
+            chart.getSeries().add(pieSeries);
+            chart.getLegend().setVisibility(Visibility.Visible);
+            chart.getLegend().setDockPosition(ChartDock.Right);
+            chart.getLegend().setOrientation(Orientation.Vertical);
+        }
+        else
+        {
+            ColumnSeries seriesChart = new ColumnSeries();
+            list.add(new ChartDataPoint("Tra",0));
+            list.add(new ChartDataPoint("Tru",0));
+            list.add(new ChartDataPoint("Sea",0));
+            list.add(new ChartDataPoint("Inl",0));
+            seriesChart.setDataSource(list);
+            seriesChart.getDataMarker().setShowLabel(true);
+            seriesChart.getDataMarker().getLabelStyle().setLabelPosition(DataMarkerLabelPosition.Inner);
+            chart.getSeries().add(seriesChart);
+            chart.setPrimaryAxis(new CategoryAxis());
+            NumericalAxis test = new NumericalAxis();
+            test.setInterval(10);
+            chart.setSecondaryAxis(test);
+        }
+    }
+
+    private void updateChart(final List<Integer> data)
+    {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                list.clear();
+                if (graphID == 0) {
+                    list.add(new ChartDataPoint("Train", data.get(0)));
+                    list.add(new ChartDataPoint("Truck", data.get(1)));
+                    list.add(new ChartDataPoint("Seaship", data.get(2)));
+                    list.add(new ChartDataPoint("Inline Ship", data.get(3)));
+                    list.add(new ChartDataPoint("Storage", data.get(4)));
+                    list.add(new ChartDataPoint("AGV", data.get(5)));
+                    list.add(new ChartDataPoint("Remainer", data.get(6)));
+                } else {
+                    list.add(new ChartDataPoint("Train", data.get(0)));
+                    list.add(new ChartDataPoint("Truck", data.get(1)));
+                    list.add(new ChartDataPoint("Seaship", data.get(2)));
+                    list.add(new ChartDataPoint("Inline Ship", data.get(3)));
+                }
+            }
+        });
     }
 
     /**
@@ -57,71 +121,28 @@ public class GraphFragment extends Fragment {
      */
     public void setData()
     {
-        updateGraph(Communicator.getData(graphID));
-    }
-
-    /**
-     * Setup the Graph
-     */
-    private void setUpGraph(GraphView graph)
-    {
-        StaticLabelsFormatter slf = new StaticLabelsFormatter(graph);
-        slf.setHorizontalLabels(new String[]{"Tra", "Tru", "Sea", "Inl", "Sto", "AGV", "Rem"});
-        graph.getGridLabelRenderer().setLabelFormatter(slf);
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(-0.5);
-        graph.getViewport().setMaxX(6.5);
-        series = new BarGraphSeries<>(new DataPoint[]{
-                new DataPoint(0,0),
-                new DataPoint(1,0),
-                new DataPoint(2,0),
-                new DataPoint(3,0),
-                new DataPoint(4,0),
-                new DataPoint(5,0),
-                new DataPoint(6,0)
-        });
-        graph.addSeries(series);
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                switch ((int)data.getX())
-                {
-                    case 0:
-                        return Color.GREEN;
-                    case 1:
-                        return Color.BLUE;
-                    case 2:
-                        return Color.RED;
-                    case 3:
-                        return Color.GRAY;
-                    case 4:
-                        return Color.YELLOW;
-                    case 5:
-                        return Color.CYAN;
-                    case 6:
-                        return Color.BLACK;
-                    default:
-                        return Color.WHITE;
+        try{
+            updateChart(Communicator.getData(graphID));
+        }
+        catch (Exception e){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-        series.setSpacing(20);
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
+            });
+        }
     }
 
     /**
-     * Makes the graph
+     * Returns the id of the graph
+     * @return graphid
      */
-    private void updateGraph(final DataPoint[] data)
+    public int getGraphID()
     {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                series.resetData(data);
-            }
-        });
+        return graphID;
     }
+
 
 
 

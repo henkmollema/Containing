@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import nhl.containing.managmentinterface.R;
-import nhl.containing.managmentinterface.navigationdrawer.dummy.DummyContent;
+import java.util.List;
+
+import nhl.containing.managmentinterface.data.ContainerProtos.*;
+import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
+import nhl.containing.managmentinterface.communication.Communicator;
 
 /**
  * A fragment representing a list of Items.
@@ -20,6 +22,7 @@ import nhl.containing.managmentinterface.navigationdrawer.dummy.DummyContent;
 public class ContainersFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
+    private ContainerArrayAdapter items;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -31,10 +34,9 @@ public class ContainersFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        // TODO: Change Adapter to display your content
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),R.layout.listitem, R.id.list_item_text, DummyContent.ITEMS));
+        List<ContainerDataListItem> list = Communicator.getContainerList();
+        items = new ContainerArrayAdapter(getActivity(),list);
+        setListAdapter(items);
     }
 
 
@@ -62,8 +64,26 @@ public class ContainersFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction(items.getItem(position).getID());
         }
+    }
+
+    public void setData()
+    {
+        try{
+            updateList(Communicator.getContainerList());
+        }catch (Exception e){}
+    }
+
+
+    private void updateList(final List<ContainerDataListItem> listItems)
+    {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                items.Update(listItems);
+            }
+        });
     }
 
     /**
@@ -78,7 +98,7 @@ public class ContainersFragment extends ListFragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onFragmentInteraction(int id);
     }
 
 }

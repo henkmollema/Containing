@@ -1,8 +1,10 @@
 package nhl.containing.managmentinterface.communication;
 
 import com.google.protobuf.ByteString;
-import com.jjoe64.graphview.series.DataPoint;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import nhl.containing.managmentinterface.data.ContainerProtos.*;
 
@@ -11,7 +13,12 @@ import nhl.containing.managmentinterface.data.ContainerProtos.*;
  */
 public class Communicator
 {
-    public static String test()
+    /**
+     * [FOR TESTING PURPOSE ONLY]
+     * Gives serialized string
+     * @return string
+     */
+    private static String test()
     {
         ContainerGraphList list = ContainerGraphList.newBuilder()
                 .addContainers(ContainerGraphData.newBuilder().setAantal(10).setCategory(ContainerCategory.TRAIN).build())
@@ -26,23 +33,85 @@ public class Communicator
         return list.toByteString().toStringUtf8();
     }
 
-    public static String test1()
+    /**
+     * [FOR TESTING PURPOSE ONLY]
+     * Gives serialized string
+     * @return string
+     */
+    private static String test1()
     {
         ContainerGraphList list = ContainerGraphList.newBuilder()
                 .addContainers(ContainerGraphData.newBuilder().setAantal(15).setCategory(ContainerCategory.TRAIN).build())
                 .addContainers(ContainerGraphData.newBuilder().setAantal(20).setCategory(ContainerCategory.TRUCK).build())
                 .addContainers(ContainerGraphData.newBuilder().setAantal(80).setCategory(ContainerCategory.SEASHIP).build())
                 .addContainers(ContainerGraphData.newBuilder().setAantal(33).setCategory(ContainerCategory.INLINESHIP).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(91).setCategory(ContainerCategory.STORAGE).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(69).setCategory(ContainerCategory.AGV).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(15).setCategory(ContainerCategory.REMAINDER).build())
                 .build();
 
         return list.toByteString().toStringUtf8();
     }
 
+    /**
+     * [FOR TESTING PURPOSE ONLY]
+     * Gives serialized string
+     * @return string
+     */
+    private static String testContainerList()
+    {
+        ContainerDataList list = ContainerDataList.newBuilder()
+                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Niels").setID(1).setCategory(ContainerCategory.REMAINDER).build())
+                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Sietse").setID(2).setCategory(ContainerCategory.INLINESHIP).build())
+                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Henk").setID(3).setCategory(ContainerCategory.SEASHIP).build())
+                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Coen").setID(4).setCategory(ContainerCategory.AGV).build())
+                .build();
 
-    public static DataPoint[] getData(int index)
+        return list.toByteString().toStringUtf8();
+    }
+
+    /**
+     * [FOR TESTING PURPOSE ONLY]
+     * Gives serialized string
+     * @return string
+     */
+    private static ByteString testContainer()
+    {
+        ContainerInfo info = ContainerInfo.newBuilder()
+                .setID(1)
+                .setAanvoerMaatschappij("Test Maatschappij")
+                .setAfvoerMaatschappij("Test 1 Maatschappij")
+                .setBinnenkomstDatum(new Date().getTime())
+                .setEigenaar("Niels")
+                .setGewichtLeeg(3)
+                .setGewichtVol(78)
+                .setInhoud("Death Star")
+                .setVertrekDatum(new Date().getTime())
+                .setVervoerBinnenkomst(ContainerCategory.SEASHIP)
+                .setVervoerVertrek(ContainerCategory.TRAIN)
+                .build();
+        return info.toByteString();
+    }
+
+
+    public static ContainerInfo getContainerInfo(int id) throws Exception
+    {
+        //add communication with controller
+        ContainerInfo info = ContainerInfo.parseFrom(testContainer());
+        return info;
+    }
+
+
+
+    public static List<ContainerDataListItem> getContainerList()
+    {
+        ContainerDataList list;
+        try
+        {
+            list = ContainerDataList.parseFrom(ByteString.copyFromUtf8(testContainerList()));
+        }
+        catch (Exception e){return new ArrayList<>();}
+        return list.getItemsList();
+    }
+
+    public static List<Integer> getData(int index) throws Exception
     {
         ByteString received = null;
         switch (index)
@@ -54,21 +123,12 @@ public class Communicator
                 received = ByteString.copyFromUtf8(test1()); //make communication method
                 break;
         }
-        ContainerGraphList list;
-        try
-        {
-             list = ContainerGraphList.parseFrom(received);
-        }
-        catch (Exception e)
-        {
-            return new DataPoint[0];
-        }
-        DataPoint[] returnlist = new DataPoint[list.getContainersList().size()];
+        List<Integer> returnlist = new ArrayList<>();
+        ContainerGraphList list = ContainerGraphList.parseFrom(received);
         for(int i = 0; i < list.getContainersList().size();i++)
         {
             ContainerGraphData data = list.getContainersList().get(i);
-            DataPoint point = new DataPoint(data.getCategory().getNumber(),data.getAantal());
-            returnlist[i] = point;
+            returnlist.add(data.getCategory().getNumber(),data.getAantal());
         }
         return returnlist;
     }

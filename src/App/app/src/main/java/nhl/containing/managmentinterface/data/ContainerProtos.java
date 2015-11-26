@@ -2025,102 +2025,111 @@ public final class ContainerProtos {
     int getID();
 
     /**
-     * <code>optional int64 binnenkomstDatum = 2;</code>
+     * <code>required int64 binnenkomstDatum = 2;</code>
      */
     boolean hasBinnenkomstDatum();
     /**
-     * <code>optional int64 binnenkomstDatum = 2;</code>
+     * <code>required int64 binnenkomstDatum = 2;</code>
      */
     long getBinnenkomstDatum();
 
     /**
-     * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+     * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
     boolean hasVervoerBinnenkomst();
     /**
-     * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+     * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
     nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerBinnenkomst();
 
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     boolean hasAanvoerMaatschappij();
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     java.lang.String getAanvoerMaatschappij();
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     com.google.protobuf.ByteString
         getAanvoerMaatschappijBytes();
 
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     boolean hasEigenaar();
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     java.lang.String getEigenaar();
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     com.google.protobuf.ByteString
         getEigenaarBytes();
 
     /**
-     * <code>optional int64 vertrekDatum = 6;</code>
+     * <code>required int64 vertrekDatum = 6;</code>
      */
     boolean hasVertrekDatum();
     /**
-     * <code>optional int64 vertrekDatum = 6;</code>
+     * <code>required int64 vertrekDatum = 6;</code>
      */
     long getVertrekDatum();
 
     /**
-     * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+     * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
      */
     boolean hasVervoerVertrek();
     /**
-     * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+     * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
      */
     nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerVertrek();
 
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     boolean hasAfvoerMaatschappij();
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     java.lang.String getAfvoerMaatschappij();
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     com.google.protobuf.ByteString
         getAfvoerMaatschappijBytes();
 
     /**
-     * <code>optional float gewicht = 9;</code>
+     * <code>required int32 gewichtLeeg = 9;</code>
      */
-    boolean hasGewicht();
+    boolean hasGewichtLeeg();
     /**
-     * <code>optional float gewicht = 9;</code>
+     * <code>required int32 gewichtLeeg = 9;</code>
      */
-    float getGewicht();
+    int getGewichtLeeg();
 
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required int32 gewichtVol = 10;</code>
+     */
+    boolean hasGewichtVol();
+    /**
+     * <code>required int32 gewichtVol = 10;</code>
+     */
+    int getGewichtVol();
+
+    /**
+     * <code>required string inhoud = 11;</code>
      */
     boolean hasInhoud();
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required string inhoud = 11;</code>
      */
     java.lang.String getInhoud();
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required string inhoud = 11;</code>
      */
     com.google.protobuf.ByteString
         getInhoudBytes();
@@ -2232,14 +2241,19 @@ public final class ContainerProtos {
               afvoerMaatschappij_ = bs;
               break;
             }
-            case 77: {
+            case 72: {
               bitField0_ |= 0x00000100;
-              gewicht_ = input.readFloat();
+              gewichtLeeg_ = input.readInt32();
               break;
             }
-            case 82: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 80: {
               bitField0_ |= 0x00000200;
+              gewichtVol_ = input.readInt32();
+              break;
+            }
+            case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000400;
               inhoud_ = bs;
               break;
             }
@@ -2301,13 +2315,13 @@ public final class ContainerProtos {
     public static final int BINNENKOMSTDATUM_FIELD_NUMBER = 2;
     private long binnenkomstDatum_;
     /**
-     * <code>optional int64 binnenkomstDatum = 2;</code>
+     * <code>required int64 binnenkomstDatum = 2;</code>
      */
     public boolean hasBinnenkomstDatum() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional int64 binnenkomstDatum = 2;</code>
+     * <code>required int64 binnenkomstDatum = 2;</code>
      */
     public long getBinnenkomstDatum() {
       return binnenkomstDatum_;
@@ -2316,13 +2330,13 @@ public final class ContainerProtos {
     public static final int VERVOERBINNENKOMST_FIELD_NUMBER = 3;
     private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory vervoerBinnenkomst_;
     /**
-     * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+     * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
     public boolean hasVervoerBinnenkomst() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+     * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
     public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerBinnenkomst() {
       return vervoerBinnenkomst_;
@@ -2331,13 +2345,13 @@ public final class ContainerProtos {
     public static final int AANVOERMAATSCHAPPIJ_FIELD_NUMBER = 4;
     private java.lang.Object aanvoerMaatschappij_;
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     public boolean hasAanvoerMaatschappij() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     public java.lang.String getAanvoerMaatschappij() {
       java.lang.Object ref = aanvoerMaatschappij_;
@@ -2354,7 +2368,7 @@ public final class ContainerProtos {
       }
     }
     /**
-     * <code>optional string aanvoerMaatschappij = 4;</code>
+     * <code>required string aanvoerMaatschappij = 4;</code>
      */
     public com.google.protobuf.ByteString
         getAanvoerMaatschappijBytes() {
@@ -2373,13 +2387,13 @@ public final class ContainerProtos {
     public static final int EIGENAAR_FIELD_NUMBER = 5;
     private java.lang.Object eigenaar_;
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     public boolean hasEigenaar() {
       return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     public java.lang.String getEigenaar() {
       java.lang.Object ref = eigenaar_;
@@ -2396,7 +2410,7 @@ public final class ContainerProtos {
       }
     }
     /**
-     * <code>optional string eigenaar = 5;</code>
+     * <code>required string eigenaar = 5;</code>
      */
     public com.google.protobuf.ByteString
         getEigenaarBytes() {
@@ -2415,13 +2429,13 @@ public final class ContainerProtos {
     public static final int VERTREKDATUM_FIELD_NUMBER = 6;
     private long vertrekDatum_;
     /**
-     * <code>optional int64 vertrekDatum = 6;</code>
+     * <code>required int64 vertrekDatum = 6;</code>
      */
     public boolean hasVertrekDatum() {
       return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional int64 vertrekDatum = 6;</code>
+     * <code>required int64 vertrekDatum = 6;</code>
      */
     public long getVertrekDatum() {
       return vertrekDatum_;
@@ -2430,13 +2444,13 @@ public final class ContainerProtos {
     public static final int VERVOERVERTREK_FIELD_NUMBER = 7;
     private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory vervoerVertrek_;
     /**
-     * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+     * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
      */
     public boolean hasVervoerVertrek() {
       return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
-     * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+     * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
      */
     public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerVertrek() {
       return vervoerVertrek_;
@@ -2445,13 +2459,13 @@ public final class ContainerProtos {
     public static final int AFVOERMAATSCHAPPIJ_FIELD_NUMBER = 8;
     private java.lang.Object afvoerMaatschappij_;
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     public boolean hasAfvoerMaatschappij() {
       return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     public java.lang.String getAfvoerMaatschappij() {
       java.lang.Object ref = afvoerMaatschappij_;
@@ -2468,7 +2482,7 @@ public final class ContainerProtos {
       }
     }
     /**
-     * <code>optional string afvoerMaatschappij = 8;</code>
+     * <code>required string afvoerMaatschappij = 8;</code>
      */
     public com.google.protobuf.ByteString
         getAfvoerMaatschappijBytes() {
@@ -2484,31 +2498,46 @@ public final class ContainerProtos {
       }
     }
 
-    public static final int GEWICHT_FIELD_NUMBER = 9;
-    private float gewicht_;
+    public static final int GEWICHTLEEG_FIELD_NUMBER = 9;
+    private int gewichtLeeg_;
     /**
-     * <code>optional float gewicht = 9;</code>
+     * <code>required int32 gewichtLeeg = 9;</code>
      */
-    public boolean hasGewicht() {
+    public boolean hasGewichtLeeg() {
       return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     /**
-     * <code>optional float gewicht = 9;</code>
+     * <code>required int32 gewichtLeeg = 9;</code>
      */
-    public float getGewicht() {
-      return gewicht_;
+    public int getGewichtLeeg() {
+      return gewichtLeeg_;
     }
 
-    public static final int INHOUD_FIELD_NUMBER = 10;
-    private java.lang.Object inhoud_;
+    public static final int GEWICHTVOL_FIELD_NUMBER = 10;
+    private int gewichtVol_;
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required int32 gewichtVol = 10;</code>
      */
-    public boolean hasInhoud() {
+    public boolean hasGewichtVol() {
       return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required int32 gewichtVol = 10;</code>
+     */
+    public int getGewichtVol() {
+      return gewichtVol_;
+    }
+
+    public static final int INHOUD_FIELD_NUMBER = 11;
+    private java.lang.Object inhoud_;
+    /**
+     * <code>required string inhoud = 11;</code>
+     */
+    public boolean hasInhoud() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>required string inhoud = 11;</code>
      */
     public java.lang.String getInhoud() {
       java.lang.Object ref = inhoud_;
@@ -2525,7 +2554,7 @@ public final class ContainerProtos {
       }
     }
     /**
-     * <code>optional string inhoud = 10;</code>
+     * <code>required string inhoud = 11;</code>
      */
     public com.google.protobuf.ByteString
         getInhoudBytes() {
@@ -2550,7 +2579,8 @@ public final class ContainerProtos {
       vertrekDatum_ = 0L;
       vervoerVertrek_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
       afvoerMaatschappij_ = "";
-      gewicht_ = 0F;
+      gewichtLeeg_ = 0;
+      gewichtVol_ = 0;
       inhoud_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -2560,6 +2590,46 @@ public final class ContainerProtos {
       if (isInitialized == 0) return false;
 
       if (!hasID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasBinnenkomstDatum()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasVervoerBinnenkomst()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAanvoerMaatschappij()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasEigenaar()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasVertrekDatum()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasVervoerVertrek()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasAfvoerMaatschappij()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasGewichtLeeg()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasGewichtVol()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasInhoud()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -2595,10 +2665,13 @@ public final class ContainerProtos {
         output.writeBytes(8, getAfvoerMaatschappijBytes());
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
-        output.writeFloat(9, gewicht_);
+        output.writeInt32(9, gewichtLeeg_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
-        output.writeBytes(10, getInhoudBytes());
+        output.writeInt32(10, gewichtVol_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, getInhoudBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2643,11 +2716,15 @@ public final class ContainerProtos {
       }
       if (((bitField0_ & 0x00000100) == 0x00000100)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(9, gewicht_);
+          .computeInt32Size(9, gewichtLeeg_);
       }
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(10, getInhoudBytes());
+          .computeInt32Size(10, gewichtVol_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, getInhoudBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2782,10 +2859,12 @@ public final class ContainerProtos {
         bitField0_ = (bitField0_ & ~0x00000040);
         afvoerMaatschappij_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
-        gewicht_ = 0F;
+        gewichtLeeg_ = 0;
         bitField0_ = (bitField0_ & ~0x00000100);
-        inhoud_ = "";
+        gewichtVol_ = 0;
         bitField0_ = (bitField0_ & ~0x00000200);
+        inhoud_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
         return this;
       }
 
@@ -2849,9 +2928,13 @@ public final class ContainerProtos {
         if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000100;
         }
-        result.gewicht_ = gewicht_;
+        result.gewichtLeeg_ = gewichtLeeg_;
         if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000200;
+        }
+        result.gewichtVol_ = gewichtVol_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
         }
         result.inhoud_ = inhoud_;
         result.bitField0_ = to_bitField0_;
@@ -2900,11 +2983,14 @@ public final class ContainerProtos {
           afvoerMaatschappij_ = other.afvoerMaatschappij_;
           onChanged();
         }
-        if (other.hasGewicht()) {
-          setGewicht(other.getGewicht());
+        if (other.hasGewichtLeeg()) {
+          setGewichtLeeg(other.getGewichtLeeg());
+        }
+        if (other.hasGewichtVol()) {
+          setGewichtVol(other.getGewichtVol());
         }
         if (other.hasInhoud()) {
-          bitField0_ |= 0x00000200;
+          bitField0_ |= 0x00000400;
           inhoud_ = other.inhoud_;
           onChanged();
         }
@@ -2914,6 +3000,46 @@ public final class ContainerProtos {
 
       public final boolean isInitialized() {
         if (!hasID()) {
+          
+          return false;
+        }
+        if (!hasBinnenkomstDatum()) {
+          
+          return false;
+        }
+        if (!hasVervoerBinnenkomst()) {
+          
+          return false;
+        }
+        if (!hasAanvoerMaatschappij()) {
+          
+          return false;
+        }
+        if (!hasEigenaar()) {
+          
+          return false;
+        }
+        if (!hasVertrekDatum()) {
+          
+          return false;
+        }
+        if (!hasVervoerVertrek()) {
+          
+          return false;
+        }
+        if (!hasAfvoerMaatschappij()) {
+          
+          return false;
+        }
+        if (!hasGewichtLeeg()) {
+          
+          return false;
+        }
+        if (!hasGewichtVol()) {
+          
+          return false;
+        }
+        if (!hasInhoud()) {
           
           return false;
         }
@@ -2973,19 +3099,19 @@ public final class ContainerProtos {
 
       private long binnenkomstDatum_ ;
       /**
-       * <code>optional int64 binnenkomstDatum = 2;</code>
+       * <code>required int64 binnenkomstDatum = 2;</code>
        */
       public boolean hasBinnenkomstDatum() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional int64 binnenkomstDatum = 2;</code>
+       * <code>required int64 binnenkomstDatum = 2;</code>
        */
       public long getBinnenkomstDatum() {
         return binnenkomstDatum_;
       }
       /**
-       * <code>optional int64 binnenkomstDatum = 2;</code>
+       * <code>required int64 binnenkomstDatum = 2;</code>
        */
       public Builder setBinnenkomstDatum(long value) {
         bitField0_ |= 0x00000002;
@@ -2994,7 +3120,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional int64 binnenkomstDatum = 2;</code>
+       * <code>required int64 binnenkomstDatum = 2;</code>
        */
       public Builder clearBinnenkomstDatum() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3005,19 +3131,19 @@ public final class ContainerProtos {
 
       private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory vervoerBinnenkomst_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
       /**
-       * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+       * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
       public boolean hasVervoerBinnenkomst() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+       * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
       public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerBinnenkomst() {
         return vervoerBinnenkomst_;
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+       * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
       public Builder setVervoerBinnenkomst(nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory value) {
         if (value == null) {
@@ -3029,7 +3155,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerBinnenkomst = 3;</code>
+       * <code>required .data.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
       public Builder clearVervoerBinnenkomst() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -3040,13 +3166,13 @@ public final class ContainerProtos {
 
       private java.lang.Object aanvoerMaatschappij_ = "";
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public boolean hasAanvoerMaatschappij() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public java.lang.String getAanvoerMaatschappij() {
         java.lang.Object ref = aanvoerMaatschappij_;
@@ -3063,7 +3189,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public com.google.protobuf.ByteString
           getAanvoerMaatschappijBytes() {
@@ -3079,7 +3205,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public Builder setAanvoerMaatschappij(
           java.lang.String value) {
@@ -3092,7 +3218,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public Builder clearAanvoerMaatschappij() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -3101,7 +3227,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string aanvoerMaatschappij = 4;</code>
+       * <code>required string aanvoerMaatschappij = 4;</code>
        */
       public Builder setAanvoerMaatschappijBytes(
           com.google.protobuf.ByteString value) {
@@ -3116,13 +3242,13 @@ public final class ContainerProtos {
 
       private java.lang.Object eigenaar_ = "";
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public boolean hasEigenaar() {
         return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public java.lang.String getEigenaar() {
         java.lang.Object ref = eigenaar_;
@@ -3139,7 +3265,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public com.google.protobuf.ByteString
           getEigenaarBytes() {
@@ -3155,7 +3281,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public Builder setEigenaar(
           java.lang.String value) {
@@ -3168,7 +3294,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public Builder clearEigenaar() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -3177,7 +3303,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string eigenaar = 5;</code>
+       * <code>required string eigenaar = 5;</code>
        */
       public Builder setEigenaarBytes(
           com.google.protobuf.ByteString value) {
@@ -3192,19 +3318,19 @@ public final class ContainerProtos {
 
       private long vertrekDatum_ ;
       /**
-       * <code>optional int64 vertrekDatum = 6;</code>
+       * <code>required int64 vertrekDatum = 6;</code>
        */
       public boolean hasVertrekDatum() {
         return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional int64 vertrekDatum = 6;</code>
+       * <code>required int64 vertrekDatum = 6;</code>
        */
       public long getVertrekDatum() {
         return vertrekDatum_;
       }
       /**
-       * <code>optional int64 vertrekDatum = 6;</code>
+       * <code>required int64 vertrekDatum = 6;</code>
        */
       public Builder setVertrekDatum(long value) {
         bitField0_ |= 0x00000020;
@@ -3213,7 +3339,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional int64 vertrekDatum = 6;</code>
+       * <code>required int64 vertrekDatum = 6;</code>
        */
       public Builder clearVertrekDatum() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -3224,19 +3350,19 @@ public final class ContainerProtos {
 
       private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory vervoerVertrek_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
       /**
-       * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+       * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
        */
       public boolean hasVervoerVertrek() {
         return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+       * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
        */
       public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getVervoerVertrek() {
         return vervoerVertrek_;
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+       * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
        */
       public Builder setVervoerVertrek(nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory value) {
         if (value == null) {
@@ -3248,7 +3374,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional .data.ContainerCategory vervoerVertrek = 7;</code>
+       * <code>required .data.ContainerCategory vervoerVertrek = 7;</code>
        */
       public Builder clearVervoerVertrek() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -3259,13 +3385,13 @@ public final class ContainerProtos {
 
       private java.lang.Object afvoerMaatschappij_ = "";
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public boolean hasAfvoerMaatschappij() {
         return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public java.lang.String getAfvoerMaatschappij() {
         java.lang.Object ref = afvoerMaatschappij_;
@@ -3282,7 +3408,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public com.google.protobuf.ByteString
           getAfvoerMaatschappijBytes() {
@@ -3298,7 +3424,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public Builder setAfvoerMaatschappij(
           java.lang.String value) {
@@ -3311,7 +3437,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public Builder clearAfvoerMaatschappij() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -3320,7 +3446,7 @@ public final class ContainerProtos {
         return this;
       }
       /**
-       * <code>optional string afvoerMaatschappij = 8;</code>
+       * <code>required string afvoerMaatschappij = 8;</code>
        */
       public Builder setAfvoerMaatschappijBytes(
           com.google.protobuf.ByteString value) {
@@ -3333,47 +3459,79 @@ public final class ContainerProtos {
         return this;
       }
 
-      private float gewicht_ ;
+      private int gewichtLeeg_ ;
       /**
-       * <code>optional float gewicht = 9;</code>
+       * <code>required int32 gewichtLeeg = 9;</code>
        */
-      public boolean hasGewicht() {
+      public boolean hasGewichtLeeg() {
         return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       /**
-       * <code>optional float gewicht = 9;</code>
+       * <code>required int32 gewichtLeeg = 9;</code>
        */
-      public float getGewicht() {
-        return gewicht_;
+      public int getGewichtLeeg() {
+        return gewichtLeeg_;
       }
       /**
-       * <code>optional float gewicht = 9;</code>
+       * <code>required int32 gewichtLeeg = 9;</code>
        */
-      public Builder setGewicht(float value) {
+      public Builder setGewichtLeeg(int value) {
         bitField0_ |= 0x00000100;
-        gewicht_ = value;
+        gewichtLeeg_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional float gewicht = 9;</code>
+       * <code>required int32 gewichtLeeg = 9;</code>
        */
-      public Builder clearGewicht() {
+      public Builder clearGewichtLeeg() {
         bitField0_ = (bitField0_ & ~0x00000100);
-        gewicht_ = 0F;
+        gewichtLeeg_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int gewichtVol_ ;
+      /**
+       * <code>required int32 gewichtVol = 10;</code>
+       */
+      public boolean hasGewichtVol() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>required int32 gewichtVol = 10;</code>
+       */
+      public int getGewichtVol() {
+        return gewichtVol_;
+      }
+      /**
+       * <code>required int32 gewichtVol = 10;</code>
+       */
+      public Builder setGewichtVol(int value) {
+        bitField0_ |= 0x00000200;
+        gewichtVol_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 gewichtVol = 10;</code>
+       */
+      public Builder clearGewichtVol() {
+        bitField0_ = (bitField0_ & ~0x00000200);
+        gewichtVol_ = 0;
         onChanged();
         return this;
       }
 
       private java.lang.Object inhoud_ = "";
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public boolean hasInhoud() {
-        return ((bitField0_ & 0x00000200) == 0x00000200);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public java.lang.String getInhoud() {
         java.lang.Object ref = inhoud_;
@@ -3390,7 +3548,7 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public com.google.protobuf.ByteString
           getInhoudBytes() {
@@ -3406,36 +3564,36 @@ public final class ContainerProtos {
         }
       }
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public Builder setInhoud(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000200;
+  bitField0_ |= 0x00000400;
         inhoud_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public Builder clearInhoud() {
-        bitField0_ = (bitField0_ & ~0x00000200);
+        bitField0_ = (bitField0_ & ~0x00000400);
         inhoud_ = getDefaultInstance().getInhoud();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string inhoud = 10;</code>
+       * <code>required string inhoud = 11;</code>
        */
       public Builder setInhoudBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000200;
+  bitField0_ |= 0x00000400;
         inhoud_ = value;
         onChanged();
         return this;
@@ -3478,6 +3636,15 @@ public final class ContainerProtos {
      */
     com.google.protobuf.ByteString
         getEigenaarBytes();
+
+    /**
+     * <code>required .data.ContainerCategory category = 3;</code>
+     */
+    boolean hasCategory();
+    /**
+     * <code>required .data.ContainerCategory category = 3;</code>
+     */
+    nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getCategory();
   }
   /**
    * Protobuf type {@code data.ContainerDataListItem}
@@ -3540,6 +3707,17 @@ public final class ContainerProtos {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
               eigenaar_ = bs;
+              break;
+            }
+            case 24: {
+              int rawValue = input.readEnum();
+              nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory value = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(3, rawValue);
+              } else {
+                bitField0_ |= 0x00000004;
+                category_ = value;
+              }
               break;
             }
           }
@@ -3639,9 +3817,25 @@ public final class ContainerProtos {
       }
     }
 
+    public static final int CATEGORY_FIELD_NUMBER = 3;
+    private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory category_;
+    /**
+     * <code>required .data.ContainerCategory category = 3;</code>
+     */
+    public boolean hasCategory() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required .data.ContainerCategory category = 3;</code>
+     */
+    public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getCategory() {
+      return category_;
+    }
+
     private void initFields() {
       iD_ = 0;
       eigenaar_ = "";
+      category_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3657,6 +3851,10 @@ public final class ContainerProtos {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasCategory()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3669,6 +3867,9 @@ public final class ContainerProtos {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, getEigenaarBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeEnum(3, category_.getNumber());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3686,6 +3887,10 @@ public final class ContainerProtos {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, getEigenaarBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(3, category_.getNumber());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3808,6 +4013,8 @@ public final class ContainerProtos {
         bitField0_ = (bitField0_ & ~0x00000001);
         eigenaar_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
+        category_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -3844,6 +4051,10 @@ public final class ContainerProtos {
           to_bitField0_ |= 0x00000002;
         }
         result.eigenaar_ = eigenaar_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.category_ = category_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3868,6 +4079,9 @@ public final class ContainerProtos {
           eigenaar_ = other.eigenaar_;
           onChanged();
         }
+        if (other.hasCategory()) {
+          setCategory(other.getCategory());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -3878,6 +4092,10 @@ public final class ContainerProtos {
           return false;
         }
         if (!hasEigenaar()) {
+          
+          return false;
+        }
+        if (!hasCategory()) {
           
           return false;
         }
@@ -4011,6 +4229,41 @@ public final class ContainerProtos {
         return this;
       }
 
+      private nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory category_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
+      /**
+       * <code>required .data.ContainerCategory category = 3;</code>
+       */
+      public boolean hasCategory() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required .data.ContainerCategory category = 3;</code>
+       */
+      public nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory getCategory() {
+        return category_;
+      }
+      /**
+       * <code>required .data.ContainerCategory category = 3;</code>
+       */
+      public Builder setCategory(nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000004;
+        category_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required .data.ContainerCategory category = 3;</code>
+       */
+      public Builder clearCategory() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        category_ = nhl.containing.managmentinterface.data.ContainerProtos.ContainerCategory.TRAIN;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:data.ContainerDataListItem)
     }
 
@@ -4062,19 +4315,21 @@ public final class ContainerProtos {
       "ContainerGraphList\022,\n\ncontainers\030\001 \003(\0132\030" +
       ".data.ContainerGraphData\"?\n\021ContainerDat" +
       "aList\022*\n\005items\030\001 \003(\0132\033.data.ContainerDat" +
-      "aListItem\"\235\002\n\rContainerInfo\022\n\n\002ID\030\001 \002(\005\022" +
-      "\030\n\020binnenkomstDatum\030\002 \001(\003\0223\n\022vervoerBinn" +
-      "enkomst\030\003 \001(\0162\027.data.ContainerCategory\022\033" +
-      "\n\023aanvoerMaatschappij\030\004 \001(\t\022\020\n\010eigenaar\030",
-      "\005 \001(\t\022\024\n\014vertrekDatum\030\006 \001(\003\022/\n\016vervoerVe" +
-      "rtrek\030\007 \001(\0162\027.data.ContainerCategory\022\032\n\022" +
-      "afvoerMaatschappij\030\010 \001(\t\022\017\n\007gewicht\030\t \001(" +
-      "\002\022\016\n\006inhoud\030\n \001(\t\"5\n\025ContainerDataListIt" +
-      "em\022\n\n\002ID\030\001 \002(\005\022\020\n\010eigenaar\030\002 \002(\t*k\n\021Cont" +
-      "ainerCategory\022\t\n\005TRAIN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007S" +
-      "EASHIP\020\002\022\016\n\nINLINESHIP\020\003\022\013\n\007STORAGE\020\004\022\007\n" +
-      "\003AGV\020\005\022\r\n\tREMAINDER\020\006B9\n&nhl.containing." +
-      "managmentinterface.dataB\017ContainerProtos"
+      "aListItem\"\265\002\n\rContainerInfo\022\n\n\002ID\030\001 \002(\005\022" +
+      "\030\n\020binnenkomstDatum\030\002 \002(\003\0223\n\022vervoerBinn" +
+      "enkomst\030\003 \002(\0162\027.data.ContainerCategory\022\033" +
+      "\n\023aanvoerMaatschappij\030\004 \002(\t\022\020\n\010eigenaar\030",
+      "\005 \002(\t\022\024\n\014vertrekDatum\030\006 \002(\003\022/\n\016vervoerVe" +
+      "rtrek\030\007 \002(\0162\027.data.ContainerCategory\022\032\n\022" +
+      "afvoerMaatschappij\030\010 \002(\t\022\023\n\013gewichtLeeg\030" +
+      "\t \002(\005\022\022\n\ngewichtVol\030\n \002(\005\022\016\n\006inhoud\030\013 \002(" +
+      "\t\"`\n\025ContainerDataListItem\022\n\n\002ID\030\001 \002(\005\022\020" +
+      "\n\010eigenaar\030\002 \002(\t\022)\n\010category\030\003 \002(\0162\027.dat" +
+      "a.ContainerCategory*k\n\021ContainerCategory" +
+      "\022\t\n\005TRAIN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007SEASHIP\020\002\022\016\n\nI" +
+      "NLINESHIP\020\003\022\013\n\007STORAGE\020\004\022\007\n\003AGV\020\005\022\r\n\tREM" +
+      "AINDER\020\006B9\n&nhl.containing.managmentinte",
+      "rface.dataB\017ContainerProtos"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4111,13 +4366,13 @@ public final class ContainerProtos {
     internal_static_data_ContainerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_data_ContainerInfo_descriptor,
-        new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "Gewicht", "Inhoud", });
+        new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "GewichtLeeg", "GewichtVol", "Inhoud", });
     internal_static_data_ContainerDataListItem_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_data_ContainerDataListItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_data_ContainerDataListItem_descriptor,
-        new java.lang.String[] { "ID", "Eigenaar", });
+        new java.lang.String[] { "ID", "Eigenaar", "Category", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

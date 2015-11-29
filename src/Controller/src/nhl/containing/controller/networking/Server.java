@@ -3,7 +3,11 @@ package nhl.containing.controller.networking;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import nhl.containing.networking.messaging.*;
+import nhl.containing.networking.protobuf.DataProto;
+import nhl.containing.networking.protobuf.DataProto.ClientIdentity;
 import nhl.containing.networking.protobuf.PlatformProto;
 import nhl.containing.networking.protocol.*;
 
@@ -15,10 +19,12 @@ import nhl.containing.networking.protocol.*;
 public class Server implements Runnable {
 
     public static final int PORT = 1337;
-    private boolean isConnected;
+    private boolean isSimulatorConnected;
+    private boolean isAppConnected;
     private boolean shouldRun;
     private ServerSocket serverSocket = null;
-    private Socket _socket = null;
+    private Socket _simulatorSocket = null;
+    private Socket _appSocket = null;
     private CommunicationProtocol comProtocol;
 
     public Server() {
@@ -34,8 +40,12 @@ public class Server implements Runnable {
         return comProtocol;
     }
 
-    public boolean isConnected() {
-        return isConnected;
+    public boolean isSimulatorConnected() {
+        return isSimulatorConnected;
+    }
+    
+    public boolean isAppConnected() {
+        return isAppConnected;
     }
 
     public void stop() {
@@ -48,20 +58,19 @@ public class Server implements Runnable {
      * Returns false if setup/connection failed. Returns true if connection was
      * successfull and closed peacefuly
      */
-    public boolean start() {
+    public boolean start(Socket socket) {
         p("start start()");
 
-        if (!isConnected) {
-
+        if (!isSimulatorConnected) {
             try {
-                serverSocket = new ServerSocket(PORT);
+
                 p("Waiting for connection..");
 
                 // Halt the thread until a connection has been accepted
-                _socket = serverSocket.accept();
+                _simulatorSocket = serverSocket.accept();
                 p("Connection Accepted!");
 
-                isConnected = true;
+                isSimulatorConnected = true;
                 return true;
 
             } catch (Exception ex) {
@@ -74,20 +83,20 @@ public class Server implements Runnable {
         return false;
     }
 
-    public boolean init() {
-        p("init()");
+    public boolean initSimData() {
+        p("initializing Simulator data");
         try {
-            byte[] data = MessageReader.readByteArray(_socket.getInputStream());
+            byte[] data = MessageReader.readByteArray(_simulatorSocket.getInputStream());
             PlatformProto.Platform platform = PlatformProto.Platform.parseFrom(data);
 
             //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
             if (platform != null) {
                 p("ok");
-                MessageWriter.writeMessage(_socket.getOutputStream(), "ok".getBytes());
+                MessageWriter.writeMessage(_simulatorSocket.getOutputStream(), "ok".getBytes());
                 return true;
             } else {
                 p("error");
-                MessageWriter.writeMessage(_socket.getOutputStream(), "error".getBytes());
+                MessageWriter.writeMessage(_simulatorSocket.getOutputStream(), "error".getBytes());
                 return false;
             }
         } catch (Exception ex) {
@@ -95,13 +104,17 @@ public class Server implements Runnable {
             return false;
         }
     }
+    
+    public boolean initAppData() {
+        return false;
+    }
 
-    public boolean read() {
-        p("read()");
+    public boolean instructionResponseLoop(Socket socket) {
+        p("Starting instructionResponseLoop");
         try {
-            BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
+            BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-            OutputStream output = _socket.getOutputStream();
+            OutputStream output = socket.getOutputStream();
 
             //Send empty message to start conversation..
             MessageWriter.writeMessage(output, new byte[]{
@@ -125,35 +138,120 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
+        if (shouldRun) {
+            return;
+        }
         shouldRun = true;
 
-        while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
-        {
-            if (start()) {
-                if (init()) {
-                    if (read()) {
-                        p("Closed peacefully");
-                    } else {
-                        p("Lost connection during instructionloop");
-                    }
-                } else {
-                    p("Error while initialising connection..");
-                }
-            } else {
-                p("Closed forcefully");
-            }
-
-            try //Clean 
-            {
-                serverSocket.close();
-
-                _socket.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            isConnected = false;
+        try {
+            serverSocket = new ServerSocket(PORT);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
+        Runnable simHandler = new Runnable() {
+            @Override
+            public void run() {
+                boolean shouldDie = false;
+                while (shouldRun && !shouldDie)//While shouldRun, when connection is lost, start listening for a new one
+                {
+                    if (initSimData()) {
+                        if (instructionResponseLoop(_simulatorSocket)) {
+                            p("Closed peacefully");
+                        } else {
+                            p("Lost connection during instructionloop");
+                        }
+                    } else {
+                        p("Error while initialising simulator data..");
+                    }
+                    
+                    shouldDie = true;
+                }
+
+                try //Clean 
+                {
+                    _simulatorSocket.close();
+                } catch (Exception ex) { ex.printStackTrace(); }
+
+                isSimulatorConnected = false;
+            }
+        };
+
+        
+        
+        Runnable appHandler = new Runnable() {
+            @Override
+            public void run() {
+                while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
+                {
+                    if (initAppData()) {
+                        if (instructionResponseLoop(_appSocket)) {
+                            p("Closed peacefully");
+                        } else {
+                            p("Lost connection during instructionloop");
+                        }
+                    } else {
+                        p("Error while initialising simulator data..");
+                    }
+                }
+
+                try //Clean 
+                {
+                    _appSocket.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                isAppConnected = false;
+            }
+        };
+        
+        
+        
+        while(shouldRun)//TODO: Also check for app connection, and start appropriate thread
+        {
+            Socket tmpSocket;
+            p("Waiting for connection");
+            try{
+                tmpSocket = serverSocket.accept();
+                
+                BufferedInputStream input = new BufferedInputStream(tmpSocket.getInputStream());
+                ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+                OutputStream output = tmpSocket.getOutputStream();
+                
+                //The first message we recieve should be an clientidentity object
+                byte[] data = MessageReader.readByteArray(input, dataStream);
+                ClientIdentity idData = ClientIdentity.parseFrom(data);
+                
+                switch(idData.getClientType())
+                {
+                    case SIMULATOR:
+                        _simulatorSocket = tmpSocket;
+                        isSimulatorConnected = true;
+                        p("Sim connected");
+                        new Thread(simHandler).start();
+                        
+                        break;
+                    case APP:
+                        _appSocket = tmpSocket;
+                        isAppConnected = true;
+                        p("App connected");
+                        new Thread(appHandler).start();
+                        break;
+                }
+                
+            
+                
+                
+            }catch(Exception ex){p("Client connection failed"); ex.printStackTrace();}
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
     }
 
     private static void p(String s) {

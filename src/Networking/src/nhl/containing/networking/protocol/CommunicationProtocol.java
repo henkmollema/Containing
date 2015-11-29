@@ -1,6 +1,7 @@
 package nhl.containing.networking.protocol;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import nhl.containing.networking.protobuf.*;
@@ -12,12 +13,17 @@ import nhl.containing.networking.protobuf.InstructionProto.*;
  * @author Jens
  */
 public class CommunicationProtocol {
+    
+    public static final int PROTOCOL_VERSION = 1;
+    public static int DATABLOCK_SIZE = 500; //max instructions and responses per datablock
+    
+    public long bytesSent = 0;
 
     private InstructionDispatcher _dispatcher;
-    private List<Instruction> instructionQueue;
-    private List<InstructionResponse> responseQueue;
-    
-    boolean safeMode = true; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
+    private LinkedList<Instruction> instructionQueue;
+    private LinkedList<InstructionResponse> responseQueue;
+
+    volatile boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     
     final List<String> pendingAcknowelegeInst;
     final List<String> pendingAcknowelegeResp;
@@ -26,8 +32,8 @@ public class CommunicationProtocol {
     final List<String> recievedResponseUUIDs;
 
     public CommunicationProtocol() {
-        instructionQueue = new ArrayList<>();
-        responseQueue = new ArrayList<>();
+        instructionQueue = new LinkedList<>();
+        responseQueue = new LinkedList<>();
         
         pendingAcknowelegeInst = new ArrayList<>();
         pendingAcknowelegeResp = new ArrayList<>();
@@ -120,9 +126,8 @@ public class CommunicationProtocol {
             }
         }
         
-
         //The simulator will have added new instructions/responses to the queues
-        return flushDataBlock().toByteArray();
+        return flushDataBlock();
     }
 
     /**
@@ -139,33 +144,34 @@ public class CommunicationProtocol {
      * This is used as the return value of processInput(), after incomming messages have been processed.
      * @return datablock object to be sent over network
      */
-    public InstructionProto.datablock flushDataBlock() {
+    public byte[] flushDataBlock() {
         datablock.Builder dbBuilder = datablock.newBuilder();
 
 
 
         if (instructionQueue != null) {
             synchronized (instructionQueue) {
-                for(Instruction inst : instructionQueue)
+                for(int i = 0; i < Math.min(instructionQueue.size(), DATABLOCK_SIZE); i++)
                 {
+                    Instruction inst = instructionQueue.removeFirst();
                     dbBuilder.addInstructions(inst);
                      if(safeMode) pendingAcknowelegeInst.add(inst.getId());
                 }
                 
                 
-                instructionQueue.clear();
+               
             }
         }
 
-
         if (responseQueue != null) {
             synchronized (responseQueue) {
-                for(InstructionResponse resp : responseQueue)
+                for(int i = 0; i < Math.min(responseQueue.size(), DATABLOCK_SIZE); i++)
                 {
+                    InstructionResponse resp = responseQueue.removeFirst();
                     dbBuilder.addResponses(resp);
-                    if(safeMode) pendingAcknowelegeResp.add(resp.getId());
+                     
+                     if(safeMode) pendingAcknowelegeResp.add(resp.getId());
                 }
-                responseQueue.clear();
             }
         }
         
@@ -176,7 +182,8 @@ public class CommunicationProtocol {
             dbBuilder.addAllRecievedInstructionUUIDs(recievedResponseUUIDs);
         }
         
-
-        return dbBuilder.build();
+        byte[] ba = dbBuilder.build().toByteArray();
+        bytesSent +=  ba.length;
+        return ba;
     }
 }

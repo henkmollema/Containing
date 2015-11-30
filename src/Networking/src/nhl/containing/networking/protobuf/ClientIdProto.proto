@@ -1,0 +1,13 @@
+package nhl.containing.networking.protobuf;
+
+option java_outer_classname = "ClientIdProto";
+
+message ClientIdentity{
+    enum ClientType{
+        SIMULATOR  = 1;
+        APP        = 2;
+    }
+    
+    ClientType = 1;
+    optional int version = 2;
+}

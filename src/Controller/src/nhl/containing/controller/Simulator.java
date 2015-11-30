@@ -13,19 +13,15 @@ public class Simulator {
     private final SimulatorController _controller;
     private Thread _thread;
     private Server _server;
-    private InstructionDispatcher _instructionDispatcher;
+    //private InstructionDispatcher _instructionDispatcher;
 
-    public InstructionDispatcher instructionDispatcher() {
-        return _instructionDispatcher;
-    }
-
-    public CommunicationProtocol communication() {
+    /*public CommunicationProtocol communication() {
         return _server.getComProtocol();
-    }
+    }*/
 
     public Simulator(SimulatorController controller) {
         _controller = controller;
-        _instructionDispatcher = new InstructionDispatcherController(this);
+        
 
     }
 
@@ -35,8 +31,7 @@ public class Simulator {
      * @return true if the simulator initialized successfully; otherwise, false.
      */
     public boolean start() {
-        _server = new Server();
-        _server.getComProtocol().setDispatcher(_instructionDispatcher);
+        _server = new Server(this); //Needs a reference to this for instruction dispatching
 
         _thread = new Thread(_server);
         _thread.setName("Networking Controller");

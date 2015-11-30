@@ -1,38 +1,23 @@
 package nhl.containing.networking.protobuf;
 
-option java_outer_classname = "DataProto";
+option java_outer_classname = "InstructionProto";
 
 message datablock {
 	optional repeated Instruction instructions = 1;
 	optional repeated InstructionResponse responses = 2;	
-        optional repeated string recievedInstructionUUIDs = 3;
-        optional repeated string recievedResponseUUIDs = 4;
-
-        optional Identity = 5;
-}
-
-message ClientIdentity{
-    enum ClientType{
-        SIMULATOR  = 1;
-        APP        = 2;
-    }
-    
-    ClientType = 1;
-    optional int version = 2;
-}
-
-message InstructionData{
-		optional int64 time = 1;
-		optional int32 a = 2;
-		optional int32 b = 3;
-		optional string message = 4;	
+	optional repeated string recievedInstructionUUIDs = 3;
+	optional repeated string recievedResponseUUIDs = 4;
 }
 
 message Instruction
 {
 	required string id = 1;
 	required int32 instructionType = 2;
-	optional InstructionData data = 3;
+	
+	optional int64 time = 3;
+	optional int32 a = 4;
+	optional int32 b = 5;
+	optional string message = 6;	
 }
 
 message InstructionResponse

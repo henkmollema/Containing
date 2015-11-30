@@ -3,11 +3,6 @@ package nhl.containing.controller;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.util.logging.*;
 
 @SuppressWarnings("all")
 public class Main
@@ -17,14 +12,8 @@ public class Main
     {
         try
         {
-            File file = new File(Main.class.getResource("/lib/").toURI().toString(), "JNITest.dll");
-            File resFile = new File(System.getProperty("java.io.tmpdir"), "JNITest.dll");
-            if (!resFile.exists())
-            {
-                resFile.createNewFile();
-            }
-            Main.copyFileToTemp(file.getPath().substring(5), resFile.getAbsolutePath());
-            System.load(resFile.getAbsolutePath());
+            File file = new File(Main.class.getResource("/lib/").getPath(), "JNITest.dll");
+            System.load(file.getAbsolutePath());
         }
         catch (Exception ex)
         {
@@ -43,15 +32,15 @@ public class Main
             @Override
             public void run()
             {
-                JNITest.cleanup();
+                PathFinder.cleanup();
                 System.out.println("exit");
             }
         });
 
         run();
 
-        JNITest.initPath(new Dimension(25, 25));
-        int[] path = JNITest.getPath(0, 130, 5.0f);
+        PathFinder.initPath(new Dimension(25, 25));
+        int[] path = PathFinder.getPath(0, 130, 5.0f);
         for (int i : path)
         {
             System.out.println("node " + i);
@@ -77,27 +66,6 @@ public class Main
         catch (Exception ex)
         {
             ex.printStackTrace();
-        }
-    }
-    
-    private static void copyFileToTemp(String source, String dest) throws IOException
-    {
-        FileChannel inputChannel = null;
-        FileChannel outputChannel = null;
-        try
-        {
-            inputChannel = new FileInputStream(source).getChannel();
-            outputChannel = new FileOutputStream(dest).getChannel();
-            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
-        }
-        catch (Exception ex)
-        {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-            inputChannel.close();
-            outputChannel.close();
         }
     }
 }

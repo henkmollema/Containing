@@ -34,7 +34,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             case InstructionType.CONSOLE_COMMAND:
                 String message = inst.getData().getMessage();
                 System.out.println("GOT CONSOLECOMAND: " + message);
-                rdataBuilder.setMessage(_sim.parseCommand(message));
+                //rdataBuilder.setMessage(_sim.parseCommand(message));
                 break;
 
             //More instruction types here..
@@ -46,7 +46,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         rbuilder.setId(UUID.randomUUID().toString());
         InstructionResponse response = rbuilder.build();
 
-        _sim.communication().sendResponse(response);
+        //_sim.communication().sendResponse(response);
 
     }
 

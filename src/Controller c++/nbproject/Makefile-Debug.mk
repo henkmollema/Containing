@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/JNITest.o \
+	${OBJECTDIR}/src/PathFinder.o \
 	${OBJECTDIR}/src/node.o \
 	${OBJECTDIR}/src/road_map.o \
 	${OBJECTDIR}/src/vector2.o
@@ -45,8 +45,8 @@ OBJECTFILES= \
 CFLAGS=-m64 -Wl,--add-stdcall-alias -shared
 
 # CC Compiler Flags
-CCFLAGS=-m64 -Wwrite-strings -shared
-CXXFLAGS=-m64 -Wwrite-strings -shared
+CCFLAGS=-m64 -shared
+CXXFLAGS=-m64 -shared
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -55,7 +55,7 @@ FFLAGS=
 ASFLAGS=--64
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib
+LDLIBSOPTIONS=-L\"../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib\"
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -65,25 +65,25 @@ LDLIBSOPTIONS=-L../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-posix
 	${MKDIR} -p ../Controller/build/classes/lib
 	${LINK.cc} -o ../Controller/build/classes/lib/JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
-${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp 
+${OBJECTDIR}/src/PathFinder.o: src/PathFinder.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_65/include -I/C/Program\ Files/Java/jdk1.8.0_65/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -Wwrite-strings -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
+	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_66/include -I/C/Program\ Files/Java/jdk1.8.0_66/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PathFinder.o src/PathFinder.cpp
 
 ${OBJECTDIR}/src/node.o: src/node.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_65/include -I/C/Program\ Files/Java/jdk1.8.0_65/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -Wwrite-strings -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/node.o src/node.cpp
+	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_66/include -I/C/Program\ Files/Java/jdk1.8.0_66/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/node.o src/node.cpp
 
 ${OBJECTDIR}/src/road_map.o: src/road_map.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_65/include -I/C/Program\ Files/Java/jdk1.8.0_65/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -Wwrite-strings -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/road_map.o src/road_map.cpp
+	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_66/include -I/C/Program\ Files/Java/jdk1.8.0_66/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/road_map.o src/road_map.cpp
 
 ${OBJECTDIR}/src/vector2.o: src/vector2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_65/include -I/C/Program\ Files/Java/jdk1.8.0_65/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -Wwrite-strings -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/vector2.o src/vector2.cpp
+	$(COMPILE.cc) -g -I/usr/lib/jvm/default/include -I/usr/lib/jvm/default/include/linux -I/C/Program\ Files/Java/jdk1.8.0_66/include -I/C/Program\ Files/Java/jdk1.8.0_66/include/win32 -I/C/Program\ Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include -std=c++11 -shared  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/vector2.o src/vector2.cpp
 
 # Subprojects
 .build-subprojects:

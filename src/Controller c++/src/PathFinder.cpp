@@ -2,13 +2,13 @@
 #include"vector2.h"
 #include"road_map.h"
 #include"node.h"
-#include "JNITest.h"
+#include "PathFinder.h"
 
 using namespace std;
 
 road_map* roadmap;
 
-JNIEXPORT void JNICALL Java_nhl_containing_controller_JNITest_initPath(JNIEnv *env, jclass, jobject dimension)
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv *env, jclass, jobject dimension)
 {
     vector<road_map::node_base> temp = { };
     jclass dimensionCls = env->FindClass("java/awt/Dimension");
@@ -46,7 +46,7 @@ void throw_java_exception(JNIEnv *env, char *className, char *message)
     env->ThrowNew(ex, message);
 }
 
-JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_JNITest_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
+JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
 {
     if (from < 0 || from >= roadmap->size())
     {
@@ -74,12 +74,12 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_JNITest_getPath(JNIEn
 }
 
 /*
-JNIEXPORT void JNICALL Java_nhl_containing_controller_JNITest_helloFromC(JNIEnv *, jclass )
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_helloFromC(JNIEnv *, jclass )
 {
     cout << "hello" << endl;
 }
 
-JNIEXPORT jdouble JNICALL Java_nhl_containing_controller_JNITest_avgFromC(JNIEnv *env, jclass, jintArray arr)
+JNIEXPORT jdouble JNICALL Java_nhl_containing_controller_PathFinder_avgFromC(JNIEnv *env, jclass, jintArray arr)
 {
     jint *inCArray = env->GetIntArrayElements(arr, NULL);
     jsize length = env->GetArrayLength(arr);
@@ -93,7 +93,7 @@ JNIEXPORT jdouble JNICALL Java_nhl_containing_controller_JNITest_avgFromC(JNIEnv
     return avg;
 }
 
-JNIEXPORT jint JNICALL Java_nhl_containing_controller_JNITest_intFromC(JNIEnv *env, jclass thisCls, jintArray arr)
+JNIEXPORT jint JNICALL Java_nhl_containing_controller_PathFinder_intFromC(JNIEnv *env, jclass thisCls, jintArray arr)
 {
     jmethodID methId = env->GetStaticMethodID(thisCls, "avgFromC", "([I)D");
     if (env->ExceptionCheck()) return 0;
@@ -101,7 +101,7 @@ JNIEXPORT jint JNICALL Java_nhl_containing_controller_JNITest_intFromC(JNIEnv *e
     return res;
 }
 
-JNIEXPORT jobject JNICALL Java_nhl_containing_controller_JNITest_integerFromC(JNIEnv *env, jclass, jint x)
+JNIEXPORT jobject JNICALL Java_nhl_containing_controller_PathFinder_integerFromC(JNIEnv *env, jclass, jint x)
 {
     jclass cls = env->FindClass("java/lang/Integer");
     if (env->ExceptionCheck()) return NULL;
@@ -111,7 +111,7 @@ JNIEXPORT jobject JNICALL Java_nhl_containing_controller_JNITest_integerFromC(JN
     return obj;
 }
 
-JNIEXPORT jobject JNICALL Java_nhl_containing_controller_JNITest_pointInC(JNIEnv *env, jclass, jint x, jint y)
+JNIEXPORT jobject JNICALL Java_nhl_containing_controller_PathFinder_pointInC(JNIEnv *env, jclass, jint x, jint y)
 {
     jclass cls = env->FindClass("java/awt/Point");
     if (env->ExceptionCheck()) return NULL;
@@ -121,7 +121,7 @@ JNIEXPORT jobject JNICALL Java_nhl_containing_controller_JNITest_pointInC(JNIEnv
     return obj;
 }
 
-JNIEXPORT void JNICALL Java_nhl_containing_controller_JNITest_changeNumberInC(JNIEnv *env, jobject thisObj)
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_changeNumberInC(JNIEnv *env, jobject thisObj)
 {
     jclass thisClass = env->GetObjectClass(thisObj);
     if (env->ExceptionCheck()) return;
@@ -133,7 +133,7 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_JNITest_changeNumberInC(JN
     env->SetIntField(thisObj, fidNumber, number);
 }
 */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_JNITest_cleanup(JNIEnv *, jclass)
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_cleanup(JNIEnv *, jclass)
 {
     delete roadmap;
 }

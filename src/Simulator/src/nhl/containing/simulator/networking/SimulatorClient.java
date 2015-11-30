@@ -8,6 +8,7 @@ import nhl.containing.networking.messaging.MessageWriter;
 import java.io.*;
 import java.net.Socket;
 import nhl.containing.networking.messaging.MessageReader;
+import nhl.containing.networking.protobuf.DataProto;
 import nhl.containing.networking.protobuf.PlatformProto;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 
@@ -84,6 +85,17 @@ public class SimulatorClient implements Runnable {
             BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = _socket.getOutputStream();
+            
+            //Tell the Controller we are the simulator
+            DataProto.ClientIdentity.Builder idBuilder = DataProto.ClientIdentity.newBuilder();
+            idBuilder.setClientType(DataProto.ClientIdentity.ClientType.SIMULATOR)
+                     .setVersion(CommunicationProtocol.PROTOCOL_VERSION);
+            
+            MessageWriter.writeMessage(output, idBuilder.build().toByteArray());
+            //Wait for an okay response..
+            //MessageReader.readByteArray(input, dataStream);
+            
+            
 
 
             PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();

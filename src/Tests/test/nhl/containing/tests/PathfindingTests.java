@@ -3,7 +3,7 @@ package nhl.containing.tests;
 import java.awt.Dimension;
 import java.io.File;
 import static org.junit.Assert.*;
-import nhl.containing.controller.JNITest;
+import nhl.containing.controller.PathFinder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -22,12 +22,12 @@ public class PathfindingTests
     @Test
     public void NothingWrong()
     {
-        JNITest.initPath(new Dimension(25, 25));
-        int[] path = JNITest.getPath(0, 25*25-1, 5.0f);
+        PathFinder.initPath(new Dimension(25, 25));
+        int[] path = PathFinder.getPath(0, 25*25-1, 5.0f);
         assertEquals(0, path[path.length - 1]);
         assertEquals(25*25-1, path[0]);
         assertNotNull(path);
-        JNITest.cleanup();
+        PathFinder.cleanup();
     }
     
     @Test
@@ -35,10 +35,10 @@ public class PathfindingTests
     {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("origin is not in the roadmap");
-        JNITest.initPath(new Dimension(25, 25));
-        int[] path = JNITest.getPath(25*25, 130, 5.0f);
+        PathFinder.initPath(new Dimension(25, 25));
+        int[] path = PathFinder.getPath(25*25, 130, 5.0f);
         assertNull(path);
-        JNITest.cleanup();
+        PathFinder.cleanup();
     }
     
     @Test
@@ -46,9 +46,9 @@ public class PathfindingTests
     {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("destination is not in the roadmap");
-        JNITest.initPath(new Dimension(25, 25));
-        int[] path = JNITest.getPath(0, 25*25, 5.0f);
+        PathFinder.initPath(new Dimension(25, 25));
+        int[] path = PathFinder.getPath(0, 25*25, 5.0f);
         assertNull(path);
-        JNITest.cleanup();
+        PathFinder.cleanup();
     }
 }

@@ -21,7 +21,7 @@ public class CommunicationTests {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
  
-    int instructionsRecieved, repsonsesRecieved;
+    volatile int instructionsRecieved, repsonsesRecieved;
 
     @Test
     public void instructionResponseBatchTest() {
@@ -34,7 +34,7 @@ public class CommunicationTests {
 
         instructionsRecieved = 0;
         repsonsesRecieved = 0;
-        int instructionsToSend = 1000; //These will be sent twice, in batches of this number
+        int instructionsToSend = 10000; //These will be sent twice, in batches of this number
         //When instructionsToSend is around 10 000 the TCP write and read buffer will fill up and hang the program TODO: Find a fix, or make sure the batches are less than 10 000 in size
 
         System.out.println("===== instructionResponseBatchTest =====");
@@ -124,6 +124,8 @@ public class CommunicationTests {
         System.out.println("Simulator Recieved " + repsonsesRecieved + " responses");
         System.out.println("Simulator has " + simulator.getComProtocol().getNumPendingInst() + " pending instructions");
         System.out.println("Controller has " + simulator.getComProtocol().getNumPendingResp() + " pending responses");
+        System.out.println("Simulator has sent " + (simulator.getComProtocol().bytesSent / 1024) + " KB");
+        System.out.println("Controller has sent " + (controller.getComProtocol().bytesSent / 1024) + " KB");
 
         controller.stop();
         simulator.stop();

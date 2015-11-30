@@ -3,10 +3,10 @@ package app;
 option java_package = "nhl.containing.managmentinterface.data";
 option java_outer_classname = "ContainerProtos";
 
-message ContainerGraphData{	
-		required ContainerCategory category = 1;
-		required int32 aantal = 2;
-	}
+message ContainerGraphData{
+	required ContainerCategory category = 1;
+	required int32 aantal = 2;
+}
 
 message ContainerGraphList{
 	

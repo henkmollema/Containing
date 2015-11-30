@@ -38,6 +38,13 @@ public class Callback {
         m_methods = methods;
     }
     
+    public String toString() {
+        String s = "";
+        for (String a : m_methods)
+            s += a + ", ";
+        return s + " ---> " + m_class.toString();
+    }
+    
     /**
      * Run methods
      */

@@ -128,7 +128,6 @@ public class ContainerCarrier extends Item {
         return setContainer(Point3.zero(), c);
     }
     public Container setContainer(Point3 point, Container c) {
-        
         if (
                 point.x < 0 || point.y < 0 || point.z < 0 || 
                 point.x >= m_containerSpots.length || 
@@ -153,5 +152,16 @@ public class ContainerCarrier extends Item {
     }
     protected ContainerSpot getSpot(Point3 point) {
         return m_containerSpots[point.x][point.y][point.z];
+    }
+    
+    protected void replaceContainer(Container a, Container b) {
+        for (int x = 0; x < m_containerSpots.length; ++x)
+        for (int y = 0; y < m_containerSpots[x].length; ++y)
+        for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
+            if (m_containerSpots[x][y][z].container == a) {
+                m_containerSpots[x][y][z].container = b;
+                return;
+            }
+        }
     }
 }

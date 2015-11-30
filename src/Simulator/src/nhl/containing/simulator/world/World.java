@@ -41,7 +41,7 @@ import nhl.containing.simulator.simulation.Point2;
  * @author sietse
  */
 public class World extends Behaviour {
-    public static final Point2 STORAGE_SIZE = new Point2(12, 1); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(5, 1); // x = containers length per storage; y = storage amount
     
     
     public static Vector3f containerSize() {

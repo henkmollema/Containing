@@ -60,7 +60,7 @@ public abstract class LoadingPlatform extends Platform {
             return;
         }
         
-        //replace(new Point3(p).add(Point3.up()));
+        replace(new Point3(p).add(Point3.up()));
         m_queue.add(new CraneAction(container, new Callback(this, "attach2Crane")));
         m_queue.add(new CraneAction(container, carrier, new Callback(this, "crane2carrier")));
     }
@@ -79,8 +79,10 @@ public abstract class LoadingPlatform extends Platform {
     }
     public void onCrane() {
         if (m_currentAction != null) {
-            if (m_currentAction.finishCallback != null)
+            if (m_currentAction.finishCallback != null) {
+                Debug.log("0" + m_currentAction.finishCallback.toString());
                 m_currentAction.finishCallback.invoke();
+            }
         }
         
         // Get new
@@ -92,10 +94,12 @@ public abstract class LoadingPlatform extends Platform {
             m_crane.setPath();
         }
     }
-    private void attach2Crane() {
+    public void attach2Crane() {
         m_crane.setContainer(m_currentAction.target);
+        replaceContainer(m_currentAction.target, null);
+        updateOuter();
     }
-    private void crane2carrier() {
+    public void crane2carrier() {
         m_currentAction.holder.setContainer(m_crane.setContainer(null));
     }
     
@@ -105,7 +109,7 @@ public abstract class LoadingPlatform extends Platform {
     private class CraneAction {
         public final ContainerCarrier holder;
         public final Container target; // 
-        public final Callback finishCallback;
+        public Callback finishCallback;
         
         public CraneAction(Container target, Callback onFinish) {
             this.target = target;

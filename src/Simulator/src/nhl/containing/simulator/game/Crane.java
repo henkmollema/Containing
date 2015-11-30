@@ -217,5 +217,6 @@ public abstract class Crane extends MovingItem {
         if (m_hook == null)
             return;
         m_hook.attachChild(c);
+        c.localPosition(containerOffset());
     }
 }

@@ -26,8 +26,8 @@ public class RailCrane extends Crane {
                 parent, 
                 new Vector3f(0.0f,  0.0f, 0.0f),               // crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),           // hook offset
-                new Vector3f(0.0f, 0.0f, 0.0f),          // contianer offset
-                new Vector3f(0.0f, 0.0f, 30.0f),          // crane spatial offset
+                new Vector3f(0.0f, 0.0f, -30.0f),          // contianer offset
+                new Vector3f(5.0f, 0.0f, 30.0f),          // frame spatial offset
                 new Vector3f(3.0f, -11f, 0.0f));              // hook spatial offset
         //ContainerPool.dispose(getContainer());
     }
@@ -63,7 +63,7 @@ public class RailCrane extends Crane {
 
     @Override
     protected float ropeHeight() {
-        return 15.0f;
+        return 25.0f;
     }
 
     @Override

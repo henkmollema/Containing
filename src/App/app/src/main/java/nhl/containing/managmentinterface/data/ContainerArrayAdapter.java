@@ -12,16 +12,17 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import nhl.containing.managmentinterface.R;
+import nhl.containing.networking.protobuf.appDataProto;
 
 /**
  * Created by Niels on 23-11-2015.
  */
-public class ContainerArrayAdapter extends ArrayAdapter<ContainerProtos.ContainerDataListItem>
+public class ContainerArrayAdapter extends ArrayAdapter<appDataProto.ContainerDataListItem>
 {
     private final Context context;
-    private List<ContainerProtos.ContainerDataListItem> items;
+    private List<appDataProto.ContainerDataListItem> items;
 
-    public ContainerArrayAdapter(Context context, List<ContainerProtos.ContainerDataListItem> items)
+    public ContainerArrayAdapter(Context context, List<appDataProto.ContainerDataListItem> items)
     {
         super(context, R.layout.listitem,items);
         this.items = items;
@@ -37,7 +38,7 @@ public class ContainerArrayAdapter extends ArrayAdapter<ContainerProtos.Containe
         return rowView;
     }
 
-    public void Update(List<ContainerProtos.ContainerDataListItem> items)
+    public void Update(List<appDataProto.ContainerDataListItem> items)
     {
         this.items = items;
         this.notifyDataSetChanged();

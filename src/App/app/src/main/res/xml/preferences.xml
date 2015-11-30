@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-    android:title="Test"
-    android:key="pref_key_storage_settings">
+    android:title="Connection Controller">
+        <EditTextPreference
+            android:key="Connection_Host"
+            android:title="IP-adress"
+            android:summary="The IP-adress of the Controller"
+            android:dialogTitle="Controller IP-adress"/>
+        <EditTextPreference
+            android:key="Connection_Port"
+            android:title="Port"
+            android:summary="The port of the Controller"
+            android:dialogTitle="Controller Port"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Data Usage &amp; Refreshing">
         <ListPreference
-            android:key="pref_key_new_items"
-            android:title="Test1"
-            android:summary="Test1"
-            android:entries="@array/pref_example_list_values"
-            android:entryValues="@array/pref_example_list_values"
-            android:defaultValue="1"/>
+            android:key="Refresh_Network"
+            android:title="Network"
+            android:summary="Choose which network to use"
+            android:dialogTitle="Choose Network Option"
+            android:entryValues="@array/network_values"
+            android:entries="@array/network"
+            />
+        <CheckBoxPreference
+            android:key="Refresh_Always"
+            android:title="Auto refresh"
+            android:summary="Auto refresh always on"/>
+        <ListPreference
+            android:key="Refresh_Auto_Time"
+            android:title="Auto refresh Time"
+            android:summary="Set auto refresh time"
+            android:dialogTitle="Choose Auto-refresh Time"
+            android:entryValues="@array/refresh_values"
+            android:entries="@array/refresh"
+            android:dependency="Refresh_Always"
+            />
     </PreferenceCategory>
 </PreferenceScreen>

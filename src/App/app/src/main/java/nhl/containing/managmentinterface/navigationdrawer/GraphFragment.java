@@ -11,10 +11,16 @@ import android.widget.Toast;
 import com.syncfusion.charts.*;
 import com.syncfusion.charts.enums.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
+import nhl.containing.managmentinterface.data.ContainerProtos;
+import nhl.containing.networking.protobuf.DataProto.*;
+import nhl.containing.networking.protobuf.appDataProto;
+import nhl.containing.networking.protocol.CommunicationProtocol;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
  * Fragment for showing the Graph
@@ -129,20 +135,35 @@ public class GraphFragment extends Fragment {
      */
     public void setData()
     {
-        try{
-            updateChart(Communicator.getData(graphID));
-        }
-        catch (Exception e){
-            try{
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        //make instruction
+        Instruction.Builder builder = Instruction.newBuilder();
+        builder.setInstructionType(InstructionType.APP_REQUEST_DATA);
+        builder.setId(CommunicationProtocol.newUUID());
+    }
+
+    public void UpdateGraph(appDataProto.datablockApp block)
+    {
+        List<appDataProto.ContainerGraphData> list = block.getGraphsList();
+        List<Integer> dataList = new ArrayList<>();
+        if(!list.isEmpty())
+        {
+            for(int i = 0; i < list.size();i++)
+            {
+                appDataProto.ContainerGraphData data = list.get(i);
+                dataList.add(data.getCategory().getNumber(),data.getAantal());
             }
-            catch (Exception e1){}
+            updateChart(dataList);
+            return;
         }
+        try{
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception e){}
     }
 
     /**

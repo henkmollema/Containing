@@ -2,6 +2,7 @@ package nhl.containing.managmentinterface;
 
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,11 @@ public class SettingsActivityFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        ViewGroup group = (ViewGroup)view.findViewById(R.id.settings_list);
+        View view1 = super.onCreateView(inflater,container,savedInstanceState);
+        group.addView(view1);
+        return group;
     }
 }

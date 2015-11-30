@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nhl.containing.managmentinterface.data.ContainerProtos.*;
 import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
 import nhl.containing.managmentinterface.communication.Communicator;
+import nhl.containing.networking.protobuf.appDataProto;
 
 /**
  * A fragment representing a list of Items.
@@ -34,7 +37,7 @@ public class ContainersFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<ContainerDataListItem> list = Communicator.getContainerList();
+        List<appDataProto.ContainerDataListItem> list = new ArrayList<>();
         items = new ContainerArrayAdapter(getActivity(),list);
         setListAdapter(items);
     }
@@ -70,13 +73,28 @@ public class ContainersFragment extends ListFragment {
 
     public void setData()
     {
+        //make instruction
+    }
+
+    public void UpdateGraph(appDataProto.datablockApp block)
+    {
+        if(!block.getItemsList().isEmpty())
+        {
+            updateList(block.getItemsList());
+        }
         try{
-            updateList(Communicator.getContainerList());
-        }catch (Exception e){}
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception e){}
     }
 
 
-    private void updateList(final List<ContainerDataListItem> listItems)
+    private void updateList(final List<appDataProto.ContainerDataListItem> listItems)
     {
         getActivity().runOnUiThread(new Runnable() {
             @Override

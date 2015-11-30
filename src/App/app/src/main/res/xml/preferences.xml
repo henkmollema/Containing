@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+    android:title="Test"
+    android:key="pref_key_storage_settings">
+        <ListPreference
+            android:key="pref_key_new_items"
+            android:title="Test1"
+            android:summary="Test1"
+            android:entries="@array/pref_example_list_values"
+            android:entryValues="@array/pref_example_list_values"
+            android:defaultValue="1"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -2,7 +2,7 @@ package nhl.containing.networking.protobuf;
 
 option java_outer_classname = "InstructionProto";
 
-message datablock {
+message datablockSimulator {
 	optional repeated Instruction instructions = 1;
 	optional repeated InstructionResponse responses = 2;	
 	optional repeated string recievedInstructionUUIDs = 3;

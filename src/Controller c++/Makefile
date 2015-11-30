@@ -53,7 +53,7 @@ CCADMIN=CCadmin
 # build
 build: .build-post
 
-.build-pre: ; javah -o src/JNITest.h -classpath ..\Controller\build\classes nhl.containing.controller.JNITest
+.build-pre: ; javah -o src/PathFinder.h -classpath ..\Controller\build\classes nhl.containing.controller.PathFinder
 # Add your pre 'build' code here...
 #    javah -o src/JNITest.h -classpath ..\Controller\build\classes controller.JNI
 

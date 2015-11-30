@@ -11,7 +11,7 @@ import java.awt.Point;
  *
  * @author Dudecake
  */
-public class JNITest
+public class PathFinder
 {
     private int number = 88;
     

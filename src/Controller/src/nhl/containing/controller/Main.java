@@ -32,15 +32,15 @@ public class Main
             @Override
             public void run()
             {
-                JNITest.cleanup();
+                PathFinder.cleanup();
                 System.out.println("exit");
             }
         });
 
         run();
 
-        JNITest.initPath(new Dimension(25, 25));
-        int[] path = JNITest.getPath(0, 130, 5.0f);
+        PathFinder.initPath(new Dimension(25, 25));
+        int[] path = PathFinder.getPath(0, 130, 5.0f);
         for (int i : path)
         {
             System.out.println("node " + i);

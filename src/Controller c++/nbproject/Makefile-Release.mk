@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/JNITest.o \
+	${OBJECTDIR}/src/PathFinder.o \
 	${OBJECTDIR}/src/node.o \
 	${OBJECTDIR}/src/road_map.o \
 	${OBJECTDIR}/src/vector2.o
@@ -65,10 +65,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libController_c__.${CND_DLIB_EXT}: ${
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libController_c__.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
-${OBJECTDIR}/src/JNITest.o: src/JNITest.cpp 
+${OBJECTDIR}/src/PathFinder.o: src/PathFinder.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/JNITest.o src/JNITest.cpp
+	$(COMPILE.cc) -O2  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PathFinder.o src/PathFinder.cpp
 
 ${OBJECTDIR}/src/node.o: src/node.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

@@ -59,11 +59,11 @@ LDLIBSOPTIONS=-L\"../../../../../../../Program\ Files/mingw-w64/x86_64-5.2.0-pos
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../Controller/build/classes/lib/JNITest.dll
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../Controller/build/classes/lib/Controller.dll
 
-../Controller/build/classes/lib/JNITest.dll: ${OBJECTFILES}
+../Controller/build/classes/lib/Controller.dll: ${OBJECTFILES}
 	${MKDIR} -p ../Controller/build/classes/lib
-	${LINK.cc} -o ../Controller/build/classes/lib/JNITest.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
+	${LINK.cc} -o ../Controller/build/classes/lib/Controller.dll ${OBJECTFILES} ${LDLIBSOPTIONS} -shared
 
 ${OBJECTDIR}/src/PathFinder.o: src/PathFinder.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -91,7 +91,7 @@ ${OBJECTDIR}/src/vector2.o: src/vector2.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ../Controller/build/classes/lib/JNITest.dll
+	${RM} ../Controller/build/classes/lib/Controller.dll
 
 # Subprojects
 .clean-subprojects:

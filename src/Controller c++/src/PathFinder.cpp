@@ -8,6 +8,11 @@ using namespace std;
 
 road_map* roadmap;
 
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    initPath
+ * Signature: (Ljava/awt/Dimension;)V
+ */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv *env, jclass, jobject dimension)
 {
     vector<road_map::node_base> temp = { };
@@ -46,6 +51,11 @@ void throw_java_exception(JNIEnv *env, char *className, char *message)
     env->ThrowNew(ex, message);
 }
 
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    getPath
+ * Signature: (IIF)[I
+ */
 JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
 {
     if (from < 0 || from >= roadmap->size())
@@ -133,6 +143,11 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_changeNumberInC
     env->SetIntField(thisObj, fidNumber, number);
 }
 */
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    cleanup
+ * Signature: ()V
+ */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_cleanup(JNIEnv *, jclass)
 {
     delete roadmap;

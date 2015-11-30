@@ -71,7 +71,7 @@
           <architecture>2</architecture>
         </asmTool>
         <linkerTool>
-          <output>../Controller/build/classes/lib/JNITest.dll</output>
+          <output>../Controller/build/classes/lib/Controller.dll</output>
           <linkerAddLib>
             <pElem>"../../../../../../../Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/lib"</pElem>
           </linkerAddLib>

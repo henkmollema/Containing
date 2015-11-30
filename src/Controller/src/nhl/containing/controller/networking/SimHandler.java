@@ -9,6 +9,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
+import nhl.containing.controller.Time;
 import nhl.containing.networking.messaging.MessageReader;
 import nhl.containing.networking.messaging.MessageWriter;
 import nhl.containing.networking.protobuf.PlatformProto;
@@ -26,6 +29,8 @@ public class SimHandler implements Runnable {
     private Socket _socket;
     private Server _server;
     
+    private Timer _timer;
+    
     private InstructionDispatcher _instructionDispatcher;
     
     private CommunicationProtocol _comProtocol;
@@ -38,6 +43,24 @@ public class SimHandler implements Runnable {
         _comProtocol = new CommunicationProtocol();
         _instructionDispatcher = new InstructionDispatcherController(server.simulator);
         _comProtocol.setDispatcher(_instructionDispatcher);
+        
+        _timer = new Timer();
+        _timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                Time._updateTime(5 / 1000);
+            }
+        }, 0, 5);
+        _timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                Time.time();// send time to simulator
+            }
+        }, 1000, 1000);
     }
     
     /**

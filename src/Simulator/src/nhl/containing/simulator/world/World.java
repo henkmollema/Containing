@@ -65,6 +65,15 @@ public class World extends Behaviour {
         Main.camera().createShadowsFiler(m_sun);
         
         createObjects();
+        
+        // 
+        Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
+        //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
+        teapot.setMaterial(MaterialCreator.diffuse());
+        Main.root().attachChild(teapot);
+        
+        
+        
         //Time.setFixedTimeScale(0.3f);
     }
     
@@ -78,6 +87,10 @@ public class World extends Behaviour {
             createStorage(offset);
             offset.x += containerSize().x * 6 + 15.0f;
         }
+        
+        ContainerCarrier c = new ContainerCarrier(null, Point3.one());
+        m_storages.get(0).take(new Point3(4, 5, 3), c);
+        
         
         Geometry g = WorldCreator.createBox(null, new Vector3f(500.0f, 1.0f, 500.0f));
         g.setLocalTranslation(0.0f, -1.0f, 0.0f);

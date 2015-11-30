@@ -8,6 +8,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
 
 /**
@@ -24,21 +25,25 @@ public class Container extends Transform {
         super();
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        this.attachChild(ContainerPool.get());
     }
     public Container(RFID id, Material material) {
         super();
         this.m_rfid = id;
         this.m_material = material;
+        this.attachChild(ContainerPool.get());
     }
     public Container(Transform parent, RFID id) {
         super();
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        this.attachChild(ContainerPool.get());
     }
     public Container(Transform parent, Material material, RFID id) {
         super();
         this.m_rfid = id;
         this.m_material = material;
+        this.attachChild(ContainerPool.get());
     }
     
     public RFID getRFID() {

@@ -51,7 +51,8 @@ public abstract class LoadingPlatform extends Platform {
         }
     }
     
-    public void take(Point3 p, int parkingSpot) {
+    public void take(Point3 p, ContainerCarrier carrier) {
+        
         Container container = getContainer(p);
         
         if (container == null) {
@@ -59,7 +60,9 @@ public abstract class LoadingPlatform extends Platform {
             return;
         }
         
-        replace(new Point3(p).add(Point3.up()));
+        //replace(new Point3(p).add(Point3.up()));
+        m_queue.add(new CraneAction(container, new Callback(this, "attach2Crane")));
+        m_queue.add(new CraneAction(container, carrier, new Callback(this, "crane2carrier")));
     }
     public void place(int parkingSpot, Point3 p) {
         
@@ -75,15 +78,9 @@ public abstract class LoadingPlatform extends Platform {
         // Do here replacement things
     }
     public void onCrane() {
-        Debug.log("op 1");
         if (m_currentAction != null) {
-            if (m_crane.attachedContainer() == null) {
-                attach2Crane();
-            } else if (m_crane.attachedContainer() == m_currentAction.target) {
-                crane2carrier();
-            } else {
-                Debug.error("ASDF");
-            }
+            if (m_currentAction.finishCallback != null)
+                m_currentAction.finishCallback.invoke();
         }
         
         // Get new
@@ -96,10 +93,10 @@ public abstract class LoadingPlatform extends Platform {
         }
     }
     private void attach2Crane() {
-        m_crane.attachedContainer(m_currentAction.target);
+        m_crane.setContainer(m_currentAction.target);
     }
     private void crane2carrier() {
-        m_crane.attachedContainer();
+        m_currentAction.holder.setContainer(m_crane.setContainer(null));
     }
     
     private CraneAction baseAction() {
@@ -108,15 +105,25 @@ public abstract class LoadingPlatform extends Platform {
     private class CraneAction {
         public final ContainerCarrier holder;
         public final Container target; // 
+        public final Callback finishCallback;
         
-        public CraneAction(Container target) {
+        public CraneAction(Container target, Callback onFinish) {
             this.target = target;
             this.holder = null;
+            this.finishCallback = onFinish;
+        }
+        public CraneAction(Container target, ContainerCarrier carrier, Callback onFinish) {
+            this.target = target;
+            this.holder = carrier;
+            this.finishCallback = onFinish;
         }
         
         public void start() {
             m_currentAction = this;
-            m_crane.setPath(target.position());
+            if (holder == null)
+                m_crane.setPath(target.position());
+            else
+                m_crane.setPath(holder.position());
         }
     }
 }

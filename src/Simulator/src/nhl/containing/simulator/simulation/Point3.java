@@ -236,4 +236,8 @@ public class Point3 {
             a.z / b);
     }
     
+    @Override
+    public String toString() {
+        return ("[" + x + ", " + y + ", " + z + "]");
+    }
 }

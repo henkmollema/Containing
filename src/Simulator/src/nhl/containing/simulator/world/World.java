@@ -69,7 +69,7 @@ public class World extends Behaviour {
         // 
         Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
         //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-        teapot.setMaterial(MaterialCreator.diffuse());
+        teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
         Main.root().attachChild(teapot);
         
         

@@ -5,10 +5,13 @@
  */
 package nhl.containing.simulator.world;
 
+import com.jme3.asset.TextureKey;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.simulation.Mathf;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.texture.Texture;
+import nhl.containing.simulator.simulation.Debug;
 
 /**
  *
@@ -73,6 +76,21 @@ public final class MaterialCreator {
         
         return m;
     }
+    public static Material unshaded(String texture) {
+        return unshaded(texture, ColorRGBA.White);
+    }
+    public static Material unshaded(String texture, ColorRGBA color) {
+        Material m = new Material(Main.assets(), "Common/MatDefs/Misc/Unshaded.j3md");
+        
+        m.setColor("Color", color);
+        if (texture != null) {
+            TextureKey _key = new TextureKey(texture);
+            Texture _tex = Main.assets().loadTexture(new TextureKey(texture));
+            m.setTexture("ColorMap", _tex); 
+        }
+        
+        return m;
+    }
     
     public static Material diffuse() {
         return diffuse(ColorRGBA.White);
@@ -88,10 +106,11 @@ public final class MaterialCreator {
         
         Material m = new Material(Main.assets(), "Common/MatDefs/Light/Lighting.j3md"); 
         m.setBoolean("UseMaterialColors", true); 
-        m.setColor("Ambient", colorAmbient.clone()); 
+        m.setColor("Ambient", colorAmbient.clone());
         m.setColor("Diffuse", colorDiffuse.clone());
         m.setFloat("Shininess", Mathf.max(specular, 0.001f));
         m.setColor("Specular", colorSpecular);
+        
         return m;
     }
     

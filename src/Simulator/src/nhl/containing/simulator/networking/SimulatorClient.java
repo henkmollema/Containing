@@ -174,7 +174,7 @@ public class SimulatorClient implements Runnable {
         {
             if (start()) {
                 if (sendSimulatorMetadata()) {
-                    if (InstructionLoop()) {
+                    if (instructionLoop()) {
                         p("Closed peacefully");
                     } else {
                         p("Lost connection during instructionloop");

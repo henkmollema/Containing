@@ -141,7 +141,7 @@ public class SimulatorClient implements Runnable {
         return false;
     }
 
-    public boolean read() {
+    public boolean instructionLoop() {
         p("read()");
         try {
             BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
@@ -174,7 +174,7 @@ public class SimulatorClient implements Runnable {
         {
             if (start()) {
                 if (sendSimulatorMetadata()) {
-                    if (read()) {
+                    if (InstructionLoop()) {
                         p("Closed peacefully");
                     } else {
                         p("Lost connection during instructionloop");

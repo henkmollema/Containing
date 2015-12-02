@@ -43,6 +43,10 @@ public class Transform extends Node {
         m_id = Main.register(this);
     }
     
+    /**
+     * Get ID
+     * @return 
+     */
     public long id() {
         return m_id + 0;
     }
@@ -273,6 +277,11 @@ public class Transform extends Node {
         return super.rotate(x * Mathf.Deg2Rad, y * Mathf.Deg2Rad, z * Mathf.Deg2Rad);
     }
     
+    /**
+     * Attach child
+     * @param spatial
+     * @return 
+     */
     @Override
     public int attachChild(Spatial spatial) {
         if (spatial == null)

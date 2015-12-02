@@ -26,10 +26,20 @@ public final class Utilities {
     public static final Vector3f forward() { return new Vector3f(0.0f, 0.0f, 1.0f).clone(); }
     public static final Vector3f back() { return new Vector3f(0.0f, 0.0f, -1.0f).clone(); }
     
+    /**
+     * zero's out the y axis
+     * @param v
+     * @return 
+     */
     public static Vector3f Horizontal(Vector3f v) {
         return new Vector3f(v.x, 0.0f, v.z);
     }
     
+    /**
+     * 
+     * @param spatial
+     * @param rotation 
+     */
     public static void setWorldRotation(Spatial spatial, Quaternion rotation) {
         Spatial parent = spatial.getParent();
         Quaternion localRotation;
@@ -45,31 +55,63 @@ public final class Utilities {
         
         spatial.setLocalRotation(localRotation);
     }
-
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @return 
+     */
     public static Vector3f substract(Vector3f a, Vector3f b) {
         return new Vector3f(
             a.x - b.x,
             a.y - b.y,
             a.z - b.z);
     }
+    /**
+     * Distance between two points
+     * @param a
+     * @param b
+     * @return 
+     */
     public static float distance(Vector3f a, Vector3f b) {
         return Mathf.abs(substract(a, b).length());
     }
-
+    /**
+     * Check if value is NaN and fixes it to 0
+     * @param f
+     * @return 
+     */
     public static float NaNSafeFloat(float f) {
         return ((Float)f).isNaN() ? 0.0f : f;
     }
-    
+    /**
+     * String null or empty
+     * @param s
+     * @return 
+     */
     public static boolean nullOrEmpty(String s) {
         return (s == null || s.length() < 1);
     }
     
-    
+    /**
+     * Add all items to list
+     * @param <T>
+     * @param base
+     * @param added
+     * @return 
+     */
     public static <T> List<T> addAll(List<T> base, T[] added) {
         base.addAll(Arrays.asList(added));
         return base;
     }
     
+    /**
+     * Rotate vector arount world Y axis
+     * @param cur
+     * @param rotation
+     * @return 
+     */
     public static Vector3f rotateY(Vector3f cur, float rotation) {
         Vector3f __new = zero();
         __new.x = cur.z * Mathf.sin(Mathf.Deg2Rad * rotation) - cur.x * Mathf.cos(Mathf.Deg2Rad * rotation);

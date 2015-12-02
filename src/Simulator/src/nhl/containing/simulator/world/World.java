@@ -41,7 +41,7 @@ import nhl.containing.simulator.simulation.Point2;
  * @author sietse
  */
 public class World extends Behaviour {
-    public static final Point2 STORAGE_SIZE = new Point2(5, 1); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(22, 1); // x = containers length per storage; y = storage amount
     
     
     public static Vector3f containerSize() {
@@ -71,9 +71,6 @@ public class World extends Behaviour {
         //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
         teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
         Main.root().attachChild(teapot);
-        
-        
-        
         //Time.setFixedTimeScale(0.3f);
     }
     
@@ -104,8 +101,13 @@ public class World extends Behaviour {
         m_storages.add(plat);
     }
     
-    
-    
+    void runTests() {
+        SimulatorTests tests = new SimulatorTests();
+        tests.createStorage();
+        tests.disposeCreated();
+        tests.disposeNull();
+        tests.getBox();
+    }    
     /*
      * Transform testCube;
     Transform testCube2;

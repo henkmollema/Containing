@@ -66,9 +66,7 @@ public class Callback {
      * @param methods 
      */
     public static void invoke(Object target, String... methods) {
-        try {
-            Callback.invoke(target, target.getClass(), methods);
-        } catch (Exception e) { }
+        Callback.invoke(target, target.getClass(), methods);
     }
     /**
      * Run methods
@@ -78,9 +76,11 @@ public class Callback {
      */
     public static void invoke(Object target, Class c, String... methods) {
         try {
+            // Get targets
             Class<?> __class = c;
             Method[] __methods = __class.getMethods();
             
+            // Call all methods
             for (Method m : __methods) {
                 for (String s : methods) {
                     if (m.getName() == null ? s == null : m.getName().equals(s)) {
@@ -88,6 +88,6 @@ public class Callback {
                     }
                 }
             }
-        } catch(Exception e) { }
+        } catch(Exception e) { Debug.error(e.getMessage()); }
     }
 }

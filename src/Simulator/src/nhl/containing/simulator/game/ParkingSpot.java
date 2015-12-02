@@ -5,7 +5,7 @@
 package nhl.containing.simulator.game;
 
 /**
- *
+ * TODO: everything
  * @author sietse
  */
 public class ParkingSpot {

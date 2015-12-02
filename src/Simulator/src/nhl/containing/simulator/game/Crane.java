@@ -1,6 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Crane
+ * 
+ * NOTE:
+ * Manual updating required
  */
 package nhl.containing.simulator.game;
 
@@ -31,21 +33,21 @@ public abstract class Crane extends MovingItem {
     private final String MODEL_PATH_BASE = "models/henk/Cranes/";
     
     // Components
-    private Transform m_frame;
-    private Transform m_hook;
-    private Line3D m_rope;
-    private Timer m_attachTimer = new Timer(attachTime());
+    private Transform m_frame;                      // Frame that hold the hook
+    private Transform m_hook;                       // Hook, that holds the container
+    private Line3D m_rope;                          // Rope between hook and frame
+    private Timer m_attachTimer = new Timer(attachTime());  // For attach and detach containers
     
     // Objects
-    private Spatial m_craneSpatial;
-    private Spatial m_hookSpatial;
+    private Spatial m_frameSpatial;                     // Frame spatial
+    private Spatial m_hookSpatial;                      // Hook spatial
     
     // Offsets
-    protected Vector3f m_frameOffset = Utilities.zero();
-    protected Vector3f m_hookOffset = Utilities.zero();
+    protected Vector3f m_frameOffset = Utilities.zero();        // Local frame offset, from the crane transform
+    protected Vector3f m_hookOffset = Utilities.zero();         // Local hook offset, from the frame transform
     
     // Other
-    public Callback onTargetCallback;
+    public Callback onTargetCallback;                       // Method when arriving at destination
     
     /**
      * Constructor
@@ -71,7 +73,7 @@ public abstract class Crane extends MovingItem {
     }
     
     /**
-     * 
+     * Initialize
      * @param frameOffset
      * @param hookOffset
      * @param containerOffset
@@ -90,11 +92,11 @@ public abstract class Crane extends MovingItem {
         m_hook = new Transform(m_frame);
         
         // Create frame
-        m_craneSpatial = Main.assets().loadModel(craneModelPath());
-        m_craneSpatial.setMaterial(craneModelMaterial());
-        m_craneSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
-        m_craneSpatial.scale(1.5f);
-        m_frame.attachChild(m_craneSpatial);
+        m_frameSpatial = Main.assets().loadModel(frameModelPath());
+        m_frameSpatial.setMaterial(craneModelMaterial());
+        m_frameSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
+        m_frameSpatial.scale(1.5f);
+        m_frame.attachChild(m_frameSpatial);
         
         // Create hook
         m_hookSpatial = Main.assets().loadModel(hookModelPath());
@@ -103,7 +105,7 @@ public abstract class Crane extends MovingItem {
         m_hook.attachChild(m_hookSpatial);
         
         // Spatial offsets
-        m_craneSpatial.setLocalTranslation(frameSpatialOffset);
+        m_frameSpatial.setLocalTranslation(frameSpatialOffset);
         m_hookSpatial.setLocalTranslation(hookSpatialOffset);
         
         // Line
@@ -119,13 +121,23 @@ public abstract class Crane extends MovingItem {
         awake();
     }
     
-    private String craneModelPath() {
+    /**
+     * Frame model path
+     * @return 
+     */
+    private String frameModelPath() {
         return MODEL_PATH_BASE + craneModelName();
     }
+    /**
+     * Hook model path
+     * @return 
+     */
     private String hookModelPath() {
         return MODEL_PATH_BASE + hookModelName();
     }
-    
+    /**
+     * update
+     */
     public final void _update() {
         
         if (path() != null) {
@@ -149,19 +161,12 @@ public abstract class Crane extends MovingItem {
             hookPos.y += pathPos.y;
             m_hook.localPosition(hookPos);
             
-            // Container
-            /*if (getSpot().container != null) {
-                if (getSpot().container.getParent() != m_hook) {
-                    m_hook.attachChild(getSpot().container);
-                    getSpot().container.localPosition(containerOffset());
-                }
-            }*/
-            
             // Rrope
             m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(0.0f, ropeHeight(), 0.0f)));
             m_rope.SetPosition(1, m_hook.position());
         }
         
+        // Check if on target
         if (m_attachTimer.finished(true)) {
             if (onTargetCallback != null) {
                 onTargetCallback.invoke();
@@ -172,9 +177,16 @@ public abstract class Crane extends MovingItem {
             }
         }
         
+        // Child update
         update();
     }
+    /**
+     * On create
+     */
     protected void awake() { }
+    /**
+     * On update
+     */
     protected void update() { }
     
     protected abstract String craneModelName();
@@ -186,20 +198,31 @@ public abstract class Crane extends MovingItem {
     protected abstract float ropeHeight();
     protected abstract Vector3f basePosition();
     
+    /**
+     * Called when arrived at a node
+     */
     public void _onCrane() {
         if (path().atLast()) {
+            // Called when arrived at the target (last) node
             m_attachTimer.reset();
         }
     }
+    /**
+     * Set path to default destination
+     */
     public void setPath() {
         setPath(basePosition());
     }
+    /**
+     * Set path to custom destination
+     * @param pos position
+     */
     public void setPath(Vector3f pos) {
         
         // Get poins
-        Vector3f p = new Vector3f(pos);
-        Vector3f b = basePosition();
-        Vector3f c = path().getPosition();
+        Vector3f p = new Vector3f(pos); // Target
+        Vector3f b = basePosition();    // Base
+        Vector3f c = path().getPosition();  // Current
         
         // Create path
         Vector3f[] newPath = new Vector3f[] {
@@ -209,9 +232,14 @@ public abstract class Crane extends MovingItem {
             new Vector3f(p.x, p.y, p.z)    // Go down
         };
         
+        // Set path
         path().setPath(newPath);
     }
     
+    /**
+     * 
+     * @param c 
+     */
     @Override
     protected void onSetContainer(Container c) { 
         if (m_hook == null)

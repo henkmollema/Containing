@@ -16,16 +16,28 @@ import nhl.containing.simulator.world.World;
  */
 public final class StoragePlatform extends LoadingPlatform {
 
+    /**
+     * Constructor
+     * @param position 
+     */
     public StoragePlatform(Vector3f position) {
         super();
         createPlatform();
         this.position(position);
     }
+    /**
+     * Constructor
+     * @param parent
+     * @param position 
+     */
     public StoragePlatform(Transform parent, Vector3f position) {
         super(parent);
         createPlatform();
         this.position(position);
     }
+    /**
+     * Create storage platform
+     */
     @Override
     void createPlatform() {
         m_crane = new RailCrane(this/*, new Vector3f(6.0f, 0.0f, 20.0f)*/);

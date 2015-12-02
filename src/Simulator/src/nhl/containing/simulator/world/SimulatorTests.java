@@ -13,7 +13,7 @@ import nhl.containing.simulator.simulation.Utilities;
  * @author sietse
  */
 public class SimulatorTests {
-    void getBox() {
+    public void getBox() {
         /*Unit
          * mo 24-11-2015
          * expected:
@@ -27,11 +27,24 @@ public class SimulatorTests {
          */
         Transform t = ContainerPool.get();
     }
-    void disposeNull() {
+    public void disposeNull() {
+        /*Unit
+         * mo 24-11-2015
+         * expected:
+            * Nothing is happening, Return false
+         *
+         * actual result:
+            * Nothing happened, Return false
+         * 
+         * pass/fail:
+            * pass
+         */
+        boolean expected = false;
+        boolean real = ContainerPool.dispose(null);
         
-        ContainerPool.dispose(null);
+        boolean pass = expected == real;
     }
-    void disposeCreated() {
+    public void disposeCreated() {
         /*Unit
          * mo 24-11-2015
          * expected:
@@ -45,18 +58,39 @@ public class SimulatorTests {
          * pass/fail:
             * pass
          * 
-         * comments:
-            * when putting null or any other transform that is not the pool trasform
-            * FALSE will return
          */
+        
+        boolean expected = true;
+        
         Transform t = ContainerPool.get();
-        ContainerPool.dispose(t);
+        boolean real = ContainerPool.dispose(t);
+        
+        boolean pass = expected == real;
     }
-    void disposeOther() {
+    public void disposeOther() {
+        /*Unit
+         * mo 24-11-2015
+         * expected:
+            * Nothing happens
+            * return value FALSE
+         * 
+         * actual result:
+            * Nothing happened
+            * return value FALSE
+         * 
+         * pass/fail:
+            * pass
+         * 
+         */
+        boolean expected = false;
+        
         Transform t = new Transform();
-        ContainerPool.dispose(t);
+        boolean real = ContainerPool.dispose(t);
+        
+        boolean pass = expected == real;
+        
     }
-    void createStorage() {
+    public void createStorage() {
         /* Intergration,
          * mo 24-11-2015
          * expected:

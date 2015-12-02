@@ -16,21 +16,45 @@ public class Point2 {
     public int x;
     public int y;
     
+    /**
+     * [0, 0]
+     * @return 
+     */
     public static Point2 zero() {
         return new Point2(0, 0);
     }
+    /**
+     * [1, 1]
+     * @return 
+     */
     public static Point2 one() {
         return new Point2(1, 1);
     }
+    /**
+     * [0, 1]
+     * @return 
+     */
     public static Point2 up() {
         return new Point2(0, 1);
     }
+    /**
+     * [0, -1]
+     * @return 
+     */
     public static Point2 down() {
         return new Point2(0, -1);
     }
+    /**
+     * [-1, 0]
+     * @return 
+     */
     public static Point2 left() {
         return new Point2(-1, 0);
     }
+    /**
+     * [1, 0]
+     * @return 
+     */
     public static Point2 right() {
         return new Point2(1, 0);
     }

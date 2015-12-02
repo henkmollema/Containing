@@ -17,6 +17,10 @@ public class ContainerPool {
     private static List<Transform> m_activePool = new ArrayList<Transform>();
     private static List<Transform> m_inactivePool = new ArrayList<Transform>();
     
+    /**
+     * Get a new or recycled Transform
+     * @return 
+     */
     public static Transform get() {
         Transform t;
         if (m_inactivePool.size() < 1) {
@@ -27,6 +31,11 @@ public class ContainerPool {
         t.setCullHint(Spatial.CullHint.Dynamic);
         return t;
     }
+    /**
+     * Store the transform
+     * @param t
+     * @return 
+     */
     public static boolean dispose(Transform t) {
         boolean b = m_activePool.remove(t);
         if (b) {

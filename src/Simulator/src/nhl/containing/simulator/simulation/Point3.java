@@ -16,27 +16,59 @@ public class Point3 {
     public int y;
     public int z;
     
+    /**
+     * [0, 0, 0]
+     * @return 
+     */
     public static Point3 zero() {
         return new Point3(0, 0, 0);
     }
+    /**
+     * [1, 1, 1]
+     * @return 
+     */
     public static Point3 one() {
         return new Point3(1, 1, 1);
     }
+    /**
+     * [0, 1, 0]
+     * @return 
+     */
     public static Point3 up() {
         return new Point3(0, 1, 0);
     }
+    /**
+     * [0, -1, 0]
+     * @return 
+     */
     public static Point3 down() {
         return new Point3(0, -1, 0);
     }
+    /**
+     * [-1, 0, 0]
+     * @return 
+     */
     public static Point3 left() {
         return new Point3(-1, 0, 0);
     }
+    /**
+     * [1, 0, 0]
+     * @return 
+     */
     public static Point3 right() {
         return new Point3(1, 0, 0);
     }
+    /**
+     * [0, 0, 1]
+     * @return 
+     */
     public static Point3 forward() {
         return new Point3(0, 0, 1);
     }
+    /**
+     * [0, 0, -1]
+     * @return 
+     */
     public static Point3 backward() {
         return new Point3(0, 0, -1);
     }

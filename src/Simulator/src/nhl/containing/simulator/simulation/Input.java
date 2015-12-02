@@ -4,7 +4,6 @@
  */
 package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.game.Camera;
 import nhl.containing.simulator.game.CameraMode;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
@@ -27,19 +26,19 @@ import com.jme3.math.Vector3f;
 public class Input extends Behaviour {
     
     // Smoothing
-    public final float      MOUSE_SENSITIVITY_X         = 3.0f;
-    public final float      MOUSE_SENSITIVITY_Y         = -3.0f;
+    public final float      MOUSE_SENSITIVITY_X         = 6.0f;
+    public final float      MOUSE_SENSITIVITY_Y         = 6.0f;
     public final int        MOUSE_SMOOTH_CHECKS         = 20;
     
     // Acceleration
     public final boolean    MOUSE_ACCELERATION_ACTIVE   = true;
     public final float      MOUSE_ACCELERATION          = 1.0f;
-    public final float      MOUSE_LINEAR                = 4.0f;
+    public final float      MOUSE_LINEAR                = 7.0f;
     
     // Clamp
     public final boolean    MOUSE_CLAMPING_ACTIVE       = true;
-    public final float      MOUSE_CLAMPING_X            = 4.0f;
-    public final float      MOUSE_CLAMPING_Y            = 4.0f;
+    public final float      MOUSE_CLAMPING_X            = 15.0f;
+    public final float      MOUSE_CLAMPING_Y            = 15.0f;
     
     
     public final Vector2f   MOUSE_CLAMPING              = new Vector2f(Mathf.abs(MOUSE_CLAMPING_X), Mathf.abs(MOUSE_CLAMPING_Y));
@@ -49,8 +48,6 @@ public class Input extends Behaviour {
     public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.0f);
     
     // 
-    private Vector2f        m_tempRawMouseMove = Vector2f.ZERO;
-    private Vector2f        m_previousMousePosition = Vector2f.ZERO;
     private Vector2f        m_rawMouseMove = Vector2f.ZERO;
     private Vector2f        m_mouseMove = Vector2f.ZERO;
     private List<Vector2f>  m_mouseSmoothBuffer;
@@ -61,14 +58,13 @@ public class Input extends Behaviour {
     private Transform m_doubleClickTarget;
     
     // 
-    //private Transform m_target;
     private final InternalListener m_listener = new InternalListener();
     private static List<String> m_mappings = new ArrayList<String>();
     
     private Button[] m_buttons;
     
     /**
-     *
+     * Get button
      * @param button
      * @return
      */
@@ -93,27 +89,39 @@ public class Input extends Behaviour {
     
     @Override
     public void rawUpdate() {
-        m_rawMouseMove = getRawMouseInput();
         
-        // 
-        m_mouseSmoothBuffer.add(new Vector2f(m_rawMouseMove).divide(Time.unscaledDeltaTime()));
+        // Get raw input
+        m_mouseSmoothBuffer.add(rawMouseMove()/*.divide(Time.unscaledDeltaTime())*/);
         while(m_mouseSmoothBuffer.size() > MOUSE_MAX_SMOOTH_BUFFER)
             m_mouseSmoothBuffer.remove(0);
         
-        m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);
-        //m_mouseMove = getMouseAcceleration(m_mouseMove);
-        m_mouseMove = m_mouseMove.mult(0.003f);
-        m_mouseMove = getClampedInput(m_mouseMove);
+        // Set movement
+        m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER); // Smoothing mouse
+        m_mouseMove = getMouseAcceleration(m_mouseMove);  // Accelerating mouse
+        m_mouseMove = getClampedInput(m_mouseMove); // Clamp mouse input
         
     }
     
-    // 
+    /**
+     * Raw mouse input
+     * @return 
+     */
     public Vector2f rawMouseMove() {
-        return m_rawMouseMove.clone();
+        Vector2f _movement = m_rawMouseMove.clone();
+        m_rawMouseMove = new Vector2f(0.0f, 0.0f);
+        return _movement;
     }
+    /**
+     * Get mouse movement
+     * @return 
+     */
     public Vector2f mouseMove() {
         return m_mouseMove.clone();
     }
+    /**
+     * Get input axis
+     * @return 
+     */
     public Vector2f rawInputAxis() {
         Vector2f __axis = new Vector2f(0.0f, 0.0f);
         
@@ -129,45 +137,69 @@ public class Input extends Behaviour {
         
         return __axis;
     }
-    // 
-    private Vector2f getRawMouseInput() {
-        Vector2f pos = new Vector2f(Main.inputManager().getCursorPosition()).subtract(m_previousMousePosition);
-        m_previousMousePosition = new Vector2f(Main.inputManager().getCursorPosition());
-        return pos;
-    }
+    
+    /**
+     * Smooth out the mouse input
+     * @param checks
+     * @return 
+     */
     private Vector2f getSmoothMouseInput(int checks) {
+        
+        // Check if checks is valid
         checks = Mathf.clamp(checks, 0, MOUSE_MAX_SMOOTH_BUFFER);
         
+        // Vars
         Vector2f total = Vector2f.ZERO;
         float weight = 1.0f;
         float devider = 0.0f;
+        
+        // For all buffers
         for (int i = m_mouseSmoothBuffer.size() - 1; i >= Mathf.max(0, m_mouseSmoothBuffer.size() - checks); i--) {
+            
+            // get current
             Vector2f __tempv = new Vector2f(m_mouseSmoothBuffer.get(i));
             __tempv = __tempv.mult(weight);
             
+            // Set vars
             total = total.add(__tempv);
             devider += weight;
-            weight *= MOUSE_SMOOTH_WEIGHT;
+            weight *= Mathf.clamp(MOUSE_SMOOTH_WEIGHT);
         }
+        
+        // Set total
         total = total.divide(devider);
-        return total.mult(Time.unscaledDeltaTime());
+        return total; //total.divide(Time.unscaledDeltaTime());
     }
+    /**
+     * Accelerate mouse input
+     * @param inp
+     * @return 
+     */
     private Vector2f getMouseAcceleration(Vector2f inp) {
         if (!MOUSE_ACCELERATION_ACTIVE)
-            return inp;
-        return new Vector2f(
+            return new Vector2f(inp.x * MOUSE_SENSITIVITY_X, inp.y * MOUSE_SENSITIVITY_Y);
+        
+        return new Vector2f( // (1 / (a + b)) * (v * |v|) * b * c
                 (1.0f / (MOUSE_ACCELERATION + MOUSE_LINEAR)) * inp.x * Mathf.abs(inp.x) * MOUSE_SENSITIVITY_X * MOUSE_LINEAR,
                 (1.0f / (MOUSE_ACCELERATION + MOUSE_LINEAR)) * inp.y * Mathf.abs(inp.y) * MOUSE_SENSITIVITY_Y * MOUSE_LINEAR);
     }
+    /**
+     * Clamp input
+     * @param inp
+     * @return 
+     */
     private Vector2f getClampedInput(Vector2f inp) {
         if (!MOUSE_CLAMPING_ACTIVE)
             return inp;
+        
         return new Vector2f(
                 Mathf.clamp(inp.x, -Mathf.abs(MOUSE_CLAMPING_X), Mathf.abs(MOUSE_CLAMPING_X)),
                 Mathf.clamp(inp.y, -Mathf.abs(MOUSE_CLAMPING_Y), Mathf.abs(MOUSE_CLAMPING_Y)));
     }
     
-    //
+    /**
+     * Initialize all buttons
+     */
     private void initInput() {
         
         // Clear default
@@ -213,53 +245,80 @@ public class Input extends Behaviour {
         
         Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
     }
+    /**
+     * Raycasting to follow selected transform
+     */
     public void pickObject() {
         
+        // Raycast hits
         CollisionResults hit = new CollisionResults();
         
+        // Calculate raycast direction
         Vector2f _mousePosition = Main.inputManager().getCursorPosition();
         Vector3f from = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 0f).clone();
         Vector3f direction = Main.cam().getWorldCoordinates(new Vector2f(_mousePosition), 1.0f).subtractLocal(from).normalizeLocal();
         
+        // Create raycast
         Ray ray = new Ray(from, direction);
-        
         Main.root().collideWith(ray, hit);
         
+        // vars
         int lowestIndex = -1;
         Long transformID = null;
         float lowestDistance = Float.MAX_VALUE;
+        
+        // For all hits
         for (int i = 0; i < hit.size(); ++i) {
             
+            // Get id to check if can be followed
             Long o = hit.getCollision(i).getGeometry().getUserData(Main.TRANSFORM_ID_KEY);
             
             if (o == null)
                 continue;
             
+            // Check if this one is the closest transform
             float __dist = hit.getCollision(i).getDistance();
             if (__dist < lowestDistance) {
-               lowestDistance = __dist;
-               lowestIndex = i;
-               transformID = o + 0;
+                
+                // Set
+                lowestDistance = __dist;
+                lowestIndex = i;
+                transformID =   (o+0)   ;
             }
         }
         
         if (lowestIndex < 0) {
+            // no transform selected
             Main.camera().setTarget(null);
             return;
         }
-        
+         // Set
         Main.camera().setTarget(Main.getTransform(transformID));
-        
-        
     }
     
+    /**
+     * Input listner
+     */
     private class InternalListener implements ActionListener, AnalogListener {
+        
+        /**
+         * Buttons
+         * @param name
+         * @param isPressed
+         * @param tpf 
+         */
         @Override
         public void onAction(String name, boolean isPressed, float tpf) {
             for (Button b : m_buttons)
                 b.safeSet(name, isPressed);
         }
 
+        /**
+         * Axis
+         * @param name
+         * @param value
+         * @param tpf 
+         */
         @Override
         public void onAnalog(String name, float value, float tpf) {
             
@@ -281,20 +340,30 @@ public class Input extends Behaviour {
                 Main.camera().zoom(value);
             } else if (name.contains("Mouse")) {
                 
+                if (name.charAt(name.length() - 1) == 'X')
+                    m_rawMouseMove.x -= value;
+                else
+                    m_rawMouseMove.y -= value;
+                
             }
         }
     }
     public class Button {
-        public String name;
-        public KeyTrigger trigger;
-        public MouseButtonTrigger mouseTrigger;
+        public String name;                 // Button name
+        public KeyTrigger trigger;              // Key
+        public MouseButtonTrigger mouseTrigger;     // Mouse key
         
-        public boolean isNegative;
+        public boolean isNegative;              // Invert
         
-        private boolean m_isDown = false;
-        private Callback m_onDownCallback;
-        private Callback m_onUpCallback;
+        private boolean m_isDown = false;       // is pressed down
+        private Callback m_onDownCallback;      // callback on down
+        private Callback m_onUpCallback;        // callback on up
         
+        /**
+         * Constructor
+         * @param name
+         * @param trigger 
+         */
         public Button(String name, KeyTrigger trigger) {
             this.name = name;
             this.trigger = trigger;
@@ -302,6 +371,12 @@ public class Input extends Behaviour {
             this.isNegative = false;
             init();
         }
+        /**
+         * Constructor
+         * @param name
+         * @param trigger
+         * @param isNegative 
+         */
         public Button(String name, KeyTrigger trigger, boolean isNegative) {
             this.name = name;
             this.trigger = trigger;
@@ -309,6 +384,11 @@ public class Input extends Behaviour {
             this.isNegative = isNegative;
             init();
         }
+        /**
+         * Constructor
+         * @param name
+         * @param trigger 
+         */
         public Button(String name, MouseButtonTrigger trigger) {
             this.name = name;
             this.trigger = null;
@@ -316,6 +396,12 @@ public class Input extends Behaviour {
             this.isNegative = false;
             init();
         }
+        /**
+         * Constructor
+         * @param name
+         * @param trigger
+         * @param isNegative 
+         */
         public Button(String name, MouseButtonTrigger trigger, boolean isNegative) {
             this.name = name;
             this.trigger = null;
@@ -324,13 +410,21 @@ public class Input extends Behaviour {
             init();
         }
         
-        
+        /**
+         * Safely set button
+         * @param name
+         * @param isDown 
+         */
         public final void safeSet(String name, boolean isDown) {
             if(isButton(name)) {
                 set(isDown);
-            }
-                
+            }  
         }
+        /**
+         * Unsafe set
+         * Does no safety check before setting
+         * @param isDown 
+         */
         public final void set(boolean isDown) {
             if (isDown && !m_isDown)
                 onDown();
@@ -339,26 +433,48 @@ public class Input extends Behaviour {
             onSet(isDown);
             m_isDown = isDown;
         }
+        /**
+         * 
+         * @param isDown 
+         */
         protected void onSet(boolean isDown) { }
+        /**
+         * First frame on down
+         */
         protected void onDown() { 
             if (m_onDownCallback != null)
                 m_onDownCallback.invoke();
         }
+        /**
+         * First frame on up
+         */
         protected void onUp() { 
             if (m_onUpCallback != null)
                 m_onUpCallback.invoke();
         }
         
+        /**
+         * Set callback
+         * @param c 
+         */
         public final void setOnDownCallback(Callback c) {
             m_onDownCallback = c;
         }
+        /**
+         * Set callback
+         * @param c 
+         */
         public final void setOnUpCallback(Callback c) {
             m_onUpCallback = c;
         }
         
+        /**
+         * Initialize
+         */
         public final void init() {
             if (!Utilities.nullOrEmpty(name)) {
                 
+                // Check wich button to check (mouse or keyboard)
                 if (trigger != null) {
                     Main.inputManager().addMapping(name, trigger);
                 } else if (mouseTrigger != null) {
@@ -367,17 +483,30 @@ public class Input extends Behaviour {
                     return;
                 }
                 
+                // set
                 m_mappings.add(name);
             }
-                
         }
+        /**
+         * Float button value
+         * @param name
+         * @return 
+         */
         public final float isButtonf(String name) {
             return isButton(name) ? (isNegative ? -1.0f : 1.0f) : 0.0f;
         }
+        /**
+         * Int button value
+         * @param s
+         * @return 
+         */
         public final boolean isButton(String s) {
             return !Utilities.nullOrEmpty(name) && s.equals(name);
         }
-        
+        /**
+         * Is the button down
+         * @return 
+         */
         public final boolean isDown() {
             return m_isDown;
         }

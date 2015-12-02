@@ -11,9 +11,9 @@ package nhl.containing.simulator.simulation;
  */
 public final class Time {
     private static float m_timeScale = 1.0f;
-    private static float m_fixedTimeScale = 0.02f; // 50 fps
-    private static float m_deltaTime = 0.0f;
-    private static float m_time = 0.0f;
+    private static float m_fixedTimeScale = 0.02f; // 50 fps (fps = 1.0 / m_fixedTimeScale)
+    private static float m_deltaTime = 0.0f; // Time between the previous and the current frame
+    private static float m_time = 0.0f; // Time in simulator
     
     private static final float MIN_FIXED_TIME_SCALE = 0.005f;
     
@@ -79,6 +79,10 @@ public final class Time {
         return (m_fixedTimeScale * m_timeScale);
     }
     
+    /**
+     * Get time in simulator
+     * @return 
+     */
     public static float time() {
         return m_time;
     }

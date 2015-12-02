@@ -8,7 +8,7 @@ public final class InstructionProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface datablockOrBuilder
+  public interface InstructionDataBlockOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
@@ -102,24 +102,24 @@ public final class InstructionProto {
         getRecievedResponseUUIDsBytes(int index);
   }
   /**
-   * Protobuf type {@code nhl.containing.networking.protobuf.datablock}
+   * Protobuf type {@code nhl.containing.networking.protobuf.InstructionDataBlock}
    */
-  public static final class datablock extends
+  public static final class InstructionDataBlock extends
       com.google.protobuf.GeneratedMessage
-      implements datablockOrBuilder {
-    // Use datablock.newBuilder() to construct.
-    private datablock(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements InstructionDataBlockOrBuilder {
+    // Use InstructionDataBlock.newBuilder() to construct.
+    private InstructionDataBlock(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private datablock(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private InstructionDataBlock(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final datablock defaultInstance;
-    public static datablock getDefaultInstance() {
+    private static final InstructionDataBlock defaultInstance;
+    public static InstructionDataBlock getDefaultInstance() {
       return defaultInstance;
     }
 
-    public datablock getDefaultInstanceForType() {
+    public InstructionDataBlock getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -129,7 +129,7 @@ public final class InstructionProto {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private datablock(
+    private InstructionDataBlock(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -210,28 +210,28 @@ public final class InstructionProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.InstructionProto.datablock.class, nhl.containing.networking.protobuf.InstructionProto.datablock.Builder.class);
+              nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.class, nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<datablock> PARSER =
-        new com.google.protobuf.AbstractParser<datablock>() {
-      public datablock parsePartialFrom(
+    public static com.google.protobuf.Parser<InstructionDataBlock> PARSER =
+        new com.google.protobuf.AbstractParser<InstructionDataBlock>() {
+      public InstructionDataBlock parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new datablock(input, extensionRegistry);
+        return new InstructionDataBlock(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<datablock> getParserForType() {
+    public com.google.protobuf.Parser<InstructionDataBlock> getParserForType() {
       return PARSER;
     }
 
@@ -456,53 +456,53 @@ public final class InstructionProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.datablock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -511,7 +511,7 @@ public final class InstructionProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.datablock prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -523,24 +523,24 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code nhl.containing.networking.protobuf.datablock}
+     * Protobuf type {@code nhl.containing.networking.protobuf.InstructionDataBlock}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.InstructionProto.datablockOrBuilder {
+       implements nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlockOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.InstructionProto.datablock.class, nhl.containing.networking.protobuf.InstructionProto.datablock.Builder.class);
+                nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.class, nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.InstructionProto.datablock.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -587,23 +587,23 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.datablock getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.datablock.getDefaultInstance();
+      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.datablock build() {
-        nhl.containing.networking.protobuf.InstructionProto.datablock result = buildPartial();
+      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock build() {
+        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.datablock buildPartial() {
-        nhl.containing.networking.protobuf.InstructionProto.datablock result = new nhl.containing.networking.protobuf.InstructionProto.datablock(this);
+      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock buildPartial() {
+        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock result = new nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock(this);
         int from_bitField0_ = bitField0_;
         if (instructionsBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -640,16 +640,16 @@ public final class InstructionProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.datablock) {
-          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.datablock)other);
+        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock) {
+          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.datablock other) {
-        if (other == nhl.containing.networking.protobuf.InstructionProto.datablock.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock other) {
+        if (other == nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.getDefaultInstance()) return this;
         if (instructionsBuilder_ == null) {
           if (!other.instructions_.isEmpty()) {
             if (instructions_.isEmpty()) {
@@ -746,11 +746,11 @@ public final class InstructionProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.InstructionProto.datablock parsedMessage = null;
+        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.datablock) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1427,729 +1427,15 @@ public final class InstructionProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.datablock)
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionDataBlock)
     }
 
     static {
-      defaultInstance = new datablock(true);
+      defaultInstance = new InstructionDataBlock(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.datablock)
-  }
-
-  public interface InstructionDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
-
-    // optional int64 time = 1;
-    /**
-     * <code>optional int64 time = 1;</code>
-     */
-    boolean hasTime();
-    /**
-     * <code>optional int64 time = 1;</code>
-     */
-    long getTime();
-
-    // optional int32 a = 2;
-    /**
-     * <code>optional int32 a = 2;</code>
-     */
-    boolean hasA();
-    /**
-     * <code>optional int32 a = 2;</code>
-     */
-    int getA();
-
-    // optional int32 b = 3;
-    /**
-     * <code>optional int32 b = 3;</code>
-     */
-    boolean hasB();
-    /**
-     * <code>optional int32 b = 3;</code>
-     */
-    int getB();
-
-    // optional string message = 4;
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    boolean hasMessage();
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    java.lang.String getMessage();
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getMessageBytes();
-  }
-  /**
-   * Protobuf type {@code nhl.containing.networking.protobuf.InstructionData}
-   */
-  public static final class InstructionData extends
-      com.google.protobuf.GeneratedMessage
-      implements InstructionDataOrBuilder {
-    // Use InstructionData.newBuilder() to construct.
-    private InstructionData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-      this.unknownFields = builder.getUnknownFields();
-    }
-    private InstructionData(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
-
-    private static final InstructionData defaultInstance;
-    public static InstructionData getDefaultInstance() {
-      return defaultInstance;
-    }
-
-    public InstructionData getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-
-    private final com.google.protobuf.UnknownFieldSet unknownFields;
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-        getUnknownFields() {
-      return this.unknownFields;
-    }
-    private InstructionData(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      initFields();
-      int mutable_bitField0_ = 0;
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 8: {
-              bitField0_ |= 0x00000001;
-              time_ = input.readInt64();
-              break;
-            }
-            case 16: {
-              bitField0_ |= 0x00000002;
-              a_ = input.readInt32();
-              break;
-            }
-            case 24: {
-              bitField0_ |= 0x00000004;
-              b_ = input.readInt32();
-              break;
-            }
-            case 34: {
-              bitField0_ |= 0x00000008;
-              message_ = input.readBytes();
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e.getMessage()).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData.class, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder.class);
-    }
-
-    public static com.google.protobuf.Parser<InstructionData> PARSER =
-        new com.google.protobuf.AbstractParser<InstructionData>() {
-      public InstructionData parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new InstructionData(input, extensionRegistry);
-      }
-    };
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<InstructionData> getParserForType() {
-      return PARSER;
-    }
-
-    private int bitField0_;
-    // optional int64 time = 1;
-    public static final int TIME_FIELD_NUMBER = 1;
-    private long time_;
-    /**
-     * <code>optional int64 time = 1;</code>
-     */
-    public boolean hasTime() {
-      return ((bitField0_ & 0x00000001) == 0x00000001);
-    }
-    /**
-     * <code>optional int64 time = 1;</code>
-     */
-    public long getTime() {
-      return time_;
-    }
-
-    // optional int32 a = 2;
-    public static final int A_FIELD_NUMBER = 2;
-    private int a_;
-    /**
-     * <code>optional int32 a = 2;</code>
-     */
-    public boolean hasA() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>optional int32 a = 2;</code>
-     */
-    public int getA() {
-      return a_;
-    }
-
-    // optional int32 b = 3;
-    public static final int B_FIELD_NUMBER = 3;
-    private int b_;
-    /**
-     * <code>optional int32 b = 3;</code>
-     */
-    public boolean hasB() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>optional int32 b = 3;</code>
-     */
-    public int getB() {
-      return b_;
-    }
-
-    // optional string message = 4;
-    public static final int MESSAGE_FIELD_NUMBER = 4;
-    private java.lang.Object message_;
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    public boolean hasMessage() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          message_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>optional string message = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        message_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private void initFields() {
-      time_ = 0L;
-      a_ = 0;
-      b_ = 0;
-      message_ = "";
-    }
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      getSerializedSize();
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeInt64(1, time_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, a_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(3, b_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeBytes(4, getMessageBytes());
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(1, time_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, a_);
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, b_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(4, getMessageBytes());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    protected java.lang.Object writeReplace()
-        throws java.io.ObjectStreamException {
-      return super.writeReplace();
-    }
-
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionData parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.InstructionData prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code nhl.containing.networking.protobuf.InstructionData}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.InstructionProto.InstructionData.class, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder.class);
-      }
-
-      // Construct using nhl.containing.networking.protobuf.InstructionProto.InstructionData.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      private static Builder create() {
-        return new Builder();
-      }
-
-      public Builder clear() {
-        super.clear();
-        time_ = 0L;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        a_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        b_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        message_ = "";
-        bitField0_ = (bitField0_ & ~0x00000008);
-        return this;
-      }
-
-      public Builder clone() {
-        return create().mergeFrom(buildPartial());
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
-      }
-
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-      }
-
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData build() {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionData result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData buildPartial() {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionData result = new nhl.containing.networking.protobuf.InstructionProto.InstructionData(this);
-        int from_bitField0_ = bitField0_;
-        int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
-          to_bitField0_ |= 0x00000001;
-        }
-        result.time_ = time_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.a_ = a_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.b_ = b_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
-        result.message_ = message_;
-        result.bitField0_ = to_bitField0_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.InstructionData) {
-          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.InstructionData)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.InstructionData other) {
-        if (other == nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance()) return this;
-        if (other.hasTime()) {
-          setTime(other.getTime());
-        }
-        if (other.hasA()) {
-          setA(other.getA());
-        }
-        if (other.hasB()) {
-          setB(other.getB());
-        }
-        if (other.hasMessage()) {
-          bitField0_ |= 0x00000008;
-          message_ = other.message_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionData parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.InstructionData) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-      private int bitField0_;
-
-      // optional int64 time = 1;
-      private long time_ ;
-      /**
-       * <code>optional int64 time = 1;</code>
-       */
-      public boolean hasTime() {
-        return ((bitField0_ & 0x00000001) == 0x00000001);
-      }
-      /**
-       * <code>optional int64 time = 1;</code>
-       */
-      public long getTime() {
-        return time_;
-      }
-      /**
-       * <code>optional int64 time = 1;</code>
-       */
-      public Builder setTime(long value) {
-        bitField0_ |= 0x00000001;
-        time_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int64 time = 1;</code>
-       */
-      public Builder clearTime() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        time_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      // optional int32 a = 2;
-      private int a_ ;
-      /**
-       * <code>optional int32 a = 2;</code>
-       */
-      public boolean hasA() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>optional int32 a = 2;</code>
-       */
-      public int getA() {
-        return a_;
-      }
-      /**
-       * <code>optional int32 a = 2;</code>
-       */
-      public Builder setA(int value) {
-        bitField0_ |= 0x00000002;
-        a_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 a = 2;</code>
-       */
-      public Builder clearA() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        a_ = 0;
-        onChanged();
-        return this;
-      }
-
-      // optional int32 b = 3;
-      private int b_ ;
-      /**
-       * <code>optional int32 b = 3;</code>
-       */
-      public boolean hasB() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>optional int32 b = 3;</code>
-       */
-      public int getB() {
-        return b_;
-      }
-      /**
-       * <code>optional int32 b = 3;</code>
-       */
-      public Builder setB(int value) {
-        bitField0_ |= 0x00000004;
-        b_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 b = 3;</code>
-       */
-      public Builder clearB() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        b_ = 0;
-        onChanged();
-        return this;
-      }
-
-      // optional string message = 4;
-      private java.lang.Object message_ = "";
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public boolean hasMessage() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public java.lang.String getMessage() {
-        java.lang.Object ref = message_;
-        if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          message_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public com.google.protobuf.ByteString
-          getMessageBytes() {
-        java.lang.Object ref = message_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          message_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public Builder setMessage(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-        message_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public Builder clearMessage() {
-        bitField0_ = (bitField0_ & ~0x00000008);
-        message_ = getDefaultInstance().getMessage();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string message = 4;</code>
-       */
-      public Builder setMessageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-        message_ = value;
-        onChanged();
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionData)
-    }
-
-    static {
-      defaultInstance = new InstructionData(true);
-      defaultInstance.initFields();
-    }
-
-    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionData)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionDataBlock)
   }
 
   public interface InstructionOrBuilder
@@ -2180,19 +1466,50 @@ public final class InstructionProto {
      */
     int getInstructionType();
 
-    // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
+    // optional int64 time = 3;
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int64 time = 3;</code>
      */
-    boolean hasData();
+    boolean hasTime();
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int64 time = 3;</code>
      */
-    nhl.containing.networking.protobuf.InstructionProto.InstructionData getData();
+    long getTime();
+
+    // optional int32 a = 4;
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int32 a = 4;</code>
      */
-    nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder();
+    boolean hasA();
+    /**
+     * <code>optional int32 a = 4;</code>
+     */
+    int getA();
+
+    // optional int32 b = 5;
+    /**
+     * <code>optional int32 b = 5;</code>
+     */
+    boolean hasB();
+    /**
+     * <code>optional int32 b = 5;</code>
+     */
+    int getB();
+
+    // optional string message = 6;
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    boolean hasMessage();
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    java.lang.String getMessage();
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getMessageBytes();
   }
   /**
    * Protobuf type {@code nhl.containing.networking.protobuf.Instruction}
@@ -2255,17 +1572,24 @@ public final class InstructionProto {
               instructionType_ = input.readInt32();
               break;
             }
-            case 26: {
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
-                subBuilder = data_.toBuilder();
-              }
-              data_ = input.readMessage(nhl.containing.networking.protobuf.InstructionProto.InstructionData.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(data_);
-                data_ = subBuilder.buildPartial();
-              }
+            case 24: {
               bitField0_ |= 0x00000004;
+              time_ = input.readInt64();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              a_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              b_ = input.readInt32();
+              break;
+            }
+            case 50: {
+              bitField0_ |= 0x00000020;
+              message_ = input.readBytes();
               break;
             }
           }
@@ -2367,32 +1691,104 @@ public final class InstructionProto {
       return instructionType_;
     }
 
-    // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
-    public static final int DATA_FIELD_NUMBER = 3;
-    private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_;
+    // optional int64 time = 3;
+    public static final int TIME_FIELD_NUMBER = 3;
+    private long time_;
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int64 time = 3;</code>
      */
-    public boolean hasData() {
+    public boolean hasTime() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int64 time = 3;</code>
      */
-    public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
-      return data_;
+    public long getTime() {
+      return time_;
+    }
+
+    // optional int32 a = 4;
+    public static final int A_FIELD_NUMBER = 4;
+    private int a_;
+    /**
+     * <code>optional int32 a = 4;</code>
+     */
+    public boolean hasA() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+     * <code>optional int32 a = 4;</code>
      */
-    public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
-      return data_;
+    public int getA() {
+      return a_;
+    }
+
+    // optional int32 b = 5;
+    public static final int B_FIELD_NUMBER = 5;
+    private int b_;
+    /**
+     * <code>optional int32 b = 5;</code>
+     */
+    public boolean hasB() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional int32 b = 5;</code>
+     */
+    public int getB() {
+      return b_;
+    }
+
+    // optional string message = 6;
+    public static final int MESSAGE_FIELD_NUMBER = 6;
+    private java.lang.Object message_;
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    public boolean hasMessage() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          message_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string message = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private void initFields() {
       id_ = "";
       instructionType_ = 0;
-      data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
+      time_ = 0L;
+      a_ = 0;
+      b_ = 0;
+      message_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -2421,7 +1817,16 @@ public final class InstructionProto {
         output.writeInt32(2, instructionType_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(3, data_);
+        output.writeInt64(3, time_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, a_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, b_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(6, getMessageBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2442,7 +1847,19 @@ public final class InstructionProto {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, data_);
+          .computeInt64Size(3, time_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, a_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, b_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, getMessageBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2552,7 +1969,6 @@ public final class InstructionProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getDataFieldBuilder();
         }
       }
       private static Builder create() {
@@ -2565,12 +1981,14 @@ public final class InstructionProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         instructionType_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
-        if (dataBuilder_ == null) {
-          data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-        } else {
-          dataBuilder_.clear();
-        }
+        time_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
+        a_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        b_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        message_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -2610,11 +2028,19 @@ public final class InstructionProto {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (dataBuilder_ == null) {
-          result.data_ = data_;
-        } else {
-          result.data_ = dataBuilder_.build();
+        result.time_ = time_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
         }
+        result.a_ = a_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.b_ = b_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.message_ = message_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2639,8 +2065,19 @@ public final class InstructionProto {
         if (other.hasInstructionType()) {
           setInstructionType(other.getInstructionType());
         }
-        if (other.hasData()) {
-          mergeData(other.getData());
+        if (other.hasTime()) {
+          setTime(other.getTime());
+        }
+        if (other.hasA()) {
+          setA(other.getA());
+        }
+        if (other.hasB()) {
+          setB(other.getB());
+        }
+        if (other.hasMessage()) {
+          bitField0_ |= 0x00000020;
+          message_ = other.message_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -2784,121 +2221,177 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional .nhl.containing.networking.protobuf.InstructionData data = 3;
-      private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> dataBuilder_;
+      // optional int64 time = 3;
+      private long time_ ;
       /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+       * <code>optional int64 time = 3;</code>
        */
-      public boolean hasData() {
+      public boolean hasTime() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+       * <code>optional int64 time = 3;</code>
        */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
-        if (dataBuilder_ == null) {
-          return data_;
-        } else {
-          return dataBuilder_.getMessage();
-        }
+      public long getTime() {
+        return time_;
       }
       /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+       * <code>optional int64 time = 3;</code>
        */
-      public Builder setData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
-        if (dataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          data_ = value;
-          onChanged();
-        } else {
-          dataBuilder_.setMessage(value);
-        }
+      public Builder setTime(long value) {
         bitField0_ |= 0x00000004;
-        return this;
-      }
-      /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
-       */
-      public Builder setData(
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder builderForValue) {
-        if (dataBuilder_ == null) {
-          data_ = builderForValue.build();
-          onChanged();
-        } else {
-          dataBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000004;
-        return this;
-      }
-      /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
-       */
-      public Builder mergeData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
-        if (dataBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              data_ != nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance()) {
-            data_ =
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData.newBuilder(data_).mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
-          onChanged();
-        } else {
-          dataBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000004;
-        return this;
-      }
-      /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
-       */
-      public Builder clearData() {
-        if (dataBuilder_ == null) {
-          data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-          onChanged();
-        } else {
-          dataBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000004);
-        return this;
-      }
-      /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
-       */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder getDataBuilder() {
-        bitField0_ |= 0x00000004;
+        time_ = value;
         onChanged();
-        return getDataFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+       * <code>optional int64 time = 3;</code>
        */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
-        if (dataBuilder_ != null) {
-          return dataBuilder_.getMessageOrBuilder();
+      public Builder clearTime() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        time_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 a = 4;
+      private int a_ ;
+      /**
+       * <code>optional int32 a = 4;</code>
+       */
+      public boolean hasA() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional int32 a = 4;</code>
+       */
+      public int getA() {
+        return a_;
+      }
+      /**
+       * <code>optional int32 a = 4;</code>
+       */
+      public Builder setA(int value) {
+        bitField0_ |= 0x00000008;
+        a_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 a = 4;</code>
+       */
+      public Builder clearA() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        a_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional int32 b = 5;
+      private int b_ ;
+      /**
+       * <code>optional int32 b = 5;</code>
+       */
+      public boolean hasB() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional int32 b = 5;</code>
+       */
+      public int getB() {
+        return b_;
+      }
+      /**
+       * <code>optional int32 b = 5;</code>
+       */
+      public Builder setB(int value) {
+        bitField0_ |= 0x00000010;
+        b_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 b = 5;</code>
+       */
+      public Builder clearB() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        b_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // optional string message = 6;
+      private java.lang.Object message_ = "";
+      /**
+       * <code>optional string message = 6;</code>
+       */
+      public boolean hasMessage() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional string message = 6;</code>
+       */
+      public java.lang.String getMessage() {
+        java.lang.Object ref = message_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          message_ = s;
+          return s;
         } else {
-          return data_;
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional .nhl.containing.networking.protobuf.InstructionData data = 3;</code>
+       * <code>optional string message = 6;</code>
        */
-      private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> 
-          getDataFieldBuilder() {
-        if (dataBuilder_ == null) {
-          dataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder>(
-                  data_,
-                  getParentForChildren(),
-                  isClean());
-          data_ = null;
+      public com.google.protobuf.ByteString
+          getMessageBytes() {
+        java.lang.Object ref = message_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          message_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
         }
-        return dataBuilder_;
+      }
+      /**
+       * <code>optional string message = 6;</code>
+       */
+      public Builder setMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        message_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string message = 6;</code>
+       */
+      public Builder clearMessage() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string message = 6;</code>
+       */
+      public Builder setMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        message_ = value;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.Instruction)
@@ -2945,19 +2438,20 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getInstructionIdBytes();
 
-    // required .nhl.containing.networking.protobuf.InstructionData data = 4;
+    // optional string message = 3;
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    boolean hasData();
+    boolean hasMessage();
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    nhl.containing.networking.protobuf.InstructionProto.InstructionData getData();
+    java.lang.String getMessage();
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder();
+    com.google.protobuf.ByteString
+        getMessageBytes();
   }
   /**
    * Protobuf type {@code nhl.containing.networking.protobuf.InstructionResponse}
@@ -3020,17 +2514,9 @@ public final class InstructionProto {
               instructionId_ = input.readBytes();
               break;
             }
-            case 34: {
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000004) == 0x00000004)) {
-                subBuilder = data_.toBuilder();
-              }
-              data_ = input.readMessage(nhl.containing.networking.protobuf.InstructionProto.InstructionData.PARSER, extensionRegistry);
-              if (subBuilder != null) {
-                subBuilder.mergeFrom(data_);
-                data_ = subBuilder.buildPartial();
-              }
+            case 26: {
               bitField0_ |= 0x00000004;
+              message_ = input.readBytes();
               break;
             }
           }
@@ -3159,32 +2645,53 @@ public final class InstructionProto {
       }
     }
 
-    // required .nhl.containing.networking.protobuf.InstructionData data = 4;
-    public static final int DATA_FIELD_NUMBER = 4;
-    private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_;
+    // optional string message = 3;
+    public static final int MESSAGE_FIELD_NUMBER = 3;
+    private java.lang.Object message_;
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    public boolean hasData() {
+    public boolean hasMessage() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
-      return data_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          message_ = s;
+        }
+        return s;
+      }
     }
     /**
-     * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+     * <code>optional string message = 3;</code>
      */
-    public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
-      return data_;
+    public com.google.protobuf.ByteString
+        getMessageBytes() {
+      java.lang.Object ref = message_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        message_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
     private void initFields() {
       id_ = "";
       instructionId_ = "";
-      data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
+      message_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3196,10 +2703,6 @@ public final class InstructionProto {
         return false;
       }
       if (!hasInstructionId()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasData()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -3217,7 +2720,7 @@ public final class InstructionProto {
         output.writeBytes(2, getInstructionIdBytes());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeMessage(4, data_);
+        output.writeBytes(3, getMessageBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -3238,7 +2741,7 @@ public final class InstructionProto {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, data_);
+          .computeBytesSize(3, getMessageBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3348,7 +2851,6 @@ public final class InstructionProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getDataFieldBuilder();
         }
       }
       private static Builder create() {
@@ -3361,11 +2863,7 @@ public final class InstructionProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         instructionId_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        if (dataBuilder_ == null) {
-          data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-        } else {
-          dataBuilder_.clear();
-        }
+        message_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
@@ -3406,11 +2904,7 @@ public final class InstructionProto {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (dataBuilder_ == null) {
-          result.data_ = data_;
-        } else {
-          result.data_ = dataBuilder_.build();
-        }
+        result.message_ = message_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3437,8 +2931,10 @@ public final class InstructionProto {
           instructionId_ = other.instructionId_;
           onChanged();
         }
-        if (other.hasData()) {
-          mergeData(other.getData());
+        if (other.hasMessage()) {
+          bitField0_ |= 0x00000004;
+          message_ = other.message_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -3450,10 +2946,6 @@ public final class InstructionProto {
           return false;
         }
         if (!hasInstructionId()) {
-          
-          return false;
-        }
-        if (!hasData()) {
           
           return false;
         }
@@ -3627,121 +3119,78 @@ public final class InstructionProto {
         return this;
       }
 
-      // required .nhl.containing.networking.protobuf.InstructionData data = 4;
-      private nhl.containing.networking.protobuf.InstructionProto.InstructionData data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-      private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> dataBuilder_;
+      // optional string message = 3;
+      private java.lang.Object message_ = "";
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      public boolean hasData() {
+      public boolean hasMessage() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData getData() {
-        if (dataBuilder_ == null) {
-          return data_;
+      public java.lang.String getMessage() {
+        java.lang.Object ref = message_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          message_ = s;
+          return s;
         } else {
-          return dataBuilder_.getMessage();
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      public Builder setData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
-        if (dataBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          data_ = value;
-          onChanged();
+      public com.google.protobuf.ByteString
+          getMessageBytes() {
+        java.lang.Object ref = message_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          message_ = b;
+          return b;
         } else {
-          dataBuilder_.setMessage(value);
+          return (com.google.protobuf.ByteString) ref;
         }
-        bitField0_ |= 0x00000004;
-        return this;
       }
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      public Builder setData(
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder builderForValue) {
-        if (dataBuilder_ == null) {
-          data_ = builderForValue.build();
-          onChanged();
-        } else {
-          dataBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000004;
-        return this;
-      }
-      /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
-       */
-      public Builder mergeData(nhl.containing.networking.protobuf.InstructionProto.InstructionData value) {
-        if (dataBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              data_ != nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance()) {
-            data_ =
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData.newBuilder(data_).mergeFrom(value).buildPartial();
-          } else {
-            data_ = value;
-          }
-          onChanged();
-        } else {
-          dataBuilder_.mergeFrom(value);
-        }
-        bitField0_ |= 0x00000004;
-        return this;
-      }
-      /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
-       */
-      public Builder clearData() {
-        if (dataBuilder_ == null) {
-          data_ = nhl.containing.networking.protobuf.InstructionProto.InstructionData.getDefaultInstance();
-          onChanged();
-        } else {
-          dataBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000004);
-        return this;
-      }
-      /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
-       */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder getDataBuilder() {
-        bitField0_ |= 0x00000004;
+      public Builder setMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        message_ = value;
         onChanged();
-        return getDataFieldBuilder().getBuilder();
+        return this;
       }
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder getDataOrBuilder() {
-        if (dataBuilder_ != null) {
-          return dataBuilder_.getMessageOrBuilder();
-        } else {
-          return data_;
-        }
+      public Builder clearMessage() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        message_ = getDefaultInstance().getMessage();
+        onChanged();
+        return this;
       }
       /**
-       * <code>required .nhl.containing.networking.protobuf.InstructionData data = 4;</code>
+       * <code>optional string message = 3;</code>
        */
-      private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder> 
-          getDataFieldBuilder() {
-        if (dataBuilder_ == null) {
-          dataBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              nhl.containing.networking.protobuf.InstructionProto.InstructionData, nhl.containing.networking.protobuf.InstructionProto.InstructionData.Builder, nhl.containing.networking.protobuf.InstructionProto.InstructionDataOrBuilder>(
-                  data_,
-                  getParentForChildren(),
-                  isClean());
-          data_ = null;
-        }
-        return dataBuilder_;
+      public Builder setMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        message_ = value;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionResponse)
@@ -3756,15 +3205,10 @@ public final class InstructionProto {
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_nhl_containing_networking_protobuf_datablock_descriptor;
+    internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable;
+      internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
   private static
@@ -3785,51 +3229,42 @@ public final class InstructionProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\021Instruction.proto\022\"nhl.containing.netw" +
-      "orking.protobuf\"\337\001\n\tdatablock\022E\n\014instruc" +
-      "tions\030\001 \003(\0132/.nhl.containing.networking." +
-      "protobuf.Instruction\022J\n\tresponses\030\002 \003(\0132" +
-      "7.nhl.containing.networking.protobuf.Ins" +
-      "tructionResponse\022 \n\030recievedInstructionU" +
-      "UIDs\030\003 \003(\t\022\035\n\025recievedResponseUUIDs\030\004 \003(" +
-      "\t\"F\n\017InstructionData\022\014\n\004time\030\001 \001(\003\022\t\n\001a\030" +
-      "\002 \001(\005\022\t\n\001b\030\003 \001(\005\022\017\n\007message\030\004 \001(\t\"u\n\013Ins" +
-      "truction\022\n\n\002id\030\001 \002(\t\022\027\n\017instructionType\030",
-      "\002 \002(\005\022A\n\004data\030\003 \001(\01323.nhl.containing.net" +
-      "working.protobuf.InstructionData\"{\n\023Inst" +
-      "ructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\rinstructi" +
-      "onId\030\002 \002(\t\022A\n\004data\030\004 \002(\01323.nhl.containin" +
-      "g.networking.protobuf.InstructionDataB\022B" +
-      "\020InstructionProto"
+      "orking.protobuf\"\352\001\n\024InstructionDataBlock" +
+      "\022E\n\014instructions\030\001 \003(\0132/.nhl.containing." +
+      "networking.protobuf.Instruction\022J\n\trespo" +
+      "nses\030\002 \003(\01327.nhl.containing.networking.p" +
+      "rotobuf.InstructionResponse\022 \n\030recievedI" +
+      "nstructionUUIDs\030\003 \003(\t\022\035\n\025recievedRespons" +
+      "eUUIDs\030\004 \003(\t\"g\n\013Instruction\022\n\n\002id\030\001 \002(\t\022" +
+      "\027\n\017instructionType\030\002 \002(\005\022\014\n\004time\030\003 \001(\003\022\t" +
+      "\n\001a\030\004 \001(\005\022\t\n\001b\030\005 \001(\005\022\017\n\007message\030\006 \001(\t\"I\n",
+      "\023InstructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\rinst" +
+      "ructionId\030\002 \002(\t\022\017\n\007message\030\003 \001(\tB\022B\020Inst" +
+      "ructionProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_nhl_containing_networking_protobuf_datablock_descriptor =
+          internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_nhl_containing_networking_protobuf_datablock_fieldAccessorTable = new
+          internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_nhl_containing_networking_protobuf_datablock_descriptor,
+              internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor,
               new java.lang.String[] { "Instructions", "Responses", "RecievedInstructionUUIDs", "RecievedResponseUUIDs", });
-          internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_nhl_containing_networking_protobuf_InstructionData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_nhl_containing_networking_protobuf_InstructionData_descriptor,
-              new java.lang.String[] { "Time", "A", "B", "Message", });
           internal_static_nhl_containing_networking_protobuf_Instruction_descriptor =
-            getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(1);
           internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_nhl_containing_networking_protobuf_Instruction_descriptor,
-              new java.lang.String[] { "Id", "InstructionType", "Data", });
+              new java.lang.String[] { "Id", "InstructionType", "Time", "A", "B", "Message", });
           internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(2);
           internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor,
-              new java.lang.String[] { "Id", "InstructionId", "Data", });
+              new java.lang.String[] { "Id", "InstructionId", "Message", });
           return null;
         }
       };

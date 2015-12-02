@@ -35,7 +35,6 @@ public final class Line3D extends Transform {
 
     Vector3f[] vertexArray;
     Vector3f[] normalArray;
-    ColorRGBA[] colorArray;
     int[] indexArray;
     Vector2f[] uvArray;
     
@@ -108,7 +107,6 @@ public final class Line3D extends Transform {
     {
         vertexArray = new Vector3f[lineNodes.size()*2];
         normalArray = new Vector3f[lineNodes.size()*2];
-        colorArray = new ColorRGBA[lineNodes.size()*2];
         uvArray = new Vector2f[lineNodes.size()*2];
         for (int i = 0; i < lineNodes.size(); i++)
         {
@@ -166,7 +164,6 @@ public final class Line3D extends Transform {
        
        Vector3f[] vertices   = this.vertexArray;
        Vector3f[] normals    = this.normalArray;
-       ColorRGBA[]   colors  = this.colorArray;
        Vector3f oldTangent  = new Vector3f();
        Vector3f oldDir      = new Vector3f();
 
@@ -179,13 +176,11 @@ public final class Line3D extends Transform {
            vertices[i*2]        = lineNodes.get(i).position.subtract(offset);
            vertices[i*2+1]      = lineNodes.get(i).position.add(offset);            
            normals[i*2]         = normals[i*2+1] = faceNormal;
-           colors[i*2]          = colors[i*2+1] = lineNodes.get(i).color;
            if (i == lineNodes.size() - 2) // last two points
            {
                vertices[i*2+2] = lineNodes.get(i+1).position.subtract(tangent.mult(lineNodes.get(i+1).width/2.0f));
                vertices[i*2+3] = lineNodes.get(i+1).position.add(tangent.mult(lineNodes.get(i+1).width/2.0f));
                normals[i*2+2]  = normals[i*2+3] = faceNormal;
-               colors[i*2+2]   = colors[i*2+3] = lineNodes.get(i+1).color;
            }
            oldDir = dir;
            oldTangent = tangent;
@@ -230,19 +225,6 @@ public final class Line3D extends Transform {
             lineNodes.get(i).width = Mathf.lerp(aStartWidth,aEndWidth,(float)i/(lineNodes.size()-1));
         }
     }
-    
-    /*
-     * Set the color of the line node at a given index
-     */
-    public void SetColor(int aIndex, ColorRGBA aColor)
-    {
-        if (aIndex < 0 || aIndex >= lineNodes.size()) return;
-            
-        lineNodes.get(aIndex).color = aColor;
-    }
-    
-    
-
 }
 
 

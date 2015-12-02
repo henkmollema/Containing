@@ -70,7 +70,7 @@ road_map::~road_map()
     for (vector<node*>::iterator it{ m_nodes.begin() }; it != m_nodes.end(); ++it) { delete (*it); }
 }
 
-vector<int> road_map::get_path(node * from, node * to, float speed)
+vector<int> road_map::get_path(node* from, node* to, float speed)
 { // https://docs.google.com/presentation/d/1UPEAdPqTFxVzcrofAqkVdkAGtbOZBEWF_SMrrcEyVxs/edit?usp=sharing
 	// nodes
     vector<node > nodes       { get_copy()       };
@@ -93,7 +93,7 @@ vector<int> road_map::get_path(node * from, node * to, float speed)
             while (current != NULL)
             { // set path
                 path.push_back(current->id());
-                if (current->id() == from->id()) { break; }
+                if (current->id() == from->id()) break;
                 current = current->parent;
             }
             //delete selected;

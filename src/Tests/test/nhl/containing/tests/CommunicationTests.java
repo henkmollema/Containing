@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import nhl.containing.controller.networking.Server;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
-import nhl.containing.networking.protobuf.InstructionProto.InstructionData;
 import nhl.containing.networking.protobuf.InstructionProto.InstructionResponse;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionDispatcher;
@@ -27,7 +26,7 @@ public class CommunicationTests {
     public void instructionResponseBatchTest() {
 
 
-        final Server controller = new Server();
+        final Server controller = new Server(null);
         final SimulatorClient simulator = new SimulatorClient();
         final Thread controllerThread = new Thread(controller);
         final Thread simulatorThread = new Thread(simulator);
@@ -54,10 +53,10 @@ public class CommunicationTests {
                 InstructionResponse response = InstructionResponse.newBuilder()
                         .setId(CommunicationProtocol.newUUID())
                         .setInstructionId(inst.getId())
-                        .setData(inst.getData())
+                        .setMessage("Recieved it!")
                         .build();
 
-                simulator.getComProtocol().sendResponse(response);
+                simulator.controllerCom().sendResponse(response);
                 //System.out.println("instruction recieved: " + inst.getId());
             }
 
@@ -69,8 +68,8 @@ public class CommunicationTests {
         };
 
         //They share the same dispatcher..
-        controller.getComProtocol().setDispatcher(testDispatcher);
-        simulator.getComProtocol().setDispatcher(testDispatcher);
+        controller.simCom().setDispatcher(testDispatcher);
+        simulator.controllerCom().setDispatcher(testDispatcher);
 
         controllerThread.start();
         simulatorThread.start();
@@ -79,10 +78,10 @@ public class CommunicationTests {
             Instruction instruction = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
                     .setInstructionType(InstructionType.CONSOLE_COMMAND)
-                    .setData(InstructionData.newBuilder().setMessage("Got response!").build())
+                    .setMessage("Got response!")
                     .build();
 
-            controller.getComProtocol().sendInstruction(instruction);
+            controller.simCom().sendInstruction(instruction);
         }
         System.out.println("Test: Added "+instructionsToSend+" to the instruction queue");
          try {
@@ -96,10 +95,10 @@ public class CommunicationTests {
             Instruction instruction = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
                     .setInstructionType(InstructionType.CONSOLE_COMMAND)
-                    .setData(InstructionData.newBuilder().setMessage("Got response!").build())
+                    .setMessage("Got response!")
                     .build();
 
-            simulator.getComProtocol().sendInstruction(instruction);
+            simulator.controllerCom().sendInstruction(instruction);
              
             
         }
@@ -122,10 +121,10 @@ public class CommunicationTests {
 
         System.out.println("Controller Recieved " + instructionsRecieved + " instructions");
         System.out.println("Simulator Recieved " + repsonsesRecieved + " responses");
-        System.out.println("Simulator has " + simulator.getComProtocol().getNumPendingInst() + " pending instructions");
-        System.out.println("Controller has " + simulator.getComProtocol().getNumPendingResp() + " pending responses");
-        System.out.println("Simulator has sent " + (simulator.getComProtocol().bytesSent / 1024) + " KB");
-        System.out.println("Controller has sent " + (controller.getComProtocol().bytesSent / 1024) + " KB");
+        System.out.println("Simulator has " + simulator.controllerCom().getNumPendingInst() + " pending instructions");
+        System.out.println("Controller has " + simulator.controllerCom().getNumPendingResp() + " pending responses");
+        System.out.println("Simulator has sent " + (simulator.controllerCom().bytesSent / 1024) + " KB");
+        System.out.println("Controller has sent " + (controller.simCom().bytesSent / 1024) + " KB");
 
         controller.stop();
         simulator.stop();

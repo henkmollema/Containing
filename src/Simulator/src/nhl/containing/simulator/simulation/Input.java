@@ -92,7 +92,7 @@ public class Input extends Behaviour {
     }
     
     @Override
-    public void update() {
+    public void rawUpdate() {
         m_rawMouseMove = getRawMouseInput();
         
         // 
@@ -101,9 +101,9 @@ public class Input extends Behaviour {
             m_mouseSmoothBuffer.remove(0);
         
         m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);
-        m_mouseMove = getMouseAcceleration(m_mouseMove);
+        //m_mouseMove = getMouseAcceleration(m_mouseMove);
+        m_mouseMove = m_mouseMove.mult(0.003f);
         m_mouseMove = getClampedInput(m_mouseMove);
-        m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime() * 0.4f);
         
     }
     

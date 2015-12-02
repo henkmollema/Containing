@@ -41,11 +41,11 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
             //More instruction types here..
         }
 
-        _sim.simClient().getComProtocol().sendResponse(responseBuilder.build());
+        _sim.simClient().controllerCom().sendResponse(responseBuilder.build());
     }
 
     @Override
     public void forwardResponse(InstructionProto.InstructionResponse resp) {
-        System.out.println("Recieved response: " + resp.getData().getMessage());
+        System.out.println("Recieved response: " + resp.getMessage());
     }
 }

@@ -9,8 +9,8 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=MinGW_5.2.0-Windows
 CND_ARTIFACT_DIR_Debug=../Controller/build/classes/lib
-CND_ARTIFACT_NAME_Debug=JNITest.dll
-CND_ARTIFACT_PATH_Debug=../Controller/build/classes/lib/JNITest.dll
+CND_ARTIFACT_NAME_Debug=Controller.dll
+CND_ARTIFACT_PATH_Debug=../Controller/build/classes/lib/Controller.dll
 CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_5.2.0-Windows/package
 CND_PACKAGE_NAME_Debug=libControllerc++.dll.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_5.2.0-Windows/package/libControllerc++.dll.tar

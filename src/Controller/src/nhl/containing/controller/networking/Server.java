@@ -7,7 +7,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import nhl.containing.controller.Simulator;
 import nhl.containing.networking.messaging.*;
-import nhl.containing.networking.protobuf.DataProto.ClientIdentity;
+import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
+import nhl.containing.networking.protocol.CommunicationProtocol;
 
 /**
  * Provides interaction with the client.
@@ -24,6 +25,12 @@ public class Server implements Runnable {
     private boolean isAppConnected;
     private boolean shouldRun;
     private ServerSocket serverSocket = null;
+    private CommunicationProtocol simCom;
+    
+    public CommunicationProtocol simCom()
+    {
+        return simCom;
+    }
 
     public Server(Simulator _simulator) {
         simulator = _simulator;
@@ -39,6 +46,12 @@ public class Server implements Runnable {
 
     public void stop() {
         shouldRun = false;
+    }
+    
+    public void onSimDisconnect()
+    {
+        simCom = null;
+        this.isSimulatorConnected = false;
     }
 
     @Override
@@ -73,11 +86,19 @@ public class Server implements Runnable {
                 switch(idData.getClientType())
                 {
                     case SIMULATOR:
+                        if(simCom != null)
+                        {
+                            tmpSocket.close(); //Accept only one sim connection
+                            return;
+                        }
+
+                        SimHandler simHandler = new SimHandler(this, tmpSocket);
+                        simCom = simHandler.getComProtocol();
+                        
+                        new Thread(simHandler).start(); //Start anonymous thread
                         
                         isSimulatorConnected = true;
                         p("Sim connected");
-                        SimHandler simHandler = new SimHandler(this, tmpSocket);
-                        new Thread(simHandler).start();
                         
                         break;
                     case APP:

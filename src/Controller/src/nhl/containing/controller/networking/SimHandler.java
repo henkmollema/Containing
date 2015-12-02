@@ -9,11 +9,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
+import nhl.containing.controller.Time;
 import nhl.containing.networking.messaging.MessageReader;
 import nhl.containing.networking.messaging.MessageWriter;
-import nhl.containing.networking.protobuf.PlatformProto;
+import nhl.containing.networking.protobuf.InstructionProto.Instruction;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionDispatcher;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
  *
@@ -26,6 +31,8 @@ public class SimHandler implements Runnable {
     private Socket _socket;
     private Server _server;
     
+    private Timer _timer;
+    
     private InstructionDispatcher _instructionDispatcher;
     
     private CommunicationProtocol _comProtocol;
@@ -36,8 +43,26 @@ public class SimHandler implements Runnable {
         _server = server;
         
         _comProtocol = new CommunicationProtocol();
-        _instructionDispatcher = new InstructionDispatcherController(server.simulator);
+        _instructionDispatcher = new InstructionDispatcherController(server.simulator, _comProtocol);
         _comProtocol.setDispatcher(_instructionDispatcher);
+        
+        _timer = new Timer();
+        _timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                Time._updateTime(5 / 1000);
+            }
+        }, 0, 5);
+        _timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                Time.time();// send time to simulator
+            }
+        }, 1000, 1000);
     }
     
     /**
@@ -71,6 +96,8 @@ public class SimHandler implements Runnable {
         {
             _socket.close();
         } catch (Exception ex) { ex.printStackTrace(); }
+        
+        _server.onSimDisconnect();
 
         //server.isSimulatorConnected = false;
     }
@@ -78,8 +105,16 @@ public class SimHandler implements Runnable {
     public boolean initSimData(Socket _socket) {
         p("initializing Simulator data");
         try {
+            Instruction okayMessage = Instruction.newBuilder()
+                    .setId(CommunicationProtocol.newUUID())
+                    .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
+                    .build();
+            
+            MessageWriter.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
+            
             byte[] data = MessageReader.readByteArray(_socket.getInputStream());
-            PlatformProto.Platform platform = PlatformProto.Platform.parseFrom(data);
+            //SimItemProto platform = PlatformProto.Platform.parseFrom(data);
+            SimulationItem platform = SimulationItem.parseFrom(data);
 
             //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
             if (platform != null) {
@@ -111,10 +146,10 @@ public class SimHandler implements Runnable {
 
             while (shouldRun) {
                 // Re-use streams for more efficiency.
-                byte[] data = MessageReader.readByteArray(input, dataStream);
-                byte[] response = _comProtocol.processInput(data);
+                byte[] data = MessageReader.readByteArray(input, dataStream); //Read
+                byte[] response = _comProtocol.processInput(data); //Process
 
-                MessageWriter.writeMessage(output, response);
+                MessageWriter.writeMessage(output, response); //Send
             }
         } catch (IOException ex) {
             ex.printStackTrace();

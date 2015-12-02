@@ -86,12 +86,12 @@ public class CommunicationProtocol {
      * @return 
      */
     public byte[] processInput(byte[] in) {
-        InstructionProto.datablock dbRecieved = null;
+        InstructionDataBlock dbRecieved = null;
         if (in != null && in.length > 3) //If we're not getting an empty message.
         {
             try {
                 //Try to parse the incomming data into a datablock
-                dbRecieved = InstructionProto.datablock.parseFrom(in);
+                dbRecieved = InstructionDataBlock.parseFrom(in);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -145,7 +145,7 @@ public class CommunicationProtocol {
      * @return datablock object to be sent over network
      */
     public byte[] flushDataBlock() {
-        datablock.Builder dbBuilder = datablock.newBuilder();
+        InstructionDataBlock.Builder dbBuilder = InstructionDataBlock.newBuilder();
 
 
 

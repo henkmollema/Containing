@@ -1,4 +1,4 @@
-package controller.proto;
+package nhl.containing.networking.protobuf;
 
 option java_outer_classname = "SimulationItemProto";
 

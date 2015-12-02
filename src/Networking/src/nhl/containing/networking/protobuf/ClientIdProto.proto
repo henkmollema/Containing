@@ -8,6 +8,6 @@ message ClientIdentity{
         APP        = 2;
     }
     
-    ClientType = 1;
-    optional int version = 2;
+    required ClientType clientType = 1;
+    optional int32 version = 2;
 }

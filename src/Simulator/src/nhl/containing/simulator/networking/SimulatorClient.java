@@ -8,9 +8,11 @@ import nhl.containing.networking.messaging.MessageWriter;
 import java.io.*;
 import java.net.Socket;
 import nhl.containing.networking.messaging.MessageReader;
-import nhl.containing.networking.protobuf.DataProto;
-import nhl.containing.networking.protobuf.PlatformProto;
+import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
+import nhl.containing.networking.protobuf.InstructionProto.Instruction;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
  * Providers interaction with the client.
@@ -24,10 +26,10 @@ public class SimulatorClient implements Runnable {
     private boolean isConnected;
     private boolean shouldRun;
     private Socket _socket = null;
-    private CommunicationProtocol comProtocol;
+    private CommunicationProtocol controllerCom;
 
     public SimulatorClient() {
-        comProtocol = new CommunicationProtocol();
+        controllerCom = new CommunicationProtocol();
     }
 
     /**
@@ -35,8 +37,8 @@ public class SimulatorClient implements Runnable {
      *
      * @return The communication protocol.
      */
-    public CommunicationProtocol getComProtocol() {
-        return comProtocol;
+    public CommunicationProtocol controllerCom() {
+        return controllerCom;
     }
 
     public boolean isConnected() {
@@ -87,34 +89,40 @@ public class SimulatorClient implements Runnable {
             OutputStream output = _socket.getOutputStream();
             
             //Tell the Controller we are the simulator
-            DataProto.ClientIdentity.Builder idBuilder = DataProto.ClientIdentity.newBuilder();
-            idBuilder.setClientType(DataProto.ClientIdentity.ClientType.SIMULATOR)
+            ClientIdentity.Builder idBuilder = ClientIdentity.newBuilder();
+            idBuilder.setClientType(ClientIdentity.ClientType.SIMULATOR)
                      .setVersion(CommunicationProtocol.PROTOCOL_VERSION);
             
             MessageWriter.writeMessage(output, idBuilder.build().toByteArray());
             //Wait for an okay response..
-            //MessageReader.readByteArray(input, dataStream);
+            byte[] ba = MessageReader.readByteArray(input, dataStream);
+            Instruction i = Instruction.parseFrom(ba);
+            if(i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY) throw new IOException();
             
+
+
+//            PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();
+//            platformBuilder
+//                    .setId(CommunicationProtocol.newUUID())
+//                    .setType(PlatformProto.Platform.PlatformType.SeaShip)
+//                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
+//                    .setId(CommunicationProtocol.newUUID())
+//                    .setType(PlatformProto.Platform.Crane.CraneType.Rails))
+//                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
+//                    .setId(CommunicationProtocol.newUUID())
+//                    .setType(PlatformProto.Platform.Crane.CraneType.Rails));
+//
+//            PlatformProto.Platform platform = platformBuilder.build();
             
-
-
-            PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();
-            platformBuilder
+            SimulationItem item = SimulationItem.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
-                    .setType(PlatformProto.Platform.PlatformType.SeaShip)
-                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
-                    .setId(CommunicationProtocol.newUUID())
-                    .setType(PlatformProto.Platform.Crane.CraneType.Rails))
-                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
-                    .setId(CommunicationProtocol.newUUID())
-                    .setType(PlatformProto.Platform.Crane.CraneType.Rails));
-
-            PlatformProto.Platform platform = platformBuilder.build();
+                    .setType(SimulationItem.SimulationItemType.PLATFORM)
+                    .build();
 
 
 
-            byte[] message = platform.toByteArray();
-            System.out.println("Sending " + message.length + " bytes...");
+            byte[] message = item.toByteArray();
+            p("Sending " + message.length + " bytes...");
 
             MessageWriter.writeMessage(output, message);
 
@@ -154,7 +162,7 @@ public class SimulatorClient implements Runnable {
             while (shouldRun) {
                 // Re-use streams for more efficiency.
                 byte[] data = MessageReader.readByteArray(input, dataStream);
-                byte[] response = comProtocol.processInput(data);
+                byte[] response = controllerCom.processInput(data);
 
                 MessageWriter.writeMessage(output, response);
             }
@@ -200,6 +208,6 @@ public class SimulatorClient implements Runnable {
     }
 
     private static void p(String s) {
-        //System.out.println("Simulator: " + s);
+        System.out.println("Simulator: " + s);
     }
 }

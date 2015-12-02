@@ -1,11 +1,11 @@
 package app;
 
 option java_package = "nhl.containing.networking.protobuf";
-option java_outer_classname = "appDataProto";
+option java_outer_classname = "AppDataProto";
 
 message datablockApp {
-	optional repeated ContainerGraphData graphs = 1;
-	optional repeated ContainerDataListItem items = 2;
+	repeated ContainerGraphData graphs = 1;
+	repeated ContainerDataListItem items = 2;
 	optional ContainerInfo container = 3;
 	
 }

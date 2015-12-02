@@ -83,7 +83,7 @@ public abstract class Crane extends MovingItem {
         // Init offsets
         m_frameOffset = new Vector3f(frameOffset);
         m_hookOffset = new Vector3f(hookOffset);
-        containerOffset(containerOffset);
+        this.containerOffset(containerOffset);
         
         // Init transforms (Platform -> Crane -> Frame -> Hook)
         m_frame = new Transform(this);

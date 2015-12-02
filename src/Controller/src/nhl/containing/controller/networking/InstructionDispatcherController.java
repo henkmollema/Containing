@@ -13,9 +13,11 @@ import nhl.containing.networking.protocol.*;
 public class InstructionDispatcherController implements InstructionDispatcher {
 
     Simulator _sim;
+    CommunicationProtocol _com;
 
-    public InstructionDispatcherController(Simulator sim) {
+    public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
         _sim = sim;
+        _com = com;
     }
 
     /**
@@ -28,11 +30,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     @Override
     public void forwardInstruction(InstructionProto.Instruction inst) {
 
-        InstructionData.Builder rdataBuilder = InstructionData.newBuilder();
-
         switch (inst.getInstructionType()) {
             case InstructionType.CONSOLE_COMMAND:
-                String message = inst.getData().getMessage();
+                String message = inst.getMessage();
                 System.out.println("GOT CONSOLECOMAND: " + message);
                 //rdataBuilder.setMessage(_sim.parseCommand(message));
                 break;
@@ -41,12 +41,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
 
         InstructionResponse.Builder rbuilder = InstructionResponse.newBuilder();
-        rbuilder.setData(rdataBuilder.build());
         rbuilder.setInstructionId(inst.getId());
         rbuilder.setId(UUID.randomUUID().toString());
         InstructionResponse response = rbuilder.build();
 
-        //_sim.communication().sendResponse(response);
+        _com.sendResponse(response);
 
     }
 

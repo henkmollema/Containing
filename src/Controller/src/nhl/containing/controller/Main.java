@@ -10,16 +10,16 @@ public class Main
 
     static
     {
-        try
-        {
-            File file = new File(Main.class.getResource("/lib/").getPath(), "Controller.dll");
-            System.load(file.getAbsolutePath());
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-            System.exit(1);
-        }
+//        try
+//        {
+//            File file = new File(Main.class.getResource("/lib/").getPath(), "Controller.dll");
+//            System.load(file.getAbsolutePath());
+//        }
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//            System.exit(1);
+//        }
     }
 
     /**
@@ -32,19 +32,19 @@ public class Main
             @Override
             public void run()
             {
-                PathFinder.cleanup();
+                //PathFinder.cleanup();
                 System.out.println("exit");
             }
         });
 
         run();
 
-        PathFinder.initPath(new Dimension(25, 25));
-        int[] path = PathFinder.getPath(0, 130, 5.0f);
-        for (int i : path)
-        {
-            System.out.println("node " + i);
-        }
+//        PathFinder.initPath(new Dimension(25, 25));
+//        int[] path = PathFinder.getPath(0, 130, 5.0f);
+//        for (int i : path)
+//        {
+//            System.out.println("node " + i);
+//        }
     }
 
     /**

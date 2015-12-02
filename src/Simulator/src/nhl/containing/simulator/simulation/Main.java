@@ -272,7 +272,7 @@ public class Main extends SimpleApplication {
         //Init networking
         app._simClient = new SimulatorClient();
         app._dispatcher = new InstructionDispatcherSimulator(app);
-        app._simClient.getComProtocol().setDispatcher(app._dispatcher);
+        app._simClient.controllerCom().setDispatcher(app._dispatcher);
         Thread networkThread = new Thread(app._simClient);
         networkThread.setDaemon(true);
         networkThread.setName("Network Simulator");

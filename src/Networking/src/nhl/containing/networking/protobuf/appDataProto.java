@@ -3,8 +3,8 @@
 
 package nhl.containing.networking.protobuf;
 
-public final class appDataProto {
-  private appDataProto() {}
+public final class AppDataProto {
+  private AppDataProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
@@ -110,7 +110,7 @@ public final class appDataProto {
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.appDataProto.getDescriptor().getEnumTypes().get(0);
+      return nhl.containing.networking.protobuf.AppDataProto.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final ContainerCategory[] VALUES = values();
@@ -135,19 +135,19 @@ public final class appDataProto {
     // @@protoc_insertion_point(enum_scope:app.ContainerCategory)
   }
 
-  public interface datablockAppOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:app.datablockApp)
-      com.google.protobuf.MessageOrBuilder {
+  public interface datablockAppOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .app.ContainerGraphData graphs = 1;
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> 
+    java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> 
         getGraphsList();
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerGraphData getGraphs(int index);
+    nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData getGraphs(int index);
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
@@ -155,23 +155,24 @@ public final class appDataProto {
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder> 
+    java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder> 
         getGraphsOrBuilderList();
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
+    nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
         int index);
 
+    // repeated .app.ContainerDataListItem items = 2;
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> 
+    java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> 
         getItemsList();
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem getItems(int index);
+    nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem getItems(int index);
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
@@ -179,14 +180,15 @@ public final class appDataProto {
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder> 
+    java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder> 
         getItemsOrBuilderList();
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
+    nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
         int index);
 
+    // optional .app.ContainerInfo container = 3;
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
@@ -194,19 +196,18 @@ public final class appDataProto {
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerInfo getContainer();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerInfo getContainer();
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder getContainerOrBuilder();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder getContainerOrBuilder();
   }
   /**
    * Protobuf type {@code app.datablockApp}
    */
   public static final class datablockApp extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:app.datablockApp)
-      datablockAppOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements datablockAppOrBuilder {
     // Use datablockApp.newBuilder() to construct.
     private datablockApp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -254,26 +255,26 @@ public final class appDataProto {
             }
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                graphs_ = new java.util.ArrayList<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData>();
+                graphs_ = new java.util.ArrayList<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              graphs_.add(input.readMessage(nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.PARSER, extensionRegistry));
+              graphs_.add(input.readMessage(nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.PARSER, extensionRegistry));
               break;
             }
             case 18: {
               if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                items_ = new java.util.ArrayList<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem>();
+                items_ = new java.util.ArrayList<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              items_.add(input.readMessage(nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.PARSER, extensionRegistry));
+              items_.add(input.readMessage(nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.PARSER, extensionRegistry));
               break;
             }
             case 26: {
-              nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder subBuilder = null;
+              nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = container_.toBuilder();
               }
-              container_ = input.readMessage(nhl.containing.networking.protobuf.appDataProto.ContainerInfo.PARSER, extensionRegistry);
+              container_ = input.readMessage(nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(container_);
                 container_ = subBuilder.buildPartial();
@@ -301,14 +302,14 @@ public final class appDataProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_datablockApp_descriptor;
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_datablockApp_fieldAccessorTable
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.appDataProto.datablockApp.class, nhl.containing.networking.protobuf.appDataProto.datablockApp.Builder.class);
+              nhl.containing.networking.protobuf.AppDataProto.datablockApp.class, nhl.containing.networking.protobuf.AppDataProto.datablockApp.Builder.class);
     }
 
     public static com.google.protobuf.Parser<datablockApp> PARSER =
@@ -327,18 +328,19 @@ public final class appDataProto {
     }
 
     private int bitField0_;
+    // repeated .app.ContainerGraphData graphs = 1;
     public static final int GRAPHS_FIELD_NUMBER = 1;
-    private java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> graphs_;
+    private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> graphs_;
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> getGraphsList() {
+    public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> getGraphsList() {
       return graphs_;
     }
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    public java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder> 
+    public java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder> 
         getGraphsOrBuilderList() {
       return graphs_;
     }
@@ -351,29 +353,30 @@ public final class appDataProto {
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData getGraphs(int index) {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData getGraphs(int index) {
       return graphs_.get(index);
     }
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
         int index) {
       return graphs_.get(index);
     }
 
+    // repeated .app.ContainerDataListItem items = 2;
     public static final int ITEMS_FIELD_NUMBER = 2;
-    private java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> items_;
+    private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> items_;
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> getItemsList() {
+    public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> getItemsList() {
       return items_;
     }
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    public java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder> 
+    public java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder> 
         getItemsOrBuilderList() {
       return items_;
     }
@@ -386,19 +389,20 @@ public final class appDataProto {
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem getItems(int index) {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem getItems(int index) {
       return items_.get(index);
     }
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
         int index) {
       return items_.get(index);
     }
 
+    // optional .app.ContainerInfo container = 3;
     public static final int CONTAINER_FIELD_NUMBER = 3;
-    private nhl.containing.networking.protobuf.appDataProto.ContainerInfo container_;
+    private nhl.containing.networking.protobuf.AppDataProto.ContainerInfo container_;
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
@@ -408,26 +412,25 @@ public final class appDataProto {
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerInfo getContainer() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo getContainer() {
       return container_;
     }
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder getContainerOrBuilder() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder getContainerOrBuilder() {
       return container_;
     }
 
     private void initFields() {
       graphs_ = java.util.Collections.emptyList();
       items_ = java.util.Collections.emptyList();
-      container_ = nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance();
+      container_ = nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getGraphsCount(); i++) {
         if (!getGraphs(i).isInitialized()) {
@@ -496,53 +499,53 @@ public final class appDataProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.datablockApp parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.datablockApp parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -551,7 +554,7 @@ public final class appDataProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.appDataProto.datablockApp prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.AppDataProto.datablockApp prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -566,22 +569,21 @@ public final class appDataProto {
      * Protobuf type {@code app.datablockApp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:app.datablockApp)
-        nhl.containing.networking.protobuf.appDataProto.datablockAppOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.AppDataProto.datablockAppOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_datablockApp_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_datablockApp_fieldAccessorTable
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.appDataProto.datablockApp.class, nhl.containing.networking.protobuf.appDataProto.datablockApp.Builder.class);
+                nhl.containing.networking.protobuf.AppDataProto.datablockApp.class, nhl.containing.networking.protobuf.AppDataProto.datablockApp.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.appDataProto.datablockApp.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.AppDataProto.datablockApp.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -617,7 +619,7 @@ public final class appDataProto {
           itemsBuilder_.clear();
         }
         if (containerBuilder_ == null) {
-          container_ = nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance();
+          container_ = nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
         } else {
           containerBuilder_.clear();
         }
@@ -631,23 +633,23 @@ public final class appDataProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_datablockApp_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.datablockApp getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.appDataProto.datablockApp.getDefaultInstance();
+      public nhl.containing.networking.protobuf.AppDataProto.datablockApp getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.AppDataProto.datablockApp.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.datablockApp build() {
-        nhl.containing.networking.protobuf.appDataProto.datablockApp result = buildPartial();
+      public nhl.containing.networking.protobuf.AppDataProto.datablockApp build() {
+        nhl.containing.networking.protobuf.AppDataProto.datablockApp result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.datablockApp buildPartial() {
-        nhl.containing.networking.protobuf.appDataProto.datablockApp result = new nhl.containing.networking.protobuf.appDataProto.datablockApp(this);
+      public nhl.containing.networking.protobuf.AppDataProto.datablockApp buildPartial() {
+        nhl.containing.networking.protobuf.AppDataProto.datablockApp result = new nhl.containing.networking.protobuf.AppDataProto.datablockApp(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (graphsBuilder_ == null) {
@@ -682,16 +684,16 @@ public final class appDataProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.appDataProto.datablockApp) {
-          return mergeFrom((nhl.containing.networking.protobuf.appDataProto.datablockApp)other);
+        if (other instanceof nhl.containing.networking.protobuf.AppDataProto.datablockApp) {
+          return mergeFrom((nhl.containing.networking.protobuf.AppDataProto.datablockApp)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.appDataProto.datablockApp other) {
-        if (other == nhl.containing.networking.protobuf.appDataProto.datablockApp.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.AppDataProto.datablockApp other) {
+        if (other == nhl.containing.networking.protobuf.AppDataProto.datablockApp.getDefaultInstance()) return this;
         if (graphsBuilder_ == null) {
           if (!other.graphs_.isEmpty()) {
             if (graphs_.isEmpty()) {
@@ -777,11 +779,11 @@ public final class appDataProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.appDataProto.datablockApp parsedMessage = null;
+        nhl.containing.networking.protobuf.AppDataProto.datablockApp parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.appDataProto.datablockApp) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.AppDataProto.datablockApp) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -792,22 +794,23 @@ public final class appDataProto {
       }
       private int bitField0_;
 
-      private java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> graphs_ =
+      // repeated .app.ContainerGraphData graphs = 1;
+      private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> graphs_ =
         java.util.Collections.emptyList();
       private void ensureGraphsIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          graphs_ = new java.util.ArrayList<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData>(graphs_);
+          graphs_ = new java.util.ArrayList<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData>(graphs_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerGraphData, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder> graphsBuilder_;
+          nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder> graphsBuilder_;
 
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> getGraphsList() {
+      public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> getGraphsList() {
         if (graphsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(graphs_);
         } else {
@@ -827,7 +830,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData getGraphs(int index) {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData getGraphs(int index) {
         if (graphsBuilder_ == null) {
           return graphs_.get(index);
         } else {
@@ -838,7 +841,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder setGraphs(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData value) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData value) {
         if (graphsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -855,7 +858,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder setGraphs(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder builderForValue) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder builderForValue) {
         if (graphsBuilder_ == null) {
           ensureGraphsIsMutable();
           graphs_.set(index, builderForValue.build());
@@ -868,7 +871,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public Builder addGraphs(nhl.containing.networking.protobuf.appDataProto.ContainerGraphData value) {
+      public Builder addGraphs(nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData value) {
         if (graphsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -885,7 +888,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder addGraphs(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData value) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData value) {
         if (graphsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -902,7 +905,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder addGraphs(
-          nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder builderForValue) {
+          nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder builderForValue) {
         if (graphsBuilder_ == null) {
           ensureGraphsIsMutable();
           graphs_.add(builderForValue.build());
@@ -916,7 +919,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder addGraphs(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder builderForValue) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder builderForValue) {
         if (graphsBuilder_ == null) {
           ensureGraphsIsMutable();
           graphs_.add(index, builderForValue.build());
@@ -930,11 +933,10 @@ public final class appDataProto {
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
       public Builder addAllGraphs(
-          java.lang.Iterable<? extends nhl.containing.networking.protobuf.appDataProto.ContainerGraphData> values) {
+          java.lang.Iterable<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> values) {
         if (graphsBuilder_ == null) {
           ensureGraphsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, graphs_);
+          super.addAll(values, graphs_);
           onChanged();
         } else {
           graphsBuilder_.addAllMessages(values);
@@ -970,14 +972,14 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder getGraphsBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder getGraphsBuilder(
           int index) {
         return getGraphsFieldBuilder().getBuilder(index);
       }
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
           int index) {
         if (graphsBuilder_ == null) {
           return graphs_.get(index);  } else {
@@ -987,7 +989,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder> 
+      public java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder> 
            getGraphsOrBuilderList() {
         if (graphsBuilder_ != null) {
           return graphsBuilder_.getMessageOrBuilderList();
@@ -998,31 +1000,31 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder addGraphsBuilder() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder addGraphsBuilder() {
         return getGraphsFieldBuilder().addBuilder(
-            nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.getDefaultInstance());
+            nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.getDefaultInstance());
       }
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder addGraphsBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder addGraphsBuilder(
           int index) {
         return getGraphsFieldBuilder().addBuilder(
-            index, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.getDefaultInstance());
+            index, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.getDefaultInstance());
       }
       /**
        * <code>repeated .app.ContainerGraphData graphs = 1;</code>
        */
-      public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder> 
+      public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder> 
            getGraphsBuilderList() {
         return getGraphsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerGraphData, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder> 
+          nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder> 
           getGraphsFieldBuilder() {
         if (graphsBuilder_ == null) {
           graphsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              nhl.containing.networking.protobuf.appDataProto.ContainerGraphData, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder>(
+              nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder>(
                   graphs_,
                   ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
@@ -1032,22 +1034,23 @@ public final class appDataProto {
         return graphsBuilder_;
       }
 
-      private java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> items_ =
+      // repeated .app.ContainerDataListItem items = 2;
+      private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
         if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          items_ = new java.util.ArrayList<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem>(items_);
+          items_ = new java.util.ArrayList<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem>(items_);
           bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder> itemsBuilder_;
+          nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder> itemsBuilder_;
 
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> getItemsList() {
+      public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> getItemsList() {
         if (itemsBuilder_ == null) {
           return java.util.Collections.unmodifiableList(items_);
         } else {
@@ -1067,7 +1070,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem getItems(int index) {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem getItems(int index) {
         if (itemsBuilder_ == null) {
           return items_.get(index);
         } else {
@@ -1078,7 +1081,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder setItems(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem value) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem value) {
         if (itemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1095,7 +1098,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder setItems(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder builderForValue) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder builderForValue) {
         if (itemsBuilder_ == null) {
           ensureItemsIsMutable();
           items_.set(index, builderForValue.build());
@@ -1108,7 +1111,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public Builder addItems(nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem value) {
+      public Builder addItems(nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem value) {
         if (itemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1125,7 +1128,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder addItems(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem value) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem value) {
         if (itemsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1142,7 +1145,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder addItems(
-          nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder builderForValue) {
+          nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder builderForValue) {
         if (itemsBuilder_ == null) {
           ensureItemsIsMutable();
           items_.add(builderForValue.build());
@@ -1156,7 +1159,7 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder addItems(
-          int index, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder builderForValue) {
+          int index, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder builderForValue) {
         if (itemsBuilder_ == null) {
           ensureItemsIsMutable();
           items_.add(index, builderForValue.build());
@@ -1170,11 +1173,10 @@ public final class appDataProto {
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
       public Builder addAllItems(
-          java.lang.Iterable<? extends nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem> values) {
+          java.lang.Iterable<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> values) {
         if (itemsBuilder_ == null) {
           ensureItemsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, items_);
+          super.addAll(values, items_);
           onChanged();
         } else {
           itemsBuilder_.addAllMessages(values);
@@ -1210,14 +1212,14 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder getItemsBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder getItemsBuilder(
           int index) {
         return getItemsFieldBuilder().getBuilder(index);
       }
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
           int index) {
         if (itemsBuilder_ == null) {
           return items_.get(index);  } else {
@@ -1227,7 +1229,7 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public java.util.List<? extends nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder> 
+      public java.util.List<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder> 
            getItemsOrBuilderList() {
         if (itemsBuilder_ != null) {
           return itemsBuilder_.getMessageOrBuilderList();
@@ -1238,31 +1240,31 @@ public final class appDataProto {
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder addItemsBuilder() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder addItemsBuilder() {
         return getItemsFieldBuilder().addBuilder(
-            nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.getDefaultInstance());
+            nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.getDefaultInstance());
       }
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder addItemsBuilder(
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder addItemsBuilder(
           int index) {
         return getItemsFieldBuilder().addBuilder(
-            index, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.getDefaultInstance());
+            index, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.getDefaultInstance());
       }
       /**
        * <code>repeated .app.ContainerDataListItem items = 2;</code>
        */
-      public java.util.List<nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder> 
+      public java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder> 
            getItemsBuilderList() {
         return getItemsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder> 
+          nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder> 
           getItemsFieldBuilder() {
         if (itemsBuilder_ == null) {
           itemsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder>(
+              nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder>(
                   items_,
                   ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
@@ -1272,9 +1274,10 @@ public final class appDataProto {
         return itemsBuilder_;
       }
 
-      private nhl.containing.networking.protobuf.appDataProto.ContainerInfo container_ = nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance();
+      // optional .app.ContainerInfo container = 3;
+      private nhl.containing.networking.protobuf.AppDataProto.ContainerInfo container_ = nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerInfo, nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder> containerBuilder_;
+          nhl.containing.networking.protobuf.AppDataProto.ContainerInfo, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder> containerBuilder_;
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
@@ -1284,7 +1287,7 @@ public final class appDataProto {
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfo getContainer() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo getContainer() {
         if (containerBuilder_ == null) {
           return container_;
         } else {
@@ -1294,7 +1297,7 @@ public final class appDataProto {
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
-      public Builder setContainer(nhl.containing.networking.protobuf.appDataProto.ContainerInfo value) {
+      public Builder setContainer(nhl.containing.networking.protobuf.AppDataProto.ContainerInfo value) {
         if (containerBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -1311,7 +1314,7 @@ public final class appDataProto {
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
       public Builder setContainer(
-          nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder builderForValue) {
+          nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder builderForValue) {
         if (containerBuilder_ == null) {
           container_ = builderForValue.build();
           onChanged();
@@ -1324,12 +1327,12 @@ public final class appDataProto {
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
-      public Builder mergeContainer(nhl.containing.networking.protobuf.appDataProto.ContainerInfo value) {
+      public Builder mergeContainer(nhl.containing.networking.protobuf.AppDataProto.ContainerInfo value) {
         if (containerBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004) &&
-              container_ != nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance()) {
+              container_ != nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance()) {
             container_ =
-              nhl.containing.networking.protobuf.appDataProto.ContainerInfo.newBuilder(container_).mergeFrom(value).buildPartial();
+              nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.newBuilder(container_).mergeFrom(value).buildPartial();
           } else {
             container_ = value;
           }
@@ -1345,7 +1348,7 @@ public final class appDataProto {
        */
       public Builder clearContainer() {
         if (containerBuilder_ == null) {
-          container_ = nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance();
+          container_ = nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
           onChanged();
         } else {
           containerBuilder_.clear();
@@ -1356,7 +1359,7 @@ public final class appDataProto {
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder getContainerBuilder() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder getContainerBuilder() {
         bitField0_ |= 0x00000004;
         onChanged();
         return getContainerFieldBuilder().getBuilder();
@@ -1364,7 +1367,7 @@ public final class appDataProto {
       /**
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder getContainerOrBuilder() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder getContainerOrBuilder() {
         if (containerBuilder_ != null) {
           return containerBuilder_.getMessageOrBuilder();
         } else {
@@ -1375,12 +1378,12 @@ public final class appDataProto {
        * <code>optional .app.ContainerInfo container = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilder<
-          nhl.containing.networking.protobuf.appDataProto.ContainerInfo, nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder> 
+          nhl.containing.networking.protobuf.AppDataProto.ContainerInfo, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder> 
           getContainerFieldBuilder() {
         if (containerBuilder_ == null) {
           containerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              nhl.containing.networking.protobuf.appDataProto.ContainerInfo, nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder>(
-                  getContainer(),
+              nhl.containing.networking.protobuf.AppDataProto.ContainerInfo, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder>(
+                  container_,
                   getParentForChildren(),
                   isClean());
           container_ = null;
@@ -1399,10 +1402,10 @@ public final class appDataProto {
     // @@protoc_insertion_point(class_scope:app.datablockApp)
   }
 
-  public interface ContainerGraphDataOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:app.ContainerGraphData)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ContainerGraphDataOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .app.ContainerCategory category = 1;
     /**
      * <code>required .app.ContainerCategory category = 1;</code>
      */
@@ -1410,8 +1413,9 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory category = 1;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory();
 
+    // required int32 aantal = 2;
     /**
      * <code>required int32 aantal = 2;</code>
      */
@@ -1425,9 +1429,8 @@ public final class appDataProto {
    * Protobuf type {@code app.ContainerGraphData}
    */
   public static final class ContainerGraphData extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:app.ContainerGraphData)
-      ContainerGraphDataOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ContainerGraphDataOrBuilder {
     // Use ContainerGraphData.newBuilder() to construct.
     private ContainerGraphData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1475,7 +1478,7 @@ public final class appDataProto {
             }
             case 8: {
               int rawValue = input.readEnum();
-              nhl.containing.networking.protobuf.appDataProto.ContainerCategory value = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.valueOf(rawValue);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
@@ -1503,14 +1506,14 @@ public final class appDataProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerGraphData_descriptor;
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerGraphData_fieldAccessorTable
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.class, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder.class);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.class, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder.class);
     }
 
     public static com.google.protobuf.Parser<ContainerGraphData> PARSER =
@@ -1529,8 +1532,9 @@ public final class appDataProto {
     }
 
     private int bitField0_;
+    // required .app.ContainerCategory category = 1;
     public static final int CATEGORY_FIELD_NUMBER = 1;
-    private nhl.containing.networking.protobuf.appDataProto.ContainerCategory category_;
+    private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_;
     /**
      * <code>required .app.ContainerCategory category = 1;</code>
      */
@@ -1540,10 +1544,11 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory category = 1;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
       return category_;
     }
 
+    // required int32 aantal = 2;
     public static final int AANTAL_FIELD_NUMBER = 2;
     private int aantal_;
     /**
@@ -1560,14 +1565,13 @@ public final class appDataProto {
     }
 
     private void initFields() {
-      category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       aantal_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasCategory()) {
         memoizedIsInitialized = 0;
@@ -1619,53 +1623,53 @@ public final class appDataProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1674,7 +1678,7 @@ public final class appDataProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.appDataProto.ContainerGraphData prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -1689,22 +1693,21 @@ public final class appDataProto {
      * Protobuf type {@code app.ContainerGraphData}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:app.ContainerGraphData)
-        nhl.containing.networking.protobuf.appDataProto.ContainerGraphDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerGraphData_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerGraphData_fieldAccessorTable
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.class, nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.Builder.class);
+                nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.class, nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1724,7 +1727,7 @@ public final class appDataProto {
 
       public Builder clear() {
         super.clear();
-        category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         bitField0_ = (bitField0_ & ~0x00000001);
         aantal_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1737,23 +1740,23 @@ public final class appDataProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerGraphData_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.getDefaultInstance();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData build() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerGraphData result = buildPartial();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData build() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerGraphData buildPartial() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerGraphData result = new nhl.containing.networking.protobuf.appDataProto.ContainerGraphData(this);
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData buildPartial() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData result = new nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1770,16 +1773,16 @@ public final class appDataProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.appDataProto.ContainerGraphData) {
-          return mergeFrom((nhl.containing.networking.protobuf.appDataProto.ContainerGraphData)other);
+        if (other instanceof nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData) {
+          return mergeFrom((nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.appDataProto.ContainerGraphData other) {
-        if (other == nhl.containing.networking.protobuf.appDataProto.ContainerGraphData.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData other) {
+        if (other == nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData.getDefaultInstance()) return this;
         if (other.hasCategory()) {
           setCategory(other.getCategory());
         }
@@ -1806,11 +1809,11 @@ public final class appDataProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.appDataProto.ContainerGraphData parsedMessage = null;
+        nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.appDataProto.ContainerGraphData) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1821,7 +1824,8 @@ public final class appDataProto {
       }
       private int bitField0_;
 
-      private nhl.containing.networking.protobuf.appDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      // required .app.ContainerCategory category = 1;
+      private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory category = 1;</code>
        */
@@ -1831,13 +1835,13 @@ public final class appDataProto {
       /**
        * <code>required .app.ContainerCategory category = 1;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
         return category_;
       }
       /**
        * <code>required .app.ContainerCategory category = 1;</code>
        */
-      public Builder setCategory(nhl.containing.networking.protobuf.appDataProto.ContainerCategory value) {
+      public Builder setCategory(nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -1851,11 +1855,12 @@ public final class appDataProto {
        */
       public Builder clearCategory() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         onChanged();
         return this;
       }
 
+      // required int32 aantal = 2;
       private int aantal_ ;
       /**
        * <code>required int32 aantal = 2;</code>
@@ -1899,10 +1904,10 @@ public final class appDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerGraphData)
   }
 
-  public interface ContainerInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:app.ContainerInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ContainerInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 ID = 1;
     /**
      * <code>required int32 ID = 1;</code>
      */
@@ -1912,6 +1917,7 @@ public final class appDataProto {
      */
     int getID();
 
+    // required int64 binnenkomstDatum = 2;
     /**
      * <code>required int64 binnenkomstDatum = 2;</code>
      */
@@ -1921,6 +1927,7 @@ public final class appDataProto {
      */
     long getBinnenkomstDatum();
 
+    // required .app.ContainerCategory vervoerBinnenkomst = 3;
     /**
      * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
@@ -1928,8 +1935,9 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerBinnenkomst();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerBinnenkomst();
 
+    // required string aanvoerMaatschappij = 4;
     /**
      * <code>required string aanvoerMaatschappij = 4;</code>
      */
@@ -1944,6 +1952,7 @@ public final class appDataProto {
     com.google.protobuf.ByteString
         getAanvoerMaatschappijBytes();
 
+    // required string eigenaar = 5;
     /**
      * <code>required string eigenaar = 5;</code>
      */
@@ -1958,6 +1967,7 @@ public final class appDataProto {
     com.google.protobuf.ByteString
         getEigenaarBytes();
 
+    // required int64 vertrekDatum = 6;
     /**
      * <code>required int64 vertrekDatum = 6;</code>
      */
@@ -1967,6 +1977,7 @@ public final class appDataProto {
      */
     long getVertrekDatum();
 
+    // required .app.ContainerCategory vervoerVertrek = 7;
     /**
      * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
      */
@@ -1974,8 +1985,9 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerVertrek();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerVertrek();
 
+    // required string afvoerMaatschappij = 8;
     /**
      * <code>required string afvoerMaatschappij = 8;</code>
      */
@@ -1990,6 +2002,7 @@ public final class appDataProto {
     com.google.protobuf.ByteString
         getAfvoerMaatschappijBytes();
 
+    // required int32 gewichtLeeg = 9;
     /**
      * <code>required int32 gewichtLeeg = 9;</code>
      */
@@ -1999,6 +2012,7 @@ public final class appDataProto {
      */
     int getGewichtLeeg();
 
+    // required int32 gewichtVol = 10;
     /**
      * <code>required int32 gewichtVol = 10;</code>
      */
@@ -2008,6 +2022,7 @@ public final class appDataProto {
      */
     int getGewichtVol();
 
+    // required string inhoud = 11;
     /**
      * <code>required string inhoud = 11;</code>
      */
@@ -2026,9 +2041,8 @@ public final class appDataProto {
    * Protobuf type {@code app.ContainerInfo}
    */
   public static final class ContainerInfo extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:app.ContainerInfo)
-      ContainerInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ContainerInfoOrBuilder {
     // Use ContainerInfo.newBuilder() to construct.
     private ContainerInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2086,7 +2100,7 @@ public final class appDataProto {
             }
             case 24: {
               int rawValue = input.readEnum();
-              nhl.containing.networking.protobuf.appDataProto.ContainerCategory value = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.valueOf(rawValue);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
@@ -2096,15 +2110,13 @@ public final class appDataProto {
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              aanvoerMaatschappij_ = bs;
+              aanvoerMaatschappij_ = input.readBytes();
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              eigenaar_ = bs;
+              eigenaar_ = input.readBytes();
               break;
             }
             case 48: {
@@ -2114,7 +2126,7 @@ public final class appDataProto {
             }
             case 56: {
               int rawValue = input.readEnum();
-              nhl.containing.networking.protobuf.appDataProto.ContainerCategory value = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.valueOf(rawValue);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(7, rawValue);
               } else {
@@ -2124,9 +2136,8 @@ public final class appDataProto {
               break;
             }
             case 66: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000080;
-              afvoerMaatschappij_ = bs;
+              afvoerMaatschappij_ = input.readBytes();
               break;
             }
             case 72: {
@@ -2140,9 +2151,8 @@ public final class appDataProto {
               break;
             }
             case 90: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000400;
-              inhoud_ = bs;
+              inhoud_ = input.readBytes();
               break;
             }
           }
@@ -2159,14 +2169,14 @@ public final class appDataProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerInfo_descriptor;
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerInfo_fieldAccessorTable
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.appDataProto.ContainerInfo.class, nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder.class);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.class, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder.class);
     }
 
     public static com.google.protobuf.Parser<ContainerInfo> PARSER =
@@ -2185,6 +2195,7 @@ public final class appDataProto {
     }
 
     private int bitField0_;
+    // required int32 ID = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int iD_;
     /**
@@ -2200,6 +2211,7 @@ public final class appDataProto {
       return iD_;
     }
 
+    // required int64 binnenkomstDatum = 2;
     public static final int BINNENKOMSTDATUM_FIELD_NUMBER = 2;
     private long binnenkomstDatum_;
     /**
@@ -2215,8 +2227,9 @@ public final class appDataProto {
       return binnenkomstDatum_;
     }
 
+    // required .app.ContainerCategory vervoerBinnenkomst = 3;
     public static final int VERVOERBINNENKOMST_FIELD_NUMBER = 3;
-    private nhl.containing.networking.protobuf.appDataProto.ContainerCategory vervoerBinnenkomst_;
+    private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerBinnenkomst_;
     /**
      * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
@@ -2226,10 +2239,11 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerBinnenkomst() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerBinnenkomst() {
       return vervoerBinnenkomst_;
     }
 
+    // required string aanvoerMaatschappij = 4;
     public static final int AANVOERMAATSCHAPPIJ_FIELD_NUMBER = 4;
     private java.lang.Object aanvoerMaatschappij_;
     /**
@@ -2272,6 +2286,7 @@ public final class appDataProto {
       }
     }
 
+    // required string eigenaar = 5;
     public static final int EIGENAAR_FIELD_NUMBER = 5;
     private java.lang.Object eigenaar_;
     /**
@@ -2314,6 +2329,7 @@ public final class appDataProto {
       }
     }
 
+    // required int64 vertrekDatum = 6;
     public static final int VERTREKDATUM_FIELD_NUMBER = 6;
     private long vertrekDatum_;
     /**
@@ -2329,8 +2345,9 @@ public final class appDataProto {
       return vertrekDatum_;
     }
 
+    // required .app.ContainerCategory vervoerVertrek = 7;
     public static final int VERVOERVERTREK_FIELD_NUMBER = 7;
-    private nhl.containing.networking.protobuf.appDataProto.ContainerCategory vervoerVertrek_;
+    private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerVertrek_;
     /**
      * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
      */
@@ -2340,10 +2357,11 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerVertrek() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerVertrek() {
       return vervoerVertrek_;
     }
 
+    // required string afvoerMaatschappij = 8;
     public static final int AFVOERMAATSCHAPPIJ_FIELD_NUMBER = 8;
     private java.lang.Object afvoerMaatschappij_;
     /**
@@ -2386,6 +2404,7 @@ public final class appDataProto {
       }
     }
 
+    // required int32 gewichtLeeg = 9;
     public static final int GEWICHTLEEG_FIELD_NUMBER = 9;
     private int gewichtLeeg_;
     /**
@@ -2401,6 +2420,7 @@ public final class appDataProto {
       return gewichtLeeg_;
     }
 
+    // required int32 gewichtVol = 10;
     public static final int GEWICHTVOL_FIELD_NUMBER = 10;
     private int gewichtVol_;
     /**
@@ -2416,6 +2436,7 @@ public final class appDataProto {
       return gewichtVol_;
     }
 
+    // required string inhoud = 11;
     public static final int INHOUD_FIELD_NUMBER = 11;
     private java.lang.Object inhoud_;
     /**
@@ -2461,11 +2482,11 @@ public final class appDataProto {
     private void initFields() {
       iD_ = 0;
       binnenkomstDatum_ = 0L;
-      vervoerBinnenkomst_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      vervoerBinnenkomst_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       aanvoerMaatschappij_ = "";
       eigenaar_ = "";
       vertrekDatum_ = 0L;
-      vervoerVertrek_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      vervoerVertrek_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       afvoerMaatschappij_ = "";
       gewichtLeeg_ = 0;
       gewichtVol_ = 0;
@@ -2474,8 +2495,7 @@ public final class appDataProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasID()) {
         memoizedIsInitialized = 0;
@@ -2626,53 +2646,53 @@ public final class appDataProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerInfo parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2681,7 +2701,7 @@ public final class appDataProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.appDataProto.ContainerInfo prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.AppDataProto.ContainerInfo prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -2696,22 +2716,21 @@ public final class appDataProto {
      * Protobuf type {@code app.ContainerInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:app.ContainerInfo)
-        nhl.containing.networking.protobuf.appDataProto.ContainerInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerInfo_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerInfo_fieldAccessorTable
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.appDataProto.ContainerInfo.class, nhl.containing.networking.protobuf.appDataProto.ContainerInfo.Builder.class);
+                nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.class, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.appDataProto.ContainerInfo.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2735,7 +2754,7 @@ public final class appDataProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         binnenkomstDatum_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000002);
-        vervoerBinnenkomst_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        vervoerBinnenkomst_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         bitField0_ = (bitField0_ & ~0x00000004);
         aanvoerMaatschappij_ = "";
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -2743,7 +2762,7 @@ public final class appDataProto {
         bitField0_ = (bitField0_ & ~0x00000010);
         vertrekDatum_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000020);
-        vervoerVertrek_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        vervoerVertrek_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         bitField0_ = (bitField0_ & ~0x00000040);
         afvoerMaatschappij_ = "";
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -2762,23 +2781,23 @@ public final class appDataProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerInfo_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfo getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfo build() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerInfo result = buildPartial();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo build() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerInfo buildPartial() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerInfo result = new nhl.containing.networking.protobuf.appDataProto.ContainerInfo(this);
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerInfo buildPartial() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerInfo result = new nhl.containing.networking.protobuf.AppDataProto.ContainerInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -2831,16 +2850,16 @@ public final class appDataProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.appDataProto.ContainerInfo) {
-          return mergeFrom((nhl.containing.networking.protobuf.appDataProto.ContainerInfo)other);
+        if (other instanceof nhl.containing.networking.protobuf.AppDataProto.ContainerInfo) {
+          return mergeFrom((nhl.containing.networking.protobuf.AppDataProto.ContainerInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.appDataProto.ContainerInfo other) {
-        if (other == nhl.containing.networking.protobuf.appDataProto.ContainerInfo.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.AppDataProto.ContainerInfo other) {
+        if (other == nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance()) return this;
         if (other.hasID()) {
           setID(other.getID());
         }
@@ -2938,11 +2957,11 @@ public final class appDataProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.appDataProto.ContainerInfo parsedMessage = null;
+        nhl.containing.networking.protobuf.AppDataProto.ContainerInfo parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.appDataProto.ContainerInfo) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.AppDataProto.ContainerInfo) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -2953,6 +2972,7 @@ public final class appDataProto {
       }
       private int bitField0_;
 
+      // required int32 ID = 1;
       private int iD_ ;
       /**
        * <code>required int32 ID = 1;</code>
@@ -2985,6 +3005,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required int64 binnenkomstDatum = 2;
       private long binnenkomstDatum_ ;
       /**
        * <code>required int64 binnenkomstDatum = 2;</code>
@@ -3017,7 +3038,8 @@ public final class appDataProto {
         return this;
       }
 
-      private nhl.containing.networking.protobuf.appDataProto.ContainerCategory vervoerBinnenkomst_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      // required .app.ContainerCategory vervoerBinnenkomst = 3;
+      private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerBinnenkomst_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
@@ -3027,13 +3049,13 @@ public final class appDataProto {
       /**
        * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerBinnenkomst() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerBinnenkomst() {
         return vervoerBinnenkomst_;
       }
       /**
        * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
        */
-      public Builder setVervoerBinnenkomst(nhl.containing.networking.protobuf.appDataProto.ContainerCategory value) {
+      public Builder setVervoerBinnenkomst(nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -3047,11 +3069,12 @@ public final class appDataProto {
        */
       public Builder clearVervoerBinnenkomst() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        vervoerBinnenkomst_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        vervoerBinnenkomst_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         onChanged();
         return this;
       }
 
+      // required string aanvoerMaatschappij = 4;
       private java.lang.Object aanvoerMaatschappij_ = "";
       /**
        * <code>required string aanvoerMaatschappij = 4;</code>
@@ -3065,12 +3088,9 @@ public final class appDataProto {
       public java.lang.String getAanvoerMaatschappij() {
         java.lang.Object ref = aanvoerMaatschappij_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            aanvoerMaatschappij_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          aanvoerMaatschappij_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3128,6 +3148,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required string eigenaar = 5;
       private java.lang.Object eigenaar_ = "";
       /**
        * <code>required string eigenaar = 5;</code>
@@ -3141,12 +3162,9 @@ public final class appDataProto {
       public java.lang.String getEigenaar() {
         java.lang.Object ref = eigenaar_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            eigenaar_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          eigenaar_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3204,6 +3222,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required int64 vertrekDatum = 6;
       private long vertrekDatum_ ;
       /**
        * <code>required int64 vertrekDatum = 6;</code>
@@ -3236,7 +3255,8 @@ public final class appDataProto {
         return this;
       }
 
-      private nhl.containing.networking.protobuf.appDataProto.ContainerCategory vervoerVertrek_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      // required .app.ContainerCategory vervoerVertrek = 7;
+      private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerVertrek_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
        */
@@ -3246,13 +3266,13 @@ public final class appDataProto {
       /**
        * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getVervoerVertrek() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerVertrek() {
         return vervoerVertrek_;
       }
       /**
        * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
        */
-      public Builder setVervoerVertrek(nhl.containing.networking.protobuf.appDataProto.ContainerCategory value) {
+      public Builder setVervoerVertrek(nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -3266,11 +3286,12 @@ public final class appDataProto {
        */
       public Builder clearVervoerVertrek() {
         bitField0_ = (bitField0_ & ~0x00000040);
-        vervoerVertrek_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        vervoerVertrek_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         onChanged();
         return this;
       }
 
+      // required string afvoerMaatschappij = 8;
       private java.lang.Object afvoerMaatschappij_ = "";
       /**
        * <code>required string afvoerMaatschappij = 8;</code>
@@ -3284,12 +3305,9 @@ public final class appDataProto {
       public java.lang.String getAfvoerMaatschappij() {
         java.lang.Object ref = afvoerMaatschappij_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            afvoerMaatschappij_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          afvoerMaatschappij_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3347,6 +3365,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required int32 gewichtLeeg = 9;
       private int gewichtLeeg_ ;
       /**
        * <code>required int32 gewichtLeeg = 9;</code>
@@ -3379,6 +3398,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required int32 gewichtVol = 10;
       private int gewichtVol_ ;
       /**
        * <code>required int32 gewichtVol = 10;</code>
@@ -3411,6 +3431,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required string inhoud = 11;
       private java.lang.Object inhoud_ = "";
       /**
        * <code>required string inhoud = 11;</code>
@@ -3424,12 +3445,9 @@ public final class appDataProto {
       public java.lang.String getInhoud() {
         java.lang.Object ref = inhoud_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            inhoud_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          inhoud_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3498,10 +3516,10 @@ public final class appDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerInfo)
   }
 
-  public interface ContainerDataListItemOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:app.ContainerDataListItem)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ContainerDataListItemOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int32 ID = 1;
     /**
      * <code>required int32 ID = 1;</code>
      */
@@ -3511,6 +3529,7 @@ public final class appDataProto {
      */
     int getID();
 
+    // required string eigenaar = 2;
     /**
      * <code>required string eigenaar = 2;</code>
      */
@@ -3525,6 +3544,7 @@ public final class appDataProto {
     com.google.protobuf.ByteString
         getEigenaarBytes();
 
+    // required .app.ContainerCategory category = 3;
     /**
      * <code>required .app.ContainerCategory category = 3;</code>
      */
@@ -3532,15 +3552,14 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory category = 3;</code>
      */
-    nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory();
+    nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory();
   }
   /**
    * Protobuf type {@code app.ContainerDataListItem}
    */
   public static final class ContainerDataListItem extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:app.ContainerDataListItem)
-      ContainerDataListItemOrBuilder {
+      com.google.protobuf.GeneratedMessage
+      implements ContainerDataListItemOrBuilder {
     // Use ContainerDataListItem.newBuilder() to construct.
     private ContainerDataListItem(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3592,14 +3611,13 @@ public final class appDataProto {
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              eigenaar_ = bs;
+              eigenaar_ = input.readBytes();
               break;
             }
             case 24: {
               int rawValue = input.readEnum();
-              nhl.containing.networking.protobuf.appDataProto.ContainerCategory value = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.valueOf(rawValue);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
@@ -3622,14 +3640,14 @@ public final class appDataProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerDataListItem_descriptor;
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerDataListItem_fieldAccessorTable
+      return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.class, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder.class);
+              nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.class, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder.class);
     }
 
     public static com.google.protobuf.Parser<ContainerDataListItem> PARSER =
@@ -3648,6 +3666,7 @@ public final class appDataProto {
     }
 
     private int bitField0_;
+    // required int32 ID = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int iD_;
     /**
@@ -3663,6 +3682,7 @@ public final class appDataProto {
       return iD_;
     }
 
+    // required string eigenaar = 2;
     public static final int EIGENAAR_FIELD_NUMBER = 2;
     private java.lang.Object eigenaar_;
     /**
@@ -3705,8 +3725,9 @@ public final class appDataProto {
       }
     }
 
+    // required .app.ContainerCategory category = 3;
     public static final int CATEGORY_FIELD_NUMBER = 3;
-    private nhl.containing.networking.protobuf.appDataProto.ContainerCategory category_;
+    private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_;
     /**
      * <code>required .app.ContainerCategory category = 3;</code>
      */
@@ -3716,20 +3737,19 @@ public final class appDataProto {
     /**
      * <code>required .app.ContainerCategory category = 3;</code>
      */
-    public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory() {
+    public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
       return category_;
     }
 
     private void initFields() {
       iD_ = 0;
       eigenaar_ = "";
-      category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasID()) {
         memoizedIsInitialized = 0;
@@ -3792,53 +3812,53 @@ public final class appDataProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parseFrom(
+    public static nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3847,7 +3867,7 @@ public final class appDataProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -3862,22 +3882,21 @@ public final class appDataProto {
      * Protobuf type {@code app.ContainerDataListItem}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:app.ContainerDataListItem)
-        nhl.containing.networking.protobuf.appDataProto.ContainerDataListItemOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerDataListItem_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerDataListItem_fieldAccessorTable
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.class, nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.Builder.class);
+                nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.class, nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3901,7 +3920,7 @@ public final class appDataProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         eigenaar_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
-        category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
@@ -3912,23 +3931,23 @@ public final class appDataProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.appDataProto.internal_static_app_ContainerDataListItem_descriptor;
+        return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.getDefaultInstance();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem build() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem result = buildPartial();
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem build() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem buildPartial() {
-        nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem result = new nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem(this);
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem buildPartial() {
+        nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem result = new nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -3949,16 +3968,16 @@ public final class appDataProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem) {
-          return mergeFrom((nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem)other);
+        if (other instanceof nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem) {
+          return mergeFrom((nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem other) {
-        if (other == nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem other) {
+        if (other == nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem.getDefaultInstance()) return this;
         if (other.hasID()) {
           setID(other.getID());
         }
@@ -3994,11 +4013,11 @@ public final class appDataProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem parsedMessage = null;
+        nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.appDataProto.ContainerDataListItem) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -4009,6 +4028,7 @@ public final class appDataProto {
       }
       private int bitField0_;
 
+      // required int32 ID = 1;
       private int iD_ ;
       /**
        * <code>required int32 ID = 1;</code>
@@ -4041,6 +4061,7 @@ public final class appDataProto {
         return this;
       }
 
+      // required string eigenaar = 2;
       private java.lang.Object eigenaar_ = "";
       /**
        * <code>required string eigenaar = 2;</code>
@@ -4054,12 +4075,9 @@ public final class appDataProto {
       public java.lang.String getEigenaar() {
         java.lang.Object ref = eigenaar_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            eigenaar_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          eigenaar_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -4117,7 +4135,8 @@ public final class appDataProto {
         return this;
       }
 
-      private nhl.containing.networking.protobuf.appDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+      // required .app.ContainerCategory category = 3;
+      private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory category = 3;</code>
        */
@@ -4127,13 +4146,13 @@ public final class appDataProto {
       /**
        * <code>required .app.ContainerCategory category = 3;</code>
        */
-      public nhl.containing.networking.protobuf.appDataProto.ContainerCategory getCategory() {
+      public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
         return category_;
       }
       /**
        * <code>required .app.ContainerCategory category = 3;</code>
        */
-      public Builder setCategory(nhl.containing.networking.protobuf.appDataProto.ContainerCategory value) {
+      public Builder setCategory(nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -4147,7 +4166,7 @@ public final class appDataProto {
        */
       public Builder clearCategory() {
         bitField0_ = (bitField0_ & ~0x00000004);
-        category_ = nhl.containing.networking.protobuf.appDataProto.ContainerCategory.TRAIN;
+        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         onChanged();
         return this;
       }
@@ -4163,22 +4182,22 @@ public final class appDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerDataListItem)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_app_datablockApp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_datablockApp_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerGraphData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_ContainerGraphData_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_ContainerInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerDataListItem_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4212,44 +4231,44 @@ public final class appDataProto {
       "IN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007SEASHIP\020\002\022\016\n\nINLINESH" +
       "IP\020\003\022\013\n\007STORAGE\020\004\022\007\n\003AGV\020\005\022\r\n\tREMAINDER\020" +
       "\006B2\n\"nhl.containing.networking.protobufB",
-      "\014appDataProto"
+      "\014AppDataProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
-          public com.google.protobuf.ExtensionRegistry assignDescriptors(
-              com.google.protobuf.Descriptors.FileDescriptor root) {
-            descriptor = root;
-            return null;
-          }
-        };
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_app_datablockApp_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_app_datablockApp_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_app_datablockApp_descriptor,
+              new java.lang.String[] { "Graphs", "Items", "Container", });
+          internal_static_app_ContainerGraphData_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_app_ContainerGraphData_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_app_ContainerGraphData_descriptor,
+              new java.lang.String[] { "Category", "Aantal", });
+          internal_static_app_ContainerInfo_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_app_ContainerInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_app_ContainerInfo_descriptor,
+              new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "GewichtLeeg", "GewichtVol", "Inhoud", });
+          internal_static_app_ContainerDataListItem_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_app_ContainerDataListItem_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_app_ContainerDataListItem_descriptor,
+              new java.lang.String[] { "ID", "Eigenaar", "Category", });
+          return null;
+        }
+      };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_app_datablockApp_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_app_datablockApp_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_app_datablockApp_descriptor,
-        new java.lang.String[] { "Graphs", "Items", "Container", });
-    internal_static_app_ContainerGraphData_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_app_ContainerGraphData_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_app_ContainerGraphData_descriptor,
-        new java.lang.String[] { "Category", "Aantal", });
-    internal_static_app_ContainerInfo_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_app_ContainerInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_app_ContainerInfo_descriptor,
-        new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "GewichtLeeg", "GewichtVol", "Inhoud", });
-    internal_static_app_ContainerDataListItem_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_app_ContainerDataListItem_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_app_ContainerDataListItem_descriptor,
-        new java.lang.String[] { "ID", "Eigenaar", "Category", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -10,6 +10,7 @@
         <EditTextPreference
             android:key="Connection_Port"
             android:title="Port"
+            android:inputType="number"
             android:summary="The port of the Controller"
             android:dialogTitle="Controller Port"/>
     </PreferenceCategory>

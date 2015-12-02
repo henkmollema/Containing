@@ -12,12 +12,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import nhl.containing.managmentinterface.communication.Communicator;
-import nhl.containing.managmentinterface.data.ContainerProtos;
+import nhl.containing.managmentinterface.data.ClassBridge;
+import nhl.containing.networking.protobuf.AppDataProto.*;
 
 public class ContainerActivity extends AppCompatActivity {
 
     public int ID;
+    private ProgressDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,23 +26,12 @@ public class ContainerActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(getIntent().getExtras() != null)
+        if(getIntent().getExtras() != null && ClassBridge.communicator != null && ClassBridge.communicator.isRunning())
         {
             ID = getIntent().getExtras().getInt("ID");
             getSupportActionBar().setTitle("Container " + ID);
-            final ProgressDialog dialog = ProgressDialog.show(this,"Loading...","Loading container information, please wait",true,false);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    setData();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dialog.dismiss();
-                        }
-                    });
-                }
-            }).start();
+            ClassBridge.communicator.setContainerActivity(this);
+            dialog = ProgressDialog.show(this,"Loading...","Loading container information, please wait",true,false);
             return;
         }
         finish();
@@ -58,11 +48,11 @@ public class ContainerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setData()
+    public void setData(final datablockApp datablock)
     {
         try{
             final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            final ContainerProtos.ContainerInfo info = Communicator.getContainerInfo(ID);
+            final ContainerInfo info = datablock.getContainer();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -77,6 +67,7 @@ public class ContainerActivity extends AppCompatActivity {
                     ((TextView) findViewById(R.id.DepartmentCompany)).setText(info.getAfvoerMaatschappij());
                     ((TextView) findViewById(R.id.DepartmentDate)).setText(df.format(new Date(info.getVertrekDatum())));
                     ((TextView) findViewById(R.id.DepartmentTransport)).setText(getTransportType(info.getVervoerVertrek()));
+                    dialog.dismiss();
                 }
             });
         }catch (Exception e)
@@ -91,7 +82,7 @@ public class ContainerActivity extends AppCompatActivity {
         }
     }
 
-    private String getTransportType(ContainerProtos.ContainerCategory category)
+    private String getTransportType(ContainerCategory category)
     {
         switch (category)
         {
@@ -108,4 +99,9 @@ public class ContainerActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        ClassBridge.communicator.detachContainerActivity();
+        super.onDestroy();
+    }
 }

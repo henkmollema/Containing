@@ -10,10 +10,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import nhl.containing.managmentinterface.data.ContainerProtos.*;
 import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
-import nhl.containing.managmentinterface.communication.Communicator;
-import nhl.containing.networking.protobuf.appDataProto;
+import nhl.containing.networking.protobuf.AppDataProto.*;
 
 /**
  * A fragment representing a list of Items.
@@ -37,7 +35,7 @@ public class ContainersFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<appDataProto.ContainerDataListItem> list = new ArrayList<>();
+        List<ContainerDataListItem> list = new ArrayList<>();
         items = new ContainerArrayAdapter(getActivity(),list);
         setListAdapter(items);
     }
@@ -76,7 +74,7 @@ public class ContainersFragment extends ListFragment {
         //make instruction
     }
 
-    public void UpdateGraph(appDataProto.datablockApp block)
+    public void UpdateGraph(datablockApp block)
     {
         if(!block.getItemsList().isEmpty())
         {
@@ -94,7 +92,7 @@ public class ContainersFragment extends ListFragment {
     }
 
 
-    private void updateList(final List<appDataProto.ContainerDataListItem> listItems)
+    private void updateList(final List<ContainerDataListItem> listItems)
     {
         getActivity().runOnUiThread(new Runnable() {
             @Override

@@ -14,11 +14,11 @@ import com.syncfusion.charts.enums.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import nhl.containing.managmentinterface.MainActivity;
 import nhl.containing.managmentinterface.R;
-import nhl.containing.managmentinterface.communication.Communicator;
-import nhl.containing.managmentinterface.data.ContainerProtos;
-import nhl.containing.networking.protobuf.DataProto.*;
-import nhl.containing.networking.protobuf.appDataProto;
+import nhl.containing.managmentinterface.data.ClassBridge;
+import nhl.containing.networking.protobuf.AppDataProto.*;
+import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 
@@ -53,7 +53,6 @@ public class GraphFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.graphfragment, container, false);
         chart = (SfChart)view.findViewById(R.id.graph);
-        //setUpGraph(graph);
         setupChart();
         setData();
         return view;
@@ -136,20 +135,32 @@ public class GraphFragment extends Fragment {
     public void setData()
     {
         //make instruction
+        if(ClassBridge.communicator == null || !ClassBridge.communicator.isRunning())
+        {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "Coundn't connect to controller", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
         Instruction.Builder builder = Instruction.newBuilder();
         builder.setInstructionType(InstructionType.APP_REQUEST_DATA);
         builder.setId(CommunicationProtocol.newUUID());
+        builder.setA(graphID);
+        ClassBridge.communicator.setRequest(builder.build());
     }
 
-    public void UpdateGraph(appDataProto.datablockApp block)
+    public void UpdateGraph(datablockApp block)
     {
-        List<appDataProto.ContainerGraphData> list = block.getGraphsList();
+        List<ContainerGraphData> list = block.getGraphsList();
         List<Integer> dataList = new ArrayList<>();
         if(!list.isEmpty())
         {
             for(int i = 0; i < list.size();i++)
             {
-                appDataProto.ContainerGraphData data = list.get(i);
+                ContainerGraphData data = list.get(i);
                 dataList.add(data.getCategory().getNumber(),data.getAantal());
             }
             updateChart(dataList);

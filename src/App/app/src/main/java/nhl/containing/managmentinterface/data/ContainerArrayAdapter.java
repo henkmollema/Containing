@@ -7,22 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import nhl.containing.managmentinterface.R;
-import nhl.containing.networking.protobuf.appDataProto;
+import nhl.containing.networking.protobuf.AppDataProto.*;
 
 /**
  * Created by Niels on 23-11-2015.
  */
-public class ContainerArrayAdapter extends ArrayAdapter<appDataProto.ContainerDataListItem>
+public class ContainerArrayAdapter extends ArrayAdapter<ContainerDataListItem>
 {
     private final Context context;
-    private List<appDataProto.ContainerDataListItem> items;
+    private List<ContainerDataListItem> items;
 
-    public ContainerArrayAdapter(Context context, List<appDataProto.ContainerDataListItem> items)
+    public ContainerArrayAdapter(Context context, List<ContainerDataListItem> items)
     {
         super(context, R.layout.listitem,items);
         this.items = items;
@@ -38,7 +36,7 @@ public class ContainerArrayAdapter extends ArrayAdapter<appDataProto.ContainerDa
         return rowView;
     }
 
-    public void Update(List<appDataProto.ContainerDataListItem> items)
+    public void Update(List<ContainerDataListItem> items)
     {
         this.items = items;
         this.notifyDataSetChanged();

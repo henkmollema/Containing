@@ -30,31 +30,63 @@ public class GraphFragment extends Fragment {
     private SfChart chart;
     private int graphID;
     private ObservableArrayList list;
+    private MainActivity main;
 
     public GraphFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Creates the Graph fragment
+     * @param savedInstance saved instance of this fragment
+     */
     @Override
     public void onCreate(Bundle savedInstance)
     {
         super.onCreate(savedInstance);
         if(getArguments() != null)
-        {
             graphID = getArguments().getInt("graphID");
-            return;
-        }
-        graphID = 0;
+        else
+            graphID = 0;
+        if(MainActivity.getInstance() == null)
+    {
+        //give error
+    }
+        main = MainActivity.getInstance();
     }
 
+    /**
+     * Create the view of the fragment
+     * @param inflater layout inflater
+     * @param container container
+     * @param savedInstanceState bundle savedinstance
+     * @return view of the fragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.graphfragment, container, false);
         chart = (SfChart)view.findViewById(R.id.graph);
         setupChart();
         return view;
+    }
+
+    /**
+     * Called when fragment becomes visible
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(1000);
+                }catch (Exception e){}
+                if(!main.checkAutoRefresh())
+                    getActivity().runOnUiThread(main.refreshRunnable);
+            }
+        }).start();
     }
 
     /**
@@ -124,12 +156,13 @@ public class GraphFragment extends Fragment {
                     list.add(new ChartDataPoint("Seaship", data.get(2)));
                     list.add(new ChartDataPoint("Inline Ship", data.get(3)));
                 }
+                MainActivity.getInstance().completeRefresh.run();
             }
         });
     }
 
     /**
-     * Gets new data and starts updating the graph
+     * Requests the new data from the controller
      */
     public void setData()
     {
@@ -151,6 +184,10 @@ public class GraphFragment extends Fragment {
         ClassBridge.communicator.setRequest(builder.build());
     }
 
+    /**
+     * Receives the new data and starts updating the graph
+     * @param block
+     */
     public void UpdateGraph(datablockApp block)
     {
         List<ContainerGraphData> list = block.getGraphsList();
@@ -170,6 +207,7 @@ public class GraphFragment extends Fragment {
                 @Override
                 public void run() {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    MainActivity.getInstance().completeRefresh.run();
                 }
             });
         }

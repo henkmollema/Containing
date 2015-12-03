@@ -5,8 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+/**
+ * Activity that holds a PreferencesFragment
+ */
 public class SettingsActivity extends AppCompatActivity {
 
+    /**
+     * Creates the activity
+     * @param savedInstanceState saved instace of this activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +24,11 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame,new SettingsActivityFragment()).commit();
     }
 
+    /**
+    * Called when clicked on an option item
+    * @param item clicked item
+    * @return returns true when clicked home, else super.onOptionsItemSelected(item)
+    */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())

@@ -1,6 +1,7 @@
 package nhl.containing.managmentinterface.navigationdrawer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -10,20 +11,22 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import nhl.containing.managmentinterface.MainActivity;
+import nhl.containing.managmentinterface.data.ClassBridge;
 import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
 import nhl.containing.networking.protobuf.AppDataProto.*;
+import nhl.containing.networking.protobuf.InstructionProto;
+import nhl.containing.networking.protocol.CommunicationProtocol;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
+ * Fragment for the containerlist
  */
 public class ContainersFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
     private ContainerArrayAdapter items;
+    private MainActivity main;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,32 +35,75 @@ public class ContainersFragment extends ListFragment {
     public ContainersFragment() {
     }
 
+    /**
+     * Creates the fragement
+     * @param savedInstanceState bundle
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         List<ContainerDataListItem> list = new ArrayList<>();
         items = new ContainerArrayAdapter(getActivity(),list);
         setListAdapter(items);
+        if(MainActivity.getInstance() == null)
+        {
+            //give error
+        }
+        main = MainActivity.getInstance();
     }
 
-
+    /**
+     * Shows the fragment
+     */
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onResume() {
+        super.onResume();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Thread.sleep(1000);
+                }catch (Exception e){}
+                if(!main.checkAutoRefresh())
+                    getActivity().runOnUiThread(main.refreshRunnable);
+            }
+        }).start();
+    }
+
+    /**
+     * Attachs a contexts to the fragment
+     * @param context contexts
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof Activity)
+        {
+            try {
+                mListener = (OnFragmentInteractionListener) context;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(context.toString()
+                        + " must implement OnFragmentInteractionListener");
+            }
         }
     }
 
+    /**
+     * On detach event
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Event when clicked on an item in the list
+     * @param l list
+     * @param v view
+     * @param position the position
+     * @param id the id
+     */
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -69,35 +115,64 @@ public class ContainersFragment extends ListFragment {
         }
     }
 
+    /**
+     * Requests new data
+     */
     public void setData()
     {
-        //make instruction
+        if(ClassBridge.communicator == null || !ClassBridge.communicator.isRunning())
+        {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), "Coundn't connect to controller", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return;
+        }
+        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+        builder.setInstructionType(InstructionType.APP_REQUEST_DATA);
+        builder.setId(CommunicationProtocol.newUUID());
+        builder.setA(4);
+        ClassBridge.communicator.setRequest(builder.build());
     }
 
+    /**
+     * Receives the new data and begins the list update
+     * @param block
+     */
     public void UpdateGraph(datablockApp block)
     {
-        if(!block.getItemsList().isEmpty())
+        try
         {
-            updateList(block.getItemsList());
+            if(!block.getItemsList().isEmpty())
+            {
+                updateList(block.getItemsList());
+            }
         }
-        try{
+        catch (Exception e){
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    main.completeRefresh.run();
                 }
             });
         }
-        catch (Exception e){}
     }
 
 
+    /**
+     * Puts the block items in the ArrayAdapter of the list
+     * @param listItems list with container items
+     */
     private void updateList(final List<ContainerDataListItem> listItems)
     {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 items.Update(listItems);
+                main.completeRefresh.run();
             }
         });
     }

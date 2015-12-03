@@ -3,7 +3,7 @@ package nhl.containing.managmentinterface.data;
 import nhl.containing.managmentinterface.communication.Communicator_new;
 
 /**
- * Created by Niels on 2-12-2015.
+ * Used to pass references of classes between Activities and Fragments
  */
 public class ClassBridge
 {

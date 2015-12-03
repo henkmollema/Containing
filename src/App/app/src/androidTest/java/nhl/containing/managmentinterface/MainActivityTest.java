@@ -55,9 +55,8 @@ public class MainActivityTest extends ActivityUnitTestCase<MainActivity>{
     {
         boolean testing1 = mainactivity.menu.findItem(R.id.action_refresh).isVisible();
         boolean testing2 = mainactivity.menu.findItem(R.id.action_refresh_time).isVisible();
-        boolean testing3 = mainactivity.menu.findItem(R.id.action_legend).isVisible();
         boolean testing4 = mainactivity.menu.findItem(R.id.action_settings).isVisible();
-        assertEquals(testing1 && testing2 && testing3 && testing4,true);
+        assertEquals(testing1 && testing2 && testing4,true);
     }
 
 

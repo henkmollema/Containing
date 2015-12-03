@@ -7,15 +7,13 @@ import android.widget.Toast;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
-import nhl.containing.managmentinterface.ContainerActivity;
-import nhl.containing.managmentinterface.MainActivity;
-import nhl.containing.managmentinterface.navigationdrawer.ContainersFragment;
-import nhl.containing.managmentinterface.navigationdrawer.GraphFragment;
-import nhl.containing.networking.messaging.MessageReader;
-import nhl.containing.networking.messaging.MessageWriter;
+import nhl.containing.managmentinterface.*;
+import nhl.containing.managmentinterface.navigationdrawer.*;
+import nhl.containing.networking.messaging.*;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protobuf.ClientIdProto.*;
@@ -23,7 +21,7 @@ import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 
 /**
- * Created by Niels on 30-11-2015.
+ * Runnable for the communication between the App and the Controller
  */
 public class Communicator_new implements Runnable{
 
@@ -35,6 +33,11 @@ public class Communicator_new implements Runnable{
     private volatile boolean isRunning = true;
     private volatile Instruction request = null;
 
+    /**
+     * Constructor of the Communication class
+     * @param mainActivity Mainactivity
+     * @throws Exception when there isn't a host/port or mainactivity is null
+     */
     public Communicator_new(MainActivity mainActivity) throws Exception
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mainActivity);
@@ -56,11 +59,19 @@ public class Communicator_new implements Runnable{
         return isRunning;
     }
 
+    /**
+     * Place a request
+     * @param instruction
+     */
     public void setRequest(Instruction instruction)
     {
         this.request = instruction;
     }
 
+    /**
+     * Place a container acivity and do a request
+     * @param containerActivity container activity
+     */
     public void setContainerActivity(ContainerActivity containerActivity)
     {
         this.containerActivity = containerActivity;
@@ -72,16 +83,25 @@ public class Communicator_new implements Runnable{
         request = instructionBuilder.build();
     }
 
+    /**
+     * Stops the runnable
+     */
     public void stop()
     {
         this.isRunning = false;
     }
 
+    /**
+     * Removes the container activity
+     */
     public void detachContainerActivity()
     {
         this.containerActivity = null;
     }
 
+    /**
+     * Communication to Controller
+     */
     @Override
     public void run()
     {
@@ -89,7 +109,8 @@ public class Communicator_new implements Runnable{
         {
             while(isRunning)
             {
-                socket = new Socket(host,port);
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(host,port),3000);
                 BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
                 ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
                 OutputStream output = socket.getOutputStream();
@@ -130,6 +151,10 @@ public class Communicator_new implements Runnable{
                                 @Override
                                 public void run() {
                                     Toast.makeText(mainActivity, "Couldn't get data", Toast.LENGTH_SHORT).show();
+                                    if(containerActivity != null)
+                                        containerActivity.goBack();
+                                    else
+                                        mainActivity.completeRefresh.run();
                                 }
                             });
                         }
@@ -147,6 +172,7 @@ public class Communicator_new implements Runnable{
                 @Override
                 public void run() {
                     Toast.makeText(mainActivity, "Couldn't connect to Host. Please check your settings", Toast.LENGTH_SHORT).show();
+                    mainActivity.completeRefresh.run();
                 }
             });
         }

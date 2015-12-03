@@ -38,17 +38,20 @@ public class App
                 b.setCategory(ContainerCategory.TRUCK);
                 b.setAantal(50);
                 builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.INLINESHIP);
-                b.setAantal(500);
-                builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.SEASHIP);
                 b.setAantal(900);
                 builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.REMAINDER);
-                b.setAantal(0);
+                b.setCategory(ContainerCategory.INLINESHIP);
+                b.setAantal(500);
                 builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.STORAGE);
                 b.setAantal(55);
+                builder.addGraphs(b.build());
+                b.setCategory(ContainerCategory.AGV);
+                b.setAantal(0);
+                builder.addGraphs(b.build());
+                b.setCategory(ContainerCategory.REMAINDER);
+                b.setAantal(0);
                 builder.addGraphs(b.build());
                 break;
             case 1:
@@ -59,11 +62,11 @@ public class App
                 b.setCategory(ContainerCategory.TRUCK);
                 b.setAantal(50);
                 builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.INLINESHIP);
-                b.setAantal(500);
-                builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.SEASHIP);
                 b.setAantal(900);
+                builder.addGraphs(b.build());
+                b.setCategory(ContainerCategory.INLINESHIP);
+                b.setAantal(500);
                 builder.addGraphs(b.build());
                 break;
             case 2:
@@ -74,10 +77,10 @@ public class App
                 b.setCategory(ContainerCategory.TRUCK);
                 b.setAantal(500);
                 builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.INLINESHIP);
+                b.setCategory(ContainerCategory.SEASHIP);
                 b.setAantal(100);
                 builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.SEASHIP);
+                b.setCategory(ContainerCategory.INLINESHIP);
                 b.setAantal(100);
                 builder.addGraphs(b.build());
                 break;

@@ -10,7 +10,7 @@ import java.io.*;
 public class MessageReader
 {
     public static final int START_OF_HEADING = 2;
-    public static final int END_OF_TRANSMISSION = 4;
+    public static final int END_OF_TRANSMISSION = 255; //tempfix
 
     /**
      * Reads a byte-aray from the specified buffered input stream using the

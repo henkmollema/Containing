@@ -47,6 +47,7 @@ import nhl.containing.managmentinterface.navigationdrawer.*;
  */
 public class MainActivity extends AppCompatActivity implements ContainersFragment.OnFragmentInteractionListener
 {
+    private static MainActivity main;
     //navigation drawer
     public ListView mDrawerList;
     public RelativeLayout mDrawerPane;
@@ -56,14 +57,17 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     //end navigation drawer
 
     public Menu menu;
+
     public SharedPreferences preferences;
     private ConnectivityManager connManager;
+
     public Communicator_new communicator;
     public volatile Fragment fragment;
     public volatile int refreshTime = 0;
     private AutoRefreshRunnable autorefreshRunnable;
     private volatile boolean isRefreshing = false;
     private ExecutorService executer = Executors.newSingleThreadExecutor();
+    public volatile boolean rightNetwork = false;
 
     /**
      * Creates the Activity
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        main = this;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         if(toolbar == null)
@@ -84,15 +89,14 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         setupHomeFragment();
     }
 
-    @Override
-    protected void onRestart() {
-        checkNetwork();
-        super.onRestart();
-    }
-
+    /**
+     * Called on destruction of the Activity
+     */
     @Override
     protected void onDestroy() {
-        communicator.stop();
+        if(communicator != null)
+            communicator.stop();
+        autoRefresh(false);
         super.onDestroy();
     }
 
@@ -158,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 mDrawerToggle.syncState();
             }
         });
-
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -177,57 +180,82 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     }
 
     /**
+     * Checks if connected to the right network
+     * @param network id of the connectivity
+     */
+    public void setNetwork(int network)
+    {
+        String networkType = preferences.getString("Refresh_Network", "1");
+        switch (network)
+        {
+            case -1:
+                rightNetwork = false;
+                Toast.makeText(this,"There is no internet connection",Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectivityManager.TYPE_MOBILE:
+                rightNetwork = !networkType.equals("1");
+                if(!networkType.equals("1"))
+                    Toast.makeText(this,"Please connect to WI-FI or change your settings before refreshing",Toast.LENGTH_SHORT).show();
+                break;
+            case ConnectivityManager.TYPE_WIFI:
+                rightNetwork = true;
+                break;
+        }
+    }
+
+    /**
      * Check the network state
      */
     private void checkNetwork()
     {
-        String network = preferences.getString("Refresh_Network", "1");
         NetworkInfo activeNetwork = connManager.getActiveNetworkInfo();
-        if(activeNetwork == null)
+        if(activeNetwork != null)
         {
-            Toast.makeText(this,"There is no internet connection",Toast.LENGTH_SHORT).show();
-            return;
+            setNetwork(activeNetwork.getType());
         }
-        if(network.equals("1") && activeNetwork.getType() != ConnectivityManager.TYPE_WIFI)
+        else
         {
-            Toast.makeText(this,"Please connect to WI-FI or change your settings before refreshing",Toast.LENGTH_SHORT).show();
-            return;
+           setNetwork(-1);
         }
-        checkCommunucator();
-        checkAutoRefresh();
     }
 
     /**
      * Check the autorefresh settings
      */
-    private void checkAutoRefresh()
+    public boolean checkAutoRefresh()
     {
+        if(!rightNetwork)
+            return false;
         if(preferences.getBoolean("Refresh_Always",false))
         {
             try{
                 refreshTime = Integer.parseInt(preferences.getString("Refresh_Auto_Time","30"));;
                 autoRefresh(true);
+                return true;
             }
             catch (Exception e){}
         }
+        return false;
     }
 
     /**
-     * Checks if the communcator class is running
+     * Checks if the communicator class is running
      */
-    private void checkCommunucator()
+    private boolean checkCommunicator()
     {
         if(communicator != null && communicator.isRunning())
-            return;
+            return true;
         try
         {
             communicator = new Communicator_new(this);
             new Thread(communicator).start();
             ClassBridge.communicator = communicator;
+            return true;
         }
         catch (Exception e)
         {
             Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -328,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     /**
      * complete the refresh
      */
-    private Runnable completeRefresh = new Runnable() {
+    public Runnable completeRefresh = new Runnable() {
         @Override
         public void run() {
             isRefreshing = false;
@@ -344,9 +372,9 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     /**
      * refresh the graph or list
      */
-    private void refresh()
+    public void refresh()
     {
-        if(isRefreshing){
+        if(isRefreshing || !rightNetwork){
             return;
         }
         isRefreshing = true;
@@ -356,6 +384,11 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         rotate.setRepeatCount(Animation.INFINITE);
         iv.startAnimation(rotate);
         menu.findItem(R.id.action_refresh).setActionView(iv);
+        if(!checkCommunicator()){
+            isRefreshing = false;
+            completeRefresh.run();
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -369,7 +402,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     ContainersFragment cf = (ContainersFragment)fragment;
                     cf.setData();
                 }
-                runOnUiThread(completeRefresh);
             }
         }).start();
     }
@@ -377,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     /**
      * Runnable for refreshing
      */
-    private Runnable refreshRunnable = new Runnable() {
+    public Runnable refreshRunnable = new Runnable() {
         @Override
         public void run() {
             refresh();
@@ -404,7 +436,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_one").commit();
-                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -419,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_two").commit();
-                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -434,7 +464,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_three").commit();
-                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -449,7 +478,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_four").commit();
-                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -460,7 +488,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     ContainersFragment cf = new ContainersFragment();
                     fragment = cf;
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,"Container_list").commit();
-                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -468,6 +495,10 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         }
     }
 
+    /**
+     * Called when clicked in the containerlist. Provides the ID of the container
+     * @param id id of the container
+     */
     @Override
     public void onFragmentInteraction(int id) {
         Intent i = new Intent(this,ContainerActivity.class);
@@ -476,7 +507,16 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     }
 
     /**
-     * Runnable for autorefreshing datat
+     * Gets an instance of the Mainactivity
+     * @return instance of mainactivity
+     */
+    public static MainActivity getInstance()
+    {
+        return main;
+    }
+
+    /**
+     * Runnable for autorefreshing
      */
     private class AutoRefreshRunnable implements Runnable
     {

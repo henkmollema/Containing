@@ -23,11 +23,18 @@
         <activity
             android:name=".ContainerActivity"
             android:label="@string/title_activity_container"
-            android:theme="@style/Material"></activity>
+            android:theme="@style/Material" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@style/Material"></activity>
+            android:theme="@style/Material" />
+
+        <receiver
+            android:name=".communication.NetworkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

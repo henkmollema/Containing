@@ -57,9 +57,11 @@ public class AppHandler implements Runnable{
                     p("Closed peacefully");
                 } else {
                     p("Lost connection during instructionloop");
+                    break;
                 }
             } else {
                 p("Error while initialising app connection..");
+                break;
             }
         }
 

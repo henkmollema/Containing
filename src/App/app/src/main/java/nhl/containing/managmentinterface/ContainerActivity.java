@@ -15,10 +15,18 @@ import java.util.Date;
 import nhl.containing.managmentinterface.data.ClassBridge;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 
+/**
+ * Activity for showing container details
+ */
 public class ContainerActivity extends AppCompatActivity {
 
     public int ID;
     private ProgressDialog dialog;
+
+    /**
+     * Creates the containeractivity
+     * @param savedInstanceState saved instance of this activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,11 @@ public class ContainerActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Called when clicked on an option item
+     * @param item clicked item
+     * @return returns true when clicked home, else super.onOptionsItemSelected(item)
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
@@ -48,6 +61,10 @@ public class ContainerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Receives a datablock and updates the activity
+     * @param datablock data
+     */
     public void setData(final datablockApp datablock)
     {
         try{
@@ -82,6 +99,11 @@ public class ContainerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Picks the right name with the enum category
+     * @param category category
+     * @return normal name
+     */
     private String getTransportType(ContainerCategory category)
     {
         switch (category)
@@ -89,7 +111,7 @@ public class ContainerActivity extends AppCompatActivity {
             case TRUCK:
                 return "Truck";
             case SEASHIP:
-                return "seagoing vessel";
+                return "Seagoing vessel";
             case INLINESHIP:
                 return "Barge";
             case TRAIN:
@@ -99,9 +121,21 @@ public class ContainerActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Goes back to last activity
+     */
+    public void goBack()
+    {
+        finish();
+    }
+
+    /**
+     * Called on destruction of the fragment
+     */
     @Override
     protected void onDestroy() {
-        ClassBridge.communicator.detachContainerActivity();
+        if(ClassBridge.communicator != null)
+            ClassBridge.communicator.detachContainerActivity();
         super.onDestroy();
     }
 }

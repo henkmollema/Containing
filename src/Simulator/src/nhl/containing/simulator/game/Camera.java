@@ -60,23 +60,23 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 public class Camera extends Behaviour {
     
     // 
-    private final float CAMERA_RENDER_DISTANCE = 100.0f;
+    private final float CAMERA_RENDER_DISTANCE = 200.0f;
     
     // Fly
-    private final float FLY_CAMERA_SPEED_DEFAULT = 15.0f;
-    private final float FLY_CAMERA_SPEED_FAST = 30.0f;
+    private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;
+    private final float FLY_CAMERA_SPEED_FAST = 40.0f;
     private final float FLY_CAMERA_SPEED_SLOW = 8.0f;
     
     // RTS
-    private final float RTS_CAMERA_SPEED_DEFAULT = 15.0f;
-    private final float RTS_CAMERA_SPEED_FAST = 30.0f;
-    private final float RTS_CAMERA_SPEED_SLOW = 8.0f;
-    private final float RTS_CAMERA_ROTATION_SPEED = 50.0f;
+    private final float RTS_CAMERA_SPEED_DEFAULT = 40.0f;
+    private final float RTS_CAMERA_SPEED_FAST = 180.0f;
+    private final float RTS_CAMERA_SPEED_SLOW = 20.0f;
+    private final float RTS_CAMERA_ROTATION_SPEED = 70.0f;
     private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;
     private final float RTS_CAMERA_SMOOTH = 0.02f;
     private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;
     private final float RTS_MIN_CAMERA_DISTANCE = 3.0f;
-    private final float RTS_MAX_CAMERA_DISTANCE = 80.0f;
+    private final float RTS_MAX_CAMERA_DISTANCE = 100.0f;
     private float m_rtsCameraRotation = 0.0f;
     private float m_rtsCameraTargetDistance = 25.0f;
     private float m_rtsCameraCurrentDistance = 25.0f;
@@ -90,7 +90,7 @@ public class Camera extends Behaviour {
     // SSAO
     
     // FOG
-    private final float FOG_DENSITY = 2.0f;
+    private final float FOG_DENSITY = 1.0f;
     private final ColorRGBA FOG_COLOR = new ColorRGBA(0.6f, 0.7f, 0.9f, 1.0f);
     
     // Bloom
@@ -316,7 +316,11 @@ public class Camera extends Behaviour {
             newPosition = newPosition.normalize().mult(Time.unscaledDeltaTime());
             
             // Set move speed
-            newPosition = newPosition.mult((Main.input().getButton("Shift").isDown() ? RTS_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? RTS_CAMERA_SPEED_SLOW : RTS_CAMERA_SPEED_DEFAULT)));
+            float multiplier = Mathf.log10(m_rtsCameraCurrentDistance - RTS_MIN_CAMERA_DISTANCE);
+            if (multiplier < 1.0f)
+                multiplier = 1.0f;
+            multiplier *=  (Main.input().getButton("Shift").isDown() ? RTS_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? RTS_CAMERA_SPEED_SLOW : RTS_CAMERA_SPEED_DEFAULT));
+            newPosition = newPosition.mult(multiplier);
         }
         
         // Set new position

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 
 import nhl.containing.simulator.game.CameraMode;
@@ -27,25 +23,22 @@ public class Input extends Behaviour {
     
     // Smoothing
     public final float      MOUSE_SENSITIVITY_X         = 6.0f;
-    public final float      MOUSE_SENSITIVITY_Y         = 6.0f;
-    public final int        MOUSE_SMOOTH_CHECKS         = 20;
+    public final float      MOUSE_SENSITIVITY_Y         = -6.0f;
     
     // Acceleration
     public final boolean    MOUSE_ACCELERATION_ACTIVE   = true;
-    public final float      MOUSE_ACCELERATION          = 1.0f;
-    public final float      MOUSE_LINEAR                = 7.0f;
+    public final float      MOUSE_ACCELERATION          = 0.5f;
+    public final float      MOUSE_LINEAR                = 4.0f;
     
     // Clamp
     public final boolean    MOUSE_CLAMPING_ACTIVE       = true;
-    public final float      MOUSE_CLAMPING_X            = 15.0f;
-    public final float      MOUSE_CLAMPING_Y            = 15.0f;
+    public final float      MOUSE_CLAMPING_X            = 4.0f;
+    public final float      MOUSE_CLAMPING_Y            = 4.0f;
     
     
     public final Vector2f   MOUSE_CLAMPING              = new Vector2f(Mathf.abs(MOUSE_CLAMPING_X), Mathf.abs(MOUSE_CLAMPING_Y));
-    public final Vector2f   MOUSE_SENSITIVITY           = new Vector2f(MOUSE_SENSITIVITY_X, MOUSE_SENSITIVITY_Y);
     public final int        MOUSE_SMOOTH_BUFFER         = 6;
-    public final int        MOUSE_MAX_SMOOTH_BUFFER     = Mathf.max(1, MOUSE_SMOOTH_CHECKS);
-    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.0f);
+    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.8f);
     
     // 
     private Vector2f        m_rawMouseMove = Vector2f.ZERO;
@@ -77,7 +70,7 @@ public class Input extends Behaviour {
     
     @Override
     public void awake() {
-        m_mouseSmoothBuffer = new ArrayList<Vector2f>(MOUSE_MAX_SMOOTH_BUFFER);
+        m_mouseSmoothBuffer = new ArrayList<Vector2f>(MOUSE_SMOOTH_BUFFER);
         
     }
     
@@ -92,13 +85,12 @@ public class Input extends Behaviour {
         
         // Get raw input
         m_mouseSmoothBuffer.add(rawMouseMove()/*.divide(Time.unscaledDeltaTime())*/);
-        while(m_mouseSmoothBuffer.size() > MOUSE_MAX_SMOOTH_BUFFER)
+        while(m_mouseSmoothBuffer.size() > MOUSE_SMOOTH_BUFFER)
             m_mouseSmoothBuffer.remove(0);
         
         // Set movement
         m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER); // Smoothing mouse
         m_mouseMove = getMouseAcceleration(m_mouseMove);  // Accelerating mouse
-        m_mouseMove = getClampedInput(m_mouseMove); // Clamp mouse input
         
     }
     
@@ -145,9 +137,6 @@ public class Input extends Behaviour {
      */
     private Vector2f getSmoothMouseInput(int checks) {
         
-        // Check if checks is valid
-        checks = Mathf.clamp(checks, 0, MOUSE_MAX_SMOOTH_BUFFER);
-        
         // Vars
         Vector2f total = Vector2f.ZERO;
         float weight = 1.0f;
@@ -172,16 +161,22 @@ public class Input extends Behaviour {
     }
     /**
      * Accelerate mouse input
+     * (1 / (a + b)) * (v * |v|) * b * c
      * @param inp
      * @return 
      */
     private Vector2f getMouseAcceleration(Vector2f inp) {
-        if (!MOUSE_ACCELERATION_ACTIVE)
-            return new Vector2f(inp.x * MOUSE_SENSITIVITY_X, inp.y * MOUSE_SENSITIVITY_Y);
         
-        return new Vector2f( // (1 / (a + b)) * (v * |v|) * b * c
-                (1.0f / (MOUSE_ACCELERATION + MOUSE_LINEAR)) * inp.x * Mathf.abs(inp.x) * MOUSE_SENSITIVITY_X * MOUSE_LINEAR,
-                (1.0f / (MOUSE_ACCELERATION + MOUSE_LINEAR)) * inp.y * Mathf.abs(inp.y) * MOUSE_SENSITIVITY_Y * MOUSE_LINEAR);
+        Vector2f __v = new Vector2f(inp);
+        
+        if (MOUSE_ACCELERATION_ACTIVE) {
+            __v = __v.multLocal(new Vector2f(Mathf.abs(__v.x) + MOUSE_LINEAR, Mathf.abs(__v.y) + MOUSE_LINEAR));
+            __v = __v.multLocal(1.0f / (MOUSE_ACCELERATION + MOUSE_LINEAR));
+        }
+        
+        __v = getClampedInput(__v); // Clamp mouse input
+        __v = __v.multLocal(new Vector2f(MOUSE_SENSITIVITY_X, MOUSE_SENSITIVITY_Y));
+        return __v;
     }
     /**
      * Clamp input
@@ -229,7 +224,7 @@ public class Input extends Behaviour {
         
         m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
         m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"));
-        m_buttons[12].setOnDownCallback(new Callback(Main.instance().camera(), "toggleCameraMode"));
+        m_buttons[12].setOnDownCallback(new Callback(Main.camera(), "toggleCameraMode"));
         m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"));
         m_buttons[14].setOnDownCallback(new Callback(this, "pickObject"));
         

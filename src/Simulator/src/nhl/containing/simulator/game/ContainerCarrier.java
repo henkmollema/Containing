@@ -8,6 +8,7 @@ import nhl.containing.simulator.simulation.Point3;
 import nhl.containing.simulator.simulation.Transform;
 import nhl.containing.simulator.world.World;
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Point2;
 
 /**
  *
@@ -30,10 +31,16 @@ public class ContainerCarrier extends Item {
             this.localPosition = new Vector3f(position).add(m_containerOffset);
             this.container = null;
         }
+        
+        public Vector3f worldPosition() {
+            Vector3f v = Utilities.zero();
+            v = localToWorld(localPosition, v);
+            return v;
+        }
     }
     
     private Vector3f m_containerOffset = Utilities.zero();                  // Offset
-    private ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];    // All container spots
+    protected ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];    // All container spots
     
     /**
      * Constructor
@@ -146,6 +153,15 @@ public class ContainerCarrier extends Item {
             }
         }
     }
+    
+    protected final int getStackHeight(Point2 p) {
+        for (int i = 0; i < m_containerSpots[p.x].length; i++) {
+            if (m_containerSpots[p.x][i][p.y].container == null)
+                return i;
+        }
+        return m_containerSpots[p.x].length;
+    }
+    
     /**
      * Update occlusion culling
      */

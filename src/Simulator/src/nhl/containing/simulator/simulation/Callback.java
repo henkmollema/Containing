@@ -5,6 +5,7 @@
  */
 package nhl.containing.simulator.simulation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -88,6 +89,13 @@ public class Callback {
                     }
                 }
             }
-        } catch(Exception e) { Debug.error(e.getMessage()); }
+        } catch(SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) { 
+            String _m = "";
+            for (String s : methods) {
+                _m += " - " +  s;
+            }
+            
+            Debug.error("[Callback.java - " + c.toString() + _m + "]" + e.getMessage()); 
+        }
     }
 }

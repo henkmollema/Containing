@@ -404,6 +404,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_one").commit();
+                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -418,6 +419,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_two").commit();
+                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -432,6 +434,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_three").commit();
+                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -446,6 +449,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     b.putInt("graphID",position);
                     gf.setArguments(b);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_four").commit();
+                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -456,6 +460,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                     ContainersFragment cf = new ContainersFragment();
                     fragment = cf;
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,"Container_list").commit();
+                    refresh();
                 }
                 mDrawerLayout.closeDrawers();
                 break;

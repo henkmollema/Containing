@@ -54,7 +54,6 @@ public class GraphFragment extends Fragment {
         View view = inflater.inflate(R.layout.graphfragment, container, false);
         chart = (SfChart)view.findViewById(R.id.graph);
         setupChart();
-        setData();
         return view;
     }
 

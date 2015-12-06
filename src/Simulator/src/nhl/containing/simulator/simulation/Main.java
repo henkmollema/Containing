@@ -332,6 +332,7 @@ public class Main extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1920, 1080);
         settings.setBitsPerPixel(32);
+        settings.setFrameRate(120);
         app.setSettings(settings);
         app.start();
         

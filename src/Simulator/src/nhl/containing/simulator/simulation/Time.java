@@ -27,6 +27,14 @@ public final class Time {
     }
     
     /**
+     * Sets the time from the controller
+     * @param time 
+     */
+    public static void setTime(float time) {
+        m_time = time;
+    }
+    
+    /**
      * Set simulation timescale
      * @param t 
      */

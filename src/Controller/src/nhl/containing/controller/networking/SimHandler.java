@@ -52,7 +52,7 @@ public class SimHandler implements Runnable {
             @Override
             public void run()
             {
-                Time._updateTime(5 / 1000);
+                Time._updateTime(5.0 / 1000.0);
             }
         }, 0, 5);
         _timer.scheduleAtFixedRate(new TimerTask()

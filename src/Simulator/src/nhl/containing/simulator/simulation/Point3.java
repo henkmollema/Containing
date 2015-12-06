@@ -155,7 +155,20 @@ public class Point3 {
     public float magnitude() {
         return Mathf.sqrt(sqrmagnitudef());
     }
-    
+    /**
+     * 
+     * @return 
+     */
+    public Point3 above() {
+        return new Point3(this.x, this.y + 1, this.z);
+    }
+    /**
+     * 
+     * @return 
+     */
+    public Point3 below() {
+        return new Point3(this.x, this.y - 1, this.z);
+    }
     /**
      * 
      * @param v 

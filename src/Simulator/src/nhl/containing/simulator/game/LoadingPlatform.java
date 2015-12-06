@@ -5,23 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 import nhl.containing.simulator.simulation.Callback;
 import nhl.containing.simulator.simulation.Debug;
+import nhl.containing.simulator.simulation.Mathf;
+import nhl.containing.simulator.simulation.Path;
 import nhl.containing.simulator.simulation.Point2;
 import nhl.containing.simulator.simulation.Point3;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.simulation.Utilities;
 
 /**
- * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * also check line 206
+ *
  * @author sietse
  */
 public abstract class LoadingPlatform extends Platform {
     
-    protected Crane m_crane;                                            // Crane
-    protected ParkingSpot[] m_parkingSpots;                             // AGV parking spots
+    protected Crane m_crane;                                // Crane
+    protected ParkingSpot[] m_parkingSpots;                     // AGV parking spots
     
     private List<CraneAction> m_queue = new ArrayList<CraneAction>();   // Action queue
-    private CraneAction m_currentAction;                                // Current action
-    private boolean m_firstFrame = true;                                // Is first frame
+    protected CraneAction m_currentAction;                          // Current action
+    private boolean m_firstFrame = true;                        // Is first frame
     
     /**
      * Constructor
@@ -38,14 +40,8 @@ public abstract class LoadingPlatform extends Platform {
         super(parent);
         m_parkingSpots = parkingSpots();
     }
-    /**
-     * Get parking spot
-     * @param index
-     * @return 
-     */
-    public ParkingSpot getParkingSpot(int index) {
-        return m_parkingSpots[index];
-    }
+    
+    protected abstract ParkingSpot[] parkingSpots();
     
     /**
      * Set crane path
@@ -54,18 +50,11 @@ public abstract class LoadingPlatform extends Platform {
     protected void setCraneTarget(Vector3f to) {
         m_crane.getCranePath().setPath(new Vector3f(to));
     }
-    /**
-     * Init parkingspots
-     * @return 
-     */
-    protected abstract ParkingSpot[] parkingSpots();
     
     /**
      * Update, called every frame
      */
     public void update() {
-        
-        // Init
         if (m_firstFrame) {
             // First frame, init
             if (m_crane != null) {
@@ -74,7 +63,6 @@ public abstract class LoadingPlatform extends Platform {
             }
         }
         
-        // Update crane
         if (m_crane != null) {
             // Update crane
             m_crane._update();
@@ -93,56 +81,72 @@ public abstract class LoadingPlatform extends Platform {
         
         if (container == null) {
             // Invalid input
-            Debug.error("Null reference: selected container not available!");
+            Debug.error("Null reference: selected container not available! [LoadingPlatform.java] [84]");
             return;
         }
         
-        // Add action to queue
-        m_queue.add(new CraneAction(container, new CraneTarget(p), new CraneTarget(spot)));
+        // Check if needed to move containers that lie on top of the target one
+        replace(new Point3(p).add(Point3.up()));
+        
+        // Add the action to queue
+        m_queue.add(new CraneAction(container, new Callback(this, "attach2Crane")));
+        m_queue.add(new CraneAction(container, spot, new Callback(this, "crane2carrier")));
     }
     /**
      * 
      * @param parkingSpot
      * @param p 
      */
-    public void place(int spot, Point3 p) {
+    public void place(int parkingSpot, Point3 p) {
         
-        Container container = m_parkingSpots[spot].agv().getContainer();
+        Container container = m_parkingSpots[parkingSpot].agv().getContainer();
         
         if (container == null) {
             // Invalid input
-            Debug.error("Null reference: selected container not available!");
+            Debug.error("Null reference: selected container not available! [LoadingPlatform.java] [106]");
             return;
         }
         
-        // Add action to queue
-        m_queue.add(new CraneAction(container, new CraneTarget(spot), new CraneTarget(p)));
+        // Set height
+        int height = getStackHeight(new Point2(p.x, p.z));
+        if (height < p.y || p.y < 0) {
+            p.y = height;
+        } replace(new Point3(p));
+        
+        m_queue.add(new CraneAction(container, parkingSpot, new Callback(this, "parking2Crane")));
+        m_queue.add(new CraneAction(container, new Callback(this, "crane2Storage")));
+    }
+    /**
+     * Put the container to a new position
+     * @param p 
+     */
+    public void replace(Point3 p) {
+        Container container = getContainer(p);
+        if (container == null)
+            return;
+        
+        replace(new Point3(p).add(Point3.up()));
+        
+        // TODO: Do here replacement things
     }
     
     /**
-     * On crane action finished
+     * On action finished
      */
     public void onCrane() {
-        if (m_currentAction != null) 
-        {
-            // Finish the action
-            m_currentAction.finish();
-            
-            // Check if need to do the placing
-            if (m_currentAction.setPath()) {
-                return;
+        if (m_currentAction != null) {
+            if (m_currentAction.finishCallback != null) {
+                
+                // Run the finish action
+                m_currentAction.finishCallback.invoke();
             }
-        } getNext();
-    }
-    /**
-     * Get the next action in queue
-     */
-    public void getNext() {
+        }
+        
         // Get new
         m_currentAction = null;
-        
         if (m_queue.size() > 0) {
             m_queue.get(0).start();
+            m_queue.remove(0);
         } else {
             // Default position
             m_crane.setPath();
@@ -150,170 +154,88 @@ public abstract class LoadingPlatform extends Platform {
     }
     
     /**
+     * 
+     */
+    public void crane2Storage() {
+        Container c = m_crane.setContainer(null);
+        
+    }
+    /**
+     * 
+     */
+    public void parking2Crane() {
+        
+    }
+    /**
+     * Attach container to crane
+     */
+    public void attach2Crane() {
+        m_crane.setContainer(m_currentAction.target);
+        replaceContainer(m_currentAction.target, null);
+        updateOuter();
+    }
+    /**
+     * Detach from crane, and attach to the AGV
+     */
+    public void crane2carrier() {
+        m_parkingSpots[m_currentAction.parkingSpot].agv().setContainer(m_crane.setContainer(null));
+    }
+    
+    
+    
+    public ParkingSpot getSpot(int index) {
+        return m_parkingSpots[index];
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    private CraneAction baseAction() {
+        return null;
+    }
+    
+    /**
      * A crane action
      * Take and place
      */
     private class CraneAction {
-        public final Container   container;     // Target Container
-        public final CraneTarget from;          // Taking place
-        public final CraneTarget to;            // Placing place
-        private int m_onTargetIndex = 0;        // Index to check if need to take or place
+        public final int parkingSpot;
+        public final Point3 storageSpot;
+        public final Container target; // 
+        public Callback finishCallback; // Maybe can also without reflection, but for now leave it
         
-        /**
-         * Constructor
-         * @param container
-         * @param from
-         * @param to 
-         */
-        public CraneAction(Container container, CraneTarget from, CraneTarget to) {
-            if (container == null) {
-                throw new IllegalArgumentException("Container may not be NULL");
-            } if (from == null) {
-                throw new IllegalArgumentException("From may not be NULL");
-            } if (to == null) {
-                throw new IllegalArgumentException("To may not be NULL");
-            }
-            
-            this.container = container;
-            this.from      = from;
-            this.to        = to;
+        public CraneAction(Container target, Callback onFinish) {
+            this.target = target;
+            this.parkingSpot = -1;
+            this.storageSpot = null;
+            this.finishCallback = onFinish;
+        }
+        public CraneAction(Container target, int parkingSpot, Callback onFinish) {
+            this.target = target;
+            this.parkingSpot = parkingSpot;
+            this.storageSpot = null;
+            this.finishCallback = onFinish;
+        }
+        public CraneAction(Container target, Point3 starageSpot, Callback onFinish) {
+            this.target = target;
+            this.parkingSpot = -1;
+            this.storageSpot = starageSpot;
+            this.finishCallback = onFinish;
         }
         
+        /**
+         * On first frame when its <this> turn
+         */
         public void start() {
-            if (from.storageSpot != null) {
-                
-                // Check if need to replace above containers
-                if (replace(from.storageSpot)) {
-                    getNext();
-                    return;
-                }
-                
-                // Check where container need to go
-                if (to.storageSpot != null) {
-                    // TODO: get new point here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    to.storageSpot = Point3.zero(); 
-                }
-            } else if (to.storageSpot != null) {
-                
-                // Check if need to replace above containers
-                if (replace(to.storageSpot)) {
-                    getNext();
-                    return;
-                } else { // Check if any below
-                    int height = getStackHeight(new Point2(to.storageSpot.x, to.storageSpot.z));
-                    if (height < to.storageSpot.y || to.storageSpot.y < 0) {
-                        to.storageSpot.y = height;
-                        // Debug.log("Container Y position fixed");
-                    }
-                }
-            }
-            
             m_currentAction = this;
-            m_queue.remove(0);
-            setPath();
-        }
-        /**
-         * Set new Crane target path
-         * @return 
-         */
-        public boolean setPath() {
-            if (m_onTargetIndex > 1)
-                return false;
-                
-            // Check if from or to
-            CraneTarget _t = (m_onTargetIndex++ <= 0) ? from : to;
             
-            if (_t.storageSpot != null)
-                
-                // To storage
-                 m_crane.setPath(getSpot(_t.storageSpot).worldPosition());
-            
-            else if (_t.parkingSpot != null)
-                
-                // To Parking spot
-                m_crane.setPath(m_parkingSpots[_t.parkingSpot].position());
-            
+            if (this.storageSpot != null)
+                m_crane.setPath(getSpot(storageSpot).worldPosition());
+            else if (parkingSpot < 0)
+                m_crane.setPath(target.position());
             else
-                
-                // To container
-                m_crane.setPath(container.position());
-            
-            return true;
-        }
-        /**
-         * Calls on finish
-         * Container parents swap
-         */
-        public void finish() {
-            
-            if (m_onTargetIndex <= 1) { // Take
-                
-                if (from.storageSpot != null) {
-                    
-                    // Storage to crane
-                    m_crane.setContainer(container);
-                    replaceContainer(container, null);
-                    updateOuter();
-                } else {
-                    
-                    // AGV to crane
-                    Container c = m_parkingSpots[from.parkingSpot].agv().getContainer();
-                    m_crane.setContainer(c);
-                    m_parkingSpots[from.parkingSpot].agv().setContainer(null);
-                }
-            } else { // Place
-                
-                if (to.storageSpot != null) {
-                    
-                    // Crane to storage
-                    Container c = m_crane.setContainer(null);
-                    setContainer(to.storageSpot, c);
-                    updateOuter();
-                } else {
-                    
-                    // Crane to AGV
-                    m_parkingSpots[to.parkingSpot].agv().setContainer(m_crane.setContainer(null));
-                }
-            }
-        }
-        /**
-         * Check if need to replace
-         * @param p
-         * @return 
-         */
-        private boolean replace(Point3 p) {
-            Point3 _np = p.above();
-            Container _c = getContainer(_np);
-            if (_c == null)
-                return false;
-            
-            m_queue.add(0, new CraneAction(_c, new CraneTarget(_np), new CraneTarget(Point3.zero())));
-            return true;
-        }
-    }
-    /**
-     * A crane target position
-     * Storage or AGV
-     */
-    private class CraneTarget {
-        public Point3 storageSpot;
-        public final Integer parkingSpot;
-        
-        /**
-         * Constructor
-         * @param p Storage Position
-         */
-        public CraneTarget(Point3 p) {
-            storageSpot = p;
-            parkingSpot = null;
-        }
-        /**
-         * Constructor
-         * @param spot Parking Spot Index
-         */
-        public CraneTarget(int spot) {
-            storageSpot = null;
-            parkingSpot = spot + 0;
+                m_crane.setPath(m_parkingSpots[parkingSpot].position());
         }
     }
 }

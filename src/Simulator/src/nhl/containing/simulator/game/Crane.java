@@ -168,11 +168,13 @@ public abstract class Crane extends MovingItem {
         
         // Check if on target
         if (m_attachTimer.finished(true)) {
-            if (onTargetCallback != null)
+            if (onTargetCallback != null) {
                 onTargetCallback.invoke();
+            }
         } else if (!m_attachTimer.active() && path().atLast()) {
-            if (onTargetCallback != null)
+            if (onTargetCallback != null) {
                 onTargetCallback.invoke();
+            }
         }
         
         // Child update

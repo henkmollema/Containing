@@ -35,7 +35,6 @@ import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.game.AGV;
-import nhl.containing.simulator.game.Container;
 import nhl.containing.simulator.simulation.Point2;
 
 /**
@@ -90,15 +89,14 @@ public class World extends Behaviour {
         
         
         AGV agv = new AGV();
-        agv.setContainer(new Container(null));
         agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
-        m_storages.get(0).getParkingSpot(0).agv(agv);
+        m_storages.get(0).getSpot(0).agv(agv);
         
         
-        for (int i = 0; i < 3; i++) {
-            m_storages.get(0).take(new Point3(4, 4, i), 0);
+        for (int i = 0; i < 10; i++) {
+            m_storages.get(0).take(new Point3(4, 5, i), 0);
         }
-        m_storages.get(0).place(0, new Point3(4, 5, 1));
+        
         
         
         Geometry g = WorldCreator.createBox(null, new Vector3f(500.0f, 1.0f, 500.0f));

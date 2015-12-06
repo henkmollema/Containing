@@ -7,8 +7,6 @@ package nhl.containing.simulator.simulation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +14,6 @@ import java.util.logging.Logger;
  */
 public class Callback {
     
-    private static final Logger logger = Logger.getLogger(Callback.class.getName());
     private final Class m_class;        // Target class
     private final Object m_target;      // Object
     private final String[] m_methods;   // Selected target methods
@@ -97,7 +94,8 @@ public class Callback {
             for (String s : methods) {
                 _m += " - " +  s;
             }
-            logger.log(Level.SEVERE, "Error in {0} -> {1} with methods {2}", new Object[]{target, c, _m});
+            
+            Debug.error("[Callback.java - " + c.toString() + _m + "]" + e.getMessage()); 
         }
     }
 }

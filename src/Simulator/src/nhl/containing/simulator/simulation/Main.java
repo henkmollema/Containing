@@ -41,6 +41,7 @@ public class Main extends SimpleApplication {
     // Behaviours
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
+    private float m_rawFixedUpdateTimer = 0.0f;
     private nhl.containing.simulator.game.Camera m_camera;
     private Input m_input;
     private GUI m_gui;
@@ -301,6 +302,7 @@ public class Main extends SimpleApplication {
      */
     private void updateBehaviours() {
         m_fixedUpdateTimer += Time.deltaTime();
+        m_rawFixedUpdateTimer += Time.unscaledDeltaTime();
 
         // Update
         for (Behaviour behaviour : m_behaviours) {
@@ -312,6 +314,11 @@ public class Main extends SimpleApplication {
             m_fixedUpdateTimer -= Time.fixedTimeScale();
             for (Behaviour behaviour : m_behaviours) {
                 behaviour._baseFixedUpdate();
+            }
+        } while (m_rawFixedUpdateTimer >= Time.fixedTimeScale()) {
+            m_rawFixedUpdateTimer -= Time.fixedTimeScale();
+            for (Behaviour behaviour : m_behaviours) {
+                behaviour._baseRawFixedUpdate();
             }
         }
 

@@ -93,6 +93,12 @@ public abstract class Behaviour {
             return;
         fixedUpdate();
     }
+    /**
+     * Called at a fixed time rate without timescaling
+     */
+    public final void _baseRawFixedUpdate() {
+        rawFixedUpdate();
+    }
 
     /**
      * Checks if it is (un)safe to continue
@@ -136,4 +142,8 @@ public abstract class Behaviour {
      * Calls at a fixed time rate when active
      */
     public void fixedUpdate() { }
+    /**
+     * Calls at a fixed time rate without timescaling
+     */
+    public void rawFixedUpdate() { }
 }

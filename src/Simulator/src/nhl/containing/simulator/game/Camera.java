@@ -66,6 +66,8 @@ public class Camera extends Behaviour {
     private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;
     private final float FLY_CAMERA_SPEED_FAST = 40.0f;
     private final float FLY_CAMERA_SPEED_SLOW = 8.0f;
+    private final float FLY_CAMERA_DAMPING = 20.0f;
+    private Vector3f m_throttle = Utilities.zero();
     
     // RTS
     private final float RTS_CAMERA_SPEED_DEFAULT = 40.0f;
@@ -188,6 +190,11 @@ public class Camera extends Behaviour {
         onUpdateRTS();
     }
     
+    @Override
+    public void rawFixedUpdate() {
+        
+    }
+    
     /**
      * Create shadown
      * @param sun Source
@@ -210,7 +217,6 @@ public class Camera extends Behaviour {
         // Add to camera image FX
         postProcessor().addFilter(shadowFilter);
     }
-    
     /**
      * Create ambient occlusion
      */
@@ -263,7 +269,6 @@ public class Camera extends Behaviour {
         // Set target
         m_target = t;
     }
-    
     /**
      * Zoom in for RTS camera
      * @param amount 
@@ -272,7 +277,6 @@ public class Camera extends Behaviour {
         m_rtsCameraTargetDistance += amount * RTS_CAMERA_ZOOM_SPEED;
         m_rtsCameraTargetDistance = Mathf.clamp(m_rtsCameraTargetDistance, RTS_MIN_CAMERA_DISTANCE, RTS_MAX_CAMERA_DISTANCE);
     }
-    
     /**
      * Init RTS camera
      */
@@ -385,30 +389,34 @@ public class Camera extends Behaviour {
             return;
         
         // Get new position
-        Vector3f newPosition = Main.cam().getDirection().mult(Main.input().rawInputAxis().y);
-        newPosition = newPosition.subtract(Main.cam().getLeft().mult(Main.input().rawInputAxis().x));
+        Vector3f movement = Main.cam().getDirection().mult(Main.input().rawInputAxis().y);
+        movement = movement.subtract(Main.cam().getLeft().mult(Main.input().rawInputAxis().x));
         
         // World up/down (up has prior)
         if (Main.input().getButton("E").isDown()) {
-            newPosition = newPosition.add(Utilities.up());
+            movement = movement.add(Utilities.up());
         } else if (Main.input().getButton("Q").isDown()) {
-            newPosition = newPosition.add(Utilities.down());
+            movement = movement.add(Utilities.down());
         }
         
-        if (newPosition.lengthSquared() < 0.01f) {
+        if (movement.lengthSquared() < 0.01f) {
             // No movement
-            newPosition = Utilities.zero();
+            movement = Utilities.zero();
         } else {
             // Normalize movement
-            newPosition = newPosition.normalize();
+            movement = movement.normalize();
             
             // Set speed
-            newPosition = newPosition.mult(Time.unscaledDeltaTime() * (Main.input().getButton("Shift").isDown() ? FLY_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? FLY_CAMERA_SPEED_SLOW : FLY_CAMERA_SPEED_DEFAULT)));
+            movement = movement.mult((Main.input().getButton("Shift").isDown() ? FLY_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? FLY_CAMERA_SPEED_SLOW : FLY_CAMERA_SPEED_DEFAULT)));
+            movement = movement.mult(Time.unscaledDeltaTime());
         }
         
+        m_throttle = m_throttle.add(movement);
+        m_throttle = m_throttle.divide(1.0f + FLY_CAMERA_DAMPING * Time.unscaledDeltaTime());
+        
+        
         // Set new position
-        newPosition = newPosition.add(Main.cam().getLocation());
-        Main.cam().setLocation(newPosition);
+        Main.cam().setLocation(m_throttle.add(Main.cam().getLocation()));
         
         // Set rotation
         float[] __rot = Main.cam().getRotation().toAngles(null);

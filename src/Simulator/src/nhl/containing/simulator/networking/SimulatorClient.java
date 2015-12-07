@@ -4,10 +4,9 @@
  */
 package nhl.containing.simulator.networking;
 
-import nhl.containing.networking.messaging.MessageWriter;
 import java.io.*;
 import java.net.Socket;
-import nhl.containing.networking.messaging.MessageReader;
+import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
@@ -19,8 +18,8 @@ import nhl.containing.networking.protocol.InstructionType;
  *
  * @author Jens
  */
-public class SimulatorClient implements Runnable {
-
+public class SimulatorClient implements Runnable
+{
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 1337;
     private boolean isConnected;
@@ -28,7 +27,8 @@ public class SimulatorClient implements Runnable {
     private Socket _socket = null;
     private CommunicationProtocol controllerCom;
 
-    public SimulatorClient() {
+    public SimulatorClient()
+    {
         controllerCom = new CommunicationProtocol();
     }
 
@@ -37,15 +37,18 @@ public class SimulatorClient implements Runnable {
      *
      * @return The communication protocol.
      */
-    public CommunicationProtocol controllerCom() {
+    public CommunicationProtocol controllerCom()
+    {
         return controllerCom;
     }
 
-    public boolean isConnected() {
+    public boolean isConnected()
+    {
         return isConnected;
     }
 
-    public void stop() {
+    public void stop()
+    {
         shouldRun = false;
     }
 
@@ -55,12 +58,15 @@ public class SimulatorClient implements Runnable {
      * Returns false if setup/connection failed. Returns true if connection was
      * successfull and closed peacefuly
      */
-    public boolean start() {
+    public boolean start()
+    {
         p("start()");
 
-        if (!isConnected) {
+        if (!isConnected)
+        {
 
-            try {
+            try
+            {
                 // Halt the thread until a connection has been accepted
                 _socket = new Socket(HOST, PORT);
 
@@ -69,7 +75,9 @@ public class SimulatorClient implements Runnable {
                 isConnected = true;
                 return true;
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 p("Connection refused..");
                 //ex.printStackTrace();
                 return false;
@@ -79,26 +87,30 @@ public class SimulatorClient implements Runnable {
         return false;
     }
 
-    private boolean sendSimulatorMetadata() {
+    private boolean sendSimulatorMetadata()
+    {
         p("sendSimulatorMetadata()");
 
-        try {
-
-            BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
-            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+        try
+        {
+            InputStream input = _socket.getInputStream();
             OutputStream output = _socket.getOutputStream();
             
             //Tell the Controller we are the simulator
             ClientIdentity.Builder idBuilder = ClientIdentity.newBuilder();
             idBuilder.setClientType(ClientIdentity.ClientType.SIMULATOR)
-                     .setVersion(CommunicationProtocol.PROTOCOL_VERSION);
-            
-            MessageWriter.writeMessage(output, idBuilder.build().toByteArray());
+                    .setVersion(CommunicationProtocol.PROTOCOL_VERSION);
+
+            StreamHelper.writeMessage(output, idBuilder.build().toByteArray());
+
             //Wait for an okay response..
-            byte[] ba = MessageReader.readByteArray(input, dataStream);
+            byte[] ba = StreamHelper.readByteArray(input);
             Instruction i = Instruction.parseFrom(ba);
-            if(i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY) throw new IOException();
-            
+            if (i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
+            {
+                throw new IOException();
+            }
+
 
 
 //            PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();
@@ -113,7 +125,7 @@ public class SimulatorClient implements Runnable {
 //                    .setType(PlatformProto.Platform.Crane.CraneType.Rails));
 //
 //            PlatformProto.Platform platform = platformBuilder.build();
-            
+
             SimulationItem item = SimulationItem.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
                     .setType(SimulationItem.SimulationItemType.PLATFORM)
@@ -124,49 +136,58 @@ public class SimulatorClient implements Runnable {
             byte[] message = item.toByteArray();
             p("Sending " + message.length + " bytes...");
 
-            MessageWriter.writeMessage(output, message);
+            StreamHelper.writeMessage(output, message);
 
             p("Message sent to controller, start reading input..");
 
-            String result = new String(MessageReader.readByteArray(input, dataStream), "UTF-8");
+            String result = new String(StreamHelper.readByteArray(input), "UTF-8");
 
-            if (result == null || result.equals("")) {
+            if (result.equals(""))
+            {
                 System.err.println("No result of sendSimulatorMetadata().");
                 return false;
             }
 
-            if (result.equalsIgnoreCase("ok")) {
+            if (result.equalsIgnoreCase("ok"))
+            {
                 p("result is " + result);
                 return true;
             }
 
             p("result is " + result);
             return false;
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
 
         return false;
     }
 
-    public boolean instructionLoop() {
+    public boolean instructionLoop()
+    {
         p("read()");
-        try {
+        try
+        {
             BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
             ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = _socket.getOutputStream();
 
             //Send empty message to start conversation..
-            MessageWriter.writeMessage(output, new byte[]{0});
+            StreamHelper.writeMessage(output, new byte[] { 0 });
 
-            while (shouldRun) {
+            while (shouldRun)
+            {
                 // Re-use streams for more efficiency.
-                byte[] data = MessageReader.readByteArray(input, dataStream);
+                byte[] data = StreamHelper.readByteArray(input);
                 byte[] response = controllerCom.processInput(data);
 
-                MessageWriter.writeMessage(output, response);
+                StreamHelper.writeMessage(output, response);
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
             return false;
         }
@@ -175,31 +196,44 @@ public class SimulatorClient implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         shouldRun = true;
 
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
-            if (start()) {
-                if (sendSimulatorMetadata()) {
-                    if (instructionLoop()) {
+            if (start())
+            {
+                if (sendSimulatorMetadata())
+                {
+                    if (instructionLoop())
+                    {
                         p("Closed peacefully");
-                    } else {
+                    }
+                    else
+                    {
                         p("Lost connection during instructionloop");
                     }
-                } else {
+                }
+                else
+                {
                     p("Error while initialising connection..");
                 }
-            } else {
+            }
+            else
+            {
                 p("Closed forcefully");
             }
 
             try //Clean 
             {
-                if (_socket != null) {
+                if (_socket != null)
+                {
                     _socket.close();
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 ex.printStackTrace();
             }
 
@@ -207,7 +241,8 @@ public class SimulatorClient implements Runnable {
         }
     }
 
-    private static void p(String s) {
+    private static void p(String s)
+    {
         System.out.println("Simulator: " + s);
     }
 }

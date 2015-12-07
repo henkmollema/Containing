@@ -80,7 +80,7 @@ public class Server implements Runnable {
                 OutputStream output = tmpSocket.getOutputStream();
                 
                 //The first message we recieve should be an clientidentity object
-                byte[] data = MessageReader.readByteArray(input, dataStream);
+                byte[] data = StreamHelper.readByteArray(tmpSocket.getInputStream());
                 ClientIdentity idData = ClientIdentity.parseFrom(data);
                 
                 switch(idData.getClientType())

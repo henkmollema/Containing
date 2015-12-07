@@ -374,6 +374,7 @@ public class Main extends SimpleApplication {
         // Set new time
         _timescale += Time.timeScale();
         _timescale = Mathf.clamp(_timescale, MIN_TIME_SCALE, MAX_TIME_SCALE);
+        _simClient.sendTimeScale(_timescale);
         Time.setTimeScale(_timescale);
     }
     /**

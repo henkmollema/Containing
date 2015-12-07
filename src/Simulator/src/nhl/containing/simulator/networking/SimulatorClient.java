@@ -6,12 +6,14 @@ package nhl.containing.simulator.networking;
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.simulator.simulation.Time;
 
 /**
  * Providers interaction with the client.
@@ -163,6 +165,21 @@ public class SimulatorClient implements Runnable
         }
 
         return false;
+    }
+    
+    public void sendTimeScale(float tScale)
+    {
+        try
+	{
+            OutputStream out = _socket.getOutputStream();
+            byte[] mesg = ByteBuffer.allocate(64).putDouble(Time.time()).array();
+            byte[] resp = controllerCom.processInput(mesg);//Time.time();// send time to simulator
+            //StreamHelper.writeMessage(output, resp);
+	}
+	catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     public boolean instructionLoop()

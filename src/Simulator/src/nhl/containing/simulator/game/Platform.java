@@ -12,6 +12,8 @@ import nhl.containing.simulator.simulation.Transform;
  */
 public abstract class Platform extends ContainerCarrier {
     private Bounds m_bounds;
+    // private Node m_roadNode;
+    
     
     abstract void createPlatform();
     

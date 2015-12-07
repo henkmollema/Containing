@@ -18,12 +18,13 @@ import java.util.List;
 import java.util.logging.*;
 
 /**
- *
+ * Main class
  * 
  * @author sietse
  */
 public class Main extends SimpleApplication {
 
+    // Node Keys
     public static final String TRANSFORM_ID_KEY = "TRANSFORM_KEY";
     
     // Singleton
@@ -52,10 +53,10 @@ public class Main extends SimpleApplication {
     
     // Transforms
     private static long m_transformID = 0;
-    private static List<Transform> m_transforms = new ArrayList<Transform>();
+    private static List<Transform> m_transforms = new ArrayList<>();
     
     // Lines
-    private static List<Line3D> m_lines = new ArrayList<Line3D>();
+    private static List<Line3D> m_lines = new ArrayList<>();
     
     /**
      * Get JMonkey Camera
@@ -152,15 +153,15 @@ public class Main extends SimpleApplication {
     
     
     /**
-     * HERE COME ALL BEHAVIOURS
-     *
-     *
-     *
-     *
+     * ALL BEHAVIOURS HERE
+     *        ||
+     *        ||
+     *       \||/
+     *        \/
      */
     private void initBehaviours() {
         
-        m_behaviours = new ArrayList<Behaviour>();
+        m_behaviours = new ArrayList<>();
         
         // Init main behaviours
         m_camera = new nhl.containing.simulator.game.Camera();
@@ -210,17 +211,6 @@ public class Main extends SimpleApplication {
         
         updateTimescale();
     }
-
-    /**
-     * Called on render
-     *
-     * @param rm Renderer
-     */
-    @Override
-    public void simpleRender(RenderManager rm) {
-        //TODO: add render code
-    }
-
     /**
      * Register behaviour
      *
@@ -315,7 +305,9 @@ public class Main extends SimpleApplication {
             for (Behaviour behaviour : m_behaviours) {
                 behaviour._baseFixedUpdate();
             }
-        } while (m_rawFixedUpdateTimer >= Time.fixedTimeScale()) {
+        } 
+        // RawFixedUpdate
+        while (m_rawFixedUpdateTimer >= Time.fixedTimeScale()) {
             m_rawFixedUpdateTimer -= Time.fixedTimeScale();
             for (Behaviour behaviour : m_behaviours) {
                 behaviour._baseRawFixedUpdate();
@@ -371,18 +363,18 @@ public class Main extends SimpleApplication {
      * Update timescale
      */
     public void updateTimescale() {
-        float __temp = TIME_SCALE_CHANGE_SPEED * Time.deltaTime();
+        float _timescale = TIME_SCALE_CHANGE_SPEED * Time.deltaTime();
 
         if (m_input.getButton("R").isDown()) {
-            __temp = -__temp;
+            _timescale = -_timescale;
         } else if (!m_input.getButton("T").isDown()) {
             return;
         }
         
         // Set new time
-        __temp += Time.timeScale();
-        __temp = Mathf.clamp(__temp, MIN_TIME_SCALE, MAX_TIME_SCALE);
-        Time.setTimeScale(__temp);
+        _timescale += Time.timeScale();
+        _timescale = Mathf.clamp(_timescale, MIN_TIME_SCALE, MAX_TIME_SCALE);
+        Time.setTimeScale(_timescale);
     }
     /**
      * Set timescale to default value (1.0)

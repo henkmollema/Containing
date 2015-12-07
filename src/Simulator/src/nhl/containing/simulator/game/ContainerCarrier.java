@@ -20,7 +20,7 @@ public class ContainerCarrier extends Item {
      * A container place in the carrier
      */
     public class ContainerSpot {
-        public Container container = null;          // The container itsself
+        public Container container = null;                  // The container itsself
         public Vector3f localPosition = Utilities.zero();   // Local container offset
         
         /**
@@ -32,6 +32,10 @@ public class ContainerCarrier extends Item {
             this.container = null;
         }
         
+        /**
+         * Get world position of a container spot
+         * @return 
+         */
         public Vector3f worldPosition() {
             Vector3f v = Utilities.zero();
             v = localToWorld(localPosition, v);
@@ -39,8 +43,8 @@ public class ContainerCarrier extends Item {
         }
     }
     
-    private Vector3f m_containerOffset = Utilities.zero();                  // Offset
-    protected ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];    // All container spots
+    private Vector3f m_containerOffset = Utilities.zero();                      // Offset
+    protected ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];  // All container spots
     
     /**
      * Constructor
@@ -112,10 +116,10 @@ public class ContainerCarrier extends Item {
     }
     /**
      * Get container
-     * @param x
-     * @param y
-     * @param z
-     * @return 
+     * @param x local x index
+     * @param y local y index
+     * @param z local z index
+     * @return selected container, if invalid input -> null
      */
     public Container getContainer(int x, int y, int z) {
         
@@ -154,6 +158,11 @@ public class ContainerCarrier extends Item {
         }
     }
     
+    /**
+     * Get height of a horizontal position
+     * @param p point x and z index
+     * @return height
+     */
     protected final int getStackHeight(Point2 p) {
         for (int i = 0; i < m_containerSpots[p.x].length; i++) {
             if (m_containerSpots[p.x][i][p.y].container == null)

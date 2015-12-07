@@ -240,4 +240,9 @@ public class Point2 {
             a.x / b,
             a.y / b);
     }
+    
+    @Override
+    public String toString() {
+        return "[" + x + ", " + y + "]";
+    }
 }

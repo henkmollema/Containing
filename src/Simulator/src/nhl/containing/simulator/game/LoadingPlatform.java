@@ -161,6 +161,7 @@ public abstract class LoadingPlatform extends Platform {
         
         /**
          * Constructor
+         * NOTE: No input may have "null" value
          * @param container
          * @param from
          * @param to 

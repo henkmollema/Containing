@@ -406,6 +406,7 @@ public final class Mathf {
      * @param deltaTime
      * @return 
      */
+    @SuppressWarnings("unused")
     public static float smoothdamp(float current, float target, Float velocity, float smoothTime, float maxSpeed, float deltaTime) {
         smoothTime = max(0.0001f, smoothTime);
         float num = 2f / smoothTime;
@@ -426,6 +427,17 @@ public final class Mathf {
         }
         return num8;
     }
+    /**
+     * 
+     * @param current
+     * @param target
+     * @param velocity
+     * @param smoothTime
+     * @param maxSpeed
+     * @param deltaTime
+     * @return 
+     */
+    @SuppressWarnings("unused")
     public static Vector2f smoothdamp(Vector2f current, Vector2f target, Vector2f velocity, float smoothTime, float maxSpeed, float deltaTime) {
         Vector2f __new = new Vector2f();
         Float num0 = velocity.x;

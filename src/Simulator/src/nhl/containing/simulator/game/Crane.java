@@ -33,18 +33,18 @@ public abstract class Crane extends MovingItem {
     private final String MODEL_PATH_BASE = "models/henk/Cranes/";
     
     // Components
-    private Transform m_frame;                      // Frame that hold the hook
-    private Transform m_hook;                       // Hook, that holds the container
-    private Line3D m_rope;                          // Rope between hook and frame
+    private Transform m_frame;                              // Frame that hold the hook
+    private Transform m_hook;                               // Hook, that holds the container
+    private Line3D m_rope;                                  // Rope between hook and frame
     private Timer m_attachTimer = new Timer(attachTime());  // For attach and detach containers
     
     // Objects
-    private Spatial m_frameSpatial;                     // Frame spatial
-    private Spatial m_hookSpatial;                      // Hook spatial
+    private Spatial m_frameSpatial;                         // Frame spatial
+    private Spatial m_hookSpatial;                          // Hook spatial
     
     // Offsets
-    protected Vector3f m_frameOffset = Utilities.zero();        // Local frame offset, from the crane transform
-    protected Vector3f m_hookOffset = Utilities.zero();         // Local hook offset, from the frame transform
+    protected Vector3f m_frameOffset = Utilities.zero();    // Local frame offset, from the crane transform
+    protected Vector3f m_hookOffset = Utilities.zero();     // Local hook offset, from the frame transform
     
     // Other
     public Callback onTargetCallback;                       // Method when arriving at destination

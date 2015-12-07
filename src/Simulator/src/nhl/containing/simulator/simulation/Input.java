@@ -38,17 +38,12 @@ public class Input extends Behaviour {
     
     public final Vector2f   MOUSE_CLAMPING              = new Vector2f(Mathf.abs(MOUSE_CLAMPING_X), Mathf.abs(MOUSE_CLAMPING_Y));
     public final int        MOUSE_SMOOTH_BUFFER         = 6;
-    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.8f);
+    public final float      MOUSE_SMOOTH_WEIGHT         = Mathf.clamp(0.4f);
     
     // 
     private Vector2f        m_rawMouseMove = Vector2f.ZERO;
     private Vector2f        m_mouseMove = Vector2f.ZERO;
     private List<Vector2f>  m_mouseSmoothBuffer;
-    
-    // Double click
-    public final static float DOUBLE_CLICK_TIME = 0.5f;
-    private float m_doubleClickTimer = 0.0f;
-    private Transform m_doubleClickTarget;
     
     // 
     private final InternalListener m_listener = new InternalListener();

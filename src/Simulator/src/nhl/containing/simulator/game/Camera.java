@@ -1,8 +1,3 @@
-/*
- * Camera cotnroller
- * 
- * RTS and FLY
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Behaviour;
@@ -60,52 +55,53 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 public class Camera extends Behaviour {
     
     // 
-    private final float CAMERA_RENDER_DISTANCE = 200.0f;
+    private final float CAMERA_RENDER_DISTANCE = 200.0f;        // The distance how far the camera can render
     
     // Fly
-    private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;
-    private final float FLY_CAMERA_SPEED_FAST = 40.0f;
-    private final float FLY_CAMERA_SPEED_SLOW = 8.0f;
-    private final float FLY_CAMERA_DAMPING = 20.0f;
-    private Vector3f m_throttle = Utilities.zero();
+    private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;       // Default movement speed of the fly camera
+    private final float FLY_CAMERA_SPEED_FAST = 40.0f;          // Fast (shift) movement speed of the fly camera
+    private final float FLY_CAMERA_SPEED_SLOW = 8.0f;           // Slow (ctrl) movemet speed of the fly camera
+    private final float FLY_CAMERA_DAMPING = 20.0f;             // Amount of movement damping
+    private Vector3f m_flyVelocity = Utilities.zero();          // Current fly camera velocity
     
     // RTS
-    private final float RTS_CAMERA_SPEED_DEFAULT = 40.0f;
-    private final float RTS_CAMERA_SPEED_FAST = 180.0f;
-    private final float RTS_CAMERA_SPEED_SLOW = 20.0f;
-    private final float RTS_CAMERA_ROTATION_SPEED = 70.0f;
-    private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;
-    private final float RTS_CAMERA_SMOOTH = 0.02f;
-    private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;
-    private final float RTS_MIN_CAMERA_DISTANCE = 3.0f;
-    private final float RTS_MAX_CAMERA_DISTANCE = 100.0f;
-    private float m_rtsCameraRotation = 0.0f;
-    private float m_rtsCameraTargetDistance = 25.0f;
-    private float m_rtsCameraCurrentDistance = 25.0f;
-    private Float m_rtsCameraDistanceVelocity = 0.0f;
-    private Vector2f m_rtsPositionVelocity = new Vector2f();
+    private final float RTS_CAMERA_SPEED_DEFAULT = 40.0f;       // Default movement speed of the RTS camera
+    private final float RTS_CAMERA_SPEED_FAST = 180.0f;         // Fast (shift) movement speed of the RTS camera
+    private final float RTS_CAMERA_SPEED_SLOW = 20.0f;          // Slow (ctrl) movement speed of the RTS camera
+    private final float RTS_CAMERA_ROTATION_SPEED = 70.0f;      // Rotation speed of the RTS camera
+    private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;           // Zoom/Scroll speed of the RTS camea
+    private final float RTS_CAMERA_SMOOTH = 0.02f;              // Amount of position smoothing of the RTS camera
+    private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;         // Amout of zoom/scroll smoothing applied to the RTS camera
+    private final float RTS_MIN_CAMERA_DISTANCE = 3.0f;         // Minimum amount of distance between the camera and the look at target
+    private final float RTS_MAX_CAMERA_DISTANCE = 100.0f;       // Maximum amount of distance between the camera and the look at target
+    private float m_rtsCameraRotation = 0.0f;                   // Current rotation of the RTS camera
+    private float m_rtsCameraTargetDistance = 25.0f;            // Desired distance between the RTS camera and the look at target
+    private float m_rtsCameraCurrentDistance = 25.0f;           // Current distance betweem the RTS camera and the look at target
+    private Float m_rtsCameraDistanceVelocity = 0.0f;           // Current stored smooth velocity of the RTS caemra zoom/scroll value
+    private Vector2f m_rtsPositionVelocity = new Vector2f();    // Current stored smooth velocity of the RTS camera movement value
     
     // Shadows
-    private final int SHADOW_MAP_RESOLUTION = 2048;
-    private final float SHADOW_INTENSITY = 0.4f;
+    private final int SHADOW_MAP_RESOLUTION = 2048;             // Resolution of the shadowmap
+    private final float SHADOW_INTENSITY = 0.4f;                // Intensity of the shadowmap
     
     // SSAO
     
     // FOG
-    private final float FOG_DENSITY = 1.0f;
-    private final ColorRGBA FOG_COLOR = new ColorRGBA(0.6f, 0.7f, 0.9f, 1.0f);
+    private final float FOG_DENSITY = 1.0f;                     // Fog density
+    private final ColorRGBA FOG_COLOR =                         // Fog color
+            new ColorRGBA(0.6f, 0.7f, 0.9f, 1.0f);
     
     // Bloom
-    private final float m_bloomBlurScale= 0.5f;
-    private final float m_bloomExposurePower = 1.0f;
-    private final float m_bloomExposureCutoff = 0.2f;
-    private final float m_bloomIntensity = 0.3f;
+    private final float m_bloomBlurScale = 0.5f;                // Bloom blur scale
+    private final float m_bloomExposurePower = 1.0f;            // Bloom exposure power
+    private final float m_bloomExposureCutoff = 0.2f;           // Bloom exposure cutoff
+    private final float m_bloomIntensity = 0.3f;                // Bloom intensity
     
     // Components
-    private Transform m_transform;                      // Camera transform
-    private Transform m_target;                         // Look At Target
-    private Vector3f m_previousTargetPosition = Utilities.zero();   // Previous Target Position
-    private CameraMode m_cameraMode = CameraMode.RTS;       // Camera mode
+    private Transform m_transform;                              // Camera transform
+    private Transform m_target;                                 // Look At Target
+    private Vector3f m_previousTargetPosition= Utilities.zero();// Previous Target Position
+    private CameraMode m_cameraMode = CameraMode.RTS;           // Camera mode
     private FilterPostProcessor m_postProcessor;                // Image FX
     
     /**
@@ -188,11 +184,6 @@ public class Camera extends Behaviour {
         // Update camera modes
         onUpdateFly();
         onUpdateRTS();
-    }
-    
-    @Override
-    public void rawFixedUpdate() {
-        
     }
     
     /**
@@ -306,7 +297,10 @@ public class Camera extends Behaviour {
             return;
         }
         
-        // New horizontal position
+        /**
+         * Get new position
+         * Direction * input * Unit_Horizontal
+         */
         Vector3f newPosition = new Vector3f();
         newPosition = newPosition.add(Main.cam().getUp().add(Main.cam().getDirection()).mult(Main.input().rawInputAxis().y));
         newPosition = newPosition.add(Main.cam().getLeft().mult(-Main.input().rawInputAxis().x));
@@ -323,6 +317,8 @@ public class Camera extends Behaviour {
             float multiplier = Mathf.log10(m_rtsCameraCurrentDistance - RTS_MIN_CAMERA_DISTANCE);
             if (multiplier < 1.0f)
                 multiplier = 1.0f;
+            
+            // Multiply with speed input shift(fast)/ctrl(slow)/none(default)
             multiplier *=  (Main.input().getButton("Shift").isDown() ? RTS_CAMERA_SPEED_FAST : (Main.input().getButton("Ctrl").isDown() ? RTS_CAMERA_SPEED_SLOW : RTS_CAMERA_SPEED_DEFAULT));
             newPosition = newPosition.mult(multiplier);
         }
@@ -332,18 +328,18 @@ public class Camera extends Behaviour {
         newPosition.y = m_rtsCameraCurrentDistance;
         
         // Previous and target position
-        Vector2f __t = new Vector2f(newPosition.x, newPosition.z);
-        Vector2f __f = new Vector2f(
+        Vector2f _target = new Vector2f(newPosition.x, newPosition.z);
+        Vector2f _previous = new Vector2f(
                 Main.cam().getLocation().x,
                 Main.cam().getLocation().z);
         
         // Smooth out horizontal position
-        __f = Mathf.smoothdamp(
-                __f, 
-                __t, 
+        _previous = Mathf.smoothdamp(
+                _previous, 
+                _target, 
                 m_rtsPositionVelocity,
                 RTS_CAMERA_SMOOTH, 1000.0f, Time.unscaledDeltaTime());
-        newPosition = new Vector3f(__f.x, newPosition.y, __f.y);
+        newPosition = new Vector3f(_previous.x, newPosition.y, _previous.y);
         
         // Rotation
         if (Main.input().getButton("E").isDown())
@@ -354,9 +350,9 @@ public class Camera extends Behaviour {
         // Fix rotation
         m_rtsCameraRotation %= 360.0f;
         
-        
+        // Set look At
         if (m_target == null) {
-            // Set normal
+            // Set default
             Main.cam().setLocation(newPosition);
             Main.cam().lookAt(Utilities.rotateY(new Vector3f(10.0f, -5.0f, 10.0f), m_rtsCameraRotation).add(Utilities.Horizontal(newPosition)), Vector3f.UNIT_Y);
         } else {
@@ -378,7 +374,7 @@ public class Camera extends Behaviour {
         Main.inputManager().setCursorVisible(false);
     }
     /**
-     * 
+     * Every frame on update
      */
     public void onUpdateFly() {
         
@@ -411,12 +407,12 @@ public class Camera extends Behaviour {
             movement = movement.mult(Time.unscaledDeltaTime());
         }
         
-        m_throttle = m_throttle.add(movement);
-        m_throttle = m_throttle.divide(1.0f + FLY_CAMERA_DAMPING * Time.unscaledDeltaTime());
+        m_flyVelocity = m_flyVelocity.add(movement);
+        m_flyVelocity = m_flyVelocity.divide(1.0f + FLY_CAMERA_DAMPING * Time.unscaledDeltaTime());
         
         
         // Set new position
-        Main.cam().setLocation(m_throttle.add(Main.cam().getLocation()));
+        Main.cam().setLocation(m_flyVelocity.add(Main.cam().getLocation()));
         
         // Set rotation
         float[] __rot = Main.cam().getRotation().toAngles(null);

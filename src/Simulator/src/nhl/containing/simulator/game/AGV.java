@@ -1,6 +1,3 @@
-/*
- * 
- */
 package nhl.containing.simulator.game;
 
 /**

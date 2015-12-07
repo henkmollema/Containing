@@ -44,6 +44,7 @@ public final class WorldCreator {
         Box boxMesh = new Box(size.x, size.y, size.z); 
         Geometry boxGeo = new Geometry("Colored Box", boxMesh);
         
+        // Uncomment this for awesome aestetics, but it is very expensive
         //boxGeo.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         //boxGeo.setMaterial(MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f)); 
         

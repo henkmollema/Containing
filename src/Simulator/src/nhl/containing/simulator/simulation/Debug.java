@@ -6,7 +6,7 @@
 package nhl.containing.simulator.simulation;
 
 /**
- *
+ * Short for System.out.prinl()
  * @author sietse
  */
 public final class Debug {

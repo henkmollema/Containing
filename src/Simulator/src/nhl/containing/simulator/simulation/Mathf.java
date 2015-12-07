@@ -13,7 +13,7 @@ import com.jme3.math.Vector2f;
  */
 public final class Mathf {
     
-    public static final float PI = 3.141593f;
+    public static final float PI = 3.141593f;               // Pi value
     public static final float Deg2Rad = 0.01745329f;        // Degrees-to-radians conversion constant 
     public static final float Rad2Deg = 57.29578f;          // Radians-to-degrees conversion constant 
     

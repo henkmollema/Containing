@@ -19,6 +19,11 @@ import com.jme3.scene.shape.Box;
  * @author sietse
  */
 public final class WorldCreator {
+    /**
+     * Create box with the size of a container
+     * @param parent
+     * @return 
+     */
     public static Geometry createBox(Node parent) {
         Vector3f v = World.containerSize();
         float m = 0.48f;
@@ -26,15 +31,21 @@ public final class WorldCreator {
         
         return createBox(parent, v);
     }
+    /**
+     * Creates a box
+     * @param parent
+     * @param size
+     * @return 
+     */
     public static Geometry createBox(Node parent, Vector3f size) {
         if (parent == null) 
             parent = Main.root();
         
         Box boxMesh = new Box(size.x, size.y, size.z); 
         Geometry boxGeo = new Geometry("Colored Box", boxMesh);
+        
         //boxGeo.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         //boxGeo.setMaterial(MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f)); 
-        
         
         boxGeo.setShadowMode(RenderQueue.ShadowMode.Off);
         boxGeo.setMaterial(MaterialCreator.unshadedRandom());

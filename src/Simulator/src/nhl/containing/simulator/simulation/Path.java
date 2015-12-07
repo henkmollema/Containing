@@ -13,21 +13,21 @@ import com.jme3.math.Vector3f;
  */
 public class Path {
     
-    private Vector3f[] m_nodes = new Vector3f[0];
-    private Vector3f m_previousPosition = Vector3f.ZERO;
-    private int m_targetNode = -1;
+    private Vector3f[] m_nodes = new Vector3f[0];       // Path node positions
+    private Vector3f m_previousPosition = Vector3f.ZERO;    // Previous position, used for switching between nodes
+    private int m_targetNode = -1;                  // Target node
     
-    private boolean m_manual = false;
-    private boolean m_useTimeInsteadOfSpeed = false;
+    private boolean m_manual = false;               // Manual update
+    private boolean m_useTimeInsteadOfSpeed = false;    // true -> Use time based | false -> Use speed based
     
-    private float m_speed = 1.0f;
-    private float m_waitTime = 0.0f;
-    private LoopMode m_loopMode = LoopMode.Loop;
-    private EaseType m_easeType = EaseType.Linear;
-    private Callback m_callback = null;
+    private float m_speed = 1.0f;                   // Speed
+    private float m_waitTime = 0.0f;                // Wait time at node
+    private LoopMode m_loopMode = LoopMode.Loop;        // Loop mode
+    private EaseType m_easeType = EaseType.Linear;  // Ease type (interpolation type)
+    private Callback m_callback = null;             // Callback at node
     
-    private float m_timer = 0.0f;
-    private boolean m_goBack = false;
+    private float m_timer = 0.0f;               // Move timer
+    private boolean m_goBack = false;           // Go inverse direction
     
     
     /**
@@ -74,12 +74,22 @@ public class Path {
         this.m_targetNode = startNode == null ? 0 : startNode;
     }
     
+    /**
+     * Set path
+     * @param nodes 
+     */
     public void setPath(Vector3f... nodes) {
         setPathf(getPosition(), nodes);
     }
+    /**
+     * Set path raw
+     * @param from
+     * @param nodes 
+     */
     public void setPathf(Vector3f from, Vector3f... nodes) {
         setPosition(from);
         
+        // Reset
         this.m_timer = 0.0f;
         this.m_goBack = false;
         this.m_targetNode = 0;
@@ -88,6 +98,8 @@ public class Path {
         Vector3f[] __nodes = new Vector3f[nodes.length];
         for(int i = 0; i < nodes.length; i++)
             __nodes[i] = new Vector3f(nodes[i]);
+        
+        // Set
         m_nodes = __nodes;
     }
     
@@ -95,16 +107,16 @@ public class Path {
      * Update this every frame
      */
     public void update() {
-        if (m_timer < 1.0f) {
+        if (m_timer < 1.0f) { // Stage 1: move
             m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 1.0f);
             if (m_timer >= 1.0f && m_callback != null)
                 m_callback.invoke();
         }
-        else if (m_timer < 1.0f + m_waitTime) {
+        else if (m_timer < 1.0f + m_waitTime) { // Stage 2: wait
             m_timer += Time.deltaTime();
         }
         else {
-            if (!m_manual) {
+            if (!m_manual) { // Stage 3: to next
                 next();
                 m_timer -= (1.0f + m_waitTime);
             }
@@ -118,7 +130,7 @@ public class Path {
         
         if (m_manual)
             m_timer = 0.0f;
-            
+        
         if (m_nodes.length < 2)
             return;
         
@@ -174,24 +186,54 @@ public class Path {
     public void setCallback(Callback callback) {
         m_callback = callback;
     }
+    /**
+     * Set speed
+     * @param speed 
+     */
     public void setSpeed(float speed) {
         this.m_speed = speed;
     }
+    /**
+     * Is at first node
+     * @return 
+     */
     public boolean atFirst() {
         return atFirst(0.001f);
     }
+    /**
+     * Is at first node
+     * @param range
+     * @return 
+     */
     public boolean atFirst(float range) {
         return (new Vector3f(m_nodes[0]).distanceSquared(getPosition()) < range * range);
     }
+    /**
+     * Is at last node
+     * @return 
+     */
     public boolean atLast() {
         return atLast(0.001f);
     }
+    /**
+     * Is at last node
+     * @param range
+     * @return 
+     */
     public boolean atLast(float range) {
         return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
     }
+    /**
+     * Get current target node
+     * @return 
+     */
     public int getTargetIndex() {
         return m_targetNode;
     }
+    /**
+     * Finished waitng
+     * @return 
+     */
     public boolean finishedWaiting() {
         return m_timer >= 1.0f + m_waitTime;
     }

@@ -20,7 +20,12 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 public final class LightCreator {
     
     
-    
+    /**
+     * Create sun
+     * @param color
+     * @param direction
+     * @return 
+     */
     public static DirectionalLight createSun(ColorRGBA color, Vector3f direction) {
         
         DirectionalLight sun = new DirectionalLight();
@@ -29,6 +34,11 @@ public final class LightCreator {
         Main.root().addLight(sun); 
         return sun;
     }
+    /**
+     * Create ambient light
+     * @param color
+     * @return 
+     */
     public static AmbientLight createAmbient(ColorRGBA color) {
         
         AmbientLight ambient = new AmbientLight();

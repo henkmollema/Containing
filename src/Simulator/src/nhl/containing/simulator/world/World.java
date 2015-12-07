@@ -34,6 +34,8 @@ import java.util.UUID;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.simulator.game.AGV;
+import nhl.containing.simulator.game.Container;
 import nhl.containing.simulator.simulation.Point2;
 
 /**
@@ -41,7 +43,7 @@ import nhl.containing.simulator.simulation.Point2;
  * @author sietse
  */
 public class World extends Behaviour {
-    public static final Point2 STORAGE_SIZE = new Point2(5, 1); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(22, 1); // x = containers length per storage; y = storage amount
     
     
     public static Vector3f containerSize() {
@@ -71,9 +73,6 @@ public class World extends Behaviour {
         //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
         teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
         Main.root().attachChild(teapot);
-        
-        
-        
         //Time.setFixedTimeScale(0.3f);
     }
     
@@ -88,8 +87,18 @@ public class World extends Behaviour {
             offset.x += containerSize().x * 6 + 15.0f;
         }
         
-        ContainerCarrier c = new ContainerCarrier(null, Point3.one());
-        m_storages.get(0).take(new Point3(4, 5, 3), c);
+        
+        
+        AGV agv = new AGV();
+        agv.setContainer(new Container(null));
+        agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
+        m_storages.get(0).getParkingSpot(0).agv(agv);
+        
+        
+        for (int i = 0; i < 3; i++) {
+            m_storages.get(0).take(new Point3(4, 4, i), 0);
+        }
+        m_storages.get(0).place(0, new Point3(4, 5, 1));
         
         
         Geometry g = WorldCreator.createBox(null, new Vector3f(500.0f, 1.0f, 500.0f));
@@ -104,8 +113,13 @@ public class World extends Behaviour {
         m_storages.add(plat);
     }
     
-    
-    
+    void runTests() {
+        SimulatorTests tests = new SimulatorTests();
+        tests.createStorage();
+        tests.disposeCreated();
+        tests.disposeNull();
+        tests.getBox();
+    }    
     /*
      * Transform testCube;
     Transform testCube2;

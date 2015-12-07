@@ -12,8 +12,7 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 import nhl.containing.controller.Time;
-import nhl.containing.networking.messaging.MessageReader;
-import nhl.containing.networking.messaging.MessageWriter;
+import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
@@ -52,7 +51,7 @@ public class SimHandler implements Runnable {
             @Override
             public void run()
             {
-                Time._updateTime(5 / 1000);
+                Time._updateTime(5.0 / 1000.0);
             }
         }, 0, 5);
         _timer.scheduleAtFixedRate(new TimerTask()
@@ -110,20 +109,20 @@ public class SimHandler implements Runnable {
                     .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
                     .build();
             
-            MessageWriter.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
+            StreamHelper.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
             
-            byte[] data = MessageReader.readByteArray(_socket.getInputStream());
+            byte[] data = StreamHelper.readByteArray(_socket.getInputStream());
             //SimItemProto platform = PlatformProto.Platform.parseFrom(data);
             SimulationItem platform = SimulationItem.parseFrom(data);
 
             //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
             if (platform != null) {
                 p("ok");
-                MessageWriter.writeMessage(_socket.getOutputStream(), "ok".getBytes());
+                StreamHelper.writeMessage(_socket.getOutputStream(), "ok".getBytes());
                 return true;
             } else {
                 p("error");
-                MessageWriter.writeMessage(_socket.getOutputStream(), "error".getBytes());
+                StreamHelper.writeMessage(_socket.getOutputStream(), "error".getBytes());
                 return false;
             }
         } catch (Exception ex) {
@@ -135,21 +134,17 @@ public class SimHandler implements Runnable {
     public boolean instructionResponseLoop(Socket socket) {
         p("Starting instructionResponseLoop");
         try {
-            BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
-            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = socket.getOutputStream();
 
             //Send empty message to start conversation..
-            MessageWriter.writeMessage(output, new byte[]{
-                0
-            });
+            StreamHelper.writeMessage(output, new byte[] { 0 });
 
             while (shouldRun) {
                 // Re-use streams for more efficiency.
-                byte[] data = MessageReader.readByteArray(input, dataStream); //Read
-                byte[] response = _comProtocol.processInput(data); //Process
+                byte[] data = StreamHelper.readByteArray(socket.getInputStream());
+                byte[] response = _comProtocol.processInput(data);
 
-                MessageWriter.writeMessage(output, response); //Send
+                StreamHelper.writeMessage(output, response); 
             }
         } catch (IOException ex) {
             ex.printStackTrace();

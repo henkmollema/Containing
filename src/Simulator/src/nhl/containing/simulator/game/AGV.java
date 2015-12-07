@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package nhl.containing.simulator.game;
 
@@ -8,7 +7,7 @@ package nhl.containing.simulator.game;
  *
  * @author sietse
  */
-public class AGV {
+public class AGV extends MovingItem {
     private boolean m_waiting = false;
     
     

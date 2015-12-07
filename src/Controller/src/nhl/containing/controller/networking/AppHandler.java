@@ -9,8 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import nhl.containing.networking.messaging.MessageReader;
-import nhl.containing.networking.messaging.MessageWriter;
+import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
@@ -38,7 +37,7 @@ public class AppHandler implements Runnable{
                 .setId(CommunicationProtocol.newUUID())
                 .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
                 .build();
-            MessageWriter.writeMessage(socket.getOutputStream(), okayMessage.toByteArray());
+            StreamHelper.writeMessage(socket.getOutputStream(), okayMessage.toByteArray());
             return true;
         }
         catch (Exception ex)
@@ -80,13 +79,12 @@ public class AppHandler implements Runnable{
         p("Starting appLoop");
         try {
             BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
-            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
             OutputStream output = socket.getOutputStream();
             while (shouldRun) {
                 // Re-use streams for more efficiency.
-                byte[] data = MessageReader.readByteArray(input, dataStream); //Read
+                byte[] data = StreamHelper.readByteArray(input);
                 byte[] response = nhl.containing.controller.App.TestData(data);
-                MessageWriter.writeMessage(output, response); //Send
+                StreamHelper.writeMessage(output, response); //Send
             }
         } catch (IOException ex) {
             ex.printStackTrace();

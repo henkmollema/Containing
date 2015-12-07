@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.logging.*;
 
 /**
- * test
  *
  * 
  * @author sietse
@@ -26,8 +25,6 @@ import java.util.logging.*;
 public class Main extends SimpleApplication {
 
     public static final String TRANSFORM_ID_KEY = "TRANSFORM_KEY";
-    public static final float MIN_TIME_SCALE = 0.001f;
-    public static final float MAX_TIME_SCALE = 100.0f;
     
     // Singleton
     private static Main m_instance;
@@ -35,67 +32,120 @@ public class Main extends SimpleApplication {
         return m_instance;
     }
     
-    // 
+    // Time
+    public static final float TIME_SCALE_CHANGE_SPEED = 10.0f;
+    public static final float MIN_TIME_SCALE = 0.001f;
+    public static final float MAX_TIME_SCALE = 100.0f;
     private float m_previousTimeScale = 1.0f;
+    
     // Behaviours
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
+    private float m_rawFixedUpdateTimer = 0.0f;
+    private nhl.containing.simulator.game.Camera m_camera;
+    private Input m_input;
+    private GUI m_gui;
+    
+    //Networking
+    private SimulatorClient _simClient;
+    private InstructionDispatcherSimulator _dispatcher;
+    
     // Transforms
     private static long m_transformID = 0;
     private static List<Transform> m_transforms = new ArrayList<Transform>();
+    
     // Lines
     private static List<Line3D> m_lines = new ArrayList<Line3D>();
-    private Input m_input;
-    private GUI m_gui;
-    // Camera
-    private nhl.containing.simulator.game.Camera m_camera;
-
+    
+    /**
+     * Get JMonkey Camera
+     * @return 
+     */
     public static com.jme3.renderer.Camera cam() {
         return instance().cam;
     }
-
+    /**
+     * Get Sietse Camera
+     * @return 
+     */
     public static nhl.containing.simulator.game.Camera camera() {
         return instance().m_camera;
     }
-
-    // 
+    /**
+     * Get settings
+     * @return 
+     */
     public static AppSettings settings() {
         return instance().settings;
     }
-    //Networking
-    SimulatorClient _simClient;
-    InstructionDispatcherSimulator _dispatcher;
-    
-    public SimulatorClient simClient()
-    {
+    /**
+     * Get simulator client
+     * @return 
+     */
+    public SimulatorClient simClient() {
         return _simClient;
     }
-    
-    // Input
+    /**
+     * Get input manager
+     * @return 
+     */
     public static InputManager inputManager() {
         return instance().inputManager;
     }
+    /**
+     * Get asset manager
+     * @return 
+     */
     public static AssetManager assets() {
         return instance().assetManager;
     }
+    /**
+     * Get GUI font
+     * @return 
+     */
     public static BitmapFont guiFont() {
         return instance().guiFont;
     }
+    /**
+     * Set GUI font
+     * @param font
+     * @return 
+     */
     public static BitmapFont guiFont(BitmapFont font) {
         return instance().guiFont = font;
     }
+    /**
+     * Get Sietse input
+     * @return 
+     */
     public static Input input() {
         return instance().m_input;
     }
+    /**
+     * Get root node
+     * @return 
+     */
     public static Node root() {
         return instance().rootNode;
     }
+    /**
+     * Get GUI root node
+     * @return 
+     */
     public static Node guiRoot() {
         return instance().guiNode;
     }
+    /**
+     * Get renderer manager
+     * @return 
+     */
     public static RenderManager renderer() {
         return instance().renderManager;
     }
+    /**
+     * Get viewport
+     * @return 
+     */
     public static ViewPort view() {
         return instance().viewPort;
     }
@@ -109,6 +159,9 @@ public class Main extends SimpleApplication {
      *
      */
     private void initBehaviours() {
+        
+        m_behaviours = new ArrayList<Behaviour>();
+        
         // Init main behaviours
         m_camera = new nhl.containing.simulator.game.Camera();
         m_input = new Input();
@@ -119,47 +172,23 @@ public class Main extends SimpleApplication {
             m_input,
             m_gui,
             m_camera,
+            
             // Non-Main
-            new World(), // Here we create a new world without any help of "the Creator".
+            new World(), // Here we create a new world without any help of "the Creator" ;-)
         };
+        
         // Init all behaviours
         for (Behaviour behaviour : behaviours) {
             behaviour._baseInit();
         }
     }
-
-    /**
-     * Create world here
-     */
-    private void initWorld() {
-        
-        //m_lines = new ArrayList<Line3D>();
-        /*Line3D[] __t = new Line3D[]{
-            new Line3D(
-            MaterialCreator.diffuse(new ColorRGBA(0.4f, 0.6f, 0.8f, 1.0f)),
-            new Line3DNode(new Vector3f(0.0f, 00.0f, 00.0f), 0.1f, ColorRGBA.Blue),
-            new Line3DNode(new Vector3f(0.0f, 10.0f, 00.0f), 1.0f, ColorRGBA.Blue),
-            new Line3DNode(new Vector3f(0.0f, 10.0f, 10.0f), 1.0f, ColorRGBA.Blue))
-        };
-        m_lines.addAll(Arrays.asList(__t));
-        * */
-    }
-
-    private void updateWorld() {
-        for (Line3D l : m_lines) {
-            l.UpdateMesh();
-        }
-    }
-
     /**
      * Called at init
      */
     @Override
     public void simpleInitApp() {
-        m_instance = this;
-        m_behaviours = new ArrayList<Behaviour>();
+        m_instance = this; // init singleton
         initBehaviours();
-        initWorld();
         flyCam.setEnabled(false);
     }
 
@@ -173,7 +202,12 @@ public class Main extends SimpleApplication {
 
         Time._updateTime(tpf);
         updateBehaviours();
-        updateWorld();
+        
+        // Update lines
+        for (Line3D l : m_lines) {
+            l.UpdateMesh();
+        }
+        
         updateTimescale();
     }
 
@@ -201,7 +235,11 @@ public class Main extends SimpleApplication {
         }
         return false;
     }
-
+    /**
+     * Register Transform
+     * @param transform
+     * @return 
+     */
     public static long register(Transform transform) {
         if (!m_transforms.contains(transform)) {
             m_transforms.add(transform);
@@ -209,9 +247,16 @@ public class Main extends SimpleApplication {
         }
         return -1;
     }
-    
-    public static void register(Line3D line) {
-        m_lines.add(line);
+    /**
+     * Register line
+     * @param line 
+     */
+    public static boolean register(Line3D line) {
+        if (!m_lines.contains(line)) {
+            m_lines.add(line);
+            return true;
+        }
+        return false;
     }
     
     /**
@@ -222,10 +267,28 @@ public class Main extends SimpleApplication {
     public static boolean unregister(Behaviour behaviour) {
         return m_behaviours.remove(behaviour);
     }
+    /**
+     * Unregister transform
+     * @param transform
+     * @return 
+     */
     public static boolean unregister(Transform transform) {
         return m_transforms.remove(transform);
     }
+    /**
+     * Unregister line
+     * @param line
+     * @return 
+     */
+    public static boolean unregister(Line3D line) {
+        return m_lines.remove(line);
+    }
     
+    /**
+     * Get transform by id
+     * @param id
+     * @return 
+     */
     public static Transform getTransform(long id) {
         for (Transform t : m_transforms) {
             if (t.id() == id)
@@ -239,6 +302,7 @@ public class Main extends SimpleApplication {
      */
     private void updateBehaviours() {
         m_fixedUpdateTimer += Time.deltaTime();
+        m_rawFixedUpdateTimer += Time.unscaledDeltaTime();
 
         // Update
         for (Behaviour behaviour : m_behaviours) {
@@ -251,6 +315,11 @@ public class Main extends SimpleApplication {
             for (Behaviour behaviour : m_behaviours) {
                 behaviour._baseFixedUpdate();
             }
+        } while (m_rawFixedUpdateTimer >= Time.fixedTimeScale()) {
+            m_rawFixedUpdateTimer -= Time.fixedTimeScale();
+            for (Behaviour behaviour : m_behaviours) {
+                behaviour._baseRawFixedUpdate();
+            }
         }
 
         // LateUpdate
@@ -258,7 +327,11 @@ public class Main extends SimpleApplication {
             behaviour._baseLateUpdate();
         }
     }
-
+    /**
+     * Main, do not touch,
+     * unless you know what you are doing
+     * @param args 
+     */
     public static void main(String[] args) {     
         Logger.getLogger("").setLevel(Level.SEVERE);
         Main app = new Main();
@@ -266,6 +339,7 @@ public class Main extends SimpleApplication {
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1920, 1080);
         settings.setBitsPerPixel(32);
+        settings.setFrameRate(120);
         app.setSettings(settings);
         app.start();
         
@@ -277,39 +351,49 @@ public class Main extends SimpleApplication {
         networkThread.setDaemon(true);
         networkThread.setName("Network Simulator");
         networkThread.start();
-       
     }
-
+    
+    /**
+     * Pause/Unpause
+     */
     public void togglePause() {
         if (Time.timeScale() < 0.001f) {
             // unpause
             Time.setTimeScale(m_previousTimeScale);
         } else {
+            // Pause
             m_previousTimeScale = Time.timeScale();
             Time.setTimeScale(0.0f);
         }
     }
-
+    
+    /**
+     * Update timescale
+     */
     public void updateTimescale() {
-        float __temp = 10.0f * Time.deltaTime();
+        float __temp = TIME_SCALE_CHANGE_SPEED * Time.deltaTime();
 
         if (m_input.getButton("R").isDown()) {
             __temp = -__temp;
         } else if (!m_input.getButton("T").isDown()) {
             return;
         }
-
+        
+        // Set new time
         __temp += Time.timeScale();
         __temp = Mathf.clamp(__temp, MIN_TIME_SCALE, MAX_TIME_SCALE);
         Time.setTimeScale(__temp);
     }
-
+    /**
+     * Set timescale to default value (1.0)
+     */
     public void resetTimescale() {
         Time.setTimeScale(1.0f);
     }
-
+    /**
+     * Exit app
+     */
     public void exit() {
-        
         instance().stop();
     }
 }

@@ -5,7 +5,10 @@
  */
 package nhl.containing.simulator.simulation;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,6 +16,7 @@ import java.lang.reflect.Method;
  */
 public class Callback {
     
+    private static final Logger logger = Logger.getLogger(Callback.class.getName());
     private final Class m_class;        // Target class
     private final Object m_target;      // Object
     private final String[] m_methods;   // Selected target methods
@@ -66,9 +70,7 @@ public class Callback {
      * @param methods 
      */
     public static void invoke(Object target, String... methods) {
-        try {
-            Callback.invoke(target, target.getClass(), methods);
-        } catch (Exception e) { }
+        Callback.invoke(target, target.getClass(), methods);
     }
     /**
      * Run methods
@@ -78,9 +80,11 @@ public class Callback {
      */
     public static void invoke(Object target, Class c, String... methods) {
         try {
+            // Get targets
             Class<?> __class = c;
             Method[] __methods = __class.getMethods();
             
+            // Call all methods
             for (Method m : __methods) {
                 for (String s : methods) {
                     if (m.getName() == null ? s == null : m.getName().equals(s)) {
@@ -88,6 +92,12 @@ public class Callback {
                     }
                 }
             }
-        } catch(Exception e) { }
+        } catch(SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) { 
+            String _m = "";
+            for (String s : methods) {
+                _m += " - " +  s;
+            }
+            logger.log(Level.SEVERE, "Error in {0} -> {1} with methods {2}", new Object[]{target, c, _m});
+        }
     }
 }

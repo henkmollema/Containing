@@ -13,7 +13,7 @@ import java.net.SocketException;
 
 import nhl.containing.managmentinterface.*;
 import nhl.containing.managmentinterface.navigationdrawer.*;
-import nhl.containing.networking.messaging.*;
+import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protobuf.ClientIdProto.*;
@@ -112,14 +112,13 @@ public class Communicator_new implements Runnable{
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(host,port),3000);
                 BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
-                ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
                 OutputStream output = socket.getOutputStream();
                 //write client info
                 ClientIdentity.Builder clientBuilder = ClientIdentity.newBuilder();
                 clientBuilder.setClientType(ClientIdentity.ClientType.APP);
-                MessageWriter.writeMessage(output, clientBuilder.build().toByteArray());
+                StreamHelper.writeMessage(output, clientBuilder.build().toByteArray());
                 //read status message
-                Instruction inst =  Instruction.parseFrom(MessageReader.readByteArray(input,dataStream));
+                Instruction inst =  Instruction.parseFrom(StreamHelper.readByteArray(input));
                 if(inst.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
                     throw new Exception("Not connected");
                 byte[] bytes;
@@ -129,9 +128,9 @@ public class Communicator_new implements Runnable{
                     {
                         try
                         {
-                            MessageWriter.writeMessage(output,request.toByteArray());
+                            StreamHelper.writeMessage(output,request.toByteArray());
                             request = null;
-                            bytes = MessageReader.readByteArray(input,dataStream);
+                            bytes = StreamHelper.readByteArray(input);
                             datablockApp inputBlock = datablockApp.parseFrom(bytes);
                             if(containerActivity != null)
                                 containerActivity.setData(inputBlock);

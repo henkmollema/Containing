@@ -13,6 +13,11 @@ public class Line3DNode {
     public Vector3f position    = Vector3f.ZERO;
     public float width          = 1f;
     
+    /**
+     * Constructor
+     * @param position
+     * @param width 
+     */
     public Line3DNode (Vector3f position, float width) {
         this.position = position.clone();
         this.width = width;

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import nhl.containing.managmentinterface.MainActivity;
 import nhl.containing.managmentinterface.R;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 
@@ -39,11 +40,24 @@ public class ContainerArrayAdapter extends ArrayAdapter<ContainerDataListItem>
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.listitem,parent,false);
-        TextView textView = (TextView)rowView.findViewById(R.id.list_item_text);
+        if(convertView == null)
+        {
+            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.listitem,parent,false);
+        }
+        TextView textView = (TextView)convertView.findViewById(R.id.list_item_text);
         textView.setText("Container " + this.getItem(position).getID());
-        return rowView;
+        return convertView;
+    }
+
+    /**
+     * Checks if item on list is enabled
+     * @param position position of the item
+     * @return true when enabled and not refreshing, else false
+     */
+    @Override
+    public boolean isEnabled(int position) {
+        return !(MainActivity.getInstance() != null && MainActivity.getInstance().getRefreshStatus()) && super.isEnabled(position);
     }
 
     /**

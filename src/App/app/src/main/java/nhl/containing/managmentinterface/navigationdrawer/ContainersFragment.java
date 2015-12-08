@@ -27,6 +27,7 @@ public class ContainersFragment extends ListFragment {
     private OnFragmentInteractionListener mListener;
     private ContainerArrayAdapter items;
     private MainActivity main;
+    private volatile boolean isVisible = false;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,9 +48,18 @@ public class ContainersFragment extends ListFragment {
         setListAdapter(items);
         if(MainActivity.getInstance() == null)
         {
-            //give error
+            Toast.makeText(getActivity(),"Containerfragement couldn't be initialized",Toast.LENGTH_SHORT).show();
+            getActivity().finish();
         }
         main = MainActivity.getInstance();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!isVisible){}
+                if(!main.checkAutoRefresh())
+                    getActivity().runOnUiThread(main.refreshRunnable);
+            }
+        }).start();
     }
 
     /**
@@ -58,16 +68,7 @@ public class ContainersFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    Thread.sleep(1000);
-                }catch (Exception e){}
-                if(!main.checkAutoRefresh())
-                    getActivity().runOnUiThread(main.refreshRunnable);
-            }
-        }).start();
+        isVisible = true;
     }
 
     /**
@@ -126,6 +127,7 @@ public class ContainersFragment extends ListFragment {
                 @Override
                 public void run() {
                     Toast.makeText(getActivity(), "Coundn't connect to controller", Toast.LENGTH_SHORT).show();
+                    main.completeRefresh.run();
                 }
             });
             return;
@@ -188,7 +190,6 @@ public class ContainersFragment extends ListFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(int id);
     }
 

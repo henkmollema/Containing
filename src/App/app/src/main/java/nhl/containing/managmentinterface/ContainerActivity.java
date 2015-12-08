@@ -40,6 +40,7 @@ public class ContainerActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Container " + ID);
             ClassBridge.communicator.setContainerActivity(this);
             dialog = ProgressDialog.show(this,"Loading...","Loading container information, please wait",true,false);
+            dialog.show();
             return;
         }
         finish();
@@ -70,6 +71,8 @@ public class ContainerActivity extends AppCompatActivity {
         try{
             final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             final ContainerInfo info = datablock.getContainer();
+            if(info.equals(ContainerInfo.getDefaultInstance()))
+                throw new Exception();
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -94,6 +97,7 @@ public class ContainerActivity extends AppCompatActivity {
                 public void run() {
                     Toast.makeText(getApplicationContext(), "Couldn't get container information!", Toast.LENGTH_LONG).show();
                     finish();
+                    MainActivity.getInstance().completeRefresh.run();
                 }
             });
         }

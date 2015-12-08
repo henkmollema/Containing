@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     public RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    public  ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    public  ArrayList<NavItem> mNavItems = new ArrayList<>();
+    private String[] fragmentList = new String[]{"Graph_one","Graph_two","Graph_three","Graph_four","Container_list"};
     //end navigation drawer
 
     public Menu menu;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     public volatile int refreshTime = 0;
     private AutoRefreshRunnable autorefreshRunnable;
     private volatile boolean isRefreshing = false;
-    private ExecutorService executer = Executors.newSingleThreadExecutor();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     public volatile boolean rightNetwork = false;
 
     /**
@@ -298,15 +299,15 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
             if(autorefreshRunnable == null)
             {
                 autorefreshRunnable = new AutoRefreshRunnable();
-                executer = Executors.newSingleThreadExecutor();
-                executer.submit(autorefreshRunnable);
+                executor = Executors.newSingleThreadExecutor();
+                executor.submit(autorefreshRunnable);
             }
             return;
         }
         if(autorefreshRunnable != null)
             autorefreshRunnable.stop();
-        if(!executer.isShutdown())
-            executer.shutdown();
+        if(!executor.isShutdown())
+            executor.shutdown();
         autorefreshRunnable = null;
         isRefreshing = false;
     }
@@ -370,6 +371,15 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     };
 
     /**
+     * Gives the status of refreshing
+     * @return true when refreshing, else false
+     */
+    public boolean getRefreshStatus()
+    {
+        return this.isRefreshing;
+    }
+
+    /**
      * refresh the graph or list
      */
     public void refresh()
@@ -392,15 +402,12 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(fragment!= null && fragment instanceof GraphFragment)
+                if(fragment != null)
                 {
-                    GraphFragment gf = (GraphFragment)fragment;
-                    gf.setData();
-                }
-                else if(fragment != null && fragment instanceof ContainersFragment)
-                {
-                    ContainersFragment cf = (ContainersFragment)fragment;
-                    cf.setData();
+                    if(fragment instanceof GraphFragment)
+                        ((GraphFragment) fragment).setData();
+                    else if(fragment instanceof ContainersFragment)
+                        ((ContainersFragment) fragment).setData();
                 }
             }
         }).start();
@@ -422,20 +429,37 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
      */
     private void selectItemFromDrawer(int position)
     {
-        Fragment f;
-        switch (position)
+        if(position < fragmentList.length)
         {
-            case 0:
-                f = getSupportFragmentManager().findFragmentByTag("Graph_one");
-                if(f == null || !f.isVisible())
+            Fragment f = getSupportFragmentManager().findFragmentByTag(fragmentList[position]);
+            if(f == null || !f.isVisible())
+            {
+                autoRefresh(false);
+                if(position == 4)
                 {
-                    autoRefresh(false);
+                    ContainersFragment cf = new ContainersFragment();
+                    fragment = cf;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,fragmentList[position]).commit();
+                }
+                else
+                {
                     GraphFragment gf = new GraphFragment();
                     fragment = gf;
                     Bundle b = new Bundle();
                     b.putInt("graphID",position);
                     gf.setArguments(b);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_one").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,fragmentList[position]).commit();
+                }
+            }
+        }
+        mDrawerLayout.closeDrawers();
+        /*switch (position)
+        {
+            case 0:
+                f = getSupportFragmentManager().findFragmentByTag("Graph_one");
+                if(f == null || !f.isVisible())
+                {
+
                 }
                 mDrawerLayout.closeDrawers();
                 break;
@@ -491,8 +515,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
                 }
                 mDrawerLayout.closeDrawers();
                 break;
-
-        }
+        }*/
     }
 
     /**
@@ -503,6 +526,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     public void onFragmentInteraction(int id) {
         Intent i = new Intent(this,ContainerActivity.class);
         i.putExtra("ID",id);
+        completeRefresh.run();
         startActivity(i);
     }
 

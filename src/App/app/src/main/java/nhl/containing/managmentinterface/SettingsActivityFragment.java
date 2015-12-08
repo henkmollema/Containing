@@ -39,8 +39,8 @@ public class SettingsActivityFragment extends PreferenceFragmentCompat {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ViewGroup group = (ViewGroup)view.findViewById(R.id.settings_list);
-        View view1 = super.onCreateView(inflater,container,savedInstanceState);
-        group.addView(view1);
+        View superView = super.onCreateView(inflater,container,savedInstanceState);
+        group.addView(superView);
         return group;
     }
 }

@@ -28,8 +28,8 @@ public class Communicator_new implements Runnable{
     private Socket socket;
     private MainActivity mainActivity;
     private ContainerActivity containerActivity = null;
-    private String host  = "127.0.0.1";
-    private int port = 1337;
+    private String host;
+    private int port;
     private volatile boolean isRunning = true;
     private volatile Instruction request = null;
 
@@ -41,8 +41,8 @@ public class Communicator_new implements Runnable{
     public Communicator_new(MainActivity mainActivity) throws Exception
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mainActivity);
-        host = prefs.getString("Connection_Host", null);
-        port = Integer.parseInt(prefs.getString("Connection_Port", "-1"));
+        host = prefs.getString("Connection_Host", "127.0.0.1");
+        port = Integer.parseInt(prefs.getString("Connection_Port", "1337"));
         if(host == null || port == -1)
             throw new Exception("Host or Port are not defined, Please go to settings to add a Host and Port");
         this.mainActivity = mainActivity;

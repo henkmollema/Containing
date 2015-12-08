@@ -31,6 +31,7 @@ public class GraphFragment extends Fragment {
     private int graphID;
     private ObservableArrayList list;
     private MainActivity main;
+    private String[] names = new String[] {"Train","Truck","Seaship","Barge","Storage","AGV","Remainer"};
 
     public GraphFragment() {
         // Required empty public constructor
@@ -49,9 +50,10 @@ public class GraphFragment extends Fragment {
         else
             graphID = 0;
         if(MainActivity.getInstance() == null)
-    {
-        //give error
-    }
+        {
+            Toast.makeText(getActivity(),"Containerfragement couldn't be initialized",Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+        }
         main = MainActivity.getInstance();
     }
 
@@ -63,8 +65,7 @@ public class GraphFragment extends Fragment {
      * @return view of the fragment
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.graphfragment, container, false);
         chart = (SfChart)view.findViewById(R.id.graph);
         setupChart();
@@ -97,13 +98,10 @@ public class GraphFragment extends Fragment {
         list = new ObservableArrayList();
         if(graphID == 0)
         {
-            list.add(new ChartDataPoint("Tra", 0));
-            list.add(new ChartDataPoint("Tru", 0));
-            list.add(new ChartDataPoint("Sea", 0));
-            list.add(new ChartDataPoint("Inl", 0));
-            list.add(new ChartDataPoint("Sto", 0));
-            list.add(new ChartDataPoint("AGV", 0));
-            list.add(new ChartDataPoint("Rem", 0));
+            for(int i = 0; i < 7; i++)
+            {
+                list.add(new ChartDataPoint<String,Integer>(names[i],0));
+            }
             PieSeries pieSeries = new PieSeries();
             pieSeries.getDataMarker().setShowLabel(true);
             pieSeries.getDataMarker().setLabelContent(LabelContent.YValue);
@@ -117,10 +115,10 @@ public class GraphFragment extends Fragment {
         else
         {
             ColumnSeries seriesChart = new ColumnSeries();
-            list.add(new ChartDataPoint("Tra",0));
-            list.add(new ChartDataPoint("Tru",0));
-            list.add(new ChartDataPoint("Sea",0));
-            list.add(new ChartDataPoint("Inl",0));
+            for(int i = 0; i < 4; i++)
+            {
+                list.add(new ChartDataPoint<String,Integer>(names[i],0));
+            }
             seriesChart.setDataSource(list);
             seriesChart.getDataMarker().setShowLabel(true);
             seriesChart.getDataMarker().getLabelStyle().setLabelPosition(DataMarkerLabelPosition.Inner);
@@ -143,20 +141,17 @@ public class GraphFragment extends Fragment {
             public void run() {
                 list.clear();
                 if (graphID == 0) {
-                    list.add(new ChartDataPoint("Train", data.get(0)));
-                    list.add(new ChartDataPoint("Truck", data.get(1)));
-                    list.add(new ChartDataPoint("Seaship", data.get(2)));
-                    list.add(new ChartDataPoint("Inline Ship", data.get(3)));
-                    list.add(new ChartDataPoint("Storage", data.get(4)));
-                    list.add(new ChartDataPoint("AGV", data.get(5)));
-                    list.add(new ChartDataPoint("Remainer", data.get(6)));
+                    for(int i = 0; i < 7; i++)
+                    {
+                        list.add(new ChartDataPoint<String,Integer>(names[i],data.get(i)));
+                    }
                 } else {
-                    list.add(new ChartDataPoint("Train", data.get(0)));
-                    list.add(new ChartDataPoint("Truck", data.get(1)));
-                    list.add(new ChartDataPoint("Seaship", data.get(2)));
-                    list.add(new ChartDataPoint("Inline Ship", data.get(3)));
+                    for(int i = 0; i < 4; i++)
+                    {
+                        list.add(new ChartDataPoint<String,Integer>(names[i],data.get(i)));
+                    }
                 }
-                MainActivity.getInstance().completeRefresh.run();
+               main.completeRefresh.run();
             }
         });
     }
@@ -173,6 +168,7 @@ public class GraphFragment extends Fragment {
                 @Override
                 public void run() {
                     Toast.makeText(getActivity(), "Coundn't connect to controller", Toast.LENGTH_SHORT).show();
+                    main.completeRefresh.run();
                 }
             });
             return;

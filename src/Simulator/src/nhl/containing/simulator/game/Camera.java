@@ -55,7 +55,7 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 public class Camera extends Behaviour {
     
     // 
-    private final float CAMERA_RENDER_DISTANCE = 200.0f;        // The distance how far the camera can render
+    private final float CAMERA_RENDER_DISTANCE = 5000.0f;        // The distance how far the camera can render
     
     // Fly
     private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;       // Default movement speed of the fly camera

@@ -59,7 +59,7 @@ public abstract class LoadingPlatform extends Platform {
      * @param to target position
      */
     protected void setCraneTarget(Vector3f to) {
-        m_crane.getCranePath().setPath(new Vector3f(to));
+        m_crane.path().setPath(new Vector3f(to));
     }
     /**
      * Init parkingspots

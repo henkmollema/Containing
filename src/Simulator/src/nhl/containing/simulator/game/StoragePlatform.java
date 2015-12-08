@@ -4,6 +4,7 @@ import nhl.containing.simulator.simulation.Point3;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.simulation.Transform;
 import nhl.containing.simulator.world.World;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  * Platform extion,
@@ -37,7 +38,7 @@ public final class StoragePlatform extends LoadingPlatform {
      */
     @Override
     void createPlatform() {
-        m_crane = new RailCrane(this/*, new Vector3f(6.0f, 0.0f, 20.0f)*/);
+        m_crane = WorldCreator.createStorageCrane(this);
         initSpots(new Point3(6, 6, World.STORAGE_SIZE.x));
         updateOuter();
     }

@@ -169,6 +169,7 @@ public class SimulatorClient implements Runnable
     
     public void sendTimeScale(float tScale)
     {
+        /*
         try
 	{
             OutputStream out = _socket.getOutputStream();
@@ -180,6 +181,7 @@ public class SimulatorClient implements Runnable
         {
             ex.printStackTrace();
         }
+        */ 
     }
 
     public boolean instructionLoop()

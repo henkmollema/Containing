@@ -23,14 +23,14 @@ import nhl.containing.simulator.simulation.Callback;
  *
  * @author sietse
  */
-public abstract class Crane extends MovingItem {
+public final class Crane extends MovingItem {
     private final String MODEL_PATH_BASE = "models/henk/Cranes/";
     
     // Components
     private Transform m_frame;                              // Frame that hold the hook
     private Transform m_hook;                               // Hook, that holds the container
     private Line3D m_rope;                                  // Rope between hook and frame
-    private Timer m_attachTimer = new Timer(attachTime());  // For attach and detach containers
+    private Timer m_attachTimer;  // For attach and detach containers
     
     // Objects
     private Spatial m_frameSpatial;                         // Frame spatial
@@ -40,17 +40,16 @@ public abstract class Crane extends MovingItem {
     protected Vector3f m_frameOffset = Utilities.zero();    // Local frame offset, from the crane transform
     protected Vector3f m_hookOffset = Utilities.zero();     // Local hook offset, from the frame transform
     
-    // Other
+    // Settings
+    private final String m_craneModelName;
+    private final String m_hookModelName;
+    private final Material m_craneModelMaterial;
+    private final Material m_hookModelMaterial;
+    private final float m_attachTime;
+    private final float m_ropeHeight;
+    private final Vector3f m_basePosition;
     public Callback onTargetCallback;                       // Method when arriving at destination
     
-    /**
-     * Constructor
-     * @param parent 
-     */
-    public Crane(Transform parent) {
-        super(parent);
-        init(Utilities.zero(), Utilities.zero(), Utilities.zero(), Utilities.zero(), Utilities.zero());
-    }
     /**
      * Constructor
      * @param parent
@@ -61,9 +60,35 @@ public abstract class Crane extends MovingItem {
      * @param craneSpatialOffset
      * @param hookSpatialOffset 
      */
-    public Crane(Transform parent, Vector3f craneOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f craneSpatialOffset, Vector3f hookSpatialOffset) {
+    public Crane(
+            Transform parent,
+            Path cranePath,
+            String craneModelName,
+            String hookModelName,
+            Material craneModelMaterial,
+            Material hookModelMaterial,
+            float attachTime,
+            float ropeHeight,
+            Vector3f basePosition,
+            Vector3f craneOffset, 
+            Vector3f hookOffset, 
+            Vector3f containerOffset, 
+            Vector3f craneSpatialOffset, 
+            Vector3f hookSpatialOffset) {
+        
         super(parent);
-        init(craneOffset, hookOffset, containerOffset, craneSpatialOffset, hookSpatialOffset);
+        
+        this.m_craneModelName       = craneModelName;
+        this.m_hookModelName        = hookModelName;
+        this.m_craneModelMaterial   = craneModelMaterial;
+        this.m_hookModelMaterial    = hookModelMaterial;
+        
+        this.m_attachTime           = attachTime;
+        this.m_ropeHeight           = ropeHeight;
+        this.m_basePosition         = basePosition;
+        this.m_attachTimer          = new Timer(m_attachTime);
+        
+        init(cranePath, craneOffset, hookOffset, containerOffset, craneSpatialOffset, hookSpatialOffset);
     }
     
     /**
@@ -74,7 +99,7 @@ public abstract class Crane extends MovingItem {
      * @param frameSpatialOffset
      * @param hookSpatialOffset 
      */
-    private void init(Vector3f frameOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset) {
+    private void init(Path cranePath, Vector3f frameOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset) {
         
         // Init offsets
         m_frameOffset = new Vector3f(frameOffset);
@@ -87,14 +112,14 @@ public abstract class Crane extends MovingItem {
         
         // Create frame
         m_frameSpatial = Main.assets().loadModel(frameModelPath());
-        m_frameSpatial.setMaterial(craneModelMaterial());
+        m_frameSpatial.setMaterial(m_craneModelMaterial);
         m_frameSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
         m_frameSpatial.scale(1.5f);
         m_frame.attachChild(m_frameSpatial);
         
         // Create hook
         m_hookSpatial = Main.assets().loadModel(hookModelPath());
-        m_hookSpatial.setMaterial(hookModelMaterial());
+        m_hookSpatial.setMaterial(m_hookModelMaterial);
         m_hookSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
         m_hook.attachChild(m_hookSpatial);
         
@@ -107,8 +132,8 @@ public abstract class Crane extends MovingItem {
         Main.register(m_rope);
         
         // Path
-        path(getCranePath());
-        path().setPosition(basePosition());
+        path(cranePath);
+        path().setPosition(m_basePosition);
         path().setCallback(new Callback(this, "_onCrane"));
         
         // Run aditional inhereted awake
@@ -120,14 +145,14 @@ public abstract class Crane extends MovingItem {
      * @return 
      */
     private String frameModelPath() {
-        return MODEL_PATH_BASE + craneModelName();
+        return MODEL_PATH_BASE + m_craneModelName;
     }
     /**
      * Hook model path
      * @return 
      */
     private String hookModelPath() {
-        return MODEL_PATH_BASE + hookModelName();
+        return MODEL_PATH_BASE + m_hookModelName;
     }
     /**
      * update
@@ -156,7 +181,7 @@ public abstract class Crane extends MovingItem {
             m_hook.localPosition(hookPos);
             
             // Rrope
-            m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(0.0f, ropeHeight(), 0.0f)));
+            m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(0.0f, m_ropeHeight, 0.0f)));
             m_rope.SetPosition(1, m_hook.position());
         }
         
@@ -181,15 +206,6 @@ public abstract class Crane extends MovingItem {
      */
     protected void update() { }
     
-    protected abstract String craneModelName();
-    protected abstract String hookModelName();
-    protected abstract Material craneModelMaterial();
-    protected abstract Material hookModelMaterial();
-    protected abstract Path getCranePath();
-    protected abstract float attachTime();
-    protected abstract float ropeHeight();
-    protected abstract Vector3f basePosition();
-    
     /**
      * Called when arrived at a node
      */
@@ -203,7 +219,7 @@ public abstract class Crane extends MovingItem {
      * Set path to default destination
      */
     public void setPath() {
-        setPath(basePosition());
+        setPath(m_basePosition);
     }
     /**
      * Set path to custom destination
@@ -212,16 +228,16 @@ public abstract class Crane extends MovingItem {
     public void setPath(Vector3f pos) {
         
         // Get poins
-        Vector3f p = new Vector3f(pos); // Target
-        Vector3f b = basePosition();    // Base
-        Vector3f c = path().getPosition();  // Current
+        Vector3f p = new Vector3f(pos);             // Target
+        Vector3f b = new Vector3f(m_basePosition);  // Base
+        Vector3f c = path().getPosition();          // Current
         
         // Create path
         Vector3f[] newPath = new Vector3f[] {
-            new Vector3f(c.x, b.y, c.z),    // Go up
-            new Vector3f(c.x, b.y, p.z),   // Go forward
-            new Vector3f(p.x, b.y, p.z),   // Go side
-            new Vector3f(p.x, p.y, p.z)    // Go down
+            new Vector3f(c.x, b.y, c.z),            // Go up
+            new Vector3f(c.x, b.y, p.z),            // Go forward
+            new Vector3f(p.x, b.y, p.z),            // Go side
+            new Vector3f(p.x, p.y, p.z)             // Go down
         };
         
         // Set path

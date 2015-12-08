@@ -363,7 +363,7 @@ public class Main extends SimpleApplication {
      * Update timescale
      */
     public void updateTimescale() {
-        float _timescale = TIME_SCALE_CHANGE_SPEED * Time.deltaTime();
+        float _timescale = TIME_SCALE_CHANGE_SPEED * Time.unscaledDeltaTime();
 
         if (m_input.getButton("R").isDown()) {
             _timescale = -_timescale;

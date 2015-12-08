@@ -198,6 +198,10 @@ public final class MaterialCreator {
      */
     public static Material diffuse(ColorRGBA colorAmbient, ColorRGBA colorDiffuse, float specular, ColorRGBA colorSpecular) {
         
+        if (!World.USE_DIFFUSE) {
+            return unshaded(colorDiffuse);
+        }
+        
         Material m = new Material(Main.assets(), "Common/MatDefs/Light/Lighting.j3md"); 
         m.setBoolean("UseMaterialColors", true); 
         m.setColor("Ambient", colorAmbient.clone());

@@ -16,15 +16,9 @@ import nhl.containing.simulator.simulation.Mathf;
 import nhl.containing.simulator.simulation.Utilities;
 import nhl.containing.simulator.world.MaterialCreator;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.*;
-import java.util.ArrayList;
-import java.util.List;
 import nhl.containing.simulator.simulation.Callback;
-import nhl.containing.simulator.simulation.Debug;
-import nhl.containing.simulator.world.WorldCreator;
-
 /**
  *
  * @author sietse

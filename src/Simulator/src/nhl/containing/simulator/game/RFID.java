@@ -1,11 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 /**
- *
+ * TODO: add all id stuff
  * @author sietse
  */
 public class RFID {

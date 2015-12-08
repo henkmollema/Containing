@@ -302,8 +302,8 @@ public class Camera extends Behaviour {
          * Direction * input * Unit_Horizontal
          */
         Vector3f newPosition = new Vector3f();
-        newPosition = newPosition.add(Main.cam().getUp().add(Main.cam().getDirection()).mult(Main.input().rawInputAxis().y));
-        newPosition = newPosition.add(Main.cam().getLeft().mult(-Main.input().rawInputAxis().x));
+        newPosition = newPosition.add(Main.cam().getUp().add(Main.cam().getDirection()).mult(Main.input().rawInputAxes().y));
+        newPosition = newPosition.add(Main.cam().getLeft().mult(-Main.input().rawInputAxes().x));
         newPosition = Utilities.Horizontal(newPosition);
         
         if (newPosition.lengthSquared() < 0.001f) {
@@ -385,8 +385,8 @@ public class Camera extends Behaviour {
             return;
         
         // Get new position
-        Vector3f movement = Main.cam().getDirection().mult(Main.input().rawInputAxis().y);
-        movement = movement.subtract(Main.cam().getLeft().mult(Main.input().rawInputAxis().x));
+        Vector3f movement = Main.cam().getDirection().mult(Main.input().rawInputAxes().y);
+        movement = movement.subtract(Main.cam().getLeft().mult(Main.input().rawInputAxes().x));
         
         // World up/down (up has prior)
         if (Main.input().getButton("E").isDown()) {
@@ -419,6 +419,7 @@ public class Camera extends Behaviour {
         __rot[0] += Main.input().mouseMove().y;
         __rot[1] -= Main.input().mouseMove().x;
         
+        // Angles to quaternion
         Quaternion __q = Quaternion.IDENTITY;
         __q = __q.fromAngles(__rot);
         

@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 
 /**
- *
+ * This is a class that updates
+ * You will need to register the object
+ * to Main.java (Main.register(<behaviour_class>)) Or
+ * in the main class itsself, or create the object and call "_init"
  * @author sietse
  */
 public abstract class Behaviour {

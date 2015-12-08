@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Path;
@@ -16,7 +12,11 @@ import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.World;
 
 /**
- *
+ * An extention to Crane
+ * Maybe just create in World.java
+ * a Crane method that fills in all the 
+ * members of a Crane so there will be
+ * no child classes anymore of Crane
  * @author sietse
  */
 public class RailCrane extends Crane {

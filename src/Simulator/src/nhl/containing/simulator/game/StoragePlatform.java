@@ -1,17 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Point3;
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Debug;
 import nhl.containing.simulator.simulation.Transform;
 import nhl.containing.simulator.world.World;
 
 /**
- *
+ * Platform extion,
+ * This is the main Container storage
+ * The thing in the middle
  * @author sietse
  */
 public final class StoragePlatform extends LoadingPlatform {
@@ -45,6 +42,10 @@ public final class StoragePlatform extends LoadingPlatform {
         updateOuter();
     }
 
+    /**
+     * Create parking spots
+     * @return 
+     */
     @Override
     protected ParkingSpot[] parkingSpots() {
         float y_offset = 0.0f;

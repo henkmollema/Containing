@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Callback class is a reflection
+ * simplefier, useage: 
+ *      new Callback(<class or object>, "<name of methods>"...)
+ * And than use invoke to call the methods
  * @author sietse
  */
 public class Callback {
@@ -42,6 +40,11 @@ public class Callback {
         m_methods = methods;
     }
     
+    /**
+     * Covert to string
+     * @return 
+     */
+    @Override
     public String toString() {
         String s = "";
         for (String a : m_methods)

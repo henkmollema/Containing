@@ -16,13 +16,13 @@ import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 
 /**
- *
+ * Handles input
  * @author sietse
  */
 public class Input extends Behaviour {
     
     // Smoothing
-    public final float      MOUSE_SENSITIVITY_X         = 6.0f;
+    public final float      MOUSE_SENSITIVITY_X         =  6.0f;
     public final float      MOUSE_SENSITIVITY_Y         = -6.0f;
     
     // Acceleration
@@ -63,30 +63,35 @@ public class Input extends Behaviour {
         return null;
     }
     
+    /**
+     * Called at create
+     */
     @Override
     public void awake() {
-        m_mouseSmoothBuffer = new ArrayList<Vector2f>(MOUSE_SMOOTH_BUFFER);
-        
+        m_mouseSmoothBuffer = new ArrayList<>(MOUSE_SMOOTH_BUFFER);
     }
-    
+    /**
+     * Called at first frame
+     */
     @Override
     public void start() {
-        
         initInput();
     }
-    
+    /**
+     * Called every frame
+     */
     @Override
     public void rawUpdate() {
         
-        // Get raw input
-        m_mouseSmoothBuffer.add(rawMouseMove()/*.divide(Time.unscaledDeltaTime())*/);
+        // Get raw input !speed! (input/deltatime)
+        m_mouseSmoothBuffer.add(rawMouseMove().divide(Time.unscaledDeltaTime()));
         while(m_mouseSmoothBuffer.size() > MOUSE_SMOOTH_BUFFER)
             m_mouseSmoothBuffer.remove(0);
         
         // Set movement
-        m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER); // Smoothing mouse
-        m_mouseMove = getMouseAcceleration(m_mouseMove);  // Accelerating mouse
-        
+        m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);     // Smoothing mouse
+        m_mouseMove = getMouseAcceleration(m_mouseMove);            // Accelerating mouse
+        m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime());   // Input speed to distance
     }
     
     /**
@@ -109,14 +114,16 @@ public class Input extends Behaviour {
      * Get input axis
      * @return 
      */
-    public Vector2f rawInputAxis() {
+    public Vector2f rawInputAxes() {
         Vector2f __axis = new Vector2f(0.0f, 0.0f);
         
+        // Horizontal axis
         if (getButton("D").isDown())
             __axis.x = 1.0f;
         else if (getButton("A").isDown())
             __axis.x = -1.0f;
         
+        // Vertical Axes
         if (getButton("W").isDown())
             __axis.y = 1.0f;
         else if (getButton("S").isDown())
@@ -197,31 +204,31 @@ public class Input extends Behaviour {
         Main.inputManager().clearRawInputListeners();
         
         m_buttons = new Button[] {
-            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                //  0
-            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),             //  1
-            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),             //  2
-            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                 //  3
-            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),             //  4
-            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                 //  5
+            new Button("W",     new KeyTrigger(KeyInput.KEY_W)),                    //  0
+            new Button("A",     new KeyTrigger(KeyInput.KEY_A), true),              //  1
+            new Button("S",     new KeyTrigger(KeyInput.KEY_S), true),              //  2
+            new Button("D",     new KeyTrigger(KeyInput.KEY_D)),                    //  3
+            new Button("Q",     new KeyTrigger(KeyInput.KEY_Q), true),              //  4
+            new Button("E",     new KeyTrigger(KeyInput.KEY_E)),                    //  5
             new Button("Shift", new KeyTrigger(KeyInput.KEY_LSHIFT)),               //  6
-            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),            //  7
-            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),             //  8
-            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                 //  9
-            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                 // 10
-            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                 // 11
-            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                // 12
-            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),             // 13
+            new Button("Ctrl",  new KeyTrigger(KeyInput.KEY_LCONTROL)),             //  7
+            new Button("R",     new KeyTrigger(KeyInput.KEY_R), true),              //  8
+            new Button("T",     new KeyTrigger(KeyInput.KEY_T)),                    //  9
+            new Button("Y",     new KeyTrigger(KeyInput.KEY_Y)),                    // 10
+            new Button("F",     new KeyTrigger(KeyInput.KEY_F)),                    // 11
+            new Button("G",     new KeyTrigger(KeyInput.KEY_G)),                    // 12
+            new Button("Exit",  new KeyTrigger(KeyInput.KEY_ESCAPE)),               // 13
                 
-            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),    // 14
-            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),  // 15
-            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))   // 16
+            new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),  // 14
+            new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),// 15
+            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))  // 16
         };
         
-        m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"));
-        m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"));
-        m_buttons[12].setOnDownCallback(new Callback(Main.camera(), "toggleCameraMode"));
-        m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"));
-        m_buttons[14].setOnDownCallback(new Callback(this, "pickObject"));
+        m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"     ));
+        m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"  ));
+        m_buttons[12].setOnDownCallback(new Callback(Main.camera()  , "toggleCameraMode"));
+        m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"            ));
+        m_buttons[14].setOnDownCallback(new Callback(this           , "pickObject"      ));
         
         Main.inputManager().addMapping("-Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         Main.inputManager().addMapping("+Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));

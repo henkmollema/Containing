@@ -1,6 +1,3 @@
-/*
- * Used for all simulator items that carrie containers
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Utilities;

@@ -1,18 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.gui;
 
 import nhl.containing.simulator.simulation.Behaviour;
-import nhl.containing.simulator.simulation.Debug;
 import nhl.containing.simulator.simulation.Main;
 import com.jme3.font.BitmapText;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

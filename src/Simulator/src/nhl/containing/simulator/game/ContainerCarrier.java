@@ -146,7 +146,7 @@ public class ContainerCarrier extends Item {
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     
                     // Set spot
-                    m_containerSpots[i][j][k] = new ContainerSpot(new Vector3f(i, j, k).mult(World.containerSize().add(m_containerOffset)));
+                    m_containerSpots[i][j][k] = new ContainerSpot(new Vector3f(i, j, k).mult(World.containerSize().mult(2.0f).add(m_containerOffset)));
                     
                     // Remove this, its for testing purposes
                     setContainer(new Point3(i, j, k), new Container(new RFID()));

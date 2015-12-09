@@ -29,9 +29,12 @@ import nhl.containing.simulator.simulation.Point2;
  */
 public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
-    public static final Point2 STORAGE_SIZE = new Point2(22, 1); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(47, 1); // x = containers length per storage; y = storage amount
     
-    private static final float WORLD_HEIGHT = 0.0f;
+    private static final float WORLD_HEIGHT =  0.0f;
+    private static final float WORLD_DEPTH = -150.0f;
+    private static final float LAND_HEIGHT_EXTEND = 100.0f;
+    private static final float WATER_LEVEL = - 5.0f;
     private static final float EXTENDS = 50.0f;
     private static final float STORAGE_LENGTH = 1550.0f;
     private static final float STORAGE_WIDTH = 600.0f;
@@ -57,7 +60,7 @@ public class World extends Behaviour {
     private DirectionalLight m_sun;
     
     // World
-    private List<StoragePlatform> m_storages = new ArrayList<StoragePlatform>(0);
+    private List<StoragePlatform> m_storages = new ArrayList<>(0);
     
     // External
     
@@ -92,7 +95,7 @@ public class World extends Behaviour {
         createGround();
         Vector3f offset = Utilities.up();
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
-            createStorage(offset);
+            createStorageCell(offset);
             offset.x += containerSize().x * 6 + 15.0f;
         }
         
@@ -110,7 +113,7 @@ public class World extends Behaviour {
         m_storages.get(0).place(0, new Point3(4, 5, 1));
         
     }
-    private void createStorage(Vector3f position) {
+    private void createStorageCell(Vector3f position) {
         Transform t = new Transform();
         StoragePlatform plat = new StoragePlatform(t, Utilities.zero());
         t.attachChild(plat);
@@ -118,6 +121,19 @@ public class World extends Behaviour {
         t.position(position);
         m_storages.add(plat);
     }
+    private void createLorryCell(Vector3f position) {
+        
+    }
+    private void createInlandCell(Vector3f position) {
+        
+    }
+    private void createShippingCell(Vector3f position) {
+        
+    }
+    private void createTrainCell(Vector3f position) {
+        
+    }
+    
     private void createGround() {
         createStorageGround();
         createRoadGround();
@@ -125,6 +141,7 @@ public class World extends Behaviour {
         createInlandGround();
         createShippingGround();
         createTrainGround();
+        createOtherGround();
     }
     
     private void createStorageGround() {
@@ -233,6 +250,40 @@ public class World extends Behaviour {
                 true, false                                                     // Other
         );
         lorryGround.setLocalTranslation(0.0f, WORLD_HEIGHT-0.5f, -STORAGE_WIDTH - 2 * LANE_WIDTH * LANE_COUNT - EXTENDS);
+    }
+    private void createOtherGround() {
+        Geometry belowMainGround = WorldCreator.createBox(
+                null,                                                           // Parent
+                new Vector3f(
+                    STORAGE_LENGTH + LANE_WIDTH * LANE_COUNT * 3 + EXTENDS, 
+                    -WORLD_DEPTH, 
+                    STORAGE_WIDTH + LANE_WIDTH * LANE_COUNT * 2 + EXTENDS * 2),       // Size
+                new ColorRGBA(0.0f, 0.0f, 0.0f, 1.0f),                          // Color
+                true, false                                                     // Other
+        );
+        belowMainGround.setLocalTranslation(-EXTENDS, WORLD_HEIGHT - 1.5f + WORLD_DEPTH, 0.0f);
+        
+        Geometry aBlock = WorldCreator.createBox(
+                null,                                                           // Parent
+                new Vector3f(
+                    1.0f, 
+                    LAND_HEIGHT_EXTEND, 
+                    LANE_WIDTH * LANE_COUNT * 2 + STORAGE_WIDTH + EXTENDS * 2.0f),       // Size
+                new ColorRGBA(0.0f, 0.0f, 0.0f, 1.0f),                          // Color
+                true, false                                                     // Other
+        );
+        aBlock.setLocalTranslation(STORAGE_LENGTH + LANE_WIDTH * LANE_COUNT * 3, LAND_HEIGHT_EXTEND + WORLD_HEIGHT - 0.5f, 0.0f);
+        
+        Geometry bBlock = WorldCreator.createBox(
+                null,                                                           // Parent
+                new Vector3f(
+                    STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT, 
+                    LAND_HEIGHT_EXTEND, 
+                    1.0f),       // Size
+                new ColorRGBA(0.0f, 0.0f, 0.0f, 1.0f),                          // Color
+                true, false                                                     // Other
+        );
+        bBlock.setLocalTranslation(STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT * 2, LAND_HEIGHT_EXTEND + WORLD_HEIGHT - 0.5f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS * 2.0f);
     }
     
     void runTests() {

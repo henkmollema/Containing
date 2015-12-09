@@ -30,9 +30,6 @@ public final class WorldCreator {
      */
     public static Geometry createBox(Node parent) {
         Vector3f v = World.containerSize();
-        float m = 0.48f;
-        v = v.mult(m);
-        
         return createBox(parent, v);
     }
     /**

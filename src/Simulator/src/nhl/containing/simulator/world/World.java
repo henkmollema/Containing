@@ -5,7 +5,7 @@
  */
 package nhl.containing.simulator.world;
 
-import nhl.containing.simulator.game.StoragePlatform;
+import nhl.containing.simulator.game.PlatformStorage;
 import nhl.containing.simulator.simulation.Behaviour;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.simulation.Point3;
@@ -29,15 +29,17 @@ import nhl.containing.simulator.simulation.Point2;
  */
 public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
-    public static final Point2 STORAGE_SIZE = new Point2(47, 1); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(47, 2); // x = containers length per storage; y = storage amount
     
     private static final float WORLD_HEIGHT =  0.0f;
     private static final float WORLD_DEPTH = -150.0f;
-    private static final float LAND_HEIGHT_EXTEND = 100.0f;
     private static final float WATER_LEVEL = - 5.0f;
-    private static final float EXTENDS = 50.0f;
+    private static final float LAND_HEIGHT_EXTEND = 100.0f;
+    
     private static final float STORAGE_LENGTH = 1550.0f;
     private static final float STORAGE_WIDTH = 600.0f;
+    
+    private static final float EXTENDS = 50.0f;
     private static final int SEA_SHIP_CRANE_COUNT = 8;
     private static final int TRAIN_CRANE_COUNT = 4;
     private static final int LORRY_CRANE_COUNT = 20;
@@ -60,7 +62,7 @@ public class World extends Behaviour {
     private DirectionalLight m_sun;
     
     // World
-    private List<StoragePlatform> m_storages = new ArrayList<>(0);
+    private List<PlatformStorage> m_storages = new ArrayList<>(0);
     
     // External
     
@@ -89,15 +91,23 @@ public class World extends Behaviour {
     
     @Override
     public void update() {
-        for(StoragePlatform s : m_storages) s.update();
+        for(PlatformStorage s : m_storages) s.update();
     }
     private void createObjects() {
         createGround();
-        Vector3f offset = Utilities.up();
+        
+        // Create storage
+        Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH / 2, WORLD_HEIGHT, -STORAGE_WIDTH);
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
+            
+            if (i == 10) // Adding space for the middle road
+                offset.x += LANE_WIDTH * LANE_COUNT;
+            
             createStorageCell(offset);
-            offset.x += containerSize().x * 6 + 15.0f;
+            offset.x += containerSize().x * 6 + 30.0f;
         }
+        
+        // Create lorry
         
         
         
@@ -115,7 +125,7 @@ public class World extends Behaviour {
     }
     private void createStorageCell(Vector3f position) {
         Transform t = new Transform();
-        StoragePlatform plat = new StoragePlatform(t, Utilities.zero());
+        PlatformStorage plat = new PlatformStorage(t, Utilities.zero());
         t.attachChild(plat);
         plat.localPosition(Utilities.zero());
         t.position(position);
@@ -152,7 +162,7 @@ public class World extends Behaviour {
                 new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        storageEast.setLocalTranslation((LANE_WIDTH * LANE_COUNT) + STORAGE_LENGTH / 2.0f, WORLD_HEIGHT-0.5f, 0.0f);
+        storageEast.setLocalTranslation((LANE_WIDTH * LANE_COUNT) + STORAGE_LENGTH / 2.0f, WORLD_HEIGHT-1.0f, 0.0f);
         
         // 
         Geometry storageWest = WorldCreator.createBox(
@@ -161,7 +171,7 @@ public class World extends Behaviour {
                 new ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        storageWest.setLocalTranslation(-(LANE_WIDTH * LANE_COUNT) - STORAGE_LENGTH / 2.0f, WORLD_HEIGHT-0.5f, 0.0f);
+        storageWest.setLocalTranslation(-(LANE_WIDTH * LANE_COUNT) - STORAGE_LENGTH / 2.0f, WORLD_HEIGHT-1.0f, 0.0f);
     }
     private void createRoadGround() {
         final ColorRGBA roadColor = new ColorRGBA(0.4f, 0.4f, 0.4f, 1.0f);
@@ -173,7 +183,7 @@ public class World extends Behaviour {
                 roadColor,                          // Color
                 true, false                                                     // Other
         );
-        middleRoad.setLocalTranslation(0.0f, WORLD_HEIGHT-0.5f, 0.0f);
+        middleRoad.setLocalTranslation(0.0f, WORLD_HEIGHT-1.0f, 0.0f);
         
         // Storage
         Geometry westRoad = WorldCreator.createBox(
@@ -182,7 +192,7 @@ public class World extends Behaviour {
                 roadColor,                          // Color
                 true, false                                                     // Other
         );
-        westRoad.setLocalTranslation(-STORAGE_LENGTH - LANE_WIDTH * 2 * LANE_COUNT, WORLD_HEIGHT-0.5f, 0.0f);
+        westRoad.setLocalTranslation(-STORAGE_LENGTH - LANE_WIDTH * 2 * LANE_COUNT, WORLD_HEIGHT-1.0f, 0.0f);
         
         // Storage
         Geometry eastRoad = WorldCreator.createBox(
@@ -191,7 +201,7 @@ public class World extends Behaviour {
                 roadColor,                          // Color
                 true, false                                                     // Other
         );
-        eastRoad.setLocalTranslation(STORAGE_LENGTH + LANE_WIDTH * 2 * LANE_COUNT, WORLD_HEIGHT-0.5f, 0.0f);
+        eastRoad.setLocalTranslation(STORAGE_LENGTH + LANE_WIDTH * 2 * LANE_COUNT, WORLD_HEIGHT-1.0f, 0.0f);
         
         // Storage
         Geometry northRoad = WorldCreator.createBox(
@@ -200,7 +210,7 @@ public class World extends Behaviour {
                 roadColor,                          // Color
                 true, false                                                     // Other
         );
-        northRoad.setLocalTranslation(0, WORLD_HEIGHT-0.5f, STORAGE_WIDTH + LANE_WIDTH * LANE_COUNT);
+        northRoad.setLocalTranslation(0, WORLD_HEIGHT-1.0f, STORAGE_WIDTH + LANE_WIDTH * LANE_COUNT);
         
         // Storage
         Geometry southRoad = WorldCreator.createBox(
@@ -209,7 +219,7 @@ public class World extends Behaviour {
                 roadColor,                          // Color
                 true, false                                                     // Other
         );
-        southRoad.setLocalTranslation(0, WORLD_HEIGHT-0.5f, -STORAGE_WIDTH - LANE_WIDTH * LANE_COUNT);
+        southRoad.setLocalTranslation(0, WORLD_HEIGHT-1.0f, -STORAGE_WIDTH - LANE_WIDTH * LANE_COUNT);
     }
     private void createLorryGround() {
         // Storage
@@ -219,7 +229,7 @@ public class World extends Behaviour {
                 new ColorRGBA(0.5f, 0.6f, 0.8f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        lorryGround.setLocalTranslation(STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT * 2, WORLD_HEIGHT-0.5f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS);
+        lorryGround.setLocalTranslation(STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT * 2, WORLD_HEIGHT-1.0f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS);
     }
     private void createInlandGround() {
         // Storage
@@ -229,7 +239,7 @@ public class World extends Behaviour {
                 new ColorRGBA(0.6f, 0.8f, 0.5f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        lorryGround.setLocalTranslation(-STORAGE_LENGTH / 2 - LANE_WIDTH * LANE_COUNT , WORLD_HEIGHT-0.5f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS);
+        lorryGround.setLocalTranslation(-STORAGE_LENGTH / 2 - LANE_WIDTH * LANE_COUNT , WORLD_HEIGHT-1.0f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS);
     }
     private void createShippingGround() {
         // Storage
@@ -239,7 +249,7 @@ public class World extends Behaviour {
                 new ColorRGBA(0.8f, 0.6f, 0.5f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        lorryGround.setLocalTranslation(-STORAGE_LENGTH - LANE_WIDTH * LANE_COUNT * 3 - EXTENDS, WORLD_HEIGHT-0.5f, 0.0f);
+        lorryGround.setLocalTranslation(-STORAGE_LENGTH - LANE_WIDTH * LANE_COUNT * 3 - EXTENDS, WORLD_HEIGHT-1.0f, 0.0f);
     }
     private void createTrainGround() {
         // Storage
@@ -249,7 +259,7 @@ public class World extends Behaviour {
                 new ColorRGBA(0.6f, 0.8f, 0.5f, 1.0f),                          // Color
                 true, false                                                     // Other
         );
-        lorryGround.setLocalTranslation(0.0f, WORLD_HEIGHT-0.5f, -STORAGE_WIDTH - 2 * LANE_WIDTH * LANE_COUNT - EXTENDS);
+        lorryGround.setLocalTranslation(0.0f, WORLD_HEIGHT-1.0f, -STORAGE_WIDTH - 2 * LANE_WIDTH * LANE_COUNT - EXTENDS);
     }
     private void createOtherGround() {
         Geometry belowMainGround = WorldCreator.createBox(
@@ -259,7 +269,7 @@ public class World extends Behaviour {
                     -WORLD_DEPTH, 
                     STORAGE_WIDTH + LANE_WIDTH * LANE_COUNT * 2 + EXTENDS * 2),       // Size
                 new ColorRGBA(0.0f, 0.0f, 0.0f, 1.0f),                          // Color
-                true, false                                                     // Other
+                false, false                                                     // Other
         );
         belowMainGround.setLocalTranslation(-EXTENDS, WORLD_HEIGHT - 1.5f + WORLD_DEPTH, 0.0f);
         

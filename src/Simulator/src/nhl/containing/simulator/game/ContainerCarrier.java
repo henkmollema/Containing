@@ -138,6 +138,9 @@ public class ContainerCarrier extends Item {
      * @param stack 
      */
     protected final void initSpots(Point3 stack) {
+        Vector3f _baseOffset = new Vector3f(m_containerOffset);
+        _baseOffset = _baseOffset.add(World.containerSize());
+        
         m_containerSpots = new ContainerSpot[stack.x][][];
         for (int i = 0; i < m_containerSpots.length; ++i) {
             m_containerSpots[i] = new ContainerSpot[stack.y][];
@@ -146,7 +149,11 @@ public class ContainerCarrier extends Item {
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     
                     // Set spot
-                    m_containerSpots[i][j][k] = new ContainerSpot(new Vector3f(i, j, k).mult(World.containerSize().mult(2.0f).add(m_containerOffset)));
+                    Vector3f _newPosition = new Vector3f(i, j, k);
+                    _newPosition = _newPosition.mult(World.containerSize().mult(2.0f));
+                    _newPosition = _newPosition.add(_baseOffset);
+                            
+                    m_containerSpots[i][j][k] = new ContainerSpot(_newPosition);
                     
                     // Remove this, its for testing purposes
                     setContainer(new Point3(i, j, k), new Container(new RFID()));
@@ -172,12 +179,13 @@ public class ContainerCarrier extends Item {
      * Update occlusion culling
      */
     protected final void updateOuter() {
-        for (int x = 0; x < m_containerSpots.length; ++x)
-        for (int y = 0; y < m_containerSpots[x].length; ++y)
+        for (int x = 0; x < m_containerSpots      .length; ++x)
+        for (int y = 0; y < m_containerSpots[x]   .length; ++y)
         for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
             if (m_containerSpots[x][y][z].container == null)
                 continue;
-            m_containerSpots[x][y][z].container.setCullHint(isOuter(x, y, z) ? cullHint.Dynamic : cullHint.Always);
+            
+            m_containerSpots[x][y][z].container.setCullHint(isOuter(x, y, z) ? CullHint.Dynamic : CullHint.Always);
         }
     }
     /**
@@ -191,10 +199,11 @@ public class ContainerCarrier extends Item {
         
         if (x == 0 || 
           z == 0 ||
-          x == m_containerSpots.length - 1 || 
-          y == m_containerSpots[x].length - 1 ||  
+          x == m_containerSpots      .length - 1 || 
+          y == m_containerSpots[x]   .length - 1 ||  
           z == m_containerSpots[x][y].length - 1)
             return true; // The container is on the most outer place
+        
         if (y == 0)
             return false; // It is not on outer place but on the bottom so do not render
         
@@ -224,8 +233,8 @@ public class ContainerCarrier extends Item {
     public Container setContainer(Point3 point, Container c) {
         if ( // Check if input is valid
                 point.x < 0 || point.y < 0 || point.z < 0 || 
-                point.x >= m_containerSpots.length || 
-                point.y >= m_containerSpots[point.x].length || 
+                point.x >= m_containerSpots                  .length || 
+                point.y >= m_containerSpots[point.x]         .length || 
                 point.z >= m_containerSpots[point.x][point.y].length)
         return null;
         
@@ -275,8 +284,8 @@ public class ContainerCarrier extends Item {
      * @return Replace success
      */
     protected boolean replaceContainer(Container a, Container b) {
-        for (int x = 0; x < m_containerSpots.length; ++x)
-        for (int y = 0; y < m_containerSpots[x].length; ++y)
+        for (int x = 0; x < m_containerSpots      .length; ++x)
+        for (int y = 0; y < m_containerSpots[x]   .length; ++y)
         for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
             if (m_containerSpots[x][y][z].container == a) {
                 m_containerSpots[x][y][z].container = b;

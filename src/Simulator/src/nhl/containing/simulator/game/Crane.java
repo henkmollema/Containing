@@ -74,7 +74,9 @@ public final class Crane extends MovingItem {
             Vector3f hookOffset, 
             Vector3f containerOffset, 
             Vector3f craneSpatialOffset, 
-            Vector3f hookSpatialOffset) {
+            Vector3f hookSpatialOffset,
+            float craneScale,
+            float hookScale) {
         
         super(parent);
         
@@ -88,7 +90,7 @@ public final class Crane extends MovingItem {
         this.m_basePosition         = basePosition;
         this.m_attachTimer          = new Timer(m_attachTime);
         
-        init(cranePath, craneOffset, hookOffset, containerOffset, craneSpatialOffset, hookSpatialOffset);
+        init(cranePath, craneOffset, hookOffset, containerOffset, craneSpatialOffset, hookSpatialOffset, craneScale, hookScale);
     }
     
     /**
@@ -99,7 +101,7 @@ public final class Crane extends MovingItem {
      * @param frameSpatialOffset
      * @param hookSpatialOffset 
      */
-    private void init(Path cranePath, Vector3f frameOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset) {
+    private void init(Path cranePath, Vector3f frameOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset, float craneScale, float hookScale) {
         
         // Init offsets
         m_frameOffset = new Vector3f(frameOffset);
@@ -114,13 +116,14 @@ public final class Crane extends MovingItem {
         m_frameSpatial = Main.assets().loadModel(frameModelPath());
         m_frameSpatial.setMaterial(m_craneModelMaterial);
         m_frameSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
-        m_frameSpatial.scale(1.5f);
+        m_frameSpatial.scale(craneScale);
         m_frame.attachChild(m_frameSpatial);
         
         // Create hook
         m_hookSpatial = Main.assets().loadModel(hookModelPath());
         m_hookSpatial.setMaterial(m_hookModelMaterial);
         m_hookSpatial.rotate(0.0f, 90.0f * Mathf.Deg2Rad, 0.0f);
+        m_hookSpatial.scale(hookScale);
         m_hook.attachChild(m_hookSpatial);
         
         // Spatial offsets

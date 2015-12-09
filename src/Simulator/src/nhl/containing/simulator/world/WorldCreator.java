@@ -79,12 +79,8 @@ public final class WorldCreator {
     }
     
     
-    public static Crane createStorageCrane(Transform parent) {
-        Vector3f _basePosition = new Vector3f();
-        
-        return new Crane(
-                parent,                                         // Parent
-                new Path(                                       // Path
+    private static Path createDefaultCranePath(Vector3f basePosition) {
+        return new Path(                                       // Path
                     null,                                       // Current position 
                     null,                                       // Start node
                     false,                                      // manual
@@ -94,8 +90,16 @@ public final class WorldCreator {
                     LoopMode.Once,                              // Loopmode
                     null,                                       // ease type
                     null,                                       // callback
-                    _basePosition,                              // Node 0
-                    _basePosition),                             // Node 1
+                    basePosition,                               // Node 0
+                    basePosition                                // Node 1
+                );
+    }
+    public static Crane createStorageCrane(Transform parent) {
+        Vector3f _basePosition = new Vector3f();
+        
+        return new Crane(
+                parent,                                         // Parent
+                createDefaultCranePath(_basePosition),          // Node 1
                 "TrainCrane.obj",                               // Crane model name
                 "TrainCraneHook.obj",                           // Hook model name
                 MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
@@ -107,7 +111,9 @@ public final class WorldCreator {
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
-                new Vector3f(3.0f, -11f, 0.0f)                  // Hook spatial offset
+                new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
+                3.0f,                                           // Crane scale
+                2.0f                                            // Hook scale
          );
     }
 }

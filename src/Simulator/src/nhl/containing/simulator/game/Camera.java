@@ -167,6 +167,7 @@ public class Camera extends Behaviour {
         
         // Set image fx
         Main.view().addProcessor(postProcessor());
+        Main.cam().setLocation(new Vector3f(-500.0f, 50.0f, -300.0f));
         
         // Init camera modes
         onStartRTS();

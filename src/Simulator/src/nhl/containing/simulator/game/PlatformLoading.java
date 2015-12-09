@@ -17,7 +17,7 @@ import nhl.containing.simulator.simulation.Transform;
  * 
  * @author sietse
  */
-public abstract class LoadingPlatform extends Platform {
+public abstract class PlatformLoading extends Platform {
     
     protected Crane m_crane;                                // Crane
     protected ParkingSpot[] m_parkingSpots;                 // AGV parking spots
@@ -29,7 +29,7 @@ public abstract class LoadingPlatform extends Platform {
     /**
      * Constructor
      */
-    public LoadingPlatform() {
+    public PlatformLoading() {
         super();
         m_parkingSpots = _parkingSpots();
     }
@@ -37,7 +37,7 @@ public abstract class LoadingPlatform extends Platform {
      * Constructor
      * @param parent 
      */
-    public LoadingPlatform(Transform parent) {
+    public PlatformLoading(Transform parent) {
         super(parent);
         m_parkingSpots = _parkingSpots();
     }

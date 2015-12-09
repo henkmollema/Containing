@@ -12,13 +12,13 @@ import nhl.containing.simulator.world.WorldCreator;
  * The thing in the middle
  * @author sietse
  */
-public final class StoragePlatform extends LoadingPlatform {
+public final class PlatformStorage extends PlatformLoading {
 
     /**
      * Constructor
      * @param position 
      */
-    public StoragePlatform(Vector3f position) {
+    public PlatformStorage(Vector3f position) {
         super();
         createPlatform();
         this.position(position);
@@ -28,7 +28,7 @@ public final class StoragePlatform extends LoadingPlatform {
      * @param parent
      * @param position 
      */
-    public StoragePlatform(Transform parent, Vector3f position) {
+    public PlatformStorage(Transform parent, Vector3f position) {
         super(parent);
         createPlatform();
         this.position(position);

@@ -58,25 +58,25 @@ public class Camera extends Behaviour {
     private final float CAMERA_RENDER_DISTANCE = 5000.0f;        // The distance how far the camera can render
     
     // Fly
-    private final float FLY_CAMERA_SPEED_DEFAULT = 20.0f;       // Default movement speed of the fly camera
-    private final float FLY_CAMERA_SPEED_FAST = 40.0f;          // Fast (shift) movement speed of the fly camera
+    private final float FLY_CAMERA_SPEED_DEFAULT = 30.0f;       // Default movement speed of the fly camera
+    private final float FLY_CAMERA_SPEED_FAST = 90.0f;          // Fast (shift) movement speed of the fly camera
     private final float FLY_CAMERA_SPEED_SLOW = 8.0f;           // Slow (ctrl) movemet speed of the fly camera
     private final float FLY_CAMERA_DAMPING = 20.0f;             // Amount of movement damping
     private Vector3f m_flyVelocity = Utilities.zero();          // Current fly camera velocity
     
     // RTS
-    private final float RTS_CAMERA_SPEED_DEFAULT = 40.0f;       // Default movement speed of the RTS camera
-    private final float RTS_CAMERA_SPEED_FAST = 180.0f;         // Fast (shift) movement speed of the RTS camera
-    private final float RTS_CAMERA_SPEED_SLOW = 20.0f;          // Slow (ctrl) movement speed of the RTS camera
+    private final float RTS_CAMERA_SPEED_DEFAULT = 120.0f;      // Default movement speed of the RTS camera
+    private final float RTS_CAMERA_SPEED_FAST = 280.0f;         // Fast (shift) movement speed of the RTS camera
+    private final float RTS_CAMERA_SPEED_SLOW = 40.0f;          // Slow (ctrl) movement speed of the RTS camera
     private final float RTS_CAMERA_ROTATION_SPEED = 70.0f;      // Rotation speed of the RTS camera
     private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;           // Zoom/Scroll speed of the RTS camea
     private final float RTS_CAMERA_SMOOTH = 0.02f;              // Amount of position smoothing of the RTS camera
     private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;         // Amout of zoom/scroll smoothing applied to the RTS camera
     private final float RTS_MIN_CAMERA_DISTANCE = 3.0f;         // Minimum amount of distance between the camera and the look at target
-    private final float RTS_MAX_CAMERA_DISTANCE = 100.0f;       // Maximum amount of distance between the camera and the look at target
+    private final float RTS_MAX_CAMERA_DISTANCE = 2000.0f;      // Maximum amount of distance between the camera and the look at target
     private float m_rtsCameraRotation = 0.0f;                   // Current rotation of the RTS camera
-    private float m_rtsCameraTargetDistance = 25.0f;            // Desired distance between the RTS camera and the look at target
-    private float m_rtsCameraCurrentDistance = 25.0f;           // Current distance betweem the RTS camera and the look at target
+    private float m_rtsCameraTargetDistance = 500.0f;           // Desired distance between the RTS camera and the look at target
+    private float m_rtsCameraCurrentDistance = 500.0f;          // Current distance betweem the RTS camera and the look at target
     private Float m_rtsCameraDistanceVelocity = 0.0f;           // Current stored smooth velocity of the RTS caemra zoom/scroll value
     private Vector2f m_rtsPositionVelocity = new Vector2f();    // Current stored smooth velocity of the RTS camera movement value
     
@@ -103,6 +103,8 @@ public class Camera extends Behaviour {
     private Vector3f m_previousTargetPosition= Utilities.zero();// Previous Target Position
     private CameraMode m_cameraMode = CameraMode.RTS;           // Camera mode
     private FilterPostProcessor m_postProcessor;                // Image FX
+    
+    private int m_safeFrameInit = 0;
     
     /**
      * Get Camera Transform
@@ -159,15 +161,12 @@ public class Camera extends Behaviour {
         createFog();
         createBloom();
     }
-    /**
-     * On first frame
-     */
-    @Override
-    public void start() {
+    
+    public void my_start() {
         
         // Set image fx
         Main.view().addProcessor(postProcessor());
-        Main.cam().setLocation(new Vector3f(-500.0f, 50.0f, -300.0f));
+        //Main.cam().setLocation(new Vector3f(-500.0f, 50.0f, -300.0f));
         
         // Init camera modes
         onStartRTS();
@@ -181,6 +180,19 @@ public class Camera extends Behaviour {
      */
     @Override
     public void rawUpdate() {
+        
+        /**
+         * JMonkey is F*cked up here
+         * When setting the camera position
+         * before the world positioning goes wrong.
+         * There are no indication of wrong code!
+         */
+        if (++m_safeFrameInit == 2) {
+            my_start();
+            return;
+        } else if (m_safeFrameInit < 2) {
+            return;
+        }
         
         // Update camera modes
         onUpdateFly();

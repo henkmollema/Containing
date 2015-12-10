@@ -4,20 +4,37 @@
  */
 package nhl.containing.simulator.game;
 
+import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Point3;
+import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.world.World;
+import nhl.containing.simulator.world.WorldCreator;
+
 /**
  *
  * @author sietse
  */
 public class PlatformLorry extends PlatformLoading {
 
+    public PlatformLorry(Transform parent, Vector3f _position) {
+        super(parent);
+        
+        createPlatform();
+        this.position(_position);
+    }
+    
     @Override
     protected ParkingSpot[] parkingSpots() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ParkingSpot[] {
+            new ParkingSpot(this, Vector3f.ZERO)
+        };
     }
 
     @Override
-    void createPlatform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected final void createPlatform() {
+        m_crane = WorldCreator.createLorryCrane(this);
+        initSpots(new Point3());
+        updateOuter();
     }
     
 }

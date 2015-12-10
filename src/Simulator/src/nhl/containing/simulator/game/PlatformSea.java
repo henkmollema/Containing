@@ -4,12 +4,22 @@
  */
 package nhl.containing.simulator.game;
 
+import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Transform;
+
 /**
  *
  * @author sietse
  */
 public class PlatformSea extends PlatformLoading {
 
+    public PlatformSea(Transform parent, Vector3f _position) {
+        super(parent);
+        
+        createPlatform();
+        this.position(_position);
+    }
+    
     @Override
     protected ParkingSpot[] parkingSpots() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

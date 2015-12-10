@@ -103,6 +103,6 @@ public class SimulatorTests {
             * pass
          * 
          */
-        new PlatformStorage(Utilities.zero());
+        //new PlatformStorage(Utilities.zero());
     }
 }

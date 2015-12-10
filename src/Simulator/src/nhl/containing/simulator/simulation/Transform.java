@@ -24,6 +24,7 @@ public class Transform extends Node {
      * Sets node to root node
      */
     public Transform() {
+        super("A name");
         Main.root().attachChild(this);
         this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
@@ -33,11 +34,11 @@ public class Transform extends Node {
      * @param parent parent node
      */
     public Transform(Node parent) {
+        super("A name");
         if (parent == null)
             Main.root().attachChild(this);
         else
             parent.attachChild(this);
-        
         this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
     }

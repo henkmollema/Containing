@@ -21,6 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import nhl.containing.simulator.game.AGV;
 import nhl.containing.simulator.game.Container;
+import nhl.containing.simulator.game.PlatformInland;
+import nhl.containing.simulator.game.PlatformLorry;
+import nhl.containing.simulator.game.PlatformSea;
+import nhl.containing.simulator.game.PlatformTrain;
+import nhl.containing.simulator.simulation.Debug;
 import nhl.containing.simulator.simulation.Point2;
 
 /**
@@ -31,22 +36,22 @@ public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
     public static final Point2 STORAGE_SIZE = new Point2(47, 2); // x = containers length per storage; y = storage amount
     
-    private static final float WORLD_HEIGHT =  0.0f;
-    private static final float WORLD_DEPTH = -150.0f;
-    private static final float WATER_LEVEL = - 5.0f;
-    private static final float LAND_HEIGHT_EXTEND = 100.0f;
+    public static final float WORLD_HEIGHT =  0.0f;
+    public static final float WORLD_DEPTH = -150.0f;
+    public static final float WATER_LEVEL = - 5.0f;
+    public static final float LAND_HEIGHT_EXTEND = 100.0f;
     
-    private static final float STORAGE_LENGTH = 1550.0f;
-    private static final float STORAGE_WIDTH = 600.0f;
+    public static final int AGV_COUNT = 100;
+    public static final float LANE_WIDTH = 10.0f;
+    public static final int LANE_COUNT = 4;
     
-    private static final float EXTENDS = 50.0f;
-    private static final int SEA_SHIP_CRANE_COUNT = 8;
-    private static final int TRAIN_CRANE_COUNT = 4;
-    private static final int LORRY_CRANE_COUNT = 20;
+    public static final float STORAGE_LENGTH = 1550.0f - LANE_WIDTH * LANE_COUNT;
+    public static final float STORAGE_WIDTH = 600.0f;
     
-    private static final int AGV_COUNT = 100;
-    private static final float LANE_WIDTH = 10.0f;
-    private static final int LANE_COUNT = 4;
+    public static final float EXTENDS = 100.0f;
+    public static final int SEA_SHIP_CRANE_COUNT = 8;
+    public static final int TRAIN_CRANE_COUNT = 4;
+    public static final int LORRY_CRANE_COUNT = 20;
     
     
     
@@ -62,7 +67,11 @@ public class World extends Behaviour {
     private DirectionalLight m_sun;
     
     // World
-    private List<PlatformStorage> m_storages = new ArrayList<>(0);
+    private List<PlatformInland> m_inlandCells = new ArrayList<>(0);
+    private List<PlatformLorry> m_lorryCells = new ArrayList<>(0);
+    private List<PlatformSea> m_seaCells = new ArrayList<>(0);
+    private List<PlatformStorage> m_storageCells = new ArrayList<>(0);
+    private List<PlatformTrain> m_trainCells = new ArrayList<>(0);
     
     // External
     
@@ -73,6 +82,10 @@ public class World extends Behaviour {
         LightCreator.createAmbient(new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f));
         Main.camera().createShadowsFiler(m_sun);
         
+    }
+    
+    @Override
+    public void start() {
         createObjects();
         
         // 
@@ -91,13 +104,42 @@ public class World extends Behaviour {
     
     @Override
     public void update() {
-        for(PlatformStorage s : m_storages) s.update();
+        for(PlatformInland  s : m_inlandCells  ) s.update();
+        for(PlatformLorry   s : m_lorryCells   ) s.update();
+        for(PlatformSea     s : m_seaCells     ) s.update();
+        for(PlatformStorage s : m_storageCells ) s.update();
+        for(PlatformTrain   s : m_trainCells   ) s.update();
     }
     private void createObjects() {
+        Vector3f offset;
         createGround();
         
+        // Create Inland
+        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
+        for (int i = 0; i < 0; ++i) {
+            
+            createInlandCell(offset);
+            offset.x -= 10.0f;
+        }
+        
+        // Create lorry
+        offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
+            
+            createLorryCell(offset);
+            offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;
+        }
+        
+        // Create Sea
+        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
+        for (int i = 0; i < 0; ++i) {
+            
+            createSeaCell(offset);
+            offset.x -= 10.0f;
+        }
+        
         // Create storage
-        Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH / 2, WORLD_HEIGHT, -STORAGE_WIDTH);
+        offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH / 2, WORLD_HEIGHT, -STORAGE_WIDTH);
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
             
             if (i == 10) // Adding space for the middle road
@@ -107,21 +149,52 @@ public class World extends Behaviour {
             offset.x += containerSize().x * 6 + 30.0f;
         }
         
-        // Create lorry
+        // Create Train
+        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
+        for (int i = 0; i < 0; ++i) {
+            
+            createTrainCell(offset);
+            offset.x -= 10.0f;
+        }
         
         
         
         AGV agv = new AGV();
         agv.setContainer(new Container(null));
         agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
-        m_storages.get(0).getParkingSpot(0).agv(agv);
+        m_storageCells.get(0).getParkingSpot(0).agv(agv);
         
         
         for (int i = 0; i < 3; i++) {
-            m_storages.get(0).take(new Point3(4, 4, i), 0);
+            m_storageCells.get(0).take(new Point3(4, 4, i), 0);
         }
-        m_storages.get(0).place(0, new Point3(4, 5, 1));
+        m_storageCells.get(0).place(0, new Point3(4, 5, 1));
         
+    }
+    
+    private void createInlandCell(Vector3f position) {
+        Transform t = new Transform();
+        PlatformInland plat = new PlatformInland(t, Utilities.zero());
+        t.attachChild(plat);
+        plat.localPosition(Utilities.zero());
+        t.position(position);
+        m_inlandCells.add(plat);
+    }
+    private void createLorryCell(Vector3f position) {
+        Transform t = new Transform();
+        PlatformLorry plat = new PlatformLorry(t, Utilities.zero());
+        t.attachChild(plat);
+        plat.localPosition(Utilities.zero());
+        t.position(position);
+        m_lorryCells.add(plat);
+    }
+    private void createSeaCell(Vector3f position) {
+        Transform t = new Transform();
+        PlatformSea plat = new PlatformSea(t, Utilities.zero());
+        t.attachChild(plat);
+        plat.localPosition(Utilities.zero());
+        t.position(position);
+        m_seaCells.add(plat);
     }
     private void createStorageCell(Vector3f position) {
         Transform t = new Transform();
@@ -129,19 +202,15 @@ public class World extends Behaviour {
         t.attachChild(plat);
         plat.localPosition(Utilities.zero());
         t.position(position);
-        m_storages.add(plat);
-    }
-    private void createLorryCell(Vector3f position) {
-        
-    }
-    private void createInlandCell(Vector3f position) {
-        
-    }
-    private void createShippingCell(Vector3f position) {
-        
+        m_storageCells.add(plat);
     }
     private void createTrainCell(Vector3f position) {
-        
+        Transform t = new Transform();
+        PlatformTrain plat = new PlatformTrain(t, Utilities.zero());
+        t.attachChild(plat);
+        plat.localPosition(Utilities.zero());
+        t.position(position);
+        m_trainCells.add(plat);
     }
     
     private void createGround() {
@@ -153,7 +222,6 @@ public class World extends Behaviour {
         createTrainGround();
         createOtherGround();
     }
-    
     private void createStorageGround() {
         // Storage
         Geometry storageEast = WorldCreator.createBox(

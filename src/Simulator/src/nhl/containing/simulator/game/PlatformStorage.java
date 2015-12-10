@@ -2,7 +2,9 @@ package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Point3;
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Debug;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.simulation.Utilities;
 import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.world.WorldCreator;
 
@@ -16,28 +18,20 @@ public final class PlatformStorage extends PlatformLoading {
 
     /**
      * Constructor
-     * @param position 
-     */
-    public PlatformStorage(Vector3f position) {
-        super();
-        createPlatform();
-        this.position(position);
-    }
-    /**
-     * Constructor
      * @param parent
      * @param position 
      */
-    public PlatformStorage(Transform parent, Vector3f position) {
+    public PlatformStorage(Transform parent, Vector3f _position) {
         super(parent);
+        
         createPlatform();
-        this.position(position);
+        this.position(_position);
     }
     /**
      * Create storage platform
      */
     @Override
-    void createPlatform() {
+    protected final void createPlatform() {
         m_crane = WorldCreator.createStorageCrane(this);
         initSpots(new Point3(6, 6, World.STORAGE_SIZE.x));
         updateOuter();

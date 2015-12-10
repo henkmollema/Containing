@@ -23,7 +23,6 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
     if (env->ExceptionCheck()) return;
     int dimensionX = env->GetIntField(dimension, dimensionXField);
     int dimensionY = env->GetIntField(dimension, dimensionYField);
-    long dinges = 0;
     for (int i = 0; i < dimensionX; i++)
     {
         for (int j = 0; j < dimensionY; j++)
@@ -34,7 +33,6 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
             if (i < dimensionX - 1) conn.push_back(((i + 1) * dimensionY) + j);
             if (j < dimensionY - 1) conn.push_back(i * dimensionY + (j + 1));
             temp.push_back(road_map::node_base(vector2((float)i, (float)j), conn));
-            dinges++;
         }
     }
     roadmap = new road_map(temp);

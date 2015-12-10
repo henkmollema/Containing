@@ -1,7 +1,10 @@
 package nhl.containing.simulator.game;
 
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.simulation.Utilities;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  * TODO: create()
@@ -18,10 +21,9 @@ public class ParkingSpot extends Transform {
      */
     public ParkingSpot(Transform parent, Vector3f offset) {
         super(parent);
-        this.localPosition(offset);
-        
         m_agv = null;
         create();
+        this.localPosition(offset);
     }
     
     /**
@@ -43,5 +45,6 @@ public class ParkingSpot extends Transform {
      */
     private void create() {
         // TODO: Maybe shadow caster or decal
+        WorldCreator.createBox(this, Utilities.one(), ColorRGBA.Black);
     }
 }

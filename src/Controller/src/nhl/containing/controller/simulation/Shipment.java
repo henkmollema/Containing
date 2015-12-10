@@ -1,5 +1,7 @@
 package nhl.containing.controller.simulation;
 
+import java.util.Date;
+
 /**
  *
  * @author henkmollema
@@ -17,4 +19,6 @@ public class Shipment
     public boolean incoming;
     
     public Carrier carrier;
+    
+    public Date date;
 }

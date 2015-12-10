@@ -6,7 +6,7 @@
 package nhl.containing.simulator.simulation;
 
 /**
- *
+ * Path loop mode
  * @author sietse
  */
 public enum LoopMode {

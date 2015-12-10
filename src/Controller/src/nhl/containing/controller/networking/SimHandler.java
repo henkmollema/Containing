@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
 import nhl.containing.controller.Time;
@@ -44,24 +45,6 @@ public class SimHandler implements Runnable {
         _comProtocol = new CommunicationProtocol();
         _instructionDispatcher = new InstructionDispatcherController(server.simulator, _comProtocol);
         _comProtocol.setDispatcher(_instructionDispatcher);
-        
-        _timer = new Timer();
-        _timer.scheduleAtFixedRate(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                Time._updateTime(5.0 / 1000.0);
-            }
-        }, 0, 5);
-        _timer.scheduleAtFixedRate(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                Time.time();// send time to simulator
-            }
-        }, 1000, 1000);
     }
     
     /**
@@ -139,6 +122,7 @@ public class SimHandler implements Runnable {
             //Send empty message to start conversation..
             StreamHelper.writeMessage(output, new byte[] { 0 });
 
+            
             while (shouldRun) {
                 // Re-use streams for more efficiency.
                 byte[] data = StreamHelper.readByteArray(socket.getInputStream());
@@ -148,6 +132,9 @@ public class SimHandler implements Runnable {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+            _timer.cancel();
+            _timer = new Timer();
+            _timer.scheduleAtFixedRate(new TimeUpdater(), 0, 5);
             return false;
         }
 
@@ -158,4 +145,12 @@ public class SimHandler implements Runnable {
         System.out.println("Controller: " + s);
     }
     
+    private class TimeUpdater extends TimerTask
+    {
+        @Override
+        public void run()
+        {
+            Time._updateTime(5.0 / 1000.0);
+        }
+    }
 }

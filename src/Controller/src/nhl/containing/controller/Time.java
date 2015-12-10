@@ -79,7 +79,7 @@ public final class Time {
         return (m_fixedTimeScale * m_timeScale);
     }
     
-    public static float time() {
-        return (float)m_time;
+    public static double time() {
+        return m_time;
     }
 }

@@ -1,13 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 
 import com.jme3.math.Vector3f;
 
 /**
- *
+ * Found out this class already exists in
+ * standard library, but do not throw this 
+ * away yet!
  * @author sietse
  */
 public class Bounds {

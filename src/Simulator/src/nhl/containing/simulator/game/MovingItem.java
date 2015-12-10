@@ -1,6 +1,3 @@
-/*
- * For every moving item in the simulator
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.simulation.Path;
@@ -15,7 +12,7 @@ public class MovingItem extends ContainerCarrier {
     protected float m_empySpeed;        // The speed when it doesn't carrie anything
     protected float m_loadedSpeed;      // The speed when it is carring a container
     
-    private Path m_path;            // Path
+    private Path m_path;                // Path
     
     /**
      * Constructor

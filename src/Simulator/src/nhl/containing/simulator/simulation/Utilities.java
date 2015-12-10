@@ -5,7 +5,6 @@
  */
 package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.simulation.Mathf;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
@@ -17,14 +16,14 @@ import java.util.List;
  * @author sietse
  */
 public final class Utilities {
-    public static final Vector3f zero() { return new Vector3f(0.0f, 0.0f, 0.0f).clone(); }
-    public static final Vector3f one() { return new Vector3f(1.0f, 1.0f, 1.0f).clone(); }
-    public static final Vector3f up() { return new Vector3f(0.0f, 1.0f, 0.0f).clone(); }
-    public static final Vector3f down() { return new Vector3f(0.0f, -1.0f, 0.0f).clone(); }
-    public static final Vector3f left() { return new Vector3f(-1.0f, 0.0f, 0.0f).clone(); }
-    public static final Vector3f right() { return new Vector3f(1.0f, 0.0f, 0.0f).clone(); }
-    public static final Vector3f forward() { return new Vector3f(0.0f, 0.0f, 1.0f).clone(); }
-    public static final Vector3f back() { return new Vector3f(0.0f, 0.0f, -1.0f).clone(); }
+    public static final Vector3f zero()    { return new Vector3f( 0.0f,  0.0f,  0.0f).clone(); }
+    public static final Vector3f one()     { return new Vector3f( 1.0f,  1.0f,  1.0f).clone(); }
+    public static final Vector3f up()      { return new Vector3f( 0.0f,  1.0f,  0.0f).clone(); }
+    public static final Vector3f down()    { return new Vector3f( 0.0f, -1.0f,  0.0f).clone(); }
+    public static final Vector3f left()    { return new Vector3f(-1.0f,  0.0f,  0.0f).clone(); }
+    public static final Vector3f right()   { return new Vector3f( 1.0f,  0.0f,  0.0f).clone(); }
+    public static final Vector3f forward() { return new Vector3f( 0.0f,  0.0f,  1.0f).clone(); }
+    public static final Vector3f back()    { return new Vector3f( 0.0f,  0.0f, -1.0f).clone(); }
     
     /**
      * zero's out the y axis

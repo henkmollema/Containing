@@ -4,14 +4,20 @@
  */
 package nhl.containing.simulator.networking;
 
+import com.google.protobuf.ByteString;
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.simulator.simulation.Time;
 
 /**
  * Providers interaction with the client.
@@ -25,7 +31,8 @@ public class SimulatorClient implements Runnable
     private boolean isConnected;
     private boolean shouldRun;
     private Socket _socket = null;
-    private CommunicationProtocol controllerCom;
+    public static CommunicationProtocol controllerCom;
+    
 
     public SimulatorClient()
     {
@@ -164,6 +171,37 @@ public class SimulatorClient implements Runnable
 
         return false;
     }
+    
+    public static void sendTimeUpdate()
+    {
+        byte[] timeBytes = new byte[8];
+        ByteBuffer.wrap(timeBytes).putDouble(Time.time());
+        ByteString bs = ByteString.copyFrom(timeBytes);
+        
+        Instruction timeUpdate = Instruction.newBuilder()
+                .setId(CommunicationProtocol.newUUID())
+                .setInstructionType(InstructionType.CLIENT_TIME_UPDATE)
+                .setMessageBytes(bs)
+                .build();
+        
+        controllerCom.sendInstruction(timeUpdate);
+    }
+    
+    public void sendTimeScale(float tScale)
+    {
+        /*try
+	{
+            OutputStream out = _socket.getOutputStream();
+            byte[] mesg = ByteBuffer.allocate(64).putDouble(Time.time()).array();
+            byte[] resp = controllerCom.processInput(mesg);//Time.time();// send time to simulator
+            //StreamHelper.writeMessage(output, resp);
+	}
+	catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }*/
+        
+    }
 
     public boolean instructionLoop()
     {
@@ -206,6 +244,7 @@ public class SimulatorClient implements Runnable
             {
                 if (sendSimulatorMetadata())
                 {
+                   
                     if (instructionLoop())
                     {
                         p("Closed peacefully");

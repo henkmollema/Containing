@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
@@ -20,7 +16,7 @@ public class Container extends Transform {
     
     public static final Vector3f OFFSET = new Vector3f(0.0f, 0.0f, 0.0f);
     
-    private RFID m_rfid;            // Container properties
+    private RFID m_rfid;                // Container properties
     private final Material m_material;  // Container material (saved here for pool system)
     
     /**

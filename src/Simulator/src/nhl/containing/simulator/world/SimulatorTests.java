@@ -4,7 +4,7 @@
  */
 package nhl.containing.simulator.world;
 
-import nhl.containing.simulator.game.StoragePlatform;
+import nhl.containing.simulator.game.PlatformStorage;
 import nhl.containing.simulator.simulation.Transform;
 import nhl.containing.simulator.simulation.Utilities;
 
@@ -103,6 +103,6 @@ public class SimulatorTests {
             * pass
          * 
          */
-        new StoragePlatform(Utilities.zero());
+        new PlatformStorage(Utilities.zero());
     }
 }

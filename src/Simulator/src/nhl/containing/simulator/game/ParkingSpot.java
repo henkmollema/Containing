@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
@@ -13,7 +9,7 @@ import nhl.containing.simulator.simulation.Transform;
  */
 public class ParkingSpot extends Transform {
     
-    private AGV m_agv;
+    private AGV m_agv;      // Container carrier
     
     /**
      * Constructor

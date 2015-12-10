@@ -65,4 +65,14 @@ public class ShippingContainer
      * The ISO-code of the container.
      */
     public String iso;
+    
+    /**
+     * The arrival shipment of the container.
+     */
+    public Shipment arrivalShipment;
+    
+    /**
+     * The departure shipment of the container.
+     */
+    public Shipment departureShipment;
 }

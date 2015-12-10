@@ -45,6 +45,22 @@ public class SimulationContext
     }
 
     /**
+     * Gets a {@code ShippingContainer} by its ID.
+     *
+     * @param containerId The ID of the container.
+     * @return A {@code ShippingContainer}.
+     */
+    public ShippingContainer getContainerById(int containerId)
+    {
+        if (containers.containsKey(containerId))
+        {
+            return containers.get(containerId);
+        }
+
+        return null;
+    }
+
+    /**
      * Creates a {@code SimulationContext} from the specified record set.
      *
      * @param recordSet The record set.
@@ -117,6 +133,10 @@ public class SimulationContext
             // Add to arrival and departure shipment.
             arrivalShipment.carrier.containers.add(c);
             departureShipment.carrier.containers.add(c);
+
+            // Map the arrival and departure shipments to the container.
+            c.arrivalShipment = arrivalShipment;
+            c.departureShipment = departureShipment;
         }
 
         return context;

@@ -45,17 +45,6 @@ public class SimHandler implements Runnable {
         _comProtocol = new CommunicationProtocol();
         _instructionDispatcher = new InstructionDispatcherController(server.simulator, _comProtocol);
         _comProtocol.setDispatcher(_instructionDispatcher);
-        
-        _timer = new Timer();
-        _timer.scheduleAtFixedRate(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                Time._updateTime(5.0 / 1000.0);
-            }
-        }, 0, 5);
-        _timer.scheduleAtFixedRate(new TimeUpdater(), 1000, 1000);
     }
     
     /**
@@ -132,25 +121,7 @@ public class SimHandler implements Runnable {
 
             //Send empty message to start conversation..
             StreamHelper.writeMessage(output, new byte[] { 0 });
-            
-            _timer.scheduleAtFixedRate(new TimerTask()
-            {
-                OutputStream out = _socket.getOutputStream();
-                @Override
-                public void run()
-                {
-                    //try
-                    {
-                        byte[] mesg = ByteBuffer.allocate(64).putDouble(Time.time()).array();
-                        byte[] resp = _comProtocol.processInput(mesg);//Time.time();// send time to simulator
-                        //StreamHelper.writeMessage(out, resp);
-                    }/*
-                    catch (IOException ex)
-                    {
-                        ex.printStackTrace();
-                    }*/
-                }
-            }, 1000, 1000);
+
             
             while (shouldRun) {
                 // Re-use streams for more efficiency.

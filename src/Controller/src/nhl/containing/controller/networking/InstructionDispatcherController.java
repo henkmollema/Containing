@@ -1,5 +1,6 @@
 package nhl.containing.controller.networking;
 
+import java.nio.ByteBuffer;
 import java.util.UUID;
 import nhl.containing.controller.Simulator;
 import nhl.containing.networking.protobuf.*;
@@ -22,7 +23,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
 
     /**
      * dispatchInstruction(instruction) checks the instructiontype and forwards
-     * the instruction to the appropriate component in the simulator
+     * the instruction to the appropriate component in the Contoller
      *
      * @param inst The Instruction to be dispatched to the system
      * @return the byte array to return to the sender
@@ -35,6 +36,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 String message = inst.getMessage();
                 System.out.println("GOT CONSOLECOMAND: " + message);
                 //rdataBuilder.setMessage(_sim.parseCommand(message));
+                break;
+                
+            case InstructionType.CLIENT_TIME_UPDATE:
+                System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getDouble());
+                
                 break;
 
             //More instruction types here..

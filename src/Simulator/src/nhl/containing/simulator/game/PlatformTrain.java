@@ -5,7 +5,9 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Point3;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
@@ -28,8 +30,10 @@ public class PlatformTrain extends PlatformLoading {
     }
 
     @Override
-    void createPlatform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected final void createPlatform() {
+        m_crane = WorldCreator.createTrainCrane(this);
+        initSpots(new Point3());
+        updateOuter();
     }
     
 }

@@ -22,12 +22,14 @@ public class PlatformInland extends PlatformLoading {
     
     @Override
     protected ParkingSpot[] parkingSpots() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ParkingSpot[] {
+            new ParkingSpot(this, Vector3f.ZERO)
+        };
     }
 
     @Override
     void createPlatform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

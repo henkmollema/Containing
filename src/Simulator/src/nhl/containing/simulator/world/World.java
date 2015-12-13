@@ -16,7 +16,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 import java.util.ArrayList;
 import java.util.List;
 import nhl.containing.simulator.game.AGV;
@@ -53,12 +52,6 @@ public class World extends Behaviour {
     public static final int TRAIN_CRANE_COUNT = 4;
     public static final int LORRY_CRANE_COUNT = 20;
     
-    
-    
-    /**
-     * Container size
-     * @return 
-     */
     public static Vector3f containerSize() {
         return new Vector3f(2.438f, 2.438f, 12.192f);
     }
@@ -67,14 +60,11 @@ public class World extends Behaviour {
     private DirectionalLight m_sun;
     
     // World
-    private List<PlatformInland> m_inlandCells = new ArrayList<>(0);
-    private List<PlatformLorry> m_lorryCells = new ArrayList<>(0);
-    private List<PlatformSea> m_seaCells = new ArrayList<>(0);
+    private List<PlatformInland > m_inlandCells  = new ArrayList<>(0);
+    private List<PlatformLorry  > m_lorryCells   = new ArrayList<>(0);
+    private List<PlatformSea    > m_seaCells     = new ArrayList<>(0);
     private List<PlatformStorage> m_storageCells = new ArrayList<>(0);
-    private List<PlatformTrain> m_trainCells = new ArrayList<>(0);
-    
-    // External
-    
+    private List<PlatformTrain  > m_trainCells   = new ArrayList<>(0);
     
     @Override
     public void awake() {
@@ -115,8 +105,8 @@ public class World extends Behaviour {
         createGround();
         
         // Create Inland
-        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
-        for (int i = 0; i < 0; ++i) {
+        offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < 1; ++i) {
             
             createInlandCell(offset);
             offset.x -= 10.0f;
@@ -131,11 +121,11 @@ public class World extends Behaviour {
         }
         
         // Create Sea
-        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
-        for (int i = 0; i < 0; ++i) {
+        offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < 1; ++i) {
             
             createSeaCell(offset);
-            offset.x -= 10.0f;
+            offset.z -= 10.0f;
         }
         
         // Create storage

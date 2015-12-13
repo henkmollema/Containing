@@ -5,7 +5,9 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.simulation.Point3;
 import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
@@ -22,12 +24,16 @@ public class PlatformSea extends PlatformLoading {
     
     @Override
     protected ParkingSpot[] parkingSpots() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ParkingSpot[] {
+            new ParkingSpot(this, Vector3f.ZERO)
+        };
     }
 
     @Override
     void createPlatform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       m_crane = WorldCreator.createSeaCrane(this);
+        initSpots(new Point3());
+        updateOuter();
     }
     
 }

@@ -138,4 +138,70 @@ public final class WorldCreator {
                 2.0f                                            // Hook scale
          );
     }
+    public static Crane createInlandCrane(Transform parent) {
+        Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
+        
+        return new Crane(
+                parent,                                         // Parent
+                createDefaultCranePath(_basePosition),          // Node 1
+                "TrainCrane.obj",                               // Crane model name
+                "TrainCraneHook.obj",                           // Hook model name
+                MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
+                MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
+                3.0f,                                           // Attach Time
+                25.0f,                                          // Rope height
+                new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
+                new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
+                new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
+                new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
+                new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
+                3.0f,                                           // Crane scale
+                2.0f                                            // Hook scale
+         );
+    }
+    public static Crane createSeaCrane(Transform parent) {
+        Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
+        
+        return new Crane(
+                parent,                                         // Parent
+                createDefaultCranePath(_basePosition),          // Node 1
+                "TrainCrane.obj",                               // Crane model name
+                "TrainCraneHook.obj",                           // Hook model name
+                MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
+                MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
+                3.0f,                                           // Attach Time
+                25.0f,                                          // Rope height
+                new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
+                new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
+                new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
+                new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
+                new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
+                3.0f,                                           // Crane scale
+                2.0f                                            // Hook scale
+         );
+    }
+    public static Crane createTrainCrane(Transform parent) {
+        Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
+        
+        return new Crane(
+                parent,                                         // Parent
+                createDefaultCranePath(_basePosition),          // Node 1
+                "TrainCrane.obj",                               // Crane model name
+                "TrainCraneHook.obj",                           // Hook model name
+                MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
+                MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
+                3.0f,                                           // Attach Time
+                25.0f,                                          // Rope height
+                new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
+                new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
+                new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
+                new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
+                new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
+                3.0f,                                           // Crane scale
+                2.0f                                            // Hook scale
+         );
+    }
 }

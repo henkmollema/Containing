@@ -143,6 +143,10 @@ public final class Crane extends MovingItem {
         awake();
     }
     
+    
+    public Vector3f basePosition(){
+        return new Vector3f(m_basePosition);
+    }
     /**
      * Frame model path
      * @return 

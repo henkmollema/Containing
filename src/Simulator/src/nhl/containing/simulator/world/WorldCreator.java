@@ -100,19 +100,19 @@ public final class WorldCreator {
         return new Crane(
                 parent,                                         // Parent
                 createDefaultCranePath(_basePosition),          // Node 1
-                "TrainCrane.obj",                               // Crane model name
-                "TrainCraneHook.obj",                           // Hook model name
+                "storageCrane.obj",                               // Crane model name
+                "storageCraneHook.obj",                           // Hook model name
                 MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
                 MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
                 3.0f,                                           // Attach Time
                 25.0f,                                          // Rope height
                 new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
-                new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
+                new Vector3f(10.0f,  0.0f, 0.0f),                // Crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
                 new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
-                3.0f,                                           // Crane scale
+                2.3f,                                           // Crane scale
                 2.0f                                            // Hook scale
          );
     }

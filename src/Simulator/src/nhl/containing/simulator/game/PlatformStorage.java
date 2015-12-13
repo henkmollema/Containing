@@ -33,6 +33,7 @@ public final class PlatformStorage extends PlatformLoading {
     @Override
     protected final void createPlatform() {
         m_crane = WorldCreator.createStorageCrane(this);
+        m_crane.localPosition(Utilities.zero());
         initSpots(new Point3(6, 6, World.STORAGE_SIZE.x));
         updateOuter();
     }

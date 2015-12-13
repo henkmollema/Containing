@@ -33,7 +33,7 @@ import nhl.containing.simulator.simulation.Point2;
  */
 public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
-    public static final Point2 STORAGE_SIZE = new Point2(47, 2); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(/*45*/ 45, 3/*72*/); // x = containers length per storage; y = storage amount
     
     public static final float WORLD_HEIGHT =  0.0f;
     public static final float WORLD_DEPTH = -150.0f;
@@ -44,7 +44,7 @@ public class World extends Behaviour {
     public static final float LANE_WIDTH = 10.0f;
     public static final int LANE_COUNT = 4;
     
-    public static final float STORAGE_LENGTH = 1550.0f - LANE_WIDTH * LANE_COUNT;
+    public static final float STORAGE_LENGTH = 1550.0f;// - LANE_WIDTH * LANE_COUNT;
     public static final float STORAGE_WIDTH = 600.0f;
     
     public static final float EXTENDS = 100.0f;
@@ -129,14 +129,17 @@ public class World extends Behaviour {
         }
         
         // Create storage
-        offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH / 2, WORLD_HEIGHT, -STORAGE_WIDTH);
+        float __t = -STORAGE_WIDTH + 50.0f;
+        offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, __t);
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
             
-            if (i == 10) // Adding space for the middle road
-                offset.x += LANE_WIDTH * LANE_COUNT;
+            if (i == 36) // Adding space for the middle road
+                offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;
             
             createStorageCell(offset);
-            offset.x += containerSize().x * 6 + 30.0f;
+            offset.x += containerSize().x * 6 + 27.5f;
+            
+            offset.z = ((i % 2) == 1) ? __t : __t - 30.0f;
         }
         
         // Create Train
@@ -187,11 +190,9 @@ public class World extends Behaviour {
         m_seaCells.add(plat);
     }
     private void createStorageCell(Vector3f position) {
-        Transform t = new Transform();
-        PlatformStorage plat = new PlatformStorage(t, Utilities.zero());
-        t.attachChild(plat);
+        PlatformStorage plat = new PlatformStorage(null, Utilities.zero());
         plat.localPosition(Utilities.zero());
-        t.position(position);
+        plat.position(position);
         m_storageCells.add(plat);
     }
     private void createTrainCell(Vector3f position) {

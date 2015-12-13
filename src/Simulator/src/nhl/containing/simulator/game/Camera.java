@@ -72,7 +72,7 @@ public class Camera extends Behaviour {
     private final float RTS_CAMERA_ZOOM_SPEED = 4.0f;           // Zoom/Scroll speed of the RTS camea
     private final float RTS_CAMERA_SMOOTH = 0.02f;              // Amount of position smoothing of the RTS camera
     private final float RTS_CAMERA_ZOOM_SMOOTH = 0.05f;         // Amout of zoom/scroll smoothing applied to the RTS camera
-    private final float RTS_MIN_CAMERA_DISTANCE = 10.0f;         // Minimum amount of distance between the camera and the look at target
+    private final float RTS_MIN_CAMERA_DISTANCE = 10.0f;        // Minimum amount of distance between the camera and the look at target
     private final float RTS_MAX_CAMERA_DISTANCE = 2000.0f;      // Maximum amount of distance between the camera and the look at target
     private float m_rtsCameraRotation = 0.0f;                   // Current rotation of the RTS camera
     private float m_rtsCameraTargetDistance = 500.0f;           // Desired distance between the RTS camera and the look at target
@@ -166,7 +166,7 @@ public class Camera extends Behaviour {
         
         // Set image fx
         Main.view().addProcessor(postProcessor());
-        //Main.cam().setLocation(new Vector3f(-500.0f, 50.0f, -300.0f));
+        Main.cam().setLocation(new Vector3f(-500.0f, 50.0f, -300.0f));
         
         // Init camera modes
         onStartRTS();

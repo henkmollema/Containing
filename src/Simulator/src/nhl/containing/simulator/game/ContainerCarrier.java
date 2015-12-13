@@ -149,8 +149,8 @@ public class ContainerCarrier extends Item {
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     
                     // Set spot
-                    Vector3f _newPosition = new Vector3f(i, j, k);
-                    _newPosition = _newPosition.mult(World.containerSize().mult(2.0f));
+                    Vector3f _newPosition = new Vector3f(i * 2, j * 2, k * 2);
+                    _newPosition = _newPosition.mult(World.containerSize());
                     _newPosition = _newPosition.add(_baseOffset);
                             
                     m_containerSpots[i][j][k] = new ContainerSpot(_newPosition);
@@ -249,7 +249,7 @@ public class ContainerCarrier extends Item {
         
         // Init
         onSetContainer(c);
-        c.localPosition(m_containerSpots[point.x][point.y][point.z].localPosition.clone());
+        c.localPosition(new Vector3f(m_containerSpots[point.x][point.y][point.z].localPosition));
         
         return c;
     }

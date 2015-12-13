@@ -16,7 +16,7 @@ road_map* roadmap;
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv *env, jclass, jobject dimension)
 {
     vector<road_map::node_base> temp = { };
-    jclass dimensionCls = env->FindClass("java/awt/Dimension");
+    jclass dimensionCls = env->GetObjectClass(dimension);
     if (env->ExceptionCheck()) return;
     jfieldID dimensionXField = env->GetFieldID(dimensionCls, "width", "I");
     jfieldID dimensionYField = env->GetFieldID(dimensionCls, "height", "I");

@@ -6,6 +6,7 @@ import com.jme3.font.BitmapText;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
+import org.lwjgl.opengl.Display;
 
 /**
  *
@@ -38,10 +39,10 @@ public class GUI extends Behaviour{
         return new Vector2f(screenWidth(), screenHeight());
     }
     public static float screenHeight() {
-        return Main.settings().getHeight();
+        return Display.getHeight();
     }
     public static float screenWidth() {
-        return Main.settings().getWidth();
+        return Display.getWidth();
     }
     
     @Override
@@ -51,13 +52,13 @@ public class GUI extends Behaviour{
     @Override
     public void start() {
                 /** Write text on the screen (HUD) */
-        /*Main.guiRoot().detachAllChildren();
-        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
+        //Main.guiRoot().detachAllChildren();
+        /*Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         BitmapText helloText = new BitmapText(Main.guiFont(), false);
-        helloText.setSize(Main.guiFont().getCharSet().getRenderedSize() * 2);
-        helloText.setText("Hello World");
-        helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
+        helloText.setSize(Main.guiFont().getCharSet().getRenderedSize());
+        helloText.setText("hoi,\nik ben een\nheleboel informatie");
+        helloText.setLocalTranslation(screenWidth() - 150, (screenHeight() - 75) + helloText.getHeight(), 0);
         Main.guiRoot().attachChild(helloText);*/
  
     }

@@ -5,6 +5,8 @@
  */
 package nhl.containing.simulator.simulation;
 
+import nhl.containing.simulator.networking.SimulatorClient;
+
 /**
  *
  * @author sietse
@@ -17,13 +19,28 @@ public final class Time {
     
     private static final float MIN_FIXED_TIME_SCALE = 0.005f;
     
+    private static final float TIME_SEND_INTERVAL = 1;
+    private static float m_deltaSum = 0;
+    
     /**
      * Update time, only call this from main
      * @param deltaTime 
      */
     public static void _updateTime(float deltaTime) {
+        float _addedTime = deltaTime * m_timeScale;
         m_deltaTime = deltaTime;
-        m_time += deltaTime * m_timeScale;
+        m_time += _addedTime;
+        
+        if(SimulatorClient.controllerCom != null) {
+            m_deltaSum += _addedTime;
+            
+            if(m_deltaSum >= TIME_SEND_INTERVAL) {
+                // 
+                SimulatorClient.sendTimeUpdate();
+                m_deltaSum = 0;
+            } 
+        }
+        
     }
     
     /**

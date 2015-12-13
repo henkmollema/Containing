@@ -35,12 +35,11 @@ public class SimulatorController
      */
     public void run(String xmlFileName) throws Exception
     {
-        RecordSet recordSet = parseXml(xmlFileName);
-        p("Analyzing XML data...");
         long start = System.currentTimeMillis();
+        RecordSet recordSet = parseXml(xmlFileName);
         _context = SimulationContext.fromRecordSet(recordSet);
         long elapsed = System.currentTimeMillis() - start;
-        p("Analyzed XML data. Elapsed: " + elapsed + "ms");
+        p("Parsed and analyzed XML data. Elapsed: " + elapsed + "ms");
 
         writeAnalyzeResults();
 

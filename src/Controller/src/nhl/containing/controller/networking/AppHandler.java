@@ -111,6 +111,7 @@ public class AppHandler implements Runnable{
             return builder.build().toByteArray();
         }
         ContainerGraphData.Builder b = ContainerGraphData.newBuilder();
+        //check timing
         switch (instruction.getA())
         {
             case 0:
@@ -150,29 +151,34 @@ public class AppHandler implements Runnable{
             case 4:
                 //containerlist
                 ContainerDataListItem.Builder itemBuilder = ContainerDataListItem.newBuilder();
-                Collection<Shipment> shipments = context.getShipments();
-                for(Shipment shipment : shipments)
+                Collection<ShippingContainer> containers = context.getAllContainers();
+                ContainerCategory category = ContainerCategory.SEASHIP; //change to actual
+                for(ShippingContainer container : containers)
                 {
-                    ContainerCategory category;
-                    if(shipment.carrier instanceof SeaShip)
-                        category = ContainerCategory.SEASHIP;
-                    else if(shipment.carrier instanceof InlandShip)
-                        category = ContainerCategory.INLINESHIP;
-                    else if(shipment.carrier instanceof Train)
-                        category = ContainerCategory.TRAIN;
-                    else
-                        category = ContainerCategory.TRUCK;
-                    for(ShippingContainer container : shipment.carrier.containers)
-                    {
-                        itemBuilder.setCategory(category);
-                        itemBuilder.setEigenaar(container.ownerName);
-                        itemBuilder.setID(container.containerNumber);
-                        builder.addItems(itemBuilder.build());
-                    }
+                    itemBuilder.setCategory(category);
+                    itemBuilder.setEigenaar(container.ownerName);
+                    itemBuilder.setID(container.containerNumber);
+                    builder.addItems(itemBuilder.build());
                 }
                 break;
             case 5:
                 //containerdata
+                try
+                {
+                    ShippingContainer container = context.getContainerById(instruction.getB());
+                    ContainerInfo.Builder infoBuilder = ContainerInfo.newBuilder();
+                    infoBuilder.setEigenaar(container.ownerName);
+                    infoBuilder.setID(container.containerNumber);
+                    infoBuilder.setGewichtLeeg(container.weigthEmpty);
+                    infoBuilder.setGewichtVol(container.weightLoaded);
+                    infoBuilder.setInhoud(container.content);
+                    infoBuilder.setAanvoerMaatschappij(container.arrivalShipment.carrier.company);
+                    infoBuilder.setBinnenkomstDatum(container.arrivalShipment.date.getTime());
+                    infoBuilder.setAfvoerMaatschappij(container.departureShipment.carrier.company);
+                    infoBuilder.setVertrekDatum(container.departureShipment.date.getTime());
+                    builder.setContainer(infoBuilder.build());
+                }
+                catch(Exception e){}
                 break;
         }
         return builder.build().toByteArray();

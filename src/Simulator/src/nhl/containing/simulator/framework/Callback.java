@@ -1,4 +1,4 @@
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

@@ -17,7 +17,7 @@ import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
-import nhl.containing.simulator.simulation.Time;
+import nhl.containing.simulator.framework.Time;
 
 /**
  * Providers interaction with the client.

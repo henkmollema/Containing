@@ -5,7 +5,7 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Transform;
 
 /**
  *
@@ -13,13 +13,9 @@ import nhl.containing.simulator.simulation.Transform;
  */
 public class PlatformInland extends PlatformLoading {
 
-    public PlatformInland(Transform parent, Vector3f _position) {
-        super(parent);
-        
-        createPlatform();
-        this.position(_position);
+    public PlatformInland(Vector3f offset) {
+        super(offset);
     }
-    
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
@@ -28,7 +24,7 @@ public class PlatformInland extends PlatformLoading {
     }
 
     @Override
-    void createPlatform() {
+    protected void createPlatform() {
         
     }
     

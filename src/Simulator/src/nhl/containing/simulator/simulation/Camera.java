@@ -1,11 +1,11 @@
-package nhl.containing.simulator.game;
+package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.simulation.Behaviour;
+import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Mathf;
-import nhl.containing.simulator.simulation.Time;
-import nhl.containing.simulator.simulation.Utilities;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Mathf;
+import nhl.containing.simulator.framework.Time;
+import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.framework.Transform;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;

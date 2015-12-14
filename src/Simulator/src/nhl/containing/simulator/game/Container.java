@@ -2,8 +2,7 @@ package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
 
@@ -11,12 +10,11 @@ import nhl.containing.simulator.world.MaterialCreator;
  *
  * @author sietse
  */
-public class Container extends Transform {
+public class Container {
     
+    public Transform transform = null;
     
-    public static final Vector3f OFFSET = new Vector3f(0.0f, 0.0f, 0.0f);
-    
-    private RFID m_rfid;                // Container properties
+    private final RFID m_rfid;                // Container properties
     private final Material m_material;  // Container material (saved here for pool system)
     
     /**
@@ -24,10 +22,9 @@ public class Container extends Transform {
      * @param id 
      */
     public Container(RFID id) {
-        super();
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
-        this.attachChild(ContainerPool.get());
+        show();
     }
     /**
      * Constructor
@@ -35,10 +32,9 @@ public class Container extends Transform {
      * @param material 
      */
     public Container(RFID id, Material material) {
-        super();
         this.m_rfid = id;
         this.m_material = material;
-        this.attachChild(ContainerPool.get());
+        show();
     }
     /**
      * Constructor
@@ -46,10 +42,9 @@ public class Container extends Transform {
      * @param id 
      */
     public Container(Transform parent, RFID id) {
-        super();
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
-        this.attachChild(ContainerPool.get());
+        show();
     }
     /**
      * Constructor
@@ -58,10 +53,25 @@ public class Container extends Transform {
      * @param id 
      */
     public Container(Transform parent, Material material, RFID id) {
-        super();
         this.m_rfid = id;
         this.m_material = material;
-        this.attachChild(ContainerPool.get());
+        show();
+    }
+    
+    public final void show() {
+        if (transform != null)
+            return;
+        
+        ContainerPool.get(this);
+        transform.setMaterial(this.m_material);
+        
+        System.out.println(this);
+    }
+    public final void hide() {
+        if (transform == null)
+            return;
+        
+        ContainerPool.dispose(this);
     }
     
     /**

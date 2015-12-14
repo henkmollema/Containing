@@ -1,10 +1,14 @@
 package nhl.containing.simulator.simulation;
 
+import nhl.containing.simulator.framework.Mathf;
+import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.framework.Time;
+import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.networking.InstructionDispatcherSimulator;
 import nhl.containing.simulator.networking.SimulatorClient;
-import nhl.containing.simulator.simulation.Utilities.*;
+import nhl.containing.simulator.framework.Utilities.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
@@ -43,7 +47,7 @@ public class Main extends SimpleApplication {
     private static List<Behaviour> m_behaviours;
     private float m_fixedUpdateTimer = 0.0f;
     private float m_rawFixedUpdateTimer = 0.0f;
-    private nhl.containing.simulator.game.Camera m_camera;
+    private nhl.containing.simulator.simulation.Camera m_camera;
     private Input m_input;
     private GUI m_gui;
     
@@ -59,100 +63,6 @@ public class Main extends SimpleApplication {
     private static List<Line3D> m_lines = new ArrayList<>();
     
     /**
-     * Get JMonkey Camera
-     * @return 
-     */
-    public static com.jme3.renderer.Camera cam() {
-        return instance().cam;
-    }
-    /**
-     * Get Sietse Camera
-     * @return 
-     */
-    public static nhl.containing.simulator.game.Camera camera() {
-        return instance().m_camera;
-    }
-    /**
-     * Get settings
-     * @return 
-     */
-    public static AppSettings settings() {
-        return instance().settings;
-    }
-    /**
-     * Get simulator client
-     * @return 
-     */
-    public SimulatorClient simClient() {
-        return _simClient;
-    }
-    /**
-     * Get input manager
-     * @return 
-     */
-    public static InputManager inputManager() {
-        return instance().inputManager;
-    }
-    /**
-     * Get asset manager
-     * @return 
-     */
-    public static AssetManager assets() {
-        return instance().assetManager;
-    }
-    /**
-     * Get GUI font
-     * @return 
-     */
-    public static BitmapFont guiFont() {
-        return instance().guiFont;
-    }
-    /**
-     * Set GUI font
-     * @param font
-     * @return 
-     */
-    public static BitmapFont guiFont(BitmapFont font) {
-        return instance().guiFont = font;
-    }
-    /**
-     * Get Sietse input
-     * @return 
-     */
-    public static Input input() {
-        return instance().m_input;
-    }
-    /**
-     * Get root node
-     * @return 
-     */
-    public static Node root() {
-        return instance().rootNode;
-    }
-    /**
-     * Get GUI root node
-     * @return 
-     */
-    public static Node guiRoot() {
-        return instance().guiNode;
-    }
-    /**
-     * Get renderer manager
-     * @return 
-     */
-    public static RenderManager renderer() {
-        return instance().renderManager;
-    }
-    /**
-     * Get viewport
-     * @return 
-     */
-    public static ViewPort view() {
-        return instance().viewPort;
-    }
-    
-    
-    /**
      * ALL BEHAVIOURS HERE
      *        ||
      *        ||
@@ -164,7 +74,7 @@ public class Main extends SimpleApplication {
         m_behaviours = new ArrayList<>();
         
         // Init main behaviours
-        m_camera = new nhl.containing.simulator.game.Camera();
+        m_camera = new nhl.containing.simulator.simulation.Camera();
         m_input = new Input();
         m_gui = new GUI();
 
@@ -388,5 +298,99 @@ public class Main extends SimpleApplication {
      */
     public void exit() {
         instance().stop();
+    }
+    
+    
+    /**
+     * Get JMonkey Camera
+     * @return 
+     */
+    public static com.jme3.renderer.Camera cam() {
+        return instance().cam;
+    }
+    /**
+     * Get Sietse Camera
+     * @return 
+     */
+    public static nhl.containing.simulator.simulation.Camera camera() {
+        return instance().m_camera;
+    }
+    /**
+     * Get settings
+     * @return 
+     */
+    public static AppSettings settings() {
+        return instance().settings;
+    }
+    /**
+     * Get simulator client
+     * @return 
+     */
+    public SimulatorClient simClient() {
+        return _simClient;
+    }
+    /**
+     * Get input manager
+     * @return 
+     */
+    public static InputManager inputManager() {
+        return instance().inputManager;
+    }
+    /**
+     * Get asset manager
+     * @return 
+     */
+    public static AssetManager assets() {
+        return instance().assetManager;
+    }
+    /**
+     * Get GUI font
+     * @return 
+     */
+    public static BitmapFont guiFont() {
+        return instance().guiFont;
+    }
+    /**
+     * Set GUI font
+     * @param font
+     * @return 
+     */
+    public static BitmapFont guiFont(BitmapFont font) {
+        return instance().guiFont = font;
+    }
+    /**
+     * Get Sietse input
+     * @return 
+     */
+    public static Input input() {
+        return instance().m_input;
+    }
+    /**
+     * Get root node
+     * @return 
+     */
+    public static Node root() {
+        return instance().rootNode;
+    }
+    /**
+     * Get GUI root node
+     * @return 
+     */
+    public static Node guiRoot() {
+        return instance().guiNode;
+    }
+    /**
+     * Get renderer manager
+     * @return 
+     */
+    public static RenderManager renderer() {
+        return instance().renderManager;
+    }
+    /**
+     * Get viewport
+     * @return 
+     */
+    public static ViewPort view() {
+        return instance().viewPort;
     }
 }

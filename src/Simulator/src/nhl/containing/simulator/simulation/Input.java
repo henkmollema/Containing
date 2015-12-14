@@ -1,6 +1,10 @@
 package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.game.CameraMode;
+import nhl.containing.simulator.framework.Mathf;
+import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.framework.Time;
+import nhl.containing.simulator.framework.Callback;
+import nhl.containing.simulator.framework.Behaviour;
 import com.jme3.input.KeyInput;
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;

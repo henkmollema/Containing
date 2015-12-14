@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
+import nhl.containing.simulator.framework.Time;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import nhl.containing.simulator.simulation.Main;
 
 /**
  *
@@ -28,6 +30,7 @@ public class Transform extends Node {
         Main.root().attachChild(this);
         this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
+        position(Utilities.zero());
     }
     /**
      * Constructor
@@ -41,6 +44,7 @@ public class Transform extends Node {
             parent.attachChild(this);
         this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
+        position(Utilities.zero());
     }
     
     /**
@@ -55,14 +59,14 @@ public class Transform extends Node {
      * Get position
      * @return 
      */
-    public Vector3f position() {
+    public final Vector3f position() {
         return getWorldTranslation().clone();
     }
     /**
      * Set position
      * @param p 
      */
-    public void position(Vector3f p) {
+    public final void position(Vector3f p) {
         Vector3f pos = p == null ? Utilities.zero() : p.clone();
         move(pos.subtract(position()));
     }
@@ -71,14 +75,14 @@ public class Transform extends Node {
      * Get localposition
      * @return 
      */
-    public Vector3f localPosition() {
+    public final Vector3f localPosition() {
         return getLocalTranslation().clone();
     }
     /**
      * Sets localposition
      * @param p 
      */
-    public void localPosition(Vector3f p) {
+    public final void localPosition(Vector3f p) {
         Vector3f pos = p == null ? Utilities.zero() : p.clone();
         move(pos.subtract(localPosition()));
     }
@@ -87,14 +91,14 @@ public class Transform extends Node {
      * Get rotation
      * @return 
      */
-    public Quaternion rotation() {
+    public final Quaternion rotation() {
         return getWorldRotation().clone();
     }
     /**
      * Set rotation
      * @param q 
      */
-    public void rotation(Quaternion q) {
+    public final void rotation(Quaternion q) {
         Utilities.setWorldRotation(this, q == null ? Quaternion.IDENTITY : q.clone());
     }
     
@@ -102,14 +106,14 @@ public class Transform extends Node {
      * Get local rotation
      * @return 
      */
-    public Quaternion localRotation() {
+    public final Quaternion localRotation() {
         return getLocalRotation().clone();
     }
     /**
      * Sets local rotation
      * @param q 
      */
-    public void localRotation(Quaternion q) {
+    public final void localRotation(Quaternion q) {
         setLocalRotation(q == null ? Quaternion.IDENTITY : q.clone());
     }
     
@@ -117,7 +121,7 @@ public class Transform extends Node {
      * Get euleranges
      * @return 
      */
-    public Vector3f eulerAngles() {
+    public final Vector3f eulerAngles() {
         Quaternion q = rotation();
         float[] a = q.toAngles(null);
         return new Vector3f(a[0] * Mathf.Rad2Deg, a[1] * Mathf.Rad2Deg, a[2] * Mathf.Rad2Deg);
@@ -126,7 +130,7 @@ public class Transform extends Node {
      * Set eulerangles
      * @param a 
      */
-    public void eulerAngles(Vector3f a) {
+    public final void eulerAngles(Vector3f a) {
         Vector3f b = a == null ? Utilities.zero() : a.clone();
         Quaternion q = Quaternion.IDENTITY;
         q.fromAngles(b.x, b.y, b.z);
@@ -137,7 +141,7 @@ public class Transform extends Node {
      * Get localeulerangels
      * @return 
      */
-    public Vector3f localEulerAngles() {
+    public final Vector3f localEulerAngles() {
         Quaternion q = localRotation();
         float[] a = q.toAngles(null);
         return new Vector3f(a[0] * Mathf.Rad2Deg, a[1] * Mathf.Rad2Deg, a[2] * Mathf.Rad2Deg);
@@ -146,7 +150,7 @@ public class Transform extends Node {
      * Set localeulerangles
      * @param a 
      */
-    public void localEulerAngles(Vector3f a) {
+    public final void localEulerAngles(Vector3f a) {
         Vector3f b = a == null ? Utilities.zero() : a.clone();
         Quaternion q = Quaternion.IDENTITY;
         q.fromAngles(b.x, b.y, b.z);
@@ -157,42 +161,42 @@ public class Transform extends Node {
      * Local forward
      * @return 
      */
-    public Vector3f forward() {
+    public final Vector3f forward() {
         return transfromDirection(Utilities.forward());
     }
     /**
      * Local backward
      * @return 
      */
-    public Vector3f back() {
+    public final Vector3f back() {
         return transfromDirection(Utilities.back());
     }
     /**
      * Local right
      * @return 
      */
-    public Vector3f right() {
+    public final Vector3f right() {
         return transfromDirection(Utilities.right());
     }
     /**
      * Local left
      * @return 
      */
-    public Vector3f left() {
+    public final Vector3f left() {
         return transfromDirection(Utilities.left());
     }
     /**
      * Local up
      * @return 
      */
-    public Vector3f up() {
+    public final Vector3f up() {
         return transfromDirection(Utilities.up());
     }
     /**
      * Local down
      * @return 
      */
-    public Vector3f down() {
+    public final Vector3f down() {
         return transfromDirection(Utilities.down());
     }
     /**
@@ -200,7 +204,7 @@ public class Transform extends Node {
      * @param v
      * @return 
      */
-    public Vector3f transfromDirection(Vector3f v) {
+    public final Vector3f transfromDirection(Vector3f v) {
         Quaternion q = rotation();
         return q.mult(v);
     }
@@ -209,14 +213,14 @@ public class Transform extends Node {
      * Get look direction (forward)
      * @return 
      */
-    public Vector3f lookDirection() {
+    public final Vector3f lookDirection() {
         return forward();
     }
     /**
      * Set look diretion (set forward)
      * @param p 
      */
-    public void lookDirection(Vector3f p) {
+    public final void lookDirection(Vector3f p) {
         lookAt(position().add(p));
     }
     
@@ -224,14 +228,14 @@ public class Transform extends Node {
      * Set look position
      * @param t 
      */
-    public void lookAt(Transform t) {
+    public final void lookAt(Transform t) {
         lookAt(t.position());
     }
     /**
      * Set look position
      * @param p 
      */
-    public void lookAt(Vector3f p) {
+    public final void lookAt(Vector3f p) {
         lookAt(p, Utilities.up());
     }
     
@@ -240,7 +244,7 @@ public class Transform extends Node {
      * @param direction
      * @param speed 
      */
-    public void move(Vector3f direction, float speed) {
+    public final void move(Vector3f direction, float speed) {
         if (direction == null)
             return;
         this.move(direction.clone().mult(speed));
@@ -249,7 +253,7 @@ public class Transform extends Node {
      * Move the transform multiplied by deltatime
      * @param direction 
      */
-    public void scaledMove(Vector3f direction) {
+    public final void scaledMove(Vector3f direction) {
         if (direction == null)
             return;
         move(direction, Time.deltaTime());
@@ -259,7 +263,7 @@ public class Transform extends Node {
      * @param direction
      * @param speed 
      */
-    public void scaledMove(Vector3f direction, float speed) {
+    public final void scaledMove(Vector3f direction, float speed) {
         if (direction == null)
             return;
         move(direction, speed * Time.deltaTime());

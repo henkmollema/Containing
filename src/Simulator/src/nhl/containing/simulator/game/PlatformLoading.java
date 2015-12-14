@@ -3,11 +3,10 @@ package nhl.containing.simulator.game;
 import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
-import nhl.containing.simulator.simulation.Callback;
-import nhl.containing.simulator.simulation.Debug;
-import nhl.containing.simulator.simulation.Point2;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Callback;
+import nhl.containing.simulator.framework.Point2;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
 
 /**
  * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -17,7 +16,7 @@ import nhl.containing.simulator.simulation.Transform;
  * 
  * @author sietse
  */
-public abstract class PlatformLoading extends Platform {
+public abstract class PlatformLoading extends ContainerCarrier {
     
     protected Crane m_crane;                                // Crane
     protected ParkingSpot[] m_parkingSpots;                 // AGV parking spots
@@ -29,17 +28,11 @@ public abstract class PlatformLoading extends Platform {
     /**
      * Constructor
      */
-    public PlatformLoading() {
+    public PlatformLoading(Vector3f offset) {
         super();
         m_parkingSpots = _parkingSpots();
-    }
-    /**
-     * Constructor
-     * @param parent 
-     */
-    public PlatformLoading(Transform parent) {
-        super(parent);
-        m_parkingSpots = _parkingSpots();
+        createPlatform();
+        this.position(offset);
     }
     private ParkingSpot[] _parkingSpots() {
         return parkingSpots();
@@ -66,6 +59,7 @@ public abstract class PlatformLoading extends Platform {
      * @return 
      */
     protected abstract ParkingSpot[] parkingSpots();
+    protected abstract void createPlatform();
     
     /**
      * Update, called every frame
@@ -100,7 +94,7 @@ public abstract class PlatformLoading extends Platform {
         
         if (_container == null) {
             // Invalid input
-            Debug.error("Null reference: selected container not available!");
+            System.out.println("Null reference: selected container not available!");
             return;
         }
         
@@ -118,7 +112,7 @@ public abstract class PlatformLoading extends Platform {
         
         if (_container == null) {
             // Invalid input
-            Debug.error("Null reference: selected container not available!");
+            System.out.println("Null reference: selected container not available!");
             return;
         }
         
@@ -246,7 +240,7 @@ public abstract class PlatformLoading extends Platform {
             else
                 
                 // To container
-                m_crane.setPath(container.position());
+                m_crane.setPath(container.transform.position());
             
             return true;
         }

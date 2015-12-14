@@ -14,9 +14,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import nhl.containing.simulator.game.Crane;
-import nhl.containing.simulator.simulation.LoopMode;
-import nhl.containing.simulator.simulation.Path;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.LoopMode;
+import nhl.containing.simulator.framework.Path;
+import nhl.containing.simulator.framework.Transform;
 
 /**
  *
@@ -80,19 +80,13 @@ public final class WorldCreator {
     
     
     private static Path createDefaultCranePath(Vector3f basePosition) {
-        return new Path(                                       // Path
-                    null,                                       // Current position 
-                    null,                                       // Start node
-                    false,                                      // manual
-                    true,                                       // use speed instead of time
-                    3.0f,                                       // speed/time
-                    1.0f,                                       // wait time
-                    LoopMode.Once,                              // Loopmode
-                    null,                                       // ease type
-                    null,                                       // callback
-                    basePosition,                               // Node 0
-                    basePosition                                // Node 1
-                );
+        Path path = new Path();
+        path.m_useTimeInsteadOfSpeed = true;
+        path.m_speed = 3.0f;
+        path.m_waitTime = 0.0f;
+        path.m_loopMode = LoopMode.Once;
+        path.m_previousPosition = new Vector3f(basePosition);
+        return path;
     }
     public static Crane createStorageCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);

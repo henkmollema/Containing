@@ -5,8 +5,8 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.world.WorldCreator;
 
@@ -16,11 +16,8 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformLorry extends PlatformLoading {
 
-    public PlatformLorry(Transform parent, Vector3f _position) {
-        super(parent);
-        
-        createPlatform();
-        this.position(_position);
+    public PlatformLorry(Vector3f offset) {
+        super(offset);
     }
     
     @Override

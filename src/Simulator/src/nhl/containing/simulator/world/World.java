@@ -6,11 +6,11 @@
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.game.PlatformStorage;
-import nhl.containing.simulator.simulation.Behaviour;
+import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
-import nhl.containing.simulator.simulation.Utilities;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.framework.Utilities;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -24,8 +24,7 @@ import nhl.containing.simulator.game.PlatformInland;
 import nhl.containing.simulator.game.PlatformLorry;
 import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
-import nhl.containing.simulator.simulation.Debug;
-import nhl.containing.simulator.simulation.Point2;
+import nhl.containing.simulator.framework.Point2;
 
 /**
  *
@@ -71,25 +70,18 @@ public class World extends Behaviour {
         m_sun = LightCreator.createSun(ColorRGBA.White, new Vector3f(-0.5f, -0.5f, -0.5f));
         LightCreator.createAmbient(new ColorRGBA(0.2f, 0.2f, 0.2f, 1.0f));
         Main.camera().createShadowsFiler(m_sun);
-        
     }
     
     @Override
     public void start() {
-        createObjects();
+        createGround();
+        createInlandCell();
+        createLorryCell();
+        createSeaCell();
+        createStorageCell();
+        createTrainCell();
         
-        // 
-        Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
-        //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-        teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
-        Main.root().attachChild(teapot);
-        //Time.setFixedTimeScale(0.3f);
-        
-        Spatial mater = Main.assets().loadModel("models/Sietse/Truck/Mater.obj");
-        //Material defaultMat = new Material( assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-        mater.setMaterial(MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
-        mater.setLocalTranslation(-15.0f, 0, 0);
-        Main.root().attachChild(mater);
+        createAGV();
     }
     
     @Override
@@ -100,57 +92,15 @@ public class World extends Behaviour {
         for(PlatformStorage s : m_storageCells ) s.update();
         for(PlatformTrain   s : m_trainCells   ) s.update();
     }
-    private void createObjects() {
-        Vector3f offset;
-        createGround();
+    private void createAGV() {
+        Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
+        teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
+        Main.root().attachChild(teapot);
         
-        // Create Inland
-        offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        for (int i = 0; i < 1; ++i) {
-            
-            createInlandCell(offset);
-            offset.x -= 10.0f;
-        }
-        
-        // Create lorry
-        offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
-            
-            createLorryCell(offset);
-            offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;
-        }
-        
-        // Create Sea
-        offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        for (int i = 0; i < 1; ++i) {
-            
-            createSeaCell(offset);
-            offset.z -= 10.0f;
-        }
-        
-        // Create storage
-        float __t = -STORAGE_WIDTH + 50.0f;
-        offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, __t);
-        for (int i = 0; i < STORAGE_SIZE.y; ++i) {
-            
-            if (i == 36) // Adding space for the middle road
-                offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;
-            
-            createStorageCell(offset);
-            offset.x += containerSize().x * 6 + 27.5f;
-            
-            offset.z = ((i % 2) == 1) ? __t : __t - 30.0f;
-        }
-        
-        // Create Train
-        offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
-        for (int i = 0; i < 0; ++i) {
-            
-            createTrainCell(offset);
-            offset.x -= 10.0f;
-        }
-        
-        
+        Spatial mater = Main.assets().loadModel("models/Sietse/Truck/Mater.obj");
+        mater.setMaterial(MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
+        mater.setLocalTranslation(-15.0f, 0, 0);
+        Main.root().attachChild(mater);
         
         AGV agv = new AGV();
         agv.setContainer(new Container(null));
@@ -165,43 +115,43 @@ public class World extends Behaviour {
         
     }
     
-    private void createInlandCell(Vector3f position) {
-        Transform t = new Transform();
-        PlatformInland plat = new PlatformInland(t, Utilities.zero());
-        t.attachChild(plat);
-        plat.localPosition(Utilities.zero());
-        t.position(position);
-        m_inlandCells.add(plat);
+    private void createInlandCell() {
+        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < 1; ++i) {
+            m_inlandCells.add(new PlatformInland(offset));
+            offset.x -= 10.0f;
+        }
     }
-    private void createLorryCell(Vector3f position) {
-        Transform t = new Transform();
-        PlatformLorry plat = new PlatformLorry(t, Utilities.zero());
-        t.attachChild(plat);
-        plat.localPosition(Utilities.zero());
-        t.position(position);
-        m_lorryCells.add(plat);
+    private void createLorryCell() {
+        Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
+            m_lorryCells.add(new PlatformLorry(offset));
+            offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;
+        }
     }
-    private void createSeaCell(Vector3f position) {
-        Transform t = new Transform();
-        PlatformSea plat = new PlatformSea(t, Utilities.zero());
-        t.attachChild(plat);
-        plat.localPosition(Utilities.zero());
-        t.position(position);
-        m_seaCells.add(plat);
+    private void createSeaCell() {
+        Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < 1; ++i) {
+            m_seaCells.add(new PlatformSea(offset));
+            offset.z -= 10.0f;
+        }
     }
-    private void createStorageCell(Vector3f position) {
-        PlatformStorage plat = new PlatformStorage(null, Utilities.zero());
-        plat.localPosition(Utilities.zero());
-        plat.position(position);
-        m_storageCells.add(plat);
+    private void createStorageCell() {
+        Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);
+        for (int i = 0; i < STORAGE_SIZE.y; ++i) {
+            m_storageCells.add(new PlatformStorage(offset));
+            
+            if (i == 36) // Adding space for the middle road
+                offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;
+            offset.x += containerSize().x * 6 + 27.5f;
+        }
     }
-    private void createTrainCell(Vector3f position) {
-        Transform t = new Transform();
-        PlatformTrain plat = new PlatformTrain(t, Utilities.zero());
-        t.attachChild(plat);
-        plat.localPosition(Utilities.zero());
-        t.position(position);
-        m_trainCells.add(plat);
+    private void createTrainCell() {
+        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
+        for (int i = 0; i < 0; ++i) {
+            m_trainCells.add(new PlatformTrain(offset));
+            offset.x -= 10.0f;
+        }
     }
     
     private void createGround() {
@@ -353,13 +303,5 @@ public class World extends Behaviour {
                 true, false                                                     // Other
         );
         bBlock.setLocalTranslation(STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT * 2, LAND_HEIGHT_EXTEND + WORLD_HEIGHT - 0.5f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS * 2.0f);
-    }
-    
-    void runTests() {
-        SimulatorTests tests = new SimulatorTests();
-        tests.createStorage();
-        tests.disposeCreated();
-        tests.disposeNull();
-        tests.getBox();
     }
 }

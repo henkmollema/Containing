@@ -7,11 +7,10 @@ package nhl.containing.simulator.world;
 
 import com.jme3.asset.TextureKey;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Mathf;
+import nhl.containing.simulator.framework.Mathf;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.texture.Texture;
-import nhl.containing.simulator.simulation.Debug;
 
 /**
  *
@@ -206,8 +205,6 @@ public final class MaterialCreator {
         m.setBoolean("UseMaterialColors", true); 
         m.setColor("Ambient", colorAmbient.clone());
         m.setColor("Diffuse", colorDiffuse.clone());
-        m.setFloat("Shininess", Mathf.max(specular, 0.001f));
-        m.setColor("Specular", colorSpecular);
         
         return m;
     }

@@ -5,8 +5,8 @@
 package nhl.containing.simulator.simulation;
 
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Mathf;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Mathf;
+import nhl.containing.simulator.framework.Transform;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;

@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
-import nhl.containing.simulator.simulation.Callback;
-import nhl.containing.simulator.simulation.Time;
+import nhl.containing.simulator.framework.Callback;
+import nhl.containing.simulator.framework.Time;
 
 /**
  *

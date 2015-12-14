@@ -1,4 +1,6 @@
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
+
+import nhl.containing.simulator.simulation.Main;
 
 /**
  * This is a class that updates

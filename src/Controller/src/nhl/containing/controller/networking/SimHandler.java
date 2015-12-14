@@ -132,9 +132,6 @@ public class SimHandler implements Runnable {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
-            _timer.cancel();
-            _timer = new Timer();
-            _timer.scheduleAtFixedRate(new TimeUpdater(), 0, 5);
             return false;
         }
 

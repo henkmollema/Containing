@@ -40,18 +40,18 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 
             case InstructionType.CLIENT_TIME_UPDATE:
                 System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getDouble());
-                
+                //Here react on the new time, call the tick function or something like that.
                 break;
 
             //More instruction types here..
         }
-
-        InstructionResponse.Builder rbuilder = InstructionResponse.newBuilder();
-        rbuilder.setInstructionId(inst.getId());
-        rbuilder.setId(UUID.randomUUID().toString());
-        InstructionResponse response = rbuilder.build();
-
-        _com.sendResponse(response);
+//
+//        InstructionResponse.Builder rbuilder = InstructionResponse.newBuilder();
+//        rbuilder.setInstructionId(inst.getId());
+//        rbuilder.setId(UUID.randomUUID().toString());
+//        InstructionResponse response = rbuilder.build();
+//
+//        _com.sendResponse(response);
 
     }
 

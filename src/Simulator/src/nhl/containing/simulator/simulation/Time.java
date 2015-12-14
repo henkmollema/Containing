@@ -19,7 +19,7 @@ public final class Time {
     
     private static final float MIN_FIXED_TIME_SCALE = 0.005f;
     
-    private static final float TIME_SEND_INTERVAL = 1;
+    private static final float TIME_SEND_INTERVAL = 1f;
     private static float m_deltaSum = 0;
     
     /**

@@ -71,7 +71,7 @@ public class SimHandler implements Runnable {
                 p("Error while initialising simulator data..");
             }
 
-            shouldDie = true;
+            //shouldDie = true;
         }
 
         try //Clean 

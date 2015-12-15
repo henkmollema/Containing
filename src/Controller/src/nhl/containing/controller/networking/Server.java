@@ -34,6 +34,8 @@ public class Server implements Runnable {
 
     public Server(Simulator _simulator) {
         simulator = _simulator;
+        simCom = new CommunicationProtocol(); //The communication protocol used for the simulator connection
+        
     }
 
     public boolean isSimulatorConnected() {
@@ -50,8 +52,8 @@ public class Server implements Runnable {
     
     public void onSimDisconnect()
     {
-        simCom = null;
         this.isSimulatorConnected = false;
+        
     }
 
     @Override
@@ -86,15 +88,13 @@ public class Server implements Runnable {
                 switch(idData.getClientType())
                 {
                     case SIMULATOR:
-                        if(simCom != null)
+                        if(isSimulatorConnected)
                         {
                             tmpSocket.close(); //Accept only one sim connection
                             return;
                         }
 
                         SimHandler simHandler = new SimHandler(this, tmpSocket);
-                        simCom = simHandler.getComProtocol();
-                        
                         new Thread(simHandler).start(); //Start anonymous thread
                         
                         isSimulatorConnected = true;
@@ -122,8 +122,7 @@ public class Server implements Runnable {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-
+        
     }
     
     private static void p(String s) {

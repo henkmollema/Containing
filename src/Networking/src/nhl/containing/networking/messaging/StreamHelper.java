@@ -24,6 +24,18 @@ public class StreamHelper
     }
 
     /**
+     * Writes the specified string to the specified output stream.
+     *
+     * @param stream The output stream.
+     * @param data The string to write.
+     * @throws IOException when writing to the stream fails.
+     */
+    public static void writeString(OutputStream stream, String data) throws IOException
+    {
+        writeMessage(stream, data.getBytes());
+    }
+
+    /**
      * Reads a byte-array from the specified input stream.
      *
      * @param stream The input stream.

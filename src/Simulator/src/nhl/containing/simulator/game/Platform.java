@@ -16,7 +16,7 @@ import nhl.containing.simulator.framework.Transform;
  * 
  * @author sietse
  */
-public abstract class PlatformLoading extends ContainerCarrier {
+public abstract class Platform extends ContainerCarrier {
     
     protected Crane m_crane;                                // Crane
     protected ParkingSpot[] m_parkingSpots;                 // AGV parking spots
@@ -28,7 +28,7 @@ public abstract class PlatformLoading extends ContainerCarrier {
     /**
      * Constructor
      */
-    public PlatformLoading(Vector3f offset) {
+    public Platform(Vector3f offset) {
         super();
         m_parkingSpots = _parkingSpots();
         createPlatform();
@@ -230,17 +230,17 @@ public abstract class PlatformLoading extends ContainerCarrier {
             if (_target.storageSpot != null)
                 
                 // To storage
-                 m_crane.setPath(getSpot(_target.storageSpot).worldPosition());
+                 m_crane.setPath(getSpot(_target.storageSpot).localPosition); // .worldPosition()
             
             else if (_target.parkingSpot != null)
                 
                 // To Parking spot
-                m_crane.setPath(m_parkingSpots[_target.parkingSpot].position());
+                m_crane.setPath(m_parkingSpots[_target.parkingSpot].localPosition()); //.position()
             
             else
                 
                 // To container
-                m_crane.setPath(container.transform.position());
+                m_crane.setPath(container.transform.localPosition()); // .position()
             
             return true;
         }

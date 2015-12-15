@@ -13,7 +13,7 @@ import nhl.containing.simulator.world.WorldCreator;
  *
  * @author sietse
  */
-public class PlatformSea extends PlatformLoading {
+public class PlatformSea extends Platform {
 
     public PlatformSea(Vector3f offset) {
         super(offset);

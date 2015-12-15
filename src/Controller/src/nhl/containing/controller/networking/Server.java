@@ -26,14 +26,17 @@ public class Server implements Runnable
     {
         return simCom;
     }
-    
+
+    public Server(Simulator _simulator)
+    {
+        simulator = _simulator;
+        simCom = new CommunicationProtocol(); //The communication protocol used for the simulator connection
+
+    }
+
     public Simulator getSimulator()
     {
         return simulator;
-    }
-
-    public Server(Simulator simulator) {
-        this.simulator = simulator;
     }
 
     public boolean isSimulatorConnected()
@@ -53,16 +56,15 @@ public class Server implements Runnable
 
     public void onSimDisconnect()
     {
-        simCom = null;
         this.isSimulatorConnected = false;
+
     }
 
     @Override
     public void run()
     {
         if (shouldRun)
-        { 
-            //If already running, return..
+        { //If already running, return..
             return;
         }
 
@@ -92,22 +94,21 @@ public class Server implements Runnable
                 switch (idData.getClientType())
                 {
                     case SIMULATOR:
-                        if (simCom != null)
+                        if (isSimulatorConnected)
                         {
-                            tmpSocket.close(); //Accept only one sim connection
+                            // Accept only one sim connection
+                            tmpSocket.close();
                             return;
                         }
 
                         SimHandler simHandler = new SimHandler(this, tmpSocket);
-                        simCom = simHandler.getComProtocol();
-
-                        new Thread(simHandler).start(); //Start anonymous thread
+                        // Start anonymous thread
+                        new Thread(simHandler).start();
 
                         isSimulatorConnected = true;
                         p("Sim connected");
-
                         break;
-                        
+
                     case APP:
                         isAppConnected = true;
                         p("App connected");
@@ -115,7 +116,6 @@ public class Server implements Runnable
                         // Create new appHandler and run it on it's own thread
                         AppHandler appHandler = new AppHandler(this, tmpSocket);
                         new Thread(appHandler).start();
-
                         break;
                 }
             }
@@ -124,7 +124,6 @@ public class Server implements Runnable
                 p("Client connection failed");
                 ex.printStackTrace();
             }
-            
             try
             {
                 Thread.sleep(1000);

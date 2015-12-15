@@ -13,7 +13,7 @@ import nhl.containing.simulator.world.WorldCreator;
  * The thing in the middle
  * @author sietse
  */
-public final class PlatformStorage extends PlatformLoading {
+public final class PlatformStorage extends Platform {
 
     /**
      * Constructor

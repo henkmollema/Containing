@@ -22,78 +22,89 @@ import nhl.containing.networking.protocol.InstructionType;
  *
  * @author Jens
  */
-public class SimHandler implements Runnable {
-    
+public class SimHandler implements Runnable
+{
     public boolean shouldRun = true;
-   
     private Socket _socket;
     private Server _server;
-    
     private Timer _timer;
-    
     private InstructionDispatcher _instructionDispatcher;
-    
     private CommunicationProtocol _comProtocol;
-    
+
     public SimHandler(Server server, Socket socket)
     {
         _socket = socket;
         _server = server;
-        
+
         _comProtocol = new CommunicationProtocol();
         _instructionDispatcher = new InstructionDispatcherController(server.simulator, _comProtocol);
         _comProtocol.setDispatcher(_instructionDispatcher);
     }
-    
+
     /**
      * Gets the communication protocol of the server.
      *
      * @return The communication protocol.
      */
-    public CommunicationProtocol getComProtocol() {
+    public CommunicationProtocol getComProtocol()
+    {
         return _comProtocol;
     }
-    
+
     @Override
-    public void run() {
+    public void run()
+    {
         boolean shouldDie = false;
-        while (shouldRun && !shouldDie)//While shouldRun, when connection is lost, start listening for a new one
+        
+        // When connection is lost, start listening for a new one
+        while (shouldRun && !shouldDie)
         {
-            if (initSimData(_socket)) {
-                if (instructionResponseLoop(_socket)) {
+            if (initSimData(_socket))
+            {
+                if (instructionResponseLoop(_socket))
+                {
                     p("Closed peacefully");
-                } else {
+                }
+                else
+                {
                     p("Lost connection during instructionloop");
                 }
-            } else {
+            }
+            else
+            {
                 p("Error while initialising simulator data..");
             }
 
-            shouldDie = true;
+            //shouldDie = true;
         }
 
         try //Clean 
         {
             _socket.close();
-        } catch (Exception ex) { ex.printStackTrace(); }
-        
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
         _server.onSimDisconnect();
 
         //server.isSimulatorConnected = false;
     }
-    
-    public boolean initSimData(Socket _socket) {
+
+    private boolean initSimData(Socket _socket)
+    {
         p("initializing Simulator data");
-        try {
+        try
+        {
             Instruction okayMessage = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
                     .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
                     .build();
-            
-            StreamHelper.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
-            
-            byte[] data = StreamHelper.readByteArray(_socket.getInputStream());
 
+            StreamHelper.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
+
+            byte[] data = StreamHelper.readByteArray(_socket.getInputStream());
             SimulatorItemList platform = null;
             try{
                  platform = SimulatorItemList.parseFrom(data);
@@ -101,47 +112,56 @@ public class SimHandler implements Runnable {
             
             if (platform != null) {
                 p("ok");
-                StreamHelper.writeMessage(_socket.getOutputStream(), "ok".getBytes());
+                StreamHelper.writeString(_socket.getOutputStream(), "ok");
                 return true;
-            } else {
+            }
+            else
+            {
                 p("error");
-                StreamHelper.writeMessage(_socket.getOutputStream(), "error".getBytes());
+                StreamHelper.writeString(_socket.getOutputStream(), "error");
                 return false;
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             ex.printStackTrace();
             return false;
         }
     }
-    
-    public boolean instructionResponseLoop(Socket socket) {
+
+    public boolean instructionResponseLoop(Socket socket)
+    {
         p("Starting instructionResponseLoop");
-        try {
+        try
+        {
             OutputStream output = socket.getOutputStream();
 
             //Send empty message to start conversation..
             StreamHelper.writeMessage(output, new byte[] { 0 });
 
-            
-            while (shouldRun) {
+            while (shouldRun)
+            {
                 // Re-use streams for more efficiency.
                 byte[] data = StreamHelper.readByteArray(socket.getInputStream());
                 byte[] response = _comProtocol.processInput(data);
 
-                StreamHelper.writeMessage(output, response); 
+                StreamHelper.writeMessage(output, response);
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
             return false;
         }
 
         return true;
     }
-    
-    private static void p(String s) {
+
+    private static void p(String s)
+    {
         System.out.println("Controller: " + s);
     }
-    
+
     private class TimeUpdater extends TimerTask
     {
         @Override

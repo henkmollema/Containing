@@ -2,6 +2,7 @@ package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
@@ -57,15 +58,16 @@ public class Container {
         this.m_material = material;
         show();
     }
-    
+    public final void show(Vector3f pos) {
+        show();
+        transform.position(pos);
+    }
     public final void show() {
         if (transform != null)
             return;
         
         ContainerPool.get(this);
         transform.setMaterial(this.m_material);
-        
-        System.out.println(this);
     }
     public final void hide() {
         if (transform == null)

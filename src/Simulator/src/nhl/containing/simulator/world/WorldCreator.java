@@ -79,9 +79,9 @@ public final class WorldCreator {
     }
     
     
-    private static Path createDefaultCranePath(Vector3f basePosition) {
+    public static Path createDefaultCranePath(Vector3f basePosition) {
         Path path = new Path();
-        path.m_useTimeInsteadOfSpeed = true;
+        path.m_useTimeInsteadOfSpeed = false;
         path.m_speed = 3.0f;
         path.m_waitTime = 0.0f;
         path.m_loopMode = LoopMode.Once;
@@ -100,12 +100,13 @@ public final class WorldCreator {
                 MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
                 3.0f,                                           // Attach Time
                 25.0f,                                          // Rope height
-                new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
-                new Vector3f(10.0f,  0.0f, 0.0f),                // Crane offset
-                new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
-                new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
-                new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
-                new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
+                new Vector3f(14.0f, 33.0f, World.STORAGE_WIDTH),                // Base position
+                new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
+                new Vector3f(0.0f,  0.0f, 0.0f),               // Hook offset
+                new Vector3f(0.0f, 7.0f, 10.0f),                 // Rope offset
+                new Vector3f(World.containerSize().x, World.containerSize().y,  World.containerSize().z),               // Container offset
+                new Vector3f(15.0f, 0.0f, 20.0f),                // Crane spatial offset
+                new Vector3f(0.0f, -27f - World.containerSize().y / 2.0f, 8.0f +  World.containerSize().z),                 // Hook spatial offset
                 2.3f,                                           // Crane scale
                 2.0f                                            // Hook scale
          );
@@ -125,6 +126,7 @@ public final class WorldCreator {
                 new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
                 new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, 0.0f),                 // Rope offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
                 new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
@@ -147,6 +149,7 @@ public final class WorldCreator {
                 new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
                 new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, 0.0f),                 // Rope offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
                 new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
@@ -169,6 +172,7 @@ public final class WorldCreator {
                 new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
                 new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, 0.0f),                 // Rope offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
                 new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset
@@ -191,6 +195,7 @@ public final class WorldCreator {
                 new Vector3f(0.0f, 15.0f, 0.0f),                // Base position
                 new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
                 new Vector3f(0.0f,  0.0f, 30.0f),               // Hook offset
+                new Vector3f(0.0f, 0.0f, 0.0f),                 // Rope offset
                 new Vector3f(0.0f, 0.0f, -30.0f),               // Container offset
                 new Vector3f(5.0f, 0.0f, 30.0f),                // Crane spatial offset
                 new Vector3f(3.0f, -11f, 0.0f),                 // Hook spatial offset

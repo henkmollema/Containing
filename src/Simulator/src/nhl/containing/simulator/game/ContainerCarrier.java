@@ -49,7 +49,6 @@ public class ContainerCarrier extends Transform {
     public ContainerCarrier() {
         super();
         initSpots(Point3.one());
-        updateOuter();
     }
     /**
      * Constructor
@@ -58,7 +57,6 @@ public class ContainerCarrier extends Transform {
     public ContainerCarrier(Transform parent) {
         super(parent);
         initSpots(Point3.one());
-        updateOuter();
     }
     /**
      * Constructor
@@ -68,7 +66,6 @@ public class ContainerCarrier extends Transform {
     public ContainerCarrier(Transform parent, Point3 stack) {
         super(parent);
         initSpots(stack);
-        updateOuter();
     }
     
     /**
@@ -95,8 +92,6 @@ public class ContainerCarrier extends Transform {
         for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
             m_containerSpots[x][y][z].localPosition = m_containerSpots[x][y][z].localPosition.add(_move);
         }
-        
-        // Set offset
     }
     
     /**
@@ -159,10 +154,12 @@ public class ContainerCarrier extends Transform {
                     m_containerSpots[i][j][k] = new ContainerSpot(_newPosition);
                     
                     // Remove this, its for testing purposes
-                    setContainer(new Point3(i, j, k), new Container(new RFID()));
+                    setContainer(new Point3(i, j, k), new Container(new RFID()), false);
                 }
             }
         }
+        
+        updateOuter();
     }
     
     /**
@@ -188,8 +185,10 @@ public class ContainerCarrier extends Transform {
             if (m_containerSpots[x][y][z].container == null)
                 continue;
             
-            if (isOuter(x, y, z))
-                m_containerSpots[x][y][z].container.show();
+            if (isOuter(x, y, z)) {
+                onSetContainer(m_containerSpots[x][y][z].container);
+                m_containerSpots[x][y][z].container.show(m_containerSpots[x][y][z].worldPosition());
+            }
             else
                 m_containerSpots[x][y][z].container.hide();
         }
@@ -227,7 +226,10 @@ public class ContainerCarrier extends Transform {
      * @return 
      */
     public Container setContainer(Container c) {
-        return setContainer(Point3.zero(), c);
+        return setContainer(Point3.zero(), c, true);
+    }
+    public Container setContainer(Point3 point, Container c) {
+        return setContainer(point, c, true);
     }
     /**
      * Set container
@@ -236,7 +238,7 @@ public class ContainerCarrier extends Transform {
      * @param c
      * @return If the input equals null, the previous container returned, otherwise the new one
      */
-    public Container setContainer(Point3 point, Container c) {
+    public Container setContainer(Point3 point, Container c, boolean update) {
         if ( // Check if input is valid
                 point.x < 0 || point.y < 0 || point.z < 0 || 
                 point.x >= m_containerSpots                  .length || 
@@ -249,6 +251,9 @@ public class ContainerCarrier extends Transform {
         
         // Set the new container
         m_containerSpots[point.x][point.y][point.z].container = c;
+        
+        if (update)
+            updateOuter();
         
         if (c == null) // Return the previous one
             return temp;
@@ -265,6 +270,7 @@ public class ContainerCarrier extends Transform {
      */
     protected void onSetContainer(Container c) { 
         this.attachChild(c.transform);
+        
     }
     
     /**

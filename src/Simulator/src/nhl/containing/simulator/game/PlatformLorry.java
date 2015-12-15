@@ -14,7 +14,7 @@ import nhl.containing.simulator.world.WorldCreator;
  *
  * @author sietse
  */
-public class PlatformLorry extends PlatformLoading {
+public class PlatformLorry extends Platform {
 
     public PlatformLorry(Vector3f offset) {
         super(offset);

@@ -11,7 +11,7 @@ import nhl.containing.simulator.framework.Transform;
  *
  * @author sietse
  */
-public class PlatformInland extends PlatformLoading {
+public class PlatformInland extends Platform {
 
     public PlatformInland(Vector3f offset) {
         super(offset);

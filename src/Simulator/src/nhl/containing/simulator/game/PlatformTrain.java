@@ -13,7 +13,7 @@ import nhl.containing.simulator.world.WorldCreator;
  *
  * @author sietse
  */
-public class PlatformTrain extends PlatformLoading {
+public class PlatformTrain extends Platform {
 
     public PlatformTrain(Vector3f offset) {
         super(offset);

@@ -39,6 +39,7 @@ public final class Crane extends MovingItem {
     // Offsets
     protected Vector3f m_frameOffset = Utilities.zero();    // Local frame offset, from the crane transform
     protected Vector3f m_hookOffset = Utilities.zero();     // Local hook offset, from the frame transform
+    protected Vector3f m_ropeOffset = Utilities.zero();
     
     // Settings
     private final String m_craneModelName;
@@ -72,6 +73,7 @@ public final class Crane extends MovingItem {
             Vector3f basePosition,
             Vector3f craneOffset, 
             Vector3f hookOffset, 
+            Vector3f ropeOffset, 
             Vector3f containerOffset, 
             Vector3f craneSpatialOffset, 
             Vector3f hookSpatialOffset,
@@ -90,7 +92,7 @@ public final class Crane extends MovingItem {
         this.m_basePosition         = basePosition;
         this.m_attachTimer          = new Timer(m_attachTime);
         
-        init(cranePath, craneOffset, hookOffset, containerOffset, craneSpatialOffset, hookSpatialOffset, craneScale, hookScale);
+        init(cranePath, craneOffset, hookOffset, ropeOffset, containerOffset, craneSpatialOffset, hookSpatialOffset, craneScale, hookScale);
     }
     
     /**
@@ -101,11 +103,12 @@ public final class Crane extends MovingItem {
      * @param frameSpatialOffset
      * @param hookSpatialOffset 
      */
-    private void init(Path cranePath, Vector3f frameOffset, Vector3f hookOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset, float craneScale, float hookScale) {
+    private void init(Path cranePath, Vector3f frameOffset, Vector3f hookOffset, Vector3f ropeOffset, Vector3f containerOffset, Vector3f frameSpatialOffset, Vector3f hookSpatialOffset, float craneScale, float hookScale) {
         
         // Init offsets
         m_frameOffset = new Vector3f(frameOffset);
         m_hookOffset = new Vector3f(hookOffset);
+        m_ropeOffset = new Vector3f(ropeOffset);
         this.containerOffset(containerOffset);
         
         // Init transforms (Platform -> Crane -> Frame -> Hook)
@@ -188,8 +191,8 @@ public final class Crane extends MovingItem {
             m_hook.localPosition(hookPos);
             
             // Rrope
-            m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(0.0f, m_ropeHeight, 0.0f)));
-            m_rope.SetPosition(1, m_hook.position());
+            m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(m_ropeOffset)).add(new Vector3f(0.0f, m_ropeHeight, 0.0f)));
+            m_rope.SetPosition(1, m_hook.position().add(m_ropeOffset));
         }
         
         // Check if on target

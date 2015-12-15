@@ -6,7 +6,7 @@
     <string name="title_activity_container">ContainerActivity</string>
     <string name="rotate_animation_desc">Refreshing</string>
 
-    <string name="error_connect_controller">Coundn't connect to controller</string>
+    <string name="error_connect_controller">Couldn\'t connect to controller</string>
 
     <!-- String related to Menu-->
     <string name="refresh_actionbar">Refresh</string>
@@ -22,7 +22,7 @@
     <string name="desc">Project Containing</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="drawer_item_desc">Drawer item Icon</string>
+    <string name="drawer_item_desc">Drawer item icon</string>
     <string name="nav_home_titel">Current Numbers</string>
     <string name="nav_home_subtitel">Current numbers per category</string>
     <string name="nav_graph1_titel">In</string>
@@ -45,7 +45,7 @@
     <string name="wrong_connection">Please connect to WI-FI or change your settings before refreshing</string>
 
     <!-- Strings related to Containerlist Fragment-->
-    <string name="containerlist_error_initialized">Containerfragement couldn't be initialized</string>
+    <string name="containerlist_error_initialized">Containerfragement couldn\'t be initialized</string>
     <string name="containerlist_error_wrong">Something went wrong</string>
 
     <!-- Strings related to Graph Fragment-->
@@ -58,7 +58,7 @@
         <item>AGV</item>
         <item>Remainer</item>
     </string-array>
-    <string name="graph_error_initialized">Containerfragement couldn't be initialized</string>
+    <string name="graph_error_initialized">Graphfragement couldn\'t be initialized</string>
     <string name="graph_error_wrong">Something went wrong</string>
 
     <!-- String related to Container ArrayAdapter-->
@@ -69,7 +69,7 @@
     <string name="communicator_error_settings">Host or Port are not defined. Please check your settings</string>
     <string name="communicator_error_wrong">Something went wrong</string>
     <string name="communicator_error_not_connected">Not connected</string>
-    <string name="communicator_error_no_data">Couldn't get data</string>
+    <string name="communicator_error_no_data">Couldn\'t get data</string>
     <!-- Strings related to Container Activity -->
 
     <!-- Strings related to Loading Dialog-->
@@ -91,7 +91,7 @@
     <string name="container_date">Date</string>
     <string name="container_transport">Transport</string>
 
-    <string name="container_error_message">Couldn't get container information!</string>
+    <string name="container_error_message">Couldn\'t get container information!</string>
 
     <!-- Strings related to Settings -->
 

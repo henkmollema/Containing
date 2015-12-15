@@ -42,4 +42,54 @@
     <string name="network_sum">Kies welk netwerk gebruikt dient te worden</string>
     <string name="network_dialog_title">Kies welk netwerk gebruikt dient te worden</string>
     <string name="nav_home_titel">Huidige getallen</string>
+    <string name="containerlist_error_initialized">Containerfragment kon niet worden geïnitialiseerd</string>
+    <string name="containerlist_error_wrong">Er ging iets fout</string>
+    <string name="containter_company">Vervoerder</string>
+    <string name="data_refresh_title">Data Gebruik &amp; Vernieuwen</string>
+    <string name="desc">Project Containing</string>
+    <string name="drawer_close">Sluiten</string>
+    <string name="drawer_item_desc">Drawer item icoon</string>
+    <string name="drawer_open">Open</string>
+    <string name="error_connect_controller">Verbinden met de controller is mislukt</string>
+    <string name="exit_message">Weet u het zeker dat u de app wil verlaten?</string>
+    <string name="exit_neg">Blijven</string>
+    <string name="exit_pos">Verlaten</string>
+    <string name="exit_title">Verlaten</string>
+    <string name="graph_error_initialized">Graphfragment kon niet worden geïnitialiseerd</string>
+    <string name="graph_error_wrong">Er ging iets fout</string>
+    <string name="ip_dialog_title">Controller IP-adres</string>
+    <string name="ip_sum">Het IP-adres van de Controller</string>
+    <string name="ip_title">IP-adres</string>
+    <string name="loading_dialog_message">Container informatie ophalen, even geduld alstublieft</string>
+    <string name="loading_dialog_title">Laden…</string>
+    <string name="nav_containerlist_subtitel">Lijst met huidige containers</string>
+    <string name="nav_containerlist_titel">Containers</string>
+    <string name="nav_graph1_subtitel">Ingaande aantallen</string>
+    <string name="nav_graph1_titel">In</string>
+    <string name="nav_graph2_subtitel">Uitgaande aantallen</string>
+    <string name="nav_graph2_titel">Uit</string>
+    <string name="nav_graph3_subtitel">Onbekend</string>
+    <string name="nav_graph3_titel">Grafiek 4</string>
+    <string name="nav_home_subtitel">Huidige aantallen per categorie</string>
+    <string name="refresh_sum">Altijd automatisch vernieuwen</string>
+    <string name="refresh_time_dialog_title">Kies tijd voor het automatisch vernieuwen</string>
+    <string name="refresh_time_sum">Zet de tijd voor het automatisch vernieuwen</string>
+    <string name="refresh_time_title">Tijd automatisch vernieuwen</string>
+    <string name="refresh_title">Automatisch vernieuwen</string>
+    <string name="wrong_connection">Verbind met WI-FI of verander uw instellingen voordat u gaat vernieuwen</string>
+
+    <string-array name="graph_items">
+        <item>Trein</item>
+        <item>Vrachtwagen</item>
+        <item>Zeeschip</item>
+        <item>binnenvaartschip</item>
+        <item>Opslag</item>
+        <item>AGV</item>
+        <item>Overige</item>
+    </string-array>
+
+    <string-array name="network">
+        <item>Mobiele data En WI-FI</item>
+        <item>Alleen WI-FI</item>
+    </string-array>
 </resources>

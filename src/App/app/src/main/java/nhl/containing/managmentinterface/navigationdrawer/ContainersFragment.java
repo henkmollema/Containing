@@ -156,7 +156,7 @@ public class ContainersFragment extends ListFragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), R.string.containerlist_error_connect_controller, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.error_connect_controller, Toast.LENGTH_SHORT).show();
                     main.completeRefresh.run();
                 }
             });

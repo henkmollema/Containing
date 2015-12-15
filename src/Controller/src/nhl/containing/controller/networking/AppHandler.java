@@ -4,7 +4,6 @@
  */
 package nhl.containing.controller.networking;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,7 +18,7 @@ import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 
 /**
- *
+ * Handles the App requests
  * @author Jens
  */
 public class AppHandler implements Runnable{
@@ -28,12 +27,21 @@ public class AppHandler implements Runnable{
     private Socket socket;
     private Server server;
     
+    /**
+     * The constructor
+     * @param _server The server
+     * @param _socket the socket where the app listens on
+     */
     public AppHandler(Server _server, Socket _socket)
     {
         socket = _socket;
         server = _server;
     }
     
+    /**
+     * Send Okay message
+     * @return true when succeeded, else false
+     */
     public boolean initAppData() {
         try
         {
@@ -51,6 +59,9 @@ public class AppHandler implements Runnable{
         }
     }
 
+    /**
+     *  The run function
+     */
     @Override
     public void run() {
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
@@ -78,6 +89,10 @@ public class AppHandler implements Runnable{
         //isAppConnected = false;
     }
     
+    /**
+     * Gets the requests and sends the requested data
+     * @return false when Error, otherwise true
+     */
     public boolean appDataLoop()
     {
         p("Starting appLoop");
@@ -97,11 +112,16 @@ public class AppHandler implements Runnable{
         return true;
     }
     
+    /**
+     * parses the instruction class from a byte array and serializes the right information to an byte array
+     * @param inst instruction byte array
+     * @return information byte array
+     */
     private byte [] processInstruction(byte[] inst)
     {
         SimulatorController controller = server.getSimulator().getSimulatorController();
         SimulationContext context = controller.getSimulationContext();
-        Instruction instruction = null;
+        Instruction instruction;
         datablockApp.Builder builder = datablockApp.newBuilder();
         try
         {
@@ -116,7 +136,7 @@ public class AppHandler implements Runnable{
         switch (instruction.getA())
         {
             case 0:
-                //actual graph
+                //actual graph [WIP]
                 break;
             case 1: case 2:
                 //in and out graph
@@ -151,7 +171,7 @@ public class AppHandler implements Runnable{
                builder.addGraphs(b.build());
                 break;
             case 3:
-                //unkown graph
+                //unkown graph [WIP]
                 break;
             case 4:
                 //containerlist
@@ -196,7 +216,11 @@ public class AppHandler implements Runnable{
         return builder.build().toByteArray();
     }
     
-    
+    /**
+     * Gets the right containercategory by a specific type of carrier
+     * @param carrier The carrier
+     * @return the container category
+     */
     private ContainerCategory getCategory(Carrier carrier)
     {
         if(carrier instanceof InlandShip)
@@ -211,6 +235,10 @@ public class AppHandler implements Runnable{
             return ContainerCategory.REMAINDER;
     }
     
+    /**
+     * Prints a string
+     * @param s the string to print
+     */
     private static void p(String s) {
         System.out.println("Controller: " + s);
     }

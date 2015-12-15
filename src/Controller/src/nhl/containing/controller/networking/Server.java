@@ -37,6 +37,11 @@ public class Server implements Runnable {
         simCom = new CommunicationProtocol(); //The communication protocol used for the simulator connection
         
     }
+    
+    public Simulator getSimulator()
+    {
+        return simulator;
+    }
 
     public boolean isSimulatorConnected() {
         return isSimulatorConnected;

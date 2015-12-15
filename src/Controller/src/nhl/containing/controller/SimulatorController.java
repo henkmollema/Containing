@@ -46,16 +46,6 @@ public class SimulatorController
         Simulator sim = new Simulator(this);
         if (sim.start())
         {
-            if (sim.init(null))
-            {
-                if (sim.play())
-                {
-                    for (Record record : recordSet.records)
-                    {
-                        sim.processRecord(record);
-                    }
-                }
-            }
         }
     }
 

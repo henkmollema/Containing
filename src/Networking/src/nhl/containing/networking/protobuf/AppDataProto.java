@@ -135,10 +135,10 @@ public final class AppDataProto {
     // @@protoc_insertion_point(enum_scope:app.ContainerCategory)
   }
 
-  public interface datablockAppOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface datablockAppOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:app.datablockApp)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .app.ContainerGraphData graphs = 1;
     /**
      * <code>repeated .app.ContainerGraphData graphs = 1;</code>
      */
@@ -163,7 +163,6 @@ public final class AppDataProto {
     nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder getGraphsOrBuilder(
         int index);
 
-    // repeated .app.ContainerDataListItem items = 2;
     /**
      * <code>repeated .app.ContainerDataListItem items = 2;</code>
      */
@@ -188,7 +187,6 @@ public final class AppDataProto {
     nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder getItemsOrBuilder(
         int index);
 
-    // optional .app.ContainerInfo container = 3;
     /**
      * <code>optional .app.ContainerInfo container = 3;</code>
      */
@@ -206,8 +204,9 @@ public final class AppDataProto {
    * Protobuf type {@code app.datablockApp}
    */
   public static final class datablockApp extends
-      com.google.protobuf.GeneratedMessage
-      implements datablockAppOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:app.datablockApp)
+      datablockAppOrBuilder {
     // Use datablockApp.newBuilder() to construct.
     private datablockApp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -328,7 +327,6 @@ public final class AppDataProto {
     }
 
     private int bitField0_;
-    // repeated .app.ContainerGraphData graphs = 1;
     public static final int GRAPHS_FIELD_NUMBER = 1;
     private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> graphs_;
     /**
@@ -364,7 +362,6 @@ public final class AppDataProto {
       return graphs_.get(index);
     }
 
-    // repeated .app.ContainerDataListItem items = 2;
     public static final int ITEMS_FIELD_NUMBER = 2;
     private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> items_;
     /**
@@ -400,7 +397,6 @@ public final class AppDataProto {
       return items_.get(index);
     }
 
-    // optional .app.ContainerInfo container = 3;
     public static final int CONTAINER_FIELD_NUMBER = 3;
     private nhl.containing.networking.protobuf.AppDataProto.ContainerInfo container_;
     /**
@@ -430,7 +426,8 @@ public final class AppDataProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       for (int i = 0; i < getGraphsCount(); i++) {
         if (!getGraphs(i).isInitialized()) {
@@ -569,8 +566,9 @@ public final class AppDataProto {
      * Protobuf type {@code app.datablockApp}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.AppDataProto.datablockAppOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:app.datablockApp)
+        nhl.containing.networking.protobuf.AppDataProto.datablockAppOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_datablockApp_descriptor;
@@ -794,7 +792,6 @@ public final class AppDataProto {
       }
       private int bitField0_;
 
-      // repeated .app.ContainerGraphData graphs = 1;
       private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> graphs_ =
         java.util.Collections.emptyList();
       private void ensureGraphsIsMutable() {
@@ -936,7 +933,8 @@ public final class AppDataProto {
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerGraphData> values) {
         if (graphsBuilder_ == null) {
           ensureGraphsIsMutable();
-          super.addAll(values, graphs_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, graphs_);
           onChanged();
         } else {
           graphsBuilder_.addAllMessages(values);
@@ -1034,7 +1032,6 @@ public final class AppDataProto {
         return graphsBuilder_;
       }
 
-      // repeated .app.ContainerDataListItem items = 2;
       private java.util.List<nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> items_ =
         java.util.Collections.emptyList();
       private void ensureItemsIsMutable() {
@@ -1176,7 +1173,8 @@ public final class AppDataProto {
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItem> values) {
         if (itemsBuilder_ == null) {
           ensureItemsIsMutable();
-          super.addAll(values, items_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, items_);
           onChanged();
         } else {
           itemsBuilder_.addAllMessages(values);
@@ -1274,7 +1272,6 @@ public final class AppDataProto {
         return itemsBuilder_;
       }
 
-      // optional .app.ContainerInfo container = 3;
       private nhl.containing.networking.protobuf.AppDataProto.ContainerInfo container_ = nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.getDefaultInstance();
       private com.google.protobuf.SingleFieldBuilder<
           nhl.containing.networking.protobuf.AppDataProto.ContainerInfo, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder> containerBuilder_;
@@ -1383,7 +1380,7 @@ public final class AppDataProto {
         if (containerBuilder_ == null) {
           containerBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               nhl.containing.networking.protobuf.AppDataProto.ContainerInfo, nhl.containing.networking.protobuf.AppDataProto.ContainerInfo.Builder, nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder>(
-                  container_,
+                  getContainer(),
                   getParentForChildren(),
                   isClean());
           container_ = null;
@@ -1402,10 +1399,10 @@ public final class AppDataProto {
     // @@protoc_insertion_point(class_scope:app.datablockApp)
   }
 
-  public interface ContainerGraphDataOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ContainerGraphDataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:app.ContainerGraphData)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required .app.ContainerCategory category = 1;
     /**
      * <code>required .app.ContainerCategory category = 1;</code>
      */
@@ -1415,7 +1412,6 @@ public final class AppDataProto {
      */
     nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory();
 
-    // required int32 aantal = 2;
     /**
      * <code>required int32 aantal = 2;</code>
      */
@@ -1429,8 +1425,9 @@ public final class AppDataProto {
    * Protobuf type {@code app.ContainerGraphData}
    */
   public static final class ContainerGraphData extends
-      com.google.protobuf.GeneratedMessage
-      implements ContainerGraphDataOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:app.ContainerGraphData)
+      ContainerGraphDataOrBuilder {
     // Use ContainerGraphData.newBuilder() to construct.
     private ContainerGraphData(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1532,7 +1529,6 @@ public final class AppDataProto {
     }
 
     private int bitField0_;
-    // required .app.ContainerCategory category = 1;
     public static final int CATEGORY_FIELD_NUMBER = 1;
     private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_;
     /**
@@ -1548,7 +1544,6 @@ public final class AppDataProto {
       return category_;
     }
 
-    // required int32 aantal = 2;
     public static final int AANTAL_FIELD_NUMBER = 2;
     private int aantal_;
     /**
@@ -1571,7 +1566,8 @@ public final class AppDataProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasCategory()) {
         memoizedIsInitialized = 0;
@@ -1693,8 +1689,9 @@ public final class AppDataProto {
      * Protobuf type {@code app.ContainerGraphData}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:app.ContainerGraphData)
+        nhl.containing.networking.protobuf.AppDataProto.ContainerGraphDataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerGraphData_descriptor;
@@ -1824,7 +1821,6 @@ public final class AppDataProto {
       }
       private int bitField0_;
 
-      // required .app.ContainerCategory category = 1;
       private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory category = 1;</code>
@@ -1860,7 +1856,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required int32 aantal = 2;
       private int aantal_ ;
       /**
        * <code>required int32 aantal = 2;</code>
@@ -1904,10 +1899,10 @@ public final class AppDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerGraphData)
   }
 
-  public interface ContainerInfoOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ContainerInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:app.ContainerInfo)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int32 ID = 1;
     /**
      * <code>required int32 ID = 1;</code>
      */
@@ -1917,7 +1912,6 @@ public final class AppDataProto {
      */
     int getID();
 
-    // required int64 binnenkomstDatum = 2;
     /**
      * <code>required int64 binnenkomstDatum = 2;</code>
      */
@@ -1927,7 +1921,6 @@ public final class AppDataProto {
      */
     long getBinnenkomstDatum();
 
-    // required .app.ContainerCategory vervoerBinnenkomst = 3;
     /**
      * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
      */
@@ -1937,7 +1930,6 @@ public final class AppDataProto {
      */
     nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerBinnenkomst();
 
-    // required string aanvoerMaatschappij = 4;
     /**
      * <code>required string aanvoerMaatschappij = 4;</code>
      */
@@ -1952,7 +1944,6 @@ public final class AppDataProto {
     com.google.protobuf.ByteString
         getAanvoerMaatschappijBytes();
 
-    // required string eigenaar = 5;
     /**
      * <code>required string eigenaar = 5;</code>
      */
@@ -1967,7 +1958,6 @@ public final class AppDataProto {
     com.google.protobuf.ByteString
         getEigenaarBytes();
 
-    // required int64 vertrekDatum = 6;
     /**
      * <code>required int64 vertrekDatum = 6;</code>
      */
@@ -1977,7 +1967,6 @@ public final class AppDataProto {
      */
     long getVertrekDatum();
 
-    // required .app.ContainerCategory vervoerVertrek = 7;
     /**
      * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
      */
@@ -1987,7 +1976,6 @@ public final class AppDataProto {
      */
     nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getVervoerVertrek();
 
-    // required string afvoerMaatschappij = 8;
     /**
      * <code>required string afvoerMaatschappij = 8;</code>
      */
@@ -2002,7 +1990,6 @@ public final class AppDataProto {
     com.google.protobuf.ByteString
         getAfvoerMaatschappijBytes();
 
-    // required int32 gewichtLeeg = 9;
     /**
      * <code>required int32 gewichtLeeg = 9;</code>
      */
@@ -2012,7 +1999,6 @@ public final class AppDataProto {
      */
     int getGewichtLeeg();
 
-    // required int32 gewichtVol = 10;
     /**
      * <code>required int32 gewichtVol = 10;</code>
      */
@@ -2022,7 +2008,6 @@ public final class AppDataProto {
      */
     int getGewichtVol();
 
-    // required string inhoud = 11;
     /**
      * <code>required string inhoud = 11;</code>
      */
@@ -2036,13 +2021,42 @@ public final class AppDataProto {
      */
     com.google.protobuf.ByteString
         getInhoudBytes();
+
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    boolean hasInhoudType();
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    java.lang.String getInhoudType();
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    com.google.protobuf.ByteString
+        getInhoudTypeBytes();
+
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    boolean hasInhoudGevaar();
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    java.lang.String getInhoudGevaar();
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    com.google.protobuf.ByteString
+        getInhoudGevaarBytes();
   }
   /**
    * Protobuf type {@code app.ContainerInfo}
    */
   public static final class ContainerInfo extends
-      com.google.protobuf.GeneratedMessage
-      implements ContainerInfoOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:app.ContainerInfo)
+      ContainerInfoOrBuilder {
     // Use ContainerInfo.newBuilder() to construct.
     private ContainerInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2110,13 +2124,15 @@ public final class AppDataProto {
               break;
             }
             case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              aanvoerMaatschappij_ = input.readBytes();
+              aanvoerMaatschappij_ = bs;
               break;
             }
             case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              eigenaar_ = input.readBytes();
+              eigenaar_ = bs;
               break;
             }
             case 48: {
@@ -2136,8 +2152,9 @@ public final class AppDataProto {
               break;
             }
             case 66: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000080;
-              afvoerMaatschappij_ = input.readBytes();
+              afvoerMaatschappij_ = bs;
               break;
             }
             case 72: {
@@ -2151,8 +2168,21 @@ public final class AppDataProto {
               break;
             }
             case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000400;
-              inhoud_ = input.readBytes();
+              inhoud_ = bs;
+              break;
+            }
+            case 98: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000800;
+              inhoudType_ = bs;
+              break;
+            }
+            case 106: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00001000;
+              inhoudGevaar_ = bs;
               break;
             }
           }
@@ -2195,7 +2225,6 @@ public final class AppDataProto {
     }
 
     private int bitField0_;
-    // required int32 ID = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int iD_;
     /**
@@ -2211,7 +2240,6 @@ public final class AppDataProto {
       return iD_;
     }
 
-    // required int64 binnenkomstDatum = 2;
     public static final int BINNENKOMSTDATUM_FIELD_NUMBER = 2;
     private long binnenkomstDatum_;
     /**
@@ -2227,7 +2255,6 @@ public final class AppDataProto {
       return binnenkomstDatum_;
     }
 
-    // required .app.ContainerCategory vervoerBinnenkomst = 3;
     public static final int VERVOERBINNENKOMST_FIELD_NUMBER = 3;
     private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerBinnenkomst_;
     /**
@@ -2243,7 +2270,6 @@ public final class AppDataProto {
       return vervoerBinnenkomst_;
     }
 
-    // required string aanvoerMaatschappij = 4;
     public static final int AANVOERMAATSCHAPPIJ_FIELD_NUMBER = 4;
     private java.lang.Object aanvoerMaatschappij_;
     /**
@@ -2286,7 +2312,6 @@ public final class AppDataProto {
       }
     }
 
-    // required string eigenaar = 5;
     public static final int EIGENAAR_FIELD_NUMBER = 5;
     private java.lang.Object eigenaar_;
     /**
@@ -2329,7 +2354,6 @@ public final class AppDataProto {
       }
     }
 
-    // required int64 vertrekDatum = 6;
     public static final int VERTREKDATUM_FIELD_NUMBER = 6;
     private long vertrekDatum_;
     /**
@@ -2345,7 +2369,6 @@ public final class AppDataProto {
       return vertrekDatum_;
     }
 
-    // required .app.ContainerCategory vervoerVertrek = 7;
     public static final int VERVOERVERTREK_FIELD_NUMBER = 7;
     private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerVertrek_;
     /**
@@ -2361,7 +2384,6 @@ public final class AppDataProto {
       return vervoerVertrek_;
     }
 
-    // required string afvoerMaatschappij = 8;
     public static final int AFVOERMAATSCHAPPIJ_FIELD_NUMBER = 8;
     private java.lang.Object afvoerMaatschappij_;
     /**
@@ -2404,7 +2426,6 @@ public final class AppDataProto {
       }
     }
 
-    // required int32 gewichtLeeg = 9;
     public static final int GEWICHTLEEG_FIELD_NUMBER = 9;
     private int gewichtLeeg_;
     /**
@@ -2420,7 +2441,6 @@ public final class AppDataProto {
       return gewichtLeeg_;
     }
 
-    // required int32 gewichtVol = 10;
     public static final int GEWICHTVOL_FIELD_NUMBER = 10;
     private int gewichtVol_;
     /**
@@ -2436,7 +2456,6 @@ public final class AppDataProto {
       return gewichtVol_;
     }
 
-    // required string inhoud = 11;
     public static final int INHOUD_FIELD_NUMBER = 11;
     private java.lang.Object inhoud_;
     /**
@@ -2479,6 +2498,90 @@ public final class AppDataProto {
       }
     }
 
+    public static final int INHOUDTYPE_FIELD_NUMBER = 12;
+    private java.lang.Object inhoudType_;
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    public boolean hasInhoudType() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    public java.lang.String getInhoudType() {
+      java.lang.Object ref = inhoudType_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          inhoudType_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string inhoudType = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getInhoudTypeBytes() {
+      java.lang.Object ref = inhoudType_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        inhoudType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int INHOUDGEVAAR_FIELD_NUMBER = 13;
+    private java.lang.Object inhoudGevaar_;
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    public boolean hasInhoudGevaar() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    public java.lang.String getInhoudGevaar() {
+      java.lang.Object ref = inhoudGevaar_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          inhoudGevaar_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string inhoudGevaar = 13;</code>
+     */
+    public com.google.protobuf.ByteString
+        getInhoudGevaarBytes() {
+      java.lang.Object ref = inhoudGevaar_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        inhoudGevaar_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       iD_ = 0;
       binnenkomstDatum_ = 0L;
@@ -2491,11 +2594,14 @@ public final class AppDataProto {
       gewichtLeeg_ = 0;
       gewichtVol_ = 0;
       inhoud_ = "";
+      inhoudType_ = "";
+      inhoudGevaar_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasID()) {
         memoizedIsInitialized = 0;
@@ -2541,6 +2647,14 @@ public final class AppDataProto {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasInhoudType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasInhoudGevaar()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -2580,6 +2694,12 @@ public final class AppDataProto {
       }
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         output.writeBytes(11, getInhoudBytes());
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeBytes(12, getInhoudTypeBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeBytes(13, getInhoudGevaarBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -2633,6 +2753,14 @@ public final class AppDataProto {
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(11, getInhoudBytes());
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, getInhoudTypeBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(13, getInhoudGevaarBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2716,8 +2844,9 @@ public final class AppDataProto {
      * Protobuf type {@code app.ContainerInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:app.ContainerInfo)
+        nhl.containing.networking.protobuf.AppDataProto.ContainerInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerInfo_descriptor;
@@ -2772,6 +2901,10 @@ public final class AppDataProto {
         bitField0_ = (bitField0_ & ~0x00000200);
         inhoud_ = "";
         bitField0_ = (bitField0_ & ~0x00000400);
+        inhoudType_ = "";
+        bitField0_ = (bitField0_ & ~0x00000800);
+        inhoudGevaar_ = "";
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
 
@@ -2844,6 +2977,14 @@ public final class AppDataProto {
           to_bitField0_ |= 0x00000400;
         }
         result.inhoud_ = inhoud_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        result.inhoudType_ = inhoudType_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.inhoudGevaar_ = inhoudGevaar_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2901,6 +3042,16 @@ public final class AppDataProto {
           inhoud_ = other.inhoud_;
           onChanged();
         }
+        if (other.hasInhoudType()) {
+          bitField0_ |= 0x00000800;
+          inhoudType_ = other.inhoudType_;
+          onChanged();
+        }
+        if (other.hasInhoudGevaar()) {
+          bitField0_ |= 0x00001000;
+          inhoudGevaar_ = other.inhoudGevaar_;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2950,6 +3101,14 @@ public final class AppDataProto {
           
           return false;
         }
+        if (!hasInhoudType()) {
+          
+          return false;
+        }
+        if (!hasInhoudGevaar()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -2972,7 +3131,6 @@ public final class AppDataProto {
       }
       private int bitField0_;
 
-      // required int32 ID = 1;
       private int iD_ ;
       /**
        * <code>required int32 ID = 1;</code>
@@ -3005,7 +3163,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required int64 binnenkomstDatum = 2;
       private long binnenkomstDatum_ ;
       /**
        * <code>required int64 binnenkomstDatum = 2;</code>
@@ -3038,7 +3195,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required .app.ContainerCategory vervoerBinnenkomst = 3;
       private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerBinnenkomst_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory vervoerBinnenkomst = 3;</code>
@@ -3074,7 +3230,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required string aanvoerMaatschappij = 4;
       private java.lang.Object aanvoerMaatschappij_ = "";
       /**
        * <code>required string aanvoerMaatschappij = 4;</code>
@@ -3088,9 +3243,12 @@ public final class AppDataProto {
       public java.lang.String getAanvoerMaatschappij() {
         java.lang.Object ref = aanvoerMaatschappij_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          aanvoerMaatschappij_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            aanvoerMaatschappij_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3148,7 +3306,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required string eigenaar = 5;
       private java.lang.Object eigenaar_ = "";
       /**
        * <code>required string eigenaar = 5;</code>
@@ -3162,9 +3319,12 @@ public final class AppDataProto {
       public java.lang.String getEigenaar() {
         java.lang.Object ref = eigenaar_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          eigenaar_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            eigenaar_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3222,7 +3382,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required int64 vertrekDatum = 6;
       private long vertrekDatum_ ;
       /**
        * <code>required int64 vertrekDatum = 6;</code>
@@ -3255,7 +3414,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required .app.ContainerCategory vervoerVertrek = 7;
       private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory vervoerVertrek_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory vervoerVertrek = 7;</code>
@@ -3291,7 +3449,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required string afvoerMaatschappij = 8;
       private java.lang.Object afvoerMaatschappij_ = "";
       /**
        * <code>required string afvoerMaatschappij = 8;</code>
@@ -3305,9 +3462,12 @@ public final class AppDataProto {
       public java.lang.String getAfvoerMaatschappij() {
         java.lang.Object ref = afvoerMaatschappij_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          afvoerMaatschappij_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            afvoerMaatschappij_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3365,7 +3525,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required int32 gewichtLeeg = 9;
       private int gewichtLeeg_ ;
       /**
        * <code>required int32 gewichtLeeg = 9;</code>
@@ -3398,7 +3557,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required int32 gewichtVol = 10;
       private int gewichtVol_ ;
       /**
        * <code>required int32 gewichtVol = 10;</code>
@@ -3431,7 +3589,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required string inhoud = 11;
       private java.lang.Object inhoud_ = "";
       /**
        * <code>required string inhoud = 11;</code>
@@ -3445,9 +3602,12 @@ public final class AppDataProto {
       public java.lang.String getInhoud() {
         java.lang.Object ref = inhoud_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          inhoud_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            inhoud_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3505,6 +3665,158 @@ public final class AppDataProto {
         return this;
       }
 
+      private java.lang.Object inhoudType_ = "";
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public boolean hasInhoudType() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public java.lang.String getInhoudType() {
+        java.lang.Object ref = inhoudType_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            inhoudType_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public com.google.protobuf.ByteString
+          getInhoudTypeBytes() {
+        java.lang.Object ref = inhoudType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          inhoudType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public Builder setInhoudType(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        inhoudType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public Builder clearInhoudType() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        inhoudType_ = getDefaultInstance().getInhoudType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string inhoudType = 12;</code>
+       */
+      public Builder setInhoudTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        inhoudType_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object inhoudGevaar_ = "";
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public boolean hasInhoudGevaar() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public java.lang.String getInhoudGevaar() {
+        java.lang.Object ref = inhoudGevaar_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            inhoudGevaar_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public com.google.protobuf.ByteString
+          getInhoudGevaarBytes() {
+        java.lang.Object ref = inhoudGevaar_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          inhoudGevaar_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public Builder setInhoudGevaar(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00001000;
+        inhoudGevaar_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public Builder clearInhoudGevaar() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        inhoudGevaar_ = getDefaultInstance().getInhoudGevaar();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string inhoudGevaar = 13;</code>
+       */
+      public Builder setInhoudGevaarBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00001000;
+        inhoudGevaar_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:app.ContainerInfo)
     }
 
@@ -3516,10 +3828,10 @@ public final class AppDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerInfo)
   }
 
-  public interface ContainerDataListItemOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface ContainerDataListItemOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:app.ContainerDataListItem)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required int32 ID = 1;
     /**
      * <code>required int32 ID = 1;</code>
      */
@@ -3529,7 +3841,6 @@ public final class AppDataProto {
      */
     int getID();
 
-    // required string eigenaar = 2;
     /**
      * <code>required string eigenaar = 2;</code>
      */
@@ -3544,7 +3855,6 @@ public final class AppDataProto {
     com.google.protobuf.ByteString
         getEigenaarBytes();
 
-    // required .app.ContainerCategory category = 3;
     /**
      * <code>required .app.ContainerCategory category = 3;</code>
      */
@@ -3558,8 +3868,9 @@ public final class AppDataProto {
    * Protobuf type {@code app.ContainerDataListItem}
    */
   public static final class ContainerDataListItem extends
-      com.google.protobuf.GeneratedMessage
-      implements ContainerDataListItemOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:app.ContainerDataListItem)
+      ContainerDataListItemOrBuilder {
     // Use ContainerDataListItem.newBuilder() to construct.
     private ContainerDataListItem(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -3611,8 +3922,9 @@ public final class AppDataProto {
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              eigenaar_ = input.readBytes();
+              eigenaar_ = bs;
               break;
             }
             case 24: {
@@ -3666,7 +3978,6 @@ public final class AppDataProto {
     }
 
     private int bitField0_;
-    // required int32 ID = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private int iD_;
     /**
@@ -3682,7 +3993,6 @@ public final class AppDataProto {
       return iD_;
     }
 
-    // required string eigenaar = 2;
     public static final int EIGENAAR_FIELD_NUMBER = 2;
     private java.lang.Object eigenaar_;
     /**
@@ -3725,7 +4035,6 @@ public final class AppDataProto {
       }
     }
 
-    // required .app.ContainerCategory category = 3;
     public static final int CATEGORY_FIELD_NUMBER = 3;
     private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_;
     /**
@@ -3749,7 +4058,8 @@ public final class AppDataProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasID()) {
         memoizedIsInitialized = 0;
@@ -3882,8 +4192,9 @@ public final class AppDataProto {
      * Protobuf type {@code app.ContainerDataListItem}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:app.ContainerDataListItem)
+        nhl.containing.networking.protobuf.AppDataProto.ContainerDataListItemOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.AppDataProto.internal_static_app_ContainerDataListItem_descriptor;
@@ -4028,7 +4339,6 @@ public final class AppDataProto {
       }
       private int bitField0_;
 
-      // required int32 ID = 1;
       private int iD_ ;
       /**
        * <code>required int32 ID = 1;</code>
@@ -4061,7 +4371,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required string eigenaar = 2;
       private java.lang.Object eigenaar_ = "";
       /**
        * <code>required string eigenaar = 2;</code>
@@ -4075,9 +4384,12 @@ public final class AppDataProto {
       public java.lang.String getEigenaar() {
         java.lang.Object ref = eigenaar_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          eigenaar_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            eigenaar_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -4135,7 +4447,6 @@ public final class AppDataProto {
         return this;
       }
 
-      // required .app.ContainerCategory category = 3;
       private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
       /**
        * <code>required .app.ContainerCategory category = 3;</code>
@@ -4182,22 +4493,22 @@ public final class AppDataProto {
     // @@protoc_insertion_point(class_scope:app.ContainerDataListItem)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_app_datablockApp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_datablockApp_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerGraphData_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_ContainerGraphData_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_app_ContainerInfo_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_app_ContainerDataListItem_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -4217,58 +4528,59 @@ public final class AppDataProto {
       "stItem\022%\n\tcontainer\030\003 \001(\0132\022.app.Containe" +
       "rInfo\"N\n\022ContainerGraphData\022(\n\010category\030" +
       "\001 \002(\0162\026.app.ContainerCategory\022\016\n\006aantal\030" +
-      "\002 \002(\005\"\263\002\n\rContainerInfo\022\n\n\002ID\030\001 \002(\005\022\030\n\020b" +
+      "\002 \002(\005\"\335\002\n\rContainerInfo\022\n\n\002ID\030\001 \002(\005\022\030\n\020b" +
       "innenkomstDatum\030\002 \002(\003\0222\n\022vervoerBinnenko" +
       "mst\030\003 \002(\0162\026.app.ContainerCategory\022\033\n\023aan" +
       "voerMaatschappij\030\004 \002(\t\022\020\n\010eigenaar\030\005 \002(\t",
       "\022\024\n\014vertrekDatum\030\006 \002(\003\022.\n\016vervoerVertrek" +
       "\030\007 \002(\0162\026.app.ContainerCategory\022\032\n\022afvoer" +
       "Maatschappij\030\010 \002(\t\022\023\n\013gewichtLeeg\030\t \002(\005\022" +
-      "\022\n\ngewichtVol\030\n \002(\005\022\016\n\006inhoud\030\013 \002(\t\"_\n\025C" +
-      "ontainerDataListItem\022\n\n\002ID\030\001 \002(\005\022\020\n\010eige" +
-      "naar\030\002 \002(\t\022(\n\010category\030\003 \002(\0162\026.app.Conta" +
-      "inerCategory*k\n\021ContainerCategory\022\t\n\005TRA" +
-      "IN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007SEASHIP\020\002\022\016\n\nINLINESH" +
-      "IP\020\003\022\013\n\007STORAGE\020\004\022\007\n\003AGV\020\005\022\r\n\tREMAINDER\020" +
-      "\006B2\n\"nhl.containing.networking.protobufB",
-      "\014AppDataProto"
+      "\022\n\ngewichtVol\030\n \002(\005\022\016\n\006inhoud\030\013 \002(\t\022\022\n\ni" +
+      "nhoudType\030\014 \002(\t\022\024\n\014inhoudGevaar\030\r \002(\t\"_\n" +
+      "\025ContainerDataListItem\022\n\n\002ID\030\001 \002(\005\022\020\n\010ei" +
+      "genaar\030\002 \002(\t\022(\n\010category\030\003 \002(\0162\026.app.Con" +
+      "tainerCategory*k\n\021ContainerCategory\022\t\n\005T" +
+      "RAIN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007SEASHIP\020\002\022\016\n\nINLINE" +
+      "SHIP\020\003\022\013\n\007STORAGE\020\004\022\007\n\003AGV\020\005\022\r\n\tREMAINDE",
+      "R\020\006B2\n\"nhl.containing.networking.protobu" +
+      "fB\014AppDataProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_app_datablockApp_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_app_datablockApp_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_app_datablockApp_descriptor,
-              new java.lang.String[] { "Graphs", "Items", "Container", });
-          internal_static_app_ContainerGraphData_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_app_ContainerGraphData_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_app_ContainerGraphData_descriptor,
-              new java.lang.String[] { "Category", "Aantal", });
-          internal_static_app_ContainerInfo_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_app_ContainerInfo_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_app_ContainerInfo_descriptor,
-              new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "GewichtLeeg", "GewichtVol", "Inhoud", });
-          internal_static_app_ContainerDataListItem_descriptor =
-            getDescriptor().getMessageTypes().get(3);
-          internal_static_app_ContainerDataListItem_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_app_ContainerDataListItem_descriptor,
-              new java.lang.String[] { "ID", "Eigenaar", "Category", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_app_datablockApp_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_app_datablockApp_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_app_datablockApp_descriptor,
+        new java.lang.String[] { "Graphs", "Items", "Container", });
+    internal_static_app_ContainerGraphData_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_app_ContainerGraphData_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_app_ContainerGraphData_descriptor,
+        new java.lang.String[] { "Category", "Aantal", });
+    internal_static_app_ContainerInfo_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_app_ContainerInfo_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_app_ContainerInfo_descriptor,
+        new java.lang.String[] { "ID", "BinnenkomstDatum", "VervoerBinnenkomst", "AanvoerMaatschappij", "Eigenaar", "VertrekDatum", "VervoerVertrek", "AfvoerMaatschappij", "GewichtLeeg", "GewichtVol", "Inhoud", "InhoudType", "InhoudGevaar", });
+    internal_static_app_ContainerDataListItem_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_app_ContainerDataListItem_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_app_ContainerDataListItem_descriptor,
+        new java.lang.String[] { "ID", "Eigenaar", "Category", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

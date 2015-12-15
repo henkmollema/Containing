@@ -26,10 +26,14 @@ public class Server implements Runnable
     {
         return simCom;
     }
-
-    public Server(Simulator _simulator)
+    
+    public Simulator getSimulator()
     {
-        simulator = _simulator;
+        return simulator;
+    }
+
+    public Server(Simulator simulator) {
+        this.simulator = simulator;
     }
 
     public boolean isSimulatorConnected()

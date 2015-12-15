@@ -27,6 +27,8 @@ message ContainerInfo{
 	required int32 gewichtLeeg = 9;
 	required int32 gewichtVol = 10;
 	required string inhoud = 11;
+	required string inhoudType = 12;
+	required string inhoudGevaar = 13;
 }
 
 message ContainerDataListItem{

@@ -23,6 +23,7 @@ import nhl.containing.simulator.game.PlatformLorry;
 import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
+import nhl.containing.simulator.game.Vehicle;
 
 /**
  *
@@ -63,6 +64,10 @@ public class World extends Behaviour {
     private List<PlatformStorage> m_storageCells = new ArrayList<>(0);
     private List<PlatformTrain  > m_trainCells   = new ArrayList<>(0);
     
+    // Vehicles
+    private Vehicle m_train;
+    
+    
     @Override
     public void awake() {
         m_sun = LightCreator.createSun(ColorRGBA.White, new Vector3f(-0.5f, -0.5f, -0.5f));
@@ -89,11 +94,14 @@ public class World extends Behaviour {
         for(PlatformSea     s : m_seaCells     ) s.update();
         for(PlatformStorage s : m_storageCells ) s.update();
         for(PlatformTrain   s : m_trainCells   ) s.update();
+        
+        m_train.update();
     }
     private void createAGV() {
-        Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
-        teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
-        Main.root().attachChild(teapot);
+        //Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
+        //teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
+        //Main.root().attachChild(teapot);
+        
         
         Spatial mater = Main.assets().loadModel("models/Sietse/Truck/Mater.obj");
         mater.setMaterial(MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
@@ -150,6 +158,13 @@ public class World extends Behaviour {
             m_trainCells.add(new PlatformTrain(offset));
             offset.x -= 10.0f;
         }
+        
+        final float zOff = -STORAGE_WIDTH - EXTENDS - LANE_WIDTH * LANE_COUNT;
+        m_train = WorldCreator.createTrain(
+                new Vector3f(STORAGE_LENGTH, 0.0f,  zOff), 
+                new Vector3f(-100.0f, 0.0f, zOff));
+        m_train.state(Vehicle.VehicleState.ToLoad);
+        m_train.rotate(0.0f, -90.0f, 0.0f);
     }
     
     private void createGround() {

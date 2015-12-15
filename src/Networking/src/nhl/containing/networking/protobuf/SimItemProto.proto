@@ -7,8 +7,14 @@ message SimulationItem {
 
     enum SimulationItemType {
         CRANE = 0;
-        PLATFORM = 1;
+        PLATFORM = 1;        
     }
-
     required SimulationItemType type = 2;
+    optional float x = 3;
+    optional float y = 4;
+    optional float z = 5;
+}
+
+message SimulatorItemList{
+    repeated SimulationItem items = 1;
 }

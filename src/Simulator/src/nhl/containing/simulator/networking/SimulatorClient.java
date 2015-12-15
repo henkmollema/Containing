@@ -5,16 +5,15 @@
 package nhl.containing.simulator.networking;
 
 import com.google.protobuf.ByteString;
+import com.jme3.math.Vector3f;
 import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulatorItemList;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.framework.Time;
@@ -29,7 +28,9 @@ public class SimulatorClient implements Runnable
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 1337;
     private boolean isConnected;
-    private boolean shouldRun;
+    private volatile boolean shouldRun;
+    private volatile boolean start = false;
+    private SimulatorItemList.Builder metaList = SimulatorItemList.newBuilder();
     private Socket _socket = null;
     public static CommunicationProtocol controllerCom;
     
@@ -58,6 +59,22 @@ public class SimulatorClient implements Runnable
     {
         shouldRun = false;
     }
+    
+    public void addSimulationItem(String id,int type, Vector3f position)
+    {
+        SimulationItem.Builder builder = SimulationItem.newBuilder();
+        builder.setId(id);
+        builder.setType(SimulationItem.SimulationItemType.values()[type]);
+        builder.setX(position.x);
+        builder.setY(position.y);
+        builder.setZ(position.z);
+        metaList.addItems(builder.build());
+    }
+    
+    public void Start()
+    {
+        this.start = true;
+    }
 
     /**
      * Opens a serversocket and waits for a client to connect. This method
@@ -65,7 +82,7 @@ public class SimulatorClient implements Runnable
      * Returns false if setup/connection failed. Returns true if connection was
      * successfull and closed peacefuly
      */
-    public boolean start()
+    private boolean start()
     {
         p("start()");
 
@@ -116,31 +133,9 @@ public class SimulatorClient implements Runnable
             if (i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
             {
                 throw new IOException();
-            }
+            }         
 
-
-
-//            PlatformProto.Platform.Builder platformBuilder = PlatformProto.Platform.newBuilder();
-//            platformBuilder
-//                    .setId(CommunicationProtocol.newUUID())
-//                    .setType(PlatformProto.Platform.PlatformType.SeaShip)
-//                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
-//                    .setId(CommunicationProtocol.newUUID())
-//                    .setType(PlatformProto.Platform.Crane.CraneType.Rails))
-//                    .addCranes(PlatformProto.Platform.Crane.newBuilder()
-//                    .setId(CommunicationProtocol.newUUID())
-//                    .setType(PlatformProto.Platform.Crane.CraneType.Rails));
-//
-//            PlatformProto.Platform platform = platformBuilder.build();
-
-            SimulationItem item = SimulationItem.newBuilder()
-                    .setId(CommunicationProtocol.newUUID())
-                    .setType(SimulationItem.SimulationItemType.PLATFORM)
-                    .build();
-
-
-
-            byte[] message = item.toByteArray();
+            byte[] message = metaList.build().toByteArray();
             p("Sending " + message.length + " bytes...");
 
             StreamHelper.writeMessage(output, message);
@@ -203,7 +198,7 @@ public class SimulatorClient implements Runnable
         
     }
 
-    public boolean instructionLoop()
+    private boolean instructionLoop()
     {
         p("Starting the instruction loop..");
         try
@@ -235,7 +230,7 @@ public class SimulatorClient implements Runnable
     public void run()
     {
         shouldRun = true;
-
+        while(!start){}
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
             if (start())

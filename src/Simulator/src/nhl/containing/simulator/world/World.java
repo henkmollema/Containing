@@ -9,8 +9,6 @@ import nhl.containing.simulator.game.PlatformStorage;
 import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.framework.Point3;
-import nhl.containing.simulator.framework.Transform;
-import nhl.containing.simulator.framework.Utilities;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -80,8 +78,8 @@ public class World extends Behaviour {
         createSeaCell();
         createStorageCell();
         createTrainCell();
-        
         createAGV();
+        Main.getSimClient().Start();
     }
     
     @Override

@@ -4,18 +4,16 @@
  */
 package nhl.containing.controller.networking;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
 import nhl.containing.controller.Time;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulatorItemList;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.networking.protocol.InstructionType;
@@ -95,10 +93,12 @@ public class SimHandler implements Runnable {
             StreamHelper.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());
             
             byte[] data = StreamHelper.readByteArray(_socket.getInputStream());
-            //SimItemProto platform = PlatformProto.Platform.parseFrom(data);
-            SimulationItem platform = SimulationItem.parseFrom(data);
 
-            //PrintWriter out = new PrintWriter(_socket.getOutputStream(), true);
+            SimulatorItemList platform = null;
+            try{
+                 platform = SimulatorItemList.parseFrom(data);
+            }catch(Exception e){}
+            
             if (platform != null) {
                 p("ok");
                 StreamHelper.writeMessage(_socket.getOutputStream(), "ok".getBytes());

@@ -52,7 +52,7 @@ public class Main extends SimpleApplication {
     private GUI m_gui;
     
     //Networking
-    private SimulatorClient _simClient;
+    private static SimulatorClient _simClient;
     private InstructionDispatcherSimulator _dispatcher;
     
     // Transforms
@@ -93,6 +93,14 @@ public class Main extends SimpleApplication {
             behaviour._baseInit();
         }
     }
+    /**
+     * Returns simclient 
+     * @return 
+     */
+    public static SimulatorClient getSimClient(){
+        return _simClient;
+    }
+    
     /**
      * Called at init
      */

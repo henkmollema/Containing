@@ -38,8 +38,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import nhl.containing.managmentinterface.communication.Communicator_new;
-import nhl.containing.managmentinterface.data.ClassBridge;
+import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.managmentinterface.navigationdrawer.*;
 
 /**
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     public SharedPreferences preferences;
     private ConnectivityManager connManager;
 
-    public Communicator_new communicator;
+    public Communicator communicator;
     public volatile Fragment fragment;
     public volatile int refreshTime = 0;
     private AutoRefreshRunnable autorefreshRunnable;
@@ -87,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         checkNetwork();
         setSupportActionBar(toolbar);
         setupNavDrawer(toolbar);
-        setupHomeFragment();
+        selectItemFromDrawer(0);
+        //setupHomeFragment();
     }
 
     /**
@@ -107,15 +107,14 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     @Override
     public void onBackPressed() {
         AlertDialog.Builder dialog = new  AlertDialog.Builder(this,R.style.AppCompatAlertDialogStyle);
-        dialog.setTitle("Leaving");
-        dialog.setMessage("Are you sure you want to leave?");
-        dialog.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+        dialog.setTitle(R.string.exit_title);
+        dialog.setMessage(R.string.exit_message);
+        dialog.setPositiveButton(R.string.exit_pos, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
+            public void onClick(DialogInterface dialog, int which) {finish();
             }
         });
-        dialog.setNegativeButton("Stay", null);
+        dialog.setNegativeButton(R.string.exit_neg, null);
         dialog.show();
     }
 
@@ -125,11 +124,13 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
      */
     private void setupNavDrawer(Toolbar toolbar)
     {
-        mNavItems.add(new NavItem("Current Numbers", "Current numbers per category", R.drawable.ic_home_black));
-        mNavItems.add(new NavItem("In", "Ingoing numbers", R.drawable.ic_poll_black));
-        mNavItems.add(new NavItem("Out", "Outgoing numbers", R.drawable.ic_poll_black));
-        mNavItems.add(new NavItem("Graph4", "Unknown", R.drawable.ic_poll_black));
-        mNavItems.add(new NavItem("Containers","List with actual container stats",R.drawable.ic_list_black));
+        int[][] navitems = new int[][]{
+                new int[]{R.string.nav_home_titel,R.string.nav_graph1_titel,R.string.nav_graph2_titel,R.string.nav_graph3_titel,R.string.nav_containerlist_titel},
+                new int[]{R.string.nav_home_subtitel,R.string.nav_graph1_subtitel,R.string.nav_graph2_subtitel,R.string.nav_graph3_subtitel,R.string.nav_containerlist_subtitel},
+                new int[]{R.drawable.ic_home_black,R.drawable.ic_poll_black,R.drawable.ic_poll_black,R.drawable.ic_poll_black,R.drawable.ic_list_black}
+        };
+        for(int i = 0; i < navitems[0].length; i++)
+            mNavItems.add(new NavItem(getResources().getString(navitems[0][i]),getResources().getString(navitems[1][i]),navitems[2][i]));
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerLayout);
         mDrawerPane = (RelativeLayout)findViewById(R.id.drawerPane);
         mDrawerList = (ListView)findViewById(R.id.navList);
@@ -191,12 +192,12 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         {
             case -1:
                 rightNetwork = false;
-                Toast.makeText(this,"There is no internet connection",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,R.string.no_internet,Toast.LENGTH_SHORT).show();
                 break;
             case ConnectivityManager.TYPE_MOBILE:
                 rightNetwork = !networkType.equals("1");
                 if(!networkType.equals("1"))
-                    Toast.makeText(this,"Please connect to WI-FI or change your settings before refreshing",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,R.string.wrong_connection,Toast.LENGTH_SHORT).show();
                 break;
             case ConnectivityManager.TYPE_WIFI:
                 rightNetwork = true;
@@ -207,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     /**
      * Check the network state
      */
-    private void checkNetwork()
+    public void checkNetwork()
     {
         NetworkInfo activeNetwork = connManager.getActiveNetworkInfo();
         if(activeNetwork != null)
@@ -248,9 +249,8 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
             return true;
         try
         {
-            communicator = new Communicator_new(this);
+            communicator = new Communicator(this);
             new Thread(communicator).start();
-            ClassBridge.communicator = communicator;
             return true;
         }
         catch (Exception e)
@@ -281,10 +281,10 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
+        int[] items = new int[]{R.id.action_refresh,R.id.action_refresh_time,R.id.action_settings};
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(GravityCompat.START);
-        menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
-        menu.findItem(R.id.action_refresh_time).setVisible(!drawerOpen);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        for(int i : items)
+            menu.findItem(i).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -322,8 +322,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        switch (id)
+        switch (item.getItemId())
         {
             case R.id.action_settings:
                 startActivity(new Intent(this,SettingsActivity.class));
@@ -453,73 +452,10 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
             }
         }
         mDrawerLayout.closeDrawers();
-        /*switch (position)
-        {
-            case 0:
-                f = getSupportFragmentManager().findFragmentByTag("Graph_one");
-                if(f == null || !f.isVisible())
-                {
-
-                }
-                mDrawerLayout.closeDrawers();
-                break;
-            case 1:
-                f = getSupportFragmentManager().findFragmentByTag("Graph_two");
-                if(f == null || !f.isVisible())
-                {
-                    autoRefresh(false);
-                    GraphFragment gf = new GraphFragment();
-                    fragment = gf;
-                    Bundle b = new Bundle();
-                    b.putInt("graphID",position);
-                    gf.setArguments(b);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_two").commit();
-                }
-                mDrawerLayout.closeDrawers();
-                break;
-            case 2:
-                f = getSupportFragmentManager().findFragmentByTag("Graph_three");
-                if(f == null || !f.isVisible())
-                {
-                    autoRefresh(false);
-                    GraphFragment gf = new GraphFragment();
-                    fragment = gf;
-                    Bundle b = new Bundle();
-                    b.putInt("graphID",position);
-                    gf.setArguments(b);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_three").commit();
-                }
-                mDrawerLayout.closeDrawers();
-                break;
-            case 3:
-                f = getSupportFragmentManager().findFragmentByTag("Graph_four");
-                if(f == null || !f.isVisible())
-                {
-                    autoRefresh(false);
-                    GraphFragment gf = new GraphFragment();
-                    fragment = gf;
-                    Bundle b = new Bundle();
-                    b.putInt("graphID",position);
-                    gf.setArguments(b);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,gf,"Graph_four").commit();
-                }
-                mDrawerLayout.closeDrawers();
-                break;
-            case 4:
-                f = getSupportFragmentManager().findFragmentByTag("Container_list");
-                if(f == null || !f.isVisible()) {
-                    autoRefresh(false);
-                    ContainersFragment cf = new ContainersFragment();
-                    fragment = cf;
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame,cf,"Container_list").commit();
-                }
-                mDrawerLayout.closeDrawers();
-                break;
-        }*/
     }
 
     /**
-     * Called when clicked in the containerlist. Provides the ID of the container
+     * Called when clicked on a container in the containerlist. Provides the ID of the container
      * @param id id of the container
      */
     @Override

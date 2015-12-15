@@ -17,7 +17,6 @@ import nhl.containing.managmentinterface.MainActivity;
  * Listens to connectivity changes
  */
 public class NetworkReceiver extends BroadcastReceiver {
-    private ConnectivityManager connectivityManager;
 
     public NetworkReceiver() {
     }
@@ -31,7 +30,7 @@ public class NetworkReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(MainActivity.getInstance() == null)
             return;
-        connectivityManager =  (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
+         ConnectivityManager connectivityManager =  (ConnectivityManager)context.getSystemService(context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if(activeNetwork != null)
         {

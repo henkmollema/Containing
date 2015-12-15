@@ -1,6 +1,7 @@
 package nhl.containing.managmentinterface.data;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class ContainerArrayAdapter extends ArrayAdapter<ContainerDataListItem>
             convertView = inflater.inflate(R.layout.listitem,parent,false);
         }
         TextView textView = (TextView)convertView.findViewById(R.id.list_item_text);
-        textView.setText("Container " + this.getItem(position).getID());
+        textView.setText(context.getResources().getString(R.string.container_title, this.getItem(position).getID()));
         return convertView;
     }
 

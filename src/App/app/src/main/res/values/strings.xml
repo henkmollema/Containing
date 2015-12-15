@@ -1,13 +1,117 @@
 <resources>
+    <!-- Strings related to App-->
     <string name="app_name">CManager</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_container">ContainerActivity</string>
+    <string name="rotate_animation_desc">Refreshing</string>
+
+    <string name="error_connect_controller">Coundn't connect to controller</string>
+
+    <!-- String related to Menu-->
+    <string name="refresh_actionbar">Refresh</string>
+    <string name="Refresh_time_actionbar">Refresh Time</string>
+    <string name="Refresh_time_actionbar_off">Off</string>
+    <string name="Refresh_time_actionbar_5">5 sec</string>
+    <string name="Refresh_time_actionbar_10">10 sec</string>
+    <string name="Refresh_time_actionbar_20">20 sec</string>
+    <string name="Refresh_time_actionbar_30">30 sec</string>
+
+    <!-- Strings related to Navigation Drawer-->
+    <string name="username">Management Interface</string>
+    <string name="desc">Project Containing</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="drawer_item_desc">Drawer item Icon</string>
+    <string name="nav_home_titel">Current Numbers</string>
+    <string name="nav_home_subtitel">Current numbers per category</string>
+    <string name="nav_graph1_titel">In</string>
+    <string name="nav_graph1_subtitel">Ingoing numbers</string>
+    <string name="nav_graph2_titel">Out</string>
+    <string name="nav_graph2_subtitel">Outgoing numbers</string>
+    <string name="nav_graph3_titel">Graph 4</string>
+    <string name="nav_graph3_subtitel">Unknown</string>
+    <string name="nav_containerlist_titel">Containers</string>
+    <string name="nav_containerlist_subtitel">List with actual containers</string>
+
+    <!-- Strings related to Exit Dialog-->
+    <string name="exit_title">Leaving</string>
+    <string name="exit_message">Are you sure you want to leave?</string>
+    <string name="exit_pos">Leave</string>
+    <string name="exit_neg">Stay</string>
+
+    <!-- Strings related to Network-->
+    <string name="no_internet">There is no internet connection</string>
+    <string name="wrong_connection">Please connect to WI-FI or change your settings before refreshing</string>
+
+    <!-- Strings related to Containerlist Fragment-->
+    <string name="containerlist_error_initialized">Containerfragement couldn't be initialized</string>
+    <string name="containerlist_error_wrong">Something went wrong</string>
+
+    <!-- Strings related to Graph Fragment-->
+    <string-array name="graph_items">
+        <item>Train</item>
+        <item>Truck</item>
+        <item>Seaship</item>
+        <item>Barge</item>
+        <item>Storage</item>
+        <item>AGV</item>
+        <item>Remainer</item>
+    </string-array>
+    <string name="graph_error_initialized">Containerfragement couldn't be initialized</string>
+    <string name="graph_error_wrong">Something went wrong</string>
+
+    <!-- String related to Container ArrayAdapter-->
+    <string name="container_title">Container %1$i</string>
+
+    <!-- Strings related to Communicator-->
+    <string name="communicator_error_host_port">Host or Port are not defined. Please go to settings to add a Host and Port</string>
+    <string name="communicator_error_settings">Host or Port are not defined. Please check your settings</string>
+    <string name="communicator_error_wrong">Something went wrong</string>
+    <string name="communicator_error_not_connected">Not connected</string>
+    <string name="communicator_error_no_data">Couldn't get data</string>
+    <!-- Strings related to Container Activity -->
+
+    <!-- Strings related to Loading Dialog-->
+    <string name="loading_dialog_title">Loading…</string>
+    <string name="loading_dialog_message">Loading container information, please wait</string>
+
+    <!-- Strings related to Container Info-->
+    <string name="container_title_general">General Information</string>
+    <string name="container_title_content">Content Information</string>
+    <string name="container_title_department">Department Information</string>
+    <string name="container_id">Container number</string>
+    <string name="container_owner">Owner</string>
+    <string name="container_content">Content</string>
+    <string name="container_content_type">Type</string>
+    <string name="container_content_danger">Danger</string>
+    <string name="container_weight_empty">Weight Empty</string>
+    <string name="container_weight_full">Weight Full</string>
+    <string name="containter_company">Company</string>
+    <string name="container_date">Date</string>
+    <string name="container_transport">Transport</string>
+
+    <string name="container_error_message">Couldn't get container information!</string>
 
     <!-- Strings related to Settings -->
+
+    <!-- String related to Connection Controller-->
+    <string name="conn_controller_title">Connection Controller</string>
+
+    <string name="ip_title">IP-address</string>
+    <string name="ip_sum">The IP-address of the Controller</string>
+    <string name="ip_dialog_title">Controller IP-address</string>
+
+    <string name="port_title">Port</string>
+    <string name="port_sum">The port of the Controller</string>
+    <string name="port_dialog_title">Controller Port</string>
+
+    <!-- String related to Data and Refreshing-->
+    <string name="data_refresh_title">Data Usage &amp; Refreshing</string>
+
+    <string name="network_title">Network</string>
+    <string name="network_sum">Choose which network to use</string>
+    <string name="network_dialog_title">Choose Network Option</string>
     <string-array name="network">
         <item>Mobile And WI-FI</item>
         <item>WI-FI Only</item>
@@ -16,6 +120,13 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string name="refresh_title">Auto refresh</string>
+    <string name="refresh_sum">Auto refresh always on</string>
+
+    <string name="refresh_time_title">Auto refresh Time</string>
+    <string name="refresh_time_sum">Set auto refresh time</string>
+    <string name="refresh_time_dialog_title">Choose Auto-refresh Time</string>
     <string-array name="refresh">
         <item>5 sec</item>
         <item>10 sec</item>
@@ -28,7 +139,5 @@
         <item>20</item>
         <item>30</item>
     </string-array>
-
-
-    <string name="title_activity_container">ContainerActivity</string>
+    <string name="container_title_arrival">Arrival Information</string>
 </resources>

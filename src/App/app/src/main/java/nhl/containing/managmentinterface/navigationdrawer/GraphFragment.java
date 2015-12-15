@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.syncfusion.charts.*;
@@ -16,7 +17,7 @@ import java.util.List;
 
 import nhl.containing.managmentinterface.MainActivity;
 import nhl.containing.managmentinterface.R;
-import nhl.containing.managmentinterface.data.ClassBridge;
+import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.CommunicationProtocol;
@@ -31,7 +32,7 @@ public class GraphFragment extends Fragment {
     private int graphID;
     private ObservableArrayList list;
     private MainActivity main;
-    private String[] names = new String[] {"Train","Truck","Seaship","Barge","Storage","AGV","Remainer"};
+    private String[] names;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -51,11 +52,13 @@ public class GraphFragment extends Fragment {
             graphID = 0;
         if(MainActivity.getInstance() == null)
         {
-            Toast.makeText(getActivity(),"Containerfragement couldn't be initialized",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),R.string.graph_error_initialized,Toast.LENGTH_SHORT).show();
             getActivity().finish();
         }
         main = MainActivity.getInstance();
+        names = getResources().getStringArray(R.array.graph_items);
     }
+
 
     /**
      * Create the view of the fragment
@@ -66,28 +69,27 @@ public class GraphFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.graphfragment, container, false);
+        final View view = inflater.inflate(R.layout.graphfragment, container, false);
+        ViewTreeObserver vto = view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try{
+                            Thread.sleep(500);
+                        }catch (Exception e){};
+                        if(!main.checkAutoRefresh())
+                            getActivity().runOnUiThread(main.refreshRunnable);
+                    }
+                }).start();
+            }
+        });
         chart = (SfChart)view.findViewById(R.id.graph);
         setupChart();
         return view;
-    }
-
-    /**
-     * Called when fragment becomes visible
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    Thread.sleep(1000);
-                }catch (Exception e){}
-                if(!main.checkAutoRefresh())
-                    getActivity().runOnUiThread(main.refreshRunnable);
-            }
-        }).start();
     }
 
     /**
@@ -96,12 +98,10 @@ public class GraphFragment extends Fragment {
     private void setupChart()
     {
         list = new ObservableArrayList();
+        int max;
         if(graphID == 0)
         {
-            for(int i = 0; i < 7; i++)
-            {
-                list.add(new ChartDataPoint<String,Integer>(names[i],0));
-            }
+            max = 7;
             PieSeries pieSeries = new PieSeries();
             pieSeries.getDataMarker().setShowLabel(true);
             pieSeries.getDataMarker().setLabelContent(LabelContent.YValue);
@@ -114,19 +114,18 @@ public class GraphFragment extends Fragment {
         }
         else
         {
+            max = 4;
             ColumnSeries seriesChart = new ColumnSeries();
-            for(int i = 0; i < 4; i++)
-            {
-                list.add(new ChartDataPoint<String,Integer>(names[i],0));
-            }
             seriesChart.setDataSource(list);
             seriesChart.getDataMarker().setShowLabel(true);
             seriesChart.getDataMarker().getLabelStyle().setLabelPosition(DataMarkerLabelPosition.Inner);
             chart.getSeries().add(seriesChart);
             chart.setPrimaryAxis(new CategoryAxis());
-            NumericalAxis test = new NumericalAxis();
-            test.setInterval(10);
-            chart.setSecondaryAxis(test);
+            chart.setSecondaryAxis(new NumericalAxis());
+        }
+        for(int i = 0; i < max; i++)
+        {
+            list.add(new ChartDataPoint<String,Integer>(names[i],0));
         }
     }
 
@@ -134,22 +133,15 @@ public class GraphFragment extends Fragment {
      * Update the Graph / chart
      * @param data update data
      */
-    private void updateChart(final List<Integer> data)
+    private void updateChart(final int[] data)
     {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 list.clear();
-                if (graphID == 0) {
-                    for(int i = 0; i < 7; i++)
-                    {
-                        list.add(new ChartDataPoint<String,Integer>(names[i],data.get(i)));
-                    }
-                } else {
-                    for(int i = 0; i < 4; i++)
-                    {
-                        list.add(new ChartDataPoint<String,Integer>(names[i],data.get(i)));
-                    }
+                for(int i = 0; i < data.length; i++)
+                {
+                    list.add(new ChartDataPoint<String,Integer>(names[i],data[i]));
                 }
                main.completeRefresh.run();
             }
@@ -162,12 +154,12 @@ public class GraphFragment extends Fragment {
     public void setData()
     {
         //make instruction
-        if(ClassBridge.communicator == null || !ClassBridge.communicator.isRunning())
+        if(Communicator.getInstance() == null || !Communicator.getInstance().isRunning())
         {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "Coundn't connect to controller", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.error_connect_controller, Toast.LENGTH_SHORT).show();
                     main.completeRefresh.run();
                 }
             });
@@ -177,23 +169,23 @@ public class GraphFragment extends Fragment {
         builder.setInstructionType(InstructionType.APP_REQUEST_DATA);
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(graphID);
-        ClassBridge.communicator.setRequest(builder.build());
+        Communicator.getInstance().setRequest(builder.build());
     }
 
     /**
      * Receives the new data and starts updating the graph
-     * @param block
+     * @param block datablock
      */
     public void UpdateGraph(datablockApp block)
     {
         List<ContainerGraphData> list = block.getGraphsList();
-        List<Integer> dataList = new ArrayList<>();
+        int[] dataList = new int[list.size()];
         if(!list.isEmpty())
         {
             for(int i = 0; i < list.size();i++)
             {
                 ContainerGraphData data = list.get(i);
-                dataList.add(data.getCategory().getNumber(),data.getAantal());
+                dataList[data.getCategory().getNumber()] = data.getAantal();
             }
             updateChart(dataList);
             return;
@@ -202,7 +194,7 @@ public class GraphFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.graph_error_wrong, Toast.LENGTH_SHORT).show();
                     MainActivity.getInstance().completeRefresh.run();
                 }
             });

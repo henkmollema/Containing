@@ -12,7 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import nhl.containing.managmentinterface.data.ClassBridge;
+import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 
 /**
@@ -34,12 +34,12 @@ public class ContainerActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(getIntent().getExtras() != null && ClassBridge.communicator != null && ClassBridge.communicator.isRunning())
+        if(getIntent().getExtras() != null && Communicator.getInstance() != null && Communicator.getInstance().isRunning())
         {
             ID = getIntent().getExtras().getInt("ID");
             getSupportActionBar().setTitle("Container " + ID);
-            ClassBridge.communicator.setContainerActivity(this);
-            dialog = ProgressDialog.show(this,"Loading...","Loading container information, please wait",true,false);
+            Communicator.getInstance().setContainerActivity(this);
+            dialog = ProgressDialog.show(this,getResources().getString(R.string.loading_dialog_title),getResources().getString(R.string.loading_dialog_message),true,false);
             dialog.show();
             return;
         }
@@ -79,6 +79,8 @@ public class ContainerActivity extends AppCompatActivity {
                     ((TextView) findViewById(R.id.ContainerID)).setText(Integer.toString(info.getID()));
                     ((TextView) findViewById(R.id.Owner)).setText(info.getEigenaar());
                     ((TextView) findViewById(R.id.Content)).setText(info.getInhoud());
+                    ((TextView) findViewById(R.id.ContentType)).setText(info.getInhoudType());
+                    ((TextView) findViewById(R.id.ContentDanger)).setText(info.getInhoudGevaar());
                     ((TextView) findViewById(R.id.WeightE)).setText(info.getGewichtLeeg() + " Ton");
                     ((TextView) findViewById(R.id.Weight)).setText(info.getGewichtVol() + " Ton");
                     ((TextView) findViewById(R.id.ArrivalCompany)).setText(info.getAanvoerMaatschappij());
@@ -95,7 +97,7 @@ public class ContainerActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "Couldn't get container information!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.container_error_message, Toast.LENGTH_LONG).show();
                     finish();
                     MainActivity.getInstance().completeRefresh.run();
                 }
@@ -138,8 +140,8 @@ public class ContainerActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        if(ClassBridge.communicator != null)
-            ClassBridge.communicator.detachContainerActivity();
+        if(Communicator.getInstance() != null)
+            Communicator.getInstance().detachContainerActivity();
         super.onDestroy();
     }
 }

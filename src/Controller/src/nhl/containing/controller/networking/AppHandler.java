@@ -4,6 +4,7 @@
  */
 package nhl.containing.controller.networking;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -85,7 +86,7 @@ public class AppHandler implements Runnable{
             OutputStream output = socket.getOutputStream();
             while (shouldRun) {
                 byte[] data = StreamHelper.readByteArray(input);
-                byte[] response = nhl.containing.controller.App.TestData(data);
+                byte[] response = processInstruction(data);
                 StreamHelper.writeMessage(output, response); //Send
             }
         } catch (IOException ex) {
@@ -121,24 +122,28 @@ public class AppHandler implements Runnable{
                 //in and out graph
                 boolean incoming = instruction.getA() == 1;
                 b.setCategory(ContainerCategory.TRAIN);
+                b.setAantal(0);
                 for(Train train : context.getTrains(incoming))
                 {
                     b.setAantal(b.getAantal() + train.containers.size());
                 }
                 builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.TRUCK);
+                b.setAantal(0);
                 for(Truck truck : context.getTrucks(incoming))
                 {
                     b.setAantal(b.getAantal() + truck.containers.size());
                 }
                 builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.INLINESHIP);
+                b.setAantal(0);
                 for(InlandShip inlineShip : context.getInlandShips(incoming))
                 {
                     b.setAantal(b.getAantal() + inlineShip.containers.size());
                 }
                 builder.addGraphs(b.build());
                 b.setCategory(ContainerCategory.SEASHIP);
+                b.setAantal(0);
                 for(SeaShip seaShip : context.getSeaShips(incoming))
                 {
                     b.setAantal(b.getAantal() + seaShip.containers.size());
@@ -176,12 +181,34 @@ public class AppHandler implements Runnable{
                     infoBuilder.setBinnenkomstDatum(container.arrivalShipment.date.getTime());
                     infoBuilder.setAfvoerMaatschappij(container.departureShipment.carrier.company);
                     infoBuilder.setVertrekDatum(container.departureShipment.date.getTime());
-                    builder.setContainer(infoBuilder.build());
+                    infoBuilder.setInhoudType(container.contentType);
+                    infoBuilder.setInhoudGevaar(container.contentDanger);
+                    infoBuilder.setVervoerBinnenkomst(getCategory(container.arrivalShipment.carrier));
+                    infoBuilder.setVervoerVertrek(getCategory(container.departureShipment.carrier));
+                    ContainerInfo test = infoBuilder.build();
+                    builder.setContainer(test);
                 }
-                catch(Exception e){}
+                catch(Exception e){
+                    e.printStackTrace();
+                }
                 break;
         }
         return builder.build().toByteArray();
+    }
+    
+    
+    private ContainerCategory getCategory(Carrier carrier)
+    {
+        if(carrier instanceof InlandShip)
+            return ContainerCategory.INLINESHIP;
+        else if(carrier instanceof SeaShip)
+            return ContainerCategory.SEASHIP;
+        else if(carrier instanceof Train)
+            return ContainerCategory.TRAIN;
+        else if(carrier instanceof Truck)
+            return ContainerCategory.TRUCK;
+        else
+            return ContainerCategory.REMAINDER;
     }
     
     private static void p(String s) {

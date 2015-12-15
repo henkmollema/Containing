@@ -23,7 +23,7 @@ import nhl.containing.networking.protocol.InstructionType;
 /**
  * Runnable for the communication between the App and the Controller
  */
-public class Communicator_new implements Runnable{
+public class Communicator implements Runnable{
 
     private Socket socket;
     private MainActivity mainActivity;
@@ -32,27 +32,29 @@ public class Communicator_new implements Runnable{
     private int port;
     private volatile boolean isRunning = true;
     private volatile Instruction request = null;
+    private static Communicator instance;
 
     /**
      * Constructor of the Communication class
      * @param mainActivity Mainactivity
      * @throws Exception when there isn't a host/port or mainactivity is null
      */
-    public Communicator_new(MainActivity mainActivity) throws Exception
+    public Communicator(MainActivity mainActivity) throws Exception
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         host = prefs.getString("Connection_Host", "127.0.0.1");
         port = Integer.parseInt(prefs.getString("Connection_Port", "1337"));
         if(host == null || port == -1)
-            throw new Exception("Host or Port are not defined, Please go to settings to add a Host and Port");
+            throw new Exception(mainActivity.getString(R.string.communicator_error_host_port));
         this.mainActivity = mainActivity;
         if(this.mainActivity == null)
-            throw new Exception("Something went wrong");
+            throw new Exception(mainActivity.getString(R.string.communicator_error_wrong));
+        instance = this;
     }
 
     /**
      * Check if communicator is running
-     * @return
+     * @return true when running, otherwise false
      */
     public boolean isRunning()
     {
@@ -61,11 +63,20 @@ public class Communicator_new implements Runnable{
 
     /**
      * Place a request
-     * @param instruction
+     * @param instruction instruction to send to controller
      */
     public void setRequest(Instruction instruction)
     {
         this.request = instruction;
+    }
+
+    /**
+     * Returns an instance of the communicator
+     * @return communicator
+     */
+    public static Communicator getInstance()
+    {
+        return instance;
     }
 
     /**
@@ -120,7 +131,7 @@ public class Communicator_new implements Runnable{
                 //read status message
                 Instruction inst =  Instruction.parseFrom(StreamHelper.readByteArray(input));
                 if(inst.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
-                    throw new Exception("Not connected");
+                    throw new Exception(mainActivity.getString(R.string.communicator_error_not_connected));
                 byte[] bytes;
                 while(isRunning)
                 {
@@ -149,7 +160,7 @@ public class Communicator_new implements Runnable{
                             mainActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(mainActivity, "Couldn't get data", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mainActivity, R.string.communicator_error_no_data, Toast.LENGTH_SHORT).show();
                                     if(containerActivity != null)
                                         containerActivity.goBack();
                                     else
@@ -170,7 +181,7 @@ public class Communicator_new implements Runnable{
             mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(mainActivity, "Couldn't connect to Host. Please check your settings", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity, R.string.communicator_error_settings, Toast.LENGTH_SHORT).show();
                     mainActivity.completeRefresh.run();
                 }
             });

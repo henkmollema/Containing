@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/ic_action_refresh"
+    android:contentDescription="@string/rotate_animation_desc"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     style="@style/Widget.AppCompat.ActionButton" />

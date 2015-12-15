@@ -5,8 +5,8 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**
@@ -15,11 +15,8 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformSea extends PlatformLoading {
 
-    public PlatformSea(Transform parent, Vector3f _position) {
-        super(parent);
-        
-        createPlatform();
-        this.position(_position);
+    public PlatformSea(Vector3f offset) {
+        super(offset);
     }
     
     @Override
@@ -30,7 +27,7 @@ public class PlatformSea extends PlatformLoading {
     }
 
     @Override
-    void createPlatform() {
+    protected void createPlatform() {
        m_crane = WorldCreator.createSeaCrane(this);
         initSpots(new Point3());
         updateOuter();

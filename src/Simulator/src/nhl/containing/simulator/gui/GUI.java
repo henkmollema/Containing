@@ -1,6 +1,6 @@
 package nhl.containing.simulator.gui;
 
-import nhl.containing.simulator.simulation.Behaviour;
+import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
 import com.jme3.font.BitmapText;
 import com.jme3.math.Vector2f;

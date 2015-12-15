@@ -1,4 +1,4 @@
-package nhl.containing.simulator.game;
+package nhl.containing.simulator.simulation;
 
 /**
  * Enum for camera mode

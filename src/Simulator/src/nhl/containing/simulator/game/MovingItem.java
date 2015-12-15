@@ -1,8 +1,8 @@
 package nhl.containing.simulator.game;
 
-import nhl.containing.simulator.simulation.Path;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Path;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
 
 /**
  *

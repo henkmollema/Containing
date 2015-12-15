@@ -1,135 +1,190 @@
 package nhl.containing.managmentinterface.communication;
 
-import com.google.protobuf.ByteString;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketException;
 
-import nhl.containing.managmentinterface.data.ContainerProtos.*;
+import nhl.containing.managmentinterface.*;
+import nhl.containing.managmentinterface.navigationdrawer.*;
+import nhl.containing.networking.messaging.StreamHelper;
+import nhl.containing.networking.protobuf.AppDataProto.*;
+import nhl.containing.networking.protobuf.InstructionProto.*;
+import nhl.containing.networking.protobuf.ClientIdProto.*;
+import nhl.containing.networking.protocol.CommunicationProtocol;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
- * Created by Niels on 16-11-2015.
+ * Runnable for the communication between the App and the Controller
  */
-public class Communicator
-{
-    /**
-     * [FOR TESTING PURPOSE ONLY]
-     * Gives serialized string
-     * @return string
-     */
-    private static String test()
-    {
-        ContainerGraphList list = ContainerGraphList.newBuilder()
-                .addContainers(ContainerGraphData.newBuilder().setAantal(10).setCategory(ContainerCategory.TRAIN).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(5).setCategory(ContainerCategory.TRUCK).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(20).setCategory(ContainerCategory.SEASHIP).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(3).setCategory(ContainerCategory.INLINESHIP).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(9).setCategory(ContainerCategory.STORAGE).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(12).setCategory(ContainerCategory.AGV).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(50).setCategory(ContainerCategory.REMAINDER).build())
-                .build();
+public class Communicator implements Runnable{
 
-        return list.toByteString().toStringUtf8();
-    }
+    private Socket socket;
+    private MainActivity mainActivity;
+    private ContainerActivity containerActivity = null;
+    private String host;
+    private int port;
+    private volatile boolean isRunning = true;
+    private volatile Instruction request = null;
+    private static Communicator instance;
 
     /**
-     * [FOR TESTING PURPOSE ONLY]
-     * Gives serialized string
-     * @return string
+     * Constructor of the Communication class
+     * @param mainActivity Mainactivity
+     * @throws Exception when there isn't a host/port or mainactivity is null
      */
-    private static String test1()
+    public Communicator(MainActivity mainActivity) throws Exception
     {
-        ContainerGraphList list = ContainerGraphList.newBuilder()
-                .addContainers(ContainerGraphData.newBuilder().setAantal(15).setCategory(ContainerCategory.TRAIN).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(20).setCategory(ContainerCategory.TRUCK).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(80).setCategory(ContainerCategory.SEASHIP).build())
-                .addContainers(ContainerGraphData.newBuilder().setAantal(33).setCategory(ContainerCategory.INLINESHIP).build())
-                .build();
-
-        return list.toByteString().toStringUtf8();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+        host = prefs.getString("Connection_Host", "127.0.0.1");
+        port = Integer.parseInt(prefs.getString("Connection_Port", "1337"));
+        if(host == null || port == -1)
+            throw new Exception(mainActivity.getString(R.string.communicator_error_host_port));
+        this.mainActivity = mainActivity;
+        if(this.mainActivity == null)
+            throw new Exception(mainActivity.getString(R.string.communicator_error_wrong));
+        instance = this;
     }
 
     /**
-     * [FOR TESTING PURPOSE ONLY]
-     * Gives serialized string
-     * @return string
+     * Check if communicator is running
+     * @return true when running, otherwise false
      */
-    private static String testContainerList()
+    public boolean isRunning()
     {
-        ContainerDataList list = ContainerDataList.newBuilder()
-                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Niels").setID(1).setCategory(ContainerCategory.REMAINDER).build())
-                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Sietse").setID(2).setCategory(ContainerCategory.INLINESHIP).build())
-                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Henk").setID(3).setCategory(ContainerCategory.SEASHIP).build())
-                .addItems(ContainerDataListItem.newBuilder().setEigenaar("Coen").setID(4).setCategory(ContainerCategory.AGV).build())
-                .build();
-
-        return list.toByteString().toStringUtf8();
+        return isRunning;
     }
 
     /**
-     * [FOR TESTING PURPOSE ONLY]
-     * Gives serialized string
-     * @return string
+     * Place a request
+     * @param instruction instruction to send to controller
      */
-    private static ByteString testContainer()
+    public void setRequest(Instruction instruction)
     {
-        ContainerInfo info = ContainerInfo.newBuilder()
-                .setID(1)
-                .setAanvoerMaatschappij("Test Maatschappij")
-                .setAfvoerMaatschappij("Test 1 Maatschappij")
-                .setBinnenkomstDatum(new Date().getTime())
-                .setEigenaar("Niels")
-                .setGewichtLeeg(3)
-                .setGewichtVol(78)
-                .setInhoud("Death Star")
-                .setVertrekDatum(new Date().getTime())
-                .setVervoerBinnenkomst(ContainerCategory.SEASHIP)
-                .setVervoerVertrek(ContainerCategory.TRAIN)
-                .build();
-        return info.toByteString();
+        this.request = instruction;
     }
 
-
-    public static ContainerInfo getContainerInfo(int id) throws Exception
+    /**
+     * Returns an instance of the communicator
+     * @return communicator
+     */
+    public static Communicator getInstance()
     {
-        //add communication with controller
-        ContainerInfo info = ContainerInfo.parseFrom(testContainer());
-        return info;
+        return instance;
     }
 
-
-
-    public static List<ContainerDataListItem> getContainerList()
+    /**
+     * Place a container acivity and do a request
+     * @param containerActivity container activity
+     */
+    public void setContainerActivity(ContainerActivity containerActivity)
     {
-        ContainerDataList list;
+        this.containerActivity = containerActivity;
+        Instruction.Builder instructionBuilder = Instruction.newBuilder();
+        instructionBuilder.setInstructionType(InstructionType.APP_REQUEST_DATA);
+        instructionBuilder.setId(CommunicationProtocol.newUUID());
+        instructionBuilder.setA(5);
+        instructionBuilder.setB(containerActivity.ID);
+        request = instructionBuilder.build();
+    }
+
+    /**
+     * Stops the runnable
+     */
+    public void stop()
+    {
+        this.isRunning = false;
+    }
+
+    /**
+     * Removes the container activity
+     */
+    public void detachContainerActivity()
+    {
+        this.containerActivity = null;
+    }
+
+    /**
+     * Communication to Controller
+     */
+    @Override
+    public void run()
+    {
         try
         {
-            list = ContainerDataList.parseFrom(ByteString.copyFromUtf8(testContainerList()));
+            while(isRunning)
+            {
+                socket = new Socket();
+                socket.connect(new InetSocketAddress(host,port),3000);
+                BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
+                OutputStream output = socket.getOutputStream();
+                //write client info
+                ClientIdentity.Builder clientBuilder = ClientIdentity.newBuilder();
+                clientBuilder.setClientType(ClientIdentity.ClientType.APP);
+                StreamHelper.writeMessage(output, clientBuilder.build().toByteArray());
+                //read status message
+                Instruction inst =  Instruction.parseFrom(StreamHelper.readByteArray(input));
+                if(inst.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
+                    throw new Exception(mainActivity.getString(R.string.communicator_error_not_connected));
+                byte[] bytes;
+                while(isRunning)
+                {
+                    if(request != null)
+                    {
+                        try
+                        {
+                            StreamHelper.writeMessage(output,request.toByteArray());
+                            request = null;
+                            bytes = StreamHelper.readByteArray(input);
+                            datablockApp inputBlock = datablockApp.parseFrom(bytes);
+                            if(containerActivity != null)
+                                containerActivity.setData(inputBlock);
+                            else if(mainActivity.fragment instanceof GraphFragment)
+                                ((GraphFragment) mainActivity.fragment).UpdateGraph(inputBlock);
+                            else if(mainActivity.fragment instanceof ContainersFragment)
+                                ((ContainersFragment) mainActivity.fragment).UpdateGraph(inputBlock);
+                        }
+                        catch (SocketException s)
+                        {
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                            mainActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(mainActivity, R.string.communicator_error_no_data, Toast.LENGTH_SHORT).show();
+                                    if(containerActivity != null)
+                                        containerActivity.goBack();
+                                    else
+                                        mainActivity.completeRefresh.run();
+                                }
+                            });
+                        }
+                    }
+                }
+                input.close();
+                output.close();
+                socket.close();
+            }
         }
-        catch (Exception e){return new ArrayList<>();}
-        return list.getItemsList();
-    }
-
-    public static List<Integer> getData(int index) throws Exception
-    {
-        ByteString received = null;
-        switch (index)
+        catch (Exception e)
         {
-            case 0:
-                received = ByteString.copyFromUtf8(test()); //make communication method
-                break;
-            case 1:
-                received = ByteString.copyFromUtf8(test1()); //make communication method
-                break;
+            isRunning = false;
+            mainActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(mainActivity, R.string.communicator_error_settings, Toast.LENGTH_SHORT).show();
+                    mainActivity.completeRefresh.run();
+                }
+            });
         }
-        List<Integer> returnlist = new ArrayList<>();
-        ContainerGraphList list = ContainerGraphList.parseFrom(received);
-        for(int i = 0; i < list.getContainersList().size();i++)
-        {
-            ContainerGraphData data = list.getContainersList().get(i);
-            returnlist.add(data.getCategory().getNumber(),data.getAantal());
-        }
-        return returnlist;
     }
 }

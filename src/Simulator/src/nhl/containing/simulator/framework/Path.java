@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
+import nhl.containing.simulator.framework.Time;
+import nhl.containing.simulator.framework.LoopMode;
+import nhl.containing.simulator.framework.Interpolate;
+import nhl.containing.simulator.framework.EaseType;
+import nhl.containing.simulator.framework.Callback;
 import com.jme3.math.Vector3f;
 
 /**
@@ -14,69 +19,25 @@ import com.jme3.math.Vector3f;
 public class Path {
     
     // Main
-    private Vector3f[] m_nodes = new Vector3f[0];       // Path node positions
-    private Vector3f m_previousPosition = Vector3f.ZERO;// Previous position, used for switching between nodes
-    private int m_targetNode = -1;                      // Target node
+    public Vector3f[] m_nodes = new Vector3f[0];       // Path node positions
+    public Vector3f m_previousPosition = Vector3f.ZERO;// Previous position, used for switching between nodes
+    public int m_targetNode = 0;                      // Target node
     
     // Settings
-    private boolean m_manual = false;                   // Manual update
-    private boolean m_useTimeInsteadOfSpeed = false;    // true -> Use time based | false -> Use speed based
+    public boolean m_manual = false;                   // Manual update
+    public boolean m_useTimeInsteadOfSpeed = false;    // true -> Use time based | false -> Use speed based
     
     // Behaviours
-    private float m_speed = 1.0f;                       // Speed
-    private float m_waitTime = 0.0f;                    // Wait time at node
-    private LoopMode m_loopMode = LoopMode.Loop;        // Loop mode
-    private EaseType m_easeType = EaseType.Linear;      // Ease type (interpolation type)
-    private Callback m_callback = null;                 // Callback at node
+    public float m_speed = 1.0f;                       // Speed
+    public float m_waitTime = 0.0f;                    // Wait time at node
+    public LoopMode m_loopMode = LoopMode.Loop;        // Loop mode
+    public EaseType m_easeType = EaseType.Linear;      // Ease type (interpolation type)
+    public Callback m_callback = null;                 // Callback at node
     
     // Other
     private float m_timer = 0.0f;                       // Move timer
     private boolean m_goBack = false;                   // Go inverse direction
     
-    
-    /**
-     * Use a null for default value
-     * @param currentPosition
-     * @param startNode
-     * @param manual
-     * @param useSpeed
-     * @param speed
-     * @param waitTime
-     * @param loopMode
-     * @param easeType
-     * @param callback
-     * @param nodes 
-     */
-    public Path(Vector3f currentPosition, Integer startNode, boolean manual, boolean useSpeed, float speed, Float waitTime, LoopMode loopMode, EaseType easeType, Callback callback, Vector3f... nodes) {
-        init(currentPosition, startNode, manual, useSpeed, speed, waitTime, loopMode, easeType, callback, nodes);
-    }
-    
-    /**
-     * Constructor extention to reduce code
-     * @param currentPosition
-     * @param startNode
-     * @param manual
-     * @param useSpeed
-     * @param speed
-     * @param waitTime
-     * @param loopMode
-     * @param easeType
-     * @param callback
-     * @param nodes 
-     */
-    private void init(Vector3f currentPosition, Integer startNode, boolean manual, boolean useSpeed, float speed, Float waitTime, LoopMode loopMode, EaseType easeType, Callback callback, Vector3f... nodes) {
-        
-        this.m_manual = manual;
-        this.m_useTimeInsteadOfSpeed = !useSpeed;
-        this.m_speed = speed;
-        this.m_waitTime = waitTime == null ? 0.0f : waitTime;
-        this.m_loopMode = loopMode == null ? LoopMode.PingPong : loopMode;
-        this.m_easeType = easeType == null ? EaseType.Linear : easeType;
-        this.m_callback = callback;
-        
-        setPathf(new Vector3f(currentPosition == null ? (nodes.length < 1 ? Vector3f.ZERO : nodes[0]) : currentPosition), nodes);
-        this.m_targetNode = startNode == null ? 0 : startNode;
-    }
     
     /**
      * Set path
@@ -111,6 +72,9 @@ public class Path {
      * Update this every frame
      */
     public void update() {
+        if (m_nodes.length < 1)
+            return;
+        
         if (m_timer < 1.0f) { // Stage 1: move
             m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 1.0f);
             if (m_timer >= 1.0f && m_callback != null)
@@ -173,6 +137,9 @@ public class Path {
      * @return 
      */
     public Vector3f getPosition() {
+        if (m_targetNode < 0 || m_targetNode >= m_nodes.length)
+            return new Vector3f(m_previousPosition);
+        
         return Interpolate.ease(m_easeType, m_previousPosition, m_nodes[m_targetNode], m_timer);
     }
 
@@ -210,6 +177,9 @@ public class Path {
      * @return 
      */
     public boolean atFirst(float range) {
+        if (m_nodes.length < 1)
+            return true;
+        
         return (new Vector3f(m_nodes[0]).distanceSquared(getPosition()) < range * range);
     }
     /**
@@ -225,6 +195,9 @@ public class Path {
      * @return 
      */
     public boolean atLast(float range) {
+        if (m_nodes.length < 1)
+            return true;
+        
         return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
     }
     /**

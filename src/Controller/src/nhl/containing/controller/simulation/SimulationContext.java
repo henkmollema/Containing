@@ -61,6 +61,44 @@ public class SimulationContext
     }
 
     /**
+     * Gets the first shipment within this simuation context.
+     *
+     * @return A {@code Shipment}.
+     */
+    public Shipment getFirstShipment()
+    {
+        Shipment shipment = null;
+        for (Shipment s : shipments.values())
+        {
+            if (shipment == null || s.date.before(shipment.date))
+            {
+                shipment = s;
+                continue;
+            }
+        }
+        return shipment;
+    }
+
+    /**
+     * Gets a collection of shipments by date.
+     *
+     * @param date The date to filter on.
+     * @return A {@code Collection<ShippingContainer>}.
+     */
+    public Collection<Shipment> getShipmentsByDate(Date date)
+    {
+        List<Shipment> result = new ArrayList<>();
+        for (Shipment s : shipments.values())
+        {
+            if (s.date == date)
+            {
+                result.add(s);
+            }
+        }
+        return result;
+    }
+
+    /**
      * Creates a {@code SimulationContext} from the specified record set.
      *
      * @param recordSet The record set.

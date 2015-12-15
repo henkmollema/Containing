@@ -17,7 +17,7 @@ import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
-import nhl.containing.simulator.simulation.Time;
+import nhl.containing.simulator.framework.Time;
 
 /**
  * Providers interaction with the client.
@@ -147,7 +147,7 @@ public class SimulatorClient implements Runnable
 
             p("Message sent to controller, start reading input..");
 
-            String result = new String(StreamHelper.readByteArray(input), "UTF-8");
+            String result = StreamHelper.readString(input);
 
             if (result.equals(""))
             {
@@ -205,19 +205,17 @@ public class SimulatorClient implements Runnable
 
     public boolean instructionLoop()
     {
-        p("read()");
+        p("Starting the instruction loop..");
         try
         {
-            BufferedInputStream input = new BufferedInputStream(_socket.getInputStream());
-            ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            InputStream input = _socket.getInputStream();
             OutputStream output = _socket.getOutputStream();
 
-            //Send empty message to start conversation..
+            // Send empty message to start conversation..
             StreamHelper.writeMessage(output, new byte[] { 0 });
 
             while (shouldRun)
             {
-                // Re-use streams for more efficiency.
                 byte[] data = StreamHelper.readByteArray(input);
                 byte[] response = controllerCom.processInput(data);
 

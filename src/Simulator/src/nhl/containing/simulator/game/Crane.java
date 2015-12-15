@@ -6,19 +6,19 @@
  */
 package nhl.containing.simulator.game;
 
-import nhl.containing.simulator.simulation.Timer;
+import nhl.containing.simulator.framework.Timer;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Path;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Path;
+import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.simulation.Line3D;
 import nhl.containing.simulator.simulation.Line3DNode;
-import nhl.containing.simulator.simulation.Mathf;
-import nhl.containing.simulator.simulation.Utilities;
+import nhl.containing.simulator.framework.Mathf;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.world.MaterialCreator;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.*;
-import nhl.containing.simulator.simulation.Callback;
+import nhl.containing.simulator.framework.Callback;
 /**
  *
  * @author sietse
@@ -259,7 +259,7 @@ public final class Crane extends MovingItem {
     protected void onSetContainer(Container c) { 
         if (m_hook == null)
             return;
-        m_hook.attachChild(c);
-        c.localPosition(containerOffset());
+        m_hook.attachChild(c.transform);
+        c.transform.localPosition(containerOffset());
     }
 }

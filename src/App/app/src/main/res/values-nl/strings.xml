@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CManager</string>
+    <string name="Refresh_time_actionbar">Vernieuw Tijd</string>
+    <string name="Refresh_time_actionbar_10">10 sec</string>
+    <string name="Refresh_time_actionbar_20">20 sec</string>
+    <string name="Refresh_time_actionbar_30">30 sec</string>
+    <string name="Refresh_time_actionbar_5">5 sec</string>
+    <string name="Refresh_time_actionbar_off">Uit</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="communicator_error_host_port">Host of Poort zijn niet gedefinieerd. Ga naar instellingen om een Host en Poort toe te voegen.</string>
+    <string name="communicator_error_no_data">Gegevens ophalen mislukt</string>
+    <string name="communicator_error_not_connected">Niet verbonden</string>
+    <string name="communicator_error_settings">Host of Poort zijn niet gedefinieerd. Controleer de instellingen</string>
+    <string name="communicator_error_wrong">Er ging iets fout</string>
+    <string name="conn_controller_title">Verbinding met Controller</string>
+    <string name="container_content">Inhoud</string>
+    <string name="container_content_danger">Gevaar</string>
+    <string name="container_content_type">Type</string>
+    <string name="container_date">Datum</string>
+    <string name="container_error_message">Container informatie ophalen is mislukt!</string>
+    <string name="container_id">Container nummer</string>
+    <string name="container_owner">Eigenaar</string>
+    <string name="container_title">Container %1$i</string>
+    <string name="container_title_arrival">Aankomst Informatie</string>
+    <string name="container_title_content">Inhoud Informatie</string>
+    <string name="container_title_department">Vertrek Informatie</string>
+    <string name="container_title_general">Algemene Informatie</string>
+    <string name="container_transport">Transport type</string>
+    <string name="container_weight_empty">Gewicht leeg</string>
+    <string name="container_weight_full">Gewicht vol</string>
+    <string name="username">Management Interface</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="title_activity_container">ContainerActivity</string>
+    <string name="rotate_animation_desc">Vernieuwen</string>
+    <string name="refresh_actionbar">Vernieuwen</string>
+    <string name="port_title">Poort</string>
+    <string name="port_sum">De poort van de controller</string>
+    <string name="port_dialog_title">Controller Poort</string>
+    <string name="no_internet">Er is geen internet verbinding</string>
+    <string name="network_title">Netwerk</string>
+    <string name="network_sum">Kies welk netwerk gebruikt dient te worden</string>
+    <string name="network_dialog_title">Kies welk netwerk gebruikt dient te worden</string>
+    <string name="nav_home_titel">Huidige getallen</string>
+    <string name="containerlist_error_initialized">Containerfragment kon niet worden geïnitialiseerd</string>
+    <string name="containerlist_error_wrong">Er ging iets fout</string>
+    <string name="containter_company">Vervoerder</string>
+    <string name="data_refresh_title">Data Gebruik &amp; Vernieuwen</string>
+    <string name="desc">Project Containing</string>
+    <string name="drawer_close">Sluiten</string>
+    <string name="drawer_item_desc">Drawer item icoon</string>
+    <string name="drawer_open">Open</string>
+    <string name="error_connect_controller">Verbinden met de controller is mislukt</string>
+    <string name="exit_message">Weet u het zeker dat u de app wil verlaten?</string>
+    <string name="exit_neg">Blijven</string>
+    <string name="exit_pos">Verlaten</string>
+    <string name="exit_title">Verlaten</string>
+    <string name="graph_error_initialized">Graphfragment kon niet worden geïnitialiseerd</string>
+    <string name="graph_error_wrong">Er ging iets fout</string>
+    <string name="ip_dialog_title">Controller IP-adres</string>
+    <string name="ip_sum">Het IP-adres van de Controller</string>
+    <string name="ip_title">IP-adres</string>
+    <string name="loading_dialog_message">Container informatie ophalen, even geduld alstublieft</string>
+    <string name="loading_dialog_title">Laden…</string>
+    <string name="nav_containerlist_subtitel">Lijst met huidige containers</string>
+    <string name="nav_containerlist_titel">Containers</string>
+    <string name="nav_graph1_subtitel">Ingaande aantallen</string>
+    <string name="nav_graph1_titel">In</string>
+    <string name="nav_graph2_subtitel">Uitgaande aantallen</string>
+    <string name="nav_graph2_titel">Uit</string>
+    <string name="nav_graph3_subtitel">Onbekend</string>
+    <string name="nav_graph3_titel">Grafiek 4</string>
+    <string name="nav_home_subtitel">Huidige aantallen per categorie</string>
+    <string name="refresh_sum">Altijd automatisch vernieuwen</string>
+    <string name="refresh_time_dialog_title">Kies tijd voor het automatisch vernieuwen</string>
+    <string name="refresh_time_sum">Zet de tijd voor het automatisch vernieuwen</string>
+    <string name="refresh_time_title">Tijd automatisch vernieuwen</string>
+    <string name="refresh_title">Automatisch vernieuwen</string>
+    <string name="wrong_connection">Verbind met WI-FI of verander uw instellingen voordat u gaat vernieuwen</string>
+
+    <string-array name="graph_items">
+        <item>Trein</item>
+        <item>Vrachtwagen</item>
+        <item>Zeeschip</item>
+        <item>binnenvaartschip</item>
+        <item>Opslag</item>
+        <item>AGV</item>
+        <item>Overige</item>
+    </string-array>
+
+    <string-array name="network">
+        <item>Mobiele data En WI-FI</item>
+        <item>Alleen WI-FI</item>
+    </string-array>
+</resources>

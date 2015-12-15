@@ -1,17 +1,17 @@
 package nhl.containing.simulator.game;
 
-import nhl.containing.simulator.simulation.Utilities;
-import nhl.containing.simulator.simulation.Point3;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.World;
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Point2;
+import nhl.containing.simulator.framework.Point2;
 
 /**
  *
  * @author sietse
  */
-public class ContainerCarrier extends Item {
+public class ContainerCarrier extends Transform {
     
     /**
      * A container place in the carrier
@@ -84,16 +84,19 @@ public class ContainerCarrier extends Item {
      */
     public void containerOffset(Vector3f v) {
         
+        Vector3f _move = new Vector3f(m_containerOffset);
+        m_containerOffset = new Vector3f(v);
+        _move = _move.subtract(new Vector3f(m_containerOffset));
+        
         // For all containers, set the new offset
         if (m_containerSpots != null)
         for (int x = 0; x < m_containerSpots.length; ++x)
         for (int y = 0; y < m_containerSpots[x].length; ++y)
         for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
-            m_containerSpots[x][y][z].localPosition = m_containerSpots[x][y][z].localPosition.subtract(m_containerOffset).add(v);
+            m_containerSpots[x][y][z].localPosition = m_containerSpots[x][y][z].localPosition.add(_move);
         }
         
         // Set offset
-        m_containerOffset = new Vector3f(v);
     }
     
     /**
@@ -185,7 +188,10 @@ public class ContainerCarrier extends Item {
             if (m_containerSpots[x][y][z].container == null)
                 continue;
             
-            m_containerSpots[x][y][z].container.setCullHint(isOuter(x, y, z) ? CullHint.Dynamic : CullHint.Always);
+            if (isOuter(x, y, z))
+                m_containerSpots[x][y][z].container.show();
+            else
+                m_containerSpots[x][y][z].container.hide();
         }
     }
     /**
@@ -249,7 +255,7 @@ public class ContainerCarrier extends Item {
         
         // Init
         onSetContainer(c);
-        c.localPosition(new Vector3f(m_containerSpots[point.x][point.y][point.z].localPosition));
+        c.transform.localPosition(new Vector3f(m_containerSpots[point.x][point.y][point.z].localPosition));
         
         return c;
     }
@@ -258,7 +264,7 @@ public class ContainerCarrier extends Item {
      * @param c 
      */
     protected void onSetContainer(Container c) { 
-        this.attachChild(c);
+        this.attachChild(c.transform);
     }
     
     /**

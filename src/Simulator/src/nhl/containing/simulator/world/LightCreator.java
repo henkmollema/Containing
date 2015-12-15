@@ -6,7 +6,7 @@
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.simulation.Transform;
+import nhl.containing.simulator.framework.Transform;
 import com.jme3.light.*;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;

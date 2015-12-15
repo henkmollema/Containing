@@ -20,57 +20,47 @@
             android:layout_margin="6dip"
             android:stretchColumns="1">
             <TextView
-                android:text="General Information"
-                android:textSize="20dip"
+                android:text="@string/container_title_general"
+                android:textSize="20sp"
                 android:gravity="center" />
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="ID"
+                    android:text="@string/container_id"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/ContainerID"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Owner"
+                    android:text="@string/container_owner"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/Owner"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Content"
-                    android:padding="5dip"/>
-                <TextView
-                    android:id="@+id/Content"
-                    android:gravity="right"
-                    android:padding="5dip"/>
-            </TableRow>
-            <TableRow>
-                <TextView
-                    android:layout_column="1"
-                    android:text="Weight Empty"
+                    android:text="@string/container_weight_empty"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/WeightE"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Weight Full"
+                    android:text="@string/container_weight_full"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/Weight"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <View
@@ -78,38 +68,75 @@
                 android:background="#FF909090"
                 android:layout_marginBottom="6dip"/>
             <TextView
-                android:text="Arrival Information"
-                android:gravity="center"
-                android:textSize="20dip"
-                android:textColor="#000"/>
+                android:text="@string/container_title_content"
+                android:textSize="20sp"
+                android:gravity="center" />
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Company"
+                    android:text="@string/container_content"
+                    android:padding="5dip"/>
+                <TextView
+                    android:id="@+id/Content"
+                    android:gravity="end"
+                    android:padding="5dip"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="@string/container_content_type"
+                    android:padding="5dip"/>
+                <TextView
+                    android:id="@+id/ContentType"
+                    android:gravity="end"
+                    android:padding="5dip"/>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="@string/container_content_danger"
+                    android:padding="5dip"/>
+                <TextView
+                    android:id="@+id/ContentDanger"
+                    android:gravity="end"
+                    android:padding="5dip"/>
+            </TableRow>
+            <View
+                android:layout_height="3dip"
+                android:background="#FF909090"
+                android:layout_marginBottom="6dip"/>
+            <TextView
+                android:text="@string/container_title_arrival"
+                android:gravity="center"
+                android:textSize="20sp" />
+            <TableRow>
+                <TextView
+                    android:layout_column="1"
+                    android:text="@string/containter_company"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/ArrivalCompany"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Date"
+                    android:text="@string/container_date"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/ArrivalDate"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Transport"
+                    android:text="@string/container_transport"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/ArrivalTransport"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <View
@@ -117,37 +144,37 @@
                 android:background="#FF909090"
                 android:layout_marginBottom="6dip"/>
             <TextView
-                android:text="Department Information"
+                android:text="@string/container_title_department"
                 android:gravity="center"
-                android:textSize="20dip" />
+                android:textSize="20sp" />
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Company"
+                    android:text="@string/containter_company"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/DepartmentCompany"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Date"
+                    android:text="@string/container_date"
                     android:padding="5dp"/>
                 <TextView
                     android:id="@+id/DepartmentDate"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
             <TableRow>
                 <TextView
                     android:layout_column="1"
-                    android:text="Transport"
+                    android:text="@string/container_transport"
                     android:padding="5dip"/>
                 <TextView
                     android:id="@+id/DepartmentTransport"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:padding="5dip"/>
             </TableRow>
         </TableLayout>

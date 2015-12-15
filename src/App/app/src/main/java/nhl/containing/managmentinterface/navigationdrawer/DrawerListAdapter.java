@@ -49,6 +49,11 @@ public class DrawerListAdapter extends BaseAdapter
         return mNavItems.get(position);
     }
 
+    /**
+     * [Not implemented]
+     * @param position position
+     * @return zero
+     */
     @Override
     public long getItemId(int position) {
         return 0;

@@ -24,6 +24,15 @@ public class Simulator {
         
 
     }
+    
+    /**
+     * Gets an instance of the simulator controller
+     * @return simulator controller
+     */
+    public SimulatorController getSimulatorController()
+    {
+        return _controller;
+    }
 
     /**
      * Starts the simulator.

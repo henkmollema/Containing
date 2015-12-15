@@ -1,4 +1,4 @@
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
 /**
  *

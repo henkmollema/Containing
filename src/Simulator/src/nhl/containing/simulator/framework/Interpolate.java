@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nhl.containing.simulator.simulation;
+package nhl.containing.simulator.framework;
 
+import nhl.containing.simulator.framework.EaseType;
 import com.jme3.math.Vector3f;
 
 /**

@@ -2,8 +2,8 @@ package nhl.containing.simulator.game;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import nhl.containing.simulator.simulation.Transform;
-import nhl.containing.simulator.simulation.Utilities;
+import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**

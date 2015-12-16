@@ -53,7 +53,7 @@ public class Vehicle extends MovingItem {
         m_frontOffset = frontOffset == null ? Utilities.zero() : frontOffset;
         m_holderOffset = holderOffset == null ? Utilities.zero() : holderOffset;
         
-        if (frontModel != null) {
+        if (!Utilities.nullOrEmpty(frontModel)) {
             if (m_frontMaterial == null)
                 m_frontMaterial = MaterialCreator.unshadedRandom();
             

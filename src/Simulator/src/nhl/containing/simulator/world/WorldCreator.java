@@ -207,17 +207,20 @@ public final class WorldCreator {
     
     public static Vehicle createLorry(Vector3f from, Vector3f to) {
         Vehicle v = new Vehicle(
-                1.0f,// speed
+                5.0f,// speed
                 "", // front model
-                "", // holder model
+                "Sietse/Truck/Mater.obj", // holder model
                 1.0f, // front scale
-                1.0f, // holder scale
+                5.0f, // holder scale
                 new Vector3f(0.0f, 0.0f, 0.0f), // front offset
-                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+                new Vector3f(2.5f, 0.0f, 0.0f) // holder offset
         );
         
         v.from = new Vector3f[] { new Vector3f(from), new Vector3f(to) };
         v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
+        v.m_holderSpatial.setMaterial(v.m_holderMaterial = MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
+        v.state(Vehicle.VehicleState.Disposed);
+        v.containerOffset(new Vector3f(0.0f, -5.0f, 60.0f));
         
         return v;
     }

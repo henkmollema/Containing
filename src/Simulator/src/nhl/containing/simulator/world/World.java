@@ -23,6 +23,7 @@ import nhl.containing.simulator.game.PlatformLorry;
 import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
+import nhl.containing.simulator.framework.Tuple;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
@@ -59,10 +60,10 @@ public class World extends Behaviour {
     
     // World
     private List<PlatformInland > m_inlandCells  = new ArrayList<>(0);
-    private List<PlatformLorry  > m_lorryCells   = new ArrayList<>(0);
     private List<PlatformSea    > m_seaCells     = new ArrayList<>(0);
     private List<PlatformStorage> m_storageCells = new ArrayList<>(0);
     private List<PlatformTrain  > m_trainCells   = new ArrayList<>(0);
+    private List<Tuple<PlatformLorry, Vehicle>> m_lorryCells = new ArrayList<>(0);
     
     // Vehicles
     private Vehicle m_train;
@@ -90,10 +91,14 @@ public class World extends Behaviour {
     @Override
     public void update() {
         for(PlatformInland  s : m_inlandCells  ) s.update();
-        for(PlatformLorry   s : m_lorryCells   ) s.update();
         for(PlatformSea     s : m_seaCells     ) s.update();
         for(PlatformStorage s : m_storageCells ) s.update();
         for(PlatformTrain   s : m_trainCells   ) s.update();
+        
+        for(Tuple<PlatformLorry, Vehicle> s : m_lorryCells) {
+            s.a.update();
+            s.b.update();
+        }
         
         m_train.update();
     }
@@ -111,13 +116,15 @@ public class World extends Behaviour {
         AGV agv = new AGV();
         agv.setContainer(new Container(null));
         agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
-        m_storageCells.get(0).getParkingSpot(0).agv(agv);
+        //m_storageCells.get(0).getParkingSpot(0).agv(agv);
         
         
         for (int i = 0; i < 3; i++) {
             m_storageCells.get(0).take(new Point3(4, 4, i), 0);
         }
-        m_storageCells.get(0).place(0, new Point3(4, 5, 1));
+        //m_storageCells.get(0).place(0, new Point3(4, 5, 1));
+        
+        m_lorryCells.get(0).b.state(Vehicle.VehicleState.ToLoad);
         
     }
     
@@ -131,7 +138,17 @@ public class World extends Behaviour {
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
-            m_lorryCells.add(new PlatformLorry(offset));
+            Tuple<PlatformLorry, Vehicle> _temp = new Tuple<>();
+            _temp.a = new PlatformLorry(offset);
+            
+            Vector3f _from = new Vector3f(offset);
+            _from = _from.add(new Vector3f(0.0f, 0.0f, 40.0f)); // Base offset
+            Vector3f _to = new Vector3f(_from).add(new Vector3f(0.0f, 0.0f, 100.0f));
+            
+            _to.z += 30.0f;
+            _temp.b = WorldCreator.createLorry(_to, _from);
+            
+            m_lorryCells.add(_temp);
             offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;
         }
     }

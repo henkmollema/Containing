@@ -66,6 +66,11 @@ public abstract class Platform extends ContainerCarrier {
      */
     public void update() {
         
+        if (m_crane != null && m_crane.targetIsLast())
+            //if (!m_currentAction.isTake())
+            //System.out.println("TEST");
+            m_crane.paused = !m_currentAction.isTake() && m_currentAction.to.storageSpot == null && m_parkingSpots[m_currentAction.to.parkingSpot].agv() == null;
+        
         // Init
         if (m_firstFrame) {
             // First frame, init
@@ -158,6 +163,9 @@ public abstract class Platform extends ContainerCarrier {
         public final CraneTarget to;            // Placing place
         private int m_onTargetIndex = 0;        // Index to check if need to take or place
         
+        public boolean isTake() {
+            return m_onTargetIndex <= 1;
+        }
         /**
          * Constructor
          * NOTE: No input may have "null" value
@@ -250,7 +258,7 @@ public abstract class Platform extends ContainerCarrier {
          */
         public void finish() {
             
-            if (m_onTargetIndex <= 1) { // Take
+            if (isTake()) { // Take
                 
                 if (from.storageSpot != null) {
                     

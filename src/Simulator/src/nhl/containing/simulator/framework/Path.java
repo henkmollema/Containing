@@ -207,6 +207,9 @@ public class Path {
     public int getTargetIndex() {
         return m_targetNode;
     }
+    public boolean targetIsLast() {
+        return (m_targetNode == (m_nodes.length - 1));
+    }
     /**
      * Finished waitng
      * @return 

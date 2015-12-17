@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
-import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulatorItemList;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionDispatcher;
@@ -104,6 +103,7 @@ public class SimHandler implements Runnable
             SimulatorItemList platform = null;
             try{
                  platform = SimulatorItemList.parseFrom(data);
+                 p("Received " + platform.getItemsCount() + " metadata items");
             }catch(Exception e){
                 e.printStackTrace();
             }

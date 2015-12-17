@@ -68,7 +68,7 @@ public class Record
      */
     @Path("gewicht")
     @Element(name = "leeg")
-    public int weigthEmpty;
+    public int weightEmpty;
     
     /**
      * Weight of the container when it's loaded.

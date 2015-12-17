@@ -194,7 +194,7 @@ public class AppHandler implements Runnable{
                     ContainerInfo.Builder infoBuilder = ContainerInfo.newBuilder();
                     infoBuilder.setEigenaar(container.ownerName);
                     infoBuilder.setID(container.containerNumber);
-                    infoBuilder.setGewichtLeeg(container.weigthEmpty);
+                    infoBuilder.setGewichtLeeg(container.weightEmpty);
                     infoBuilder.setGewichtVol(container.weightLoaded);
                     infoBuilder.setInhoud(container.content);
                     infoBuilder.setAanvoerMaatschappij(container.arrivalShipment.carrier.company);

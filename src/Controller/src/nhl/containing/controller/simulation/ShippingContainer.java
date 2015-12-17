@@ -39,7 +39,7 @@ public class ShippingContainer
     /**
      * Weight of the container when it's empty.
      */
-    public int weigthEmpty;
+    public int weightEmpty;
     
     /**
      * Weight of the container when it's loaded.

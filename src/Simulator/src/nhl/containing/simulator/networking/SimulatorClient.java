@@ -170,15 +170,11 @@ public class SimulatorClient implements Runnable
     }
     
     public static void sendTimeUpdate()
-    {
-        byte[] timeBytes = new byte[8];
-        ByteBuffer.wrap(timeBytes).putFloat(Time.time());
-        ByteString bs = ByteString.copyFrom(timeBytes);
-        
+    {        
         Instruction timeUpdate = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setInstructionType(InstructionType.CLIENT_TIME_UPDATE)
-                .setMessageBytes(bs)
+                .setTime((long)(Time.time() * 1000)) // convert float to long ms
                 .build();
         
         controllerCom.sendInstruction(timeUpdate);

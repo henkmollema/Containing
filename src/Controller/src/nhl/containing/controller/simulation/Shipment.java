@@ -20,5 +20,18 @@ public class Shipment
     
     public Carrier carrier;
     
+    /**
+     * The date when the shipment arrives.
+     */
     public Date date;
+    
+    /**
+     * The date when the shipment should be processed.
+     */
+    public Date dateProcessed;
+    
+    /**
+     * Indicates whether the shipment is processed by the controller.
+     */
+    public boolean processed;
 }

@@ -34,7 +34,7 @@ public class MovingItem extends ContainerCarrier {
      * @param emptySpeed 
      */
     public MovingItem(Transform parent, float loadedSpeed, float emptySpeed) {
-        super(parent,  Point3.one());
+        super(parent, Point3.one());
         this.m_empySpeed = emptySpeed;
         this.m_loadedSpeed = loadedSpeed;
     }

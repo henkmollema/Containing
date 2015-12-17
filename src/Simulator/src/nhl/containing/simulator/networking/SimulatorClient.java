@@ -172,7 +172,7 @@ public class SimulatorClient implements Runnable
     public static void sendTimeUpdate()
     {
         byte[] timeBytes = new byte[8];
-        ByteBuffer.wrap(timeBytes).putDouble(Time.time());
+        ByteBuffer.wrap(timeBytes).putFloat(Time.time());
         ByteString bs = ByteString.copyFrom(timeBytes);
         
         Instruction timeUpdate = Instruction.newBuilder()

@@ -50,6 +50,7 @@ public final class Crane extends MovingItem {
     private final float m_ropeHeight;
     private final Vector3f m_basePosition;
     public Callback onTargetCallback;                       // Method when arriving at destination
+    public boolean paused = false;
     
     /**
      * Constructor
@@ -169,6 +170,9 @@ public final class Crane extends MovingItem {
      */
     public final void _update() {
         
+        if (paused)
+            return;
+        
         if (path() != null) {
             
             // Update Path
@@ -224,6 +228,9 @@ public final class Crane extends MovingItem {
             // Called when arrived at the target (last) node
             m_attachTimer.reset();
         }
+    }
+    public boolean targetIsLast() {
+        return path() == null ? false : path().targetIsLast();
     }
     /**
      * Set path to default destination

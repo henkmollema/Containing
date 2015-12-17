@@ -90,6 +90,9 @@ public class ContainerCarrier extends Transform {
         for (int x = 0; x < m_containerSpots.length; ++x)
         for (int y = 0; y < m_containerSpots[x].length; ++y)
         for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
+            if (m_containerSpots[x][y][z].container != null)
+                if (m_containerSpots[x][y][z].container.transform != null)
+                    m_containerSpots[x][y][z].container.transform.position(m_containerSpots[x][y][z].container.transform.position().add(_move));
             m_containerSpots[x][y][z].localPosition = m_containerSpots[x][y][z].localPosition.add(_move);
         }
     }

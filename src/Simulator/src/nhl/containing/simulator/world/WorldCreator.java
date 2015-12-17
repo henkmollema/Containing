@@ -17,6 +17,7 @@ import nhl.containing.simulator.game.Crane;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
 import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.game.Vehicle;
 
 /**
  *
@@ -202,5 +203,82 @@ public final class WorldCreator {
                 3.0f,                                           // Crane scale
                 2.0f                                            // Hook scale
          );
+    }
+    
+    public static Vehicle createLorry(Vector3f from, Vector3f to) {
+        Vehicle v = new Vehicle(
+                5.0f,// speed
+                "", // front model
+                "Sietse/Truck/Mater.obj", // holder model
+                1.0f, // front scale
+                5.0f, // holder scale
+                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
+                new Vector3f(2.5f, 0.0f, 0.0f) // holder offset
+        );
+        
+        v.from = new Vector3f[] { new Vector3f(from), new Vector3f(to) };
+        v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
+        v.m_holderSpatial.setMaterial(v.m_holderMaterial = MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
+        v.state(Vehicle.VehicleState.Disposed);
+        v.containerOffset(new Vector3f(0.0f, -5.0f, 60.0f));
+        
+        return v;
+    }
+    
+    /**
+     * 
+     * @param from The point that is out of the map
+     * @param to The point that is the loading platform
+     * @return 
+     */
+    public static Vehicle createTrain(Vector3f from, Vector3f to) {
+        Vehicle v = new Vehicle(
+                10.0f,//speed
+                "Sietse/Train/Thomas_Train.obj", // front model
+                "henk/Container/Container.obj", // holder model
+                4.0f, // front scale
+                1.0f, // holder scale
+                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+        );
+        v.m_frontSpatial.setMaterial(v.m_frontMaterial = MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
+        
+        v.from = new Vector3f[] { new Vector3f(from), new Vector3f(to) };
+        v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
+        
+        return v;
+    }
+    
+    public static Vehicle createInland(Vector3f[] from, Vector3f[] to) {
+        Vehicle v = new Vehicle(
+                10.0f,// speed
+                "", // front model
+                "", // holder model
+                1.0f, // front scale
+                1.0f, // holder scale
+                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+        );
+        
+        v.from = from;
+        v.to = to;
+        
+        return v;
+    }
+    public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {
+        Vehicle v = new Vehicle(
+                1.0f,// speed
+                "", // front model
+                "", // holder model
+                1.0f, // front scale
+                1.0f, // holder scale
+                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+        );
+        
+        v.from = from;
+        v.to = to;
+        
+        return v;
     }
 }

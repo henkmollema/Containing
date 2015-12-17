@@ -17,7 +17,9 @@ message Instruction
 	optional int64 time = 3;
 	optional int32 a = 4;
 	optional int32 b = 5;
-	optional string message = 6;	
+	optional string message = 6;
+        optional string arrivalCompany = 7;
+        repeated Container containers = 8;
 }
 
 message InstructionResponse
@@ -25,4 +27,25 @@ message InstructionResponse
 	required string id = 1;
 	required string instructionId = 2;
 	optional string message = 3;
+}
+
+message Container
+{
+    required string ownerName = 1;
+    required int32 containerNumber = 2;
+    required string length = 3;
+    required string width = 4;
+    required string height = 5;
+    required int32 x = 6;
+    required int32 y = 7;
+    required int32 z = 8;
+    required int32 weightEmpty = 9;
+    required int32 weightLoaded = 10;
+    required string content = 11;
+    required string contentType = 12;
+    required string conentDanger = 13;
+    required string iso = 14;
+    optional int64 departmentData = 15;
+    optional string departmentTransport = 16;
+    optional string departmentCompany = 17;
 }

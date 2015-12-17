@@ -8,10 +8,10 @@ public final class InstructionProto {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface InstructionDataBlockOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface datablockSimulatorOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:nhl.containing.networking.protobuf.datablockSimulator)
+      com.google.protobuf.MessageOrBuilder {
 
-    // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
     /**
      * <code>repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;</code>
      */
@@ -36,7 +36,6 @@ public final class InstructionProto {
     nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder getInstructionsOrBuilder(
         int index);
 
-    // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
     /**
      * <code>repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;</code>
      */
@@ -61,12 +60,11 @@ public final class InstructionProto {
     nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder getResponsesOrBuilder(
         int index);
 
-    // repeated string recievedInstructionUUIDs = 3;
     /**
      * <code>repeated string recievedInstructionUUIDs = 3;</code>
      */
-    java.util.List<java.lang.String>
-    getRecievedInstructionUUIDsList();
+    com.google.protobuf.ProtocolStringList
+        getRecievedInstructionUUIDsList();
     /**
      * <code>repeated string recievedInstructionUUIDs = 3;</code>
      */
@@ -81,12 +79,11 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getRecievedInstructionUUIDsBytes(int index);
 
-    // repeated string recievedResponseUUIDs = 4;
     /**
      * <code>repeated string recievedResponseUUIDs = 4;</code>
      */
-    java.util.List<java.lang.String>
-    getRecievedResponseUUIDsList();
+    com.google.protobuf.ProtocolStringList
+        getRecievedResponseUUIDsList();
     /**
      * <code>repeated string recievedResponseUUIDs = 4;</code>
      */
@@ -102,24 +99,25 @@ public final class InstructionProto {
         getRecievedResponseUUIDsBytes(int index);
   }
   /**
-   * Protobuf type {@code nhl.containing.networking.protobuf.InstructionDataBlock}
+   * Protobuf type {@code nhl.containing.networking.protobuf.datablockSimulator}
    */
-  public static final class InstructionDataBlock extends
-      com.google.protobuf.GeneratedMessage
-      implements InstructionDataBlockOrBuilder {
-    // Use InstructionDataBlock.newBuilder() to construct.
-    private InstructionDataBlock(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  public static final class datablockSimulator extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:nhl.containing.networking.protobuf.datablockSimulator)
+      datablockSimulatorOrBuilder {
+    // Use datablockSimulator.newBuilder() to construct.
+    private datablockSimulator(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private InstructionDataBlock(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private datablockSimulator(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final InstructionDataBlock defaultInstance;
-    public static InstructionDataBlock getDefaultInstance() {
+    private static final datablockSimulator defaultInstance;
+    public static datablockSimulator getDefaultInstance() {
       return defaultInstance;
     }
 
-    public InstructionDataBlock getDefaultInstanceForType() {
+    public datablockSimulator getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -129,7 +127,7 @@ public final class InstructionProto {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private InstructionDataBlock(
+    private datablockSimulator(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -169,19 +167,21 @@ public final class InstructionProto {
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 recievedInstructionUUIDs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000004;
               }
-              recievedInstructionUUIDs_.add(input.readBytes());
+              recievedInstructionUUIDs_.add(bs);
               break;
             }
             case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 recievedResponseUUIDs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
-              recievedResponseUUIDs_.add(input.readBytes());
+              recievedResponseUUIDs_.add(bs);
               break;
             }
           }
@@ -199,10 +199,10 @@ public final class InstructionProto {
           responses_ = java.util.Collections.unmodifiableList(responses_);
         }
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          recievedInstructionUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(recievedInstructionUUIDs_);
+          recievedInstructionUUIDs_ = recievedInstructionUUIDs_.getUnmodifiableView();
         }
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          recievedResponseUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(recievedResponseUUIDs_);
+          recievedResponseUUIDs_ = recievedResponseUUIDs_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -210,32 +210,31 @@ public final class InstructionProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablockSimulator_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.class, nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.Builder.class);
+              nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.class, nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<InstructionDataBlock> PARSER =
-        new com.google.protobuf.AbstractParser<InstructionDataBlock>() {
-      public InstructionDataBlock parsePartialFrom(
+    public static com.google.protobuf.Parser<datablockSimulator> PARSER =
+        new com.google.protobuf.AbstractParser<datablockSimulator>() {
+      public datablockSimulator parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new InstructionDataBlock(input, extensionRegistry);
+        return new datablockSimulator(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<InstructionDataBlock> getParserForType() {
+    public com.google.protobuf.Parser<datablockSimulator> getParserForType() {
       return PARSER;
     }
 
-    // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
     public static final int INSTRUCTIONS_FIELD_NUMBER = 1;
     private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> instructions_;
     /**
@@ -271,7 +270,6 @@ public final class InstructionProto {
       return instructions_.get(index);
     }
 
-    // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
     public static final int RESPONSES_FIELD_NUMBER = 2;
     private java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> responses_;
     /**
@@ -307,13 +305,12 @@ public final class InstructionProto {
       return responses_.get(index);
     }
 
-    // repeated string recievedInstructionUUIDs = 3;
     public static final int RECIEVEDINSTRUCTIONUUIDS_FIELD_NUMBER = 3;
     private com.google.protobuf.LazyStringList recievedInstructionUUIDs_;
     /**
      * <code>repeated string recievedInstructionUUIDs = 3;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getRecievedInstructionUUIDsList() {
       return recievedInstructionUUIDs_;
     }
@@ -337,13 +334,12 @@ public final class InstructionProto {
       return recievedInstructionUUIDs_.getByteString(index);
     }
 
-    // repeated string recievedResponseUUIDs = 4;
     public static final int RECIEVEDRESPONSEUUIDS_FIELD_NUMBER = 4;
     private com.google.protobuf.LazyStringList recievedResponseUUIDs_;
     /**
      * <code>repeated string recievedResponseUUIDs = 4;</code>
      */
-    public java.util.List<java.lang.String>
+    public com.google.protobuf.ProtocolStringList
         getRecievedResponseUUIDsList() {
       return recievedResponseUUIDs_;
     }
@@ -376,7 +372,8 @@ public final class InstructionProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       for (int i = 0; i < getInstructionsCount(); i++) {
         if (!getInstructions(i).isInitialized()) {
@@ -456,53 +453,53 @@ public final class InstructionProto {
       return super.writeReplace();
     }
 
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(byte[] data)
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseDelimitedFrom(java.io.InputStream input)
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseDelimitedFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parseFrom(
+    public static nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -511,7 +508,7 @@ public final class InstructionProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock prototype) {
+    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.datablockSimulator prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -523,24 +520,25 @@ public final class InstructionProto {
       return builder;
     }
     /**
-     * Protobuf type {@code nhl.containing.networking.protobuf.InstructionDataBlock}
+     * Protobuf type {@code nhl.containing.networking.protobuf.datablockSimulator}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlockOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:nhl.containing.networking.protobuf.datablockSimulator)
+        nhl.containing.networking.protobuf.InstructionProto.datablockSimulatorOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablockSimulator_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.class, nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.Builder.class);
+                nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.class, nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.Builder.class);
       }
 
-      // Construct using nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.newBuilder()
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -587,23 +585,23 @@ public final class InstructionProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor;
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock getDefaultInstanceForType() {
-        return nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.getDefaultInstance();
+      public nhl.containing.networking.protobuf.InstructionProto.datablockSimulator getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.getDefaultInstance();
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock build() {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock result = buildPartial();
+      public nhl.containing.networking.protobuf.InstructionProto.datablockSimulator build() {
+        nhl.containing.networking.protobuf.InstructionProto.datablockSimulator result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock buildPartial() {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock result = new nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock(this);
+      public nhl.containing.networking.protobuf.InstructionProto.datablockSimulator buildPartial() {
+        nhl.containing.networking.protobuf.InstructionProto.datablockSimulator result = new nhl.containing.networking.protobuf.InstructionProto.datablockSimulator(this);
         int from_bitField0_ = bitField0_;
         if (instructionsBuilder_ == null) {
           if (((bitField0_ & 0x00000001) == 0x00000001)) {
@@ -624,14 +622,12 @@ public final class InstructionProto {
           result.responses_ = responsesBuilder_.build();
         }
         if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          recievedInstructionUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              recievedInstructionUUIDs_);
+          recievedInstructionUUIDs_ = recievedInstructionUUIDs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.recievedInstructionUUIDs_ = recievedInstructionUUIDs_;
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          recievedResponseUUIDs_ = new com.google.protobuf.UnmodifiableLazyStringList(
-              recievedResponseUUIDs_);
+          recievedResponseUUIDs_ = recievedResponseUUIDs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000008);
         }
         result.recievedResponseUUIDs_ = recievedResponseUUIDs_;
@@ -640,16 +636,16 @@ public final class InstructionProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock) {
-          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock)other);
+        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.datablockSimulator) {
+          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.datablockSimulator)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock other) {
-        if (other == nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock.getDefaultInstance()) return this;
+      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.datablockSimulator other) {
+        if (other == nhl.containing.networking.protobuf.InstructionProto.datablockSimulator.getDefaultInstance()) return this;
         if (instructionsBuilder_ == null) {
           if (!other.instructions_.isEmpty()) {
             if (instructions_.isEmpty()) {
@@ -746,11 +742,11 @@ public final class InstructionProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock parsedMessage = null;
+        nhl.containing.networking.protobuf.InstructionProto.datablockSimulator parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.InstructionDataBlock) e.getUnfinishedMessage();
+          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.datablockSimulator) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -761,7 +757,6 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
-      // repeated .nhl.containing.networking.protobuf.Instruction instructions = 1;
       private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Instruction> instructions_ =
         java.util.Collections.emptyList();
       private void ensureInstructionsIsMutable() {
@@ -903,7 +898,8 @@ public final class InstructionProto {
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.Instruction> values) {
         if (instructionsBuilder_ == null) {
           ensureInstructionsIsMutable();
-          super.addAll(values, instructions_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, instructions_);
           onChanged();
         } else {
           instructionsBuilder_.addAllMessages(values);
@@ -1001,7 +997,6 @@ public final class InstructionProto {
         return instructionsBuilder_;
       }
 
-      // repeated .nhl.containing.networking.protobuf.InstructionResponse responses = 2;
       private java.util.List<nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> responses_ =
         java.util.Collections.emptyList();
       private void ensureResponsesIsMutable() {
@@ -1143,7 +1138,8 @@ public final class InstructionProto {
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.InstructionResponse> values) {
         if (responsesBuilder_ == null) {
           ensureResponsesIsMutable();
-          super.addAll(values, responses_);
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, responses_);
           onChanged();
         } else {
           responsesBuilder_.addAllMessages(values);
@@ -1241,7 +1237,6 @@ public final class InstructionProto {
         return responsesBuilder_;
       }
 
-      // repeated string recievedInstructionUUIDs = 3;
       private com.google.protobuf.LazyStringList recievedInstructionUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureRecievedInstructionUUIDsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
@@ -1252,9 +1247,9 @@ public final class InstructionProto {
       /**
        * <code>repeated string recievedInstructionUUIDs = 3;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getRecievedInstructionUUIDsList() {
-        return java.util.Collections.unmodifiableList(recievedInstructionUUIDs_);
+        return recievedInstructionUUIDs_.getUnmodifiableView();
       }
       /**
        * <code>repeated string recievedInstructionUUIDs = 3;</code>
@@ -1307,7 +1302,8 @@ public final class InstructionProto {
       public Builder addAllRecievedInstructionUUIDs(
           java.lang.Iterable<java.lang.String> values) {
         ensureRecievedInstructionUUIDsIsMutable();
-        super.addAll(values, recievedInstructionUUIDs_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, recievedInstructionUUIDs_);
         onChanged();
         return this;
       }
@@ -1334,7 +1330,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // repeated string recievedResponseUUIDs = 4;
       private com.google.protobuf.LazyStringList recievedResponseUUIDs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureRecievedResponseUUIDsIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
@@ -1345,9 +1340,9 @@ public final class InstructionProto {
       /**
        * <code>repeated string recievedResponseUUIDs = 4;</code>
        */
-      public java.util.List<java.lang.String>
+      public com.google.protobuf.ProtocolStringList
           getRecievedResponseUUIDsList() {
-        return java.util.Collections.unmodifiableList(recievedResponseUUIDs_);
+        return recievedResponseUUIDs_.getUnmodifiableView();
       }
       /**
        * <code>repeated string recievedResponseUUIDs = 4;</code>
@@ -1400,7 +1395,8 @@ public final class InstructionProto {
       public Builder addAllRecievedResponseUUIDs(
           java.lang.Iterable<java.lang.String> values) {
         ensureRecievedResponseUUIDsIsMutable();
-        super.addAll(values, recievedResponseUUIDs_);
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, recievedResponseUUIDs_);
         onChanged();
         return this;
       }
@@ -1427,21 +1423,21 @@ public final class InstructionProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.InstructionDataBlock)
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.datablockSimulator)
     }
 
     static {
-      defaultInstance = new InstructionDataBlock(true);
+      defaultInstance = new datablockSimulator(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionDataBlock)
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.datablockSimulator)
   }
 
-  public interface InstructionOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface InstructionOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:nhl.containing.networking.protobuf.Instruction)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -1456,7 +1452,6 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getIdBytes();
 
-    // required int32 instructionType = 2;
     /**
      * <code>required int32 instructionType = 2;</code>
      */
@@ -1466,7 +1461,6 @@ public final class InstructionProto {
      */
     int getInstructionType();
 
-    // optional int64 time = 3;
     /**
      * <code>optional int64 time = 3;</code>
      */
@@ -1476,7 +1470,6 @@ public final class InstructionProto {
      */
     long getTime();
 
-    // optional int32 a = 4;
     /**
      * <code>optional int32 a = 4;</code>
      */
@@ -1486,7 +1479,6 @@ public final class InstructionProto {
      */
     int getA();
 
-    // optional int32 b = 5;
     /**
      * <code>optional int32 b = 5;</code>
      */
@@ -1496,7 +1488,6 @@ public final class InstructionProto {
      */
     int getB();
 
-    // optional string message = 6;
     /**
      * <code>optional string message = 6;</code>
      */
@@ -1510,13 +1501,52 @@ public final class InstructionProto {
      */
     com.google.protobuf.ByteString
         getMessageBytes();
+
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    boolean hasArrivalCompany();
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    java.lang.String getArrivalCompany();
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getArrivalCompanyBytes();
+
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> 
+        getContainersList();
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index);
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    int getContainersCount();
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
+        getContainersOrBuilderList();
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code nhl.containing.networking.protobuf.Instruction}
    */
   public static final class Instruction extends
-      com.google.protobuf.GeneratedMessage
-      implements InstructionOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:nhl.containing.networking.protobuf.Instruction)
+      InstructionOrBuilder {
     // Use Instruction.newBuilder() to construct.
     private Instruction(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -1563,8 +1593,9 @@ public final class InstructionProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = input.readBytes();
+              id_ = bs;
               break;
             }
             case 16: {
@@ -1588,8 +1619,23 @@ public final class InstructionProto {
               break;
             }
             case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
-              message_ = input.readBytes();
+              message_ = bs;
+              break;
+            }
+            case 58: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000040;
+              arrivalCompany_ = bs;
+              break;
+            }
+            case 66: {
+              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+                containers_ = new java.util.ArrayList<nhl.containing.networking.protobuf.InstructionProto.Container>();
+                mutable_bitField0_ |= 0x00000080;
+              }
+              containers_.add(input.readMessage(nhl.containing.networking.protobuf.InstructionProto.Container.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1600,6 +1646,9 @@ public final class InstructionProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+          containers_ = java.util.Collections.unmodifiableList(containers_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -1632,7 +1681,6 @@ public final class InstructionProto {
     }
 
     private int bitField0_;
-    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -1675,7 +1723,6 @@ public final class InstructionProto {
       }
     }
 
-    // required int32 instructionType = 2;
     public static final int INSTRUCTIONTYPE_FIELD_NUMBER = 2;
     private int instructionType_;
     /**
@@ -1691,7 +1738,6 @@ public final class InstructionProto {
       return instructionType_;
     }
 
-    // optional int64 time = 3;
     public static final int TIME_FIELD_NUMBER = 3;
     private long time_;
     /**
@@ -1707,7 +1753,6 @@ public final class InstructionProto {
       return time_;
     }
 
-    // optional int32 a = 4;
     public static final int A_FIELD_NUMBER = 4;
     private int a_;
     /**
@@ -1723,7 +1768,6 @@ public final class InstructionProto {
       return a_;
     }
 
-    // optional int32 b = 5;
     public static final int B_FIELD_NUMBER = 5;
     private int b_;
     /**
@@ -1739,7 +1783,6 @@ public final class InstructionProto {
       return b_;
     }
 
-    // optional string message = 6;
     public static final int MESSAGE_FIELD_NUMBER = 6;
     private java.lang.Object message_;
     /**
@@ -1782,6 +1825,83 @@ public final class InstructionProto {
       }
     }
 
+    public static final int ARRIVALCOMPANY_FIELD_NUMBER = 7;
+    private java.lang.Object arrivalCompany_;
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    public boolean hasArrivalCompany() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    public java.lang.String getArrivalCompany() {
+      java.lang.Object ref = arrivalCompany_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          arrivalCompany_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string arrivalCompany = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getArrivalCompanyBytes() {
+      java.lang.Object ref = arrivalCompany_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        arrivalCompany_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONTAINERS_FIELD_NUMBER = 8;
+    private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> containers_;
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> getContainersList() {
+      return containers_;
+    }
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
+        getContainersOrBuilderList() {
+      return containers_;
+    }
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    public int getContainersCount() {
+      return containers_.size();
+    }
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    public nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index) {
+      return containers_.get(index);
+    }
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+     */
+    public nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
+        int index) {
+      return containers_.get(index);
+    }
+
     private void initFields() {
       id_ = "";
       instructionType_ = 0;
@@ -1789,11 +1909,14 @@ public final class InstructionProto {
       a_ = 0;
       b_ = 0;
       message_ = "";
+      arrivalCompany_ = "";
+      containers_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -1802,6 +1925,12 @@ public final class InstructionProto {
       if (!hasInstructionType()) {
         memoizedIsInitialized = 0;
         return false;
+      }
+      for (int i = 0; i < getContainersCount(); i++) {
+        if (!getContainers(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
       }
       memoizedIsInitialized = 1;
       return true;
@@ -1827,6 +1956,12 @@ public final class InstructionProto {
       }
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeBytes(6, getMessageBytes());
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(7, getArrivalCompanyBytes());
+      }
+      for (int i = 0; i < containers_.size(); i++) {
+        output.writeMessage(8, containers_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -1860,6 +1995,14 @@ public final class InstructionProto {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(6, getMessageBytes());
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(7, getArrivalCompanyBytes());
+      }
+      for (int i = 0; i < containers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, containers_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1943,8 +2086,9 @@ public final class InstructionProto {
      * Protobuf type {@code nhl.containing.networking.protobuf.Instruction}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:nhl.containing.networking.protobuf.Instruction)
+        nhl.containing.networking.protobuf.InstructionProto.InstructionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
@@ -1969,6 +2113,7 @@ public final class InstructionProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getContainersFieldBuilder();
         }
       }
       private static Builder create() {
@@ -1989,6 +2134,14 @@ public final class InstructionProto {
         bitField0_ = (bitField0_ & ~0x00000010);
         message_ = "";
         bitField0_ = (bitField0_ & ~0x00000020);
+        arrivalCompany_ = "";
+        bitField0_ = (bitField0_ & ~0x00000040);
+        if (containersBuilder_ == null) {
+          containers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+        } else {
+          containersBuilder_.clear();
+        }
         return this;
       }
 
@@ -2041,6 +2194,19 @@ public final class InstructionProto {
           to_bitField0_ |= 0x00000020;
         }
         result.message_ = message_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.arrivalCompany_ = arrivalCompany_;
+        if (containersBuilder_ == null) {
+          if (((bitField0_ & 0x00000080) == 0x00000080)) {
+            containers_ = java.util.Collections.unmodifiableList(containers_);
+            bitField0_ = (bitField0_ & ~0x00000080);
+          }
+          result.containers_ = containers_;
+        } else {
+          result.containers_ = containersBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -2079,6 +2245,37 @@ public final class InstructionProto {
           message_ = other.message_;
           onChanged();
         }
+        if (other.hasArrivalCompany()) {
+          bitField0_ |= 0x00000040;
+          arrivalCompany_ = other.arrivalCompany_;
+          onChanged();
+        }
+        if (containersBuilder_ == null) {
+          if (!other.containers_.isEmpty()) {
+            if (containers_.isEmpty()) {
+              containers_ = other.containers_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+            } else {
+              ensureContainersIsMutable();
+              containers_.addAll(other.containers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.containers_.isEmpty()) {
+            if (containersBuilder_.isEmpty()) {
+              containersBuilder_.dispose();
+              containersBuilder_ = null;
+              containers_ = other.containers_;
+              bitField0_ = (bitField0_ & ~0x00000080);
+              containersBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getContainersFieldBuilder() : null;
+            } else {
+              containersBuilder_.addAllMessages(other.containers_);
+            }
+          }
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -2091,6 +2288,12 @@ public final class InstructionProto {
         if (!hasInstructionType()) {
           
           return false;
+        }
+        for (int i = 0; i < getContainersCount(); i++) {
+          if (!getContainers(i).isInitialized()) {
+            
+            return false;
+          }
         }
         return true;
       }
@@ -2114,7 +2317,6 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
-      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -2128,9 +2330,12 @@ public final class InstructionProto {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          id_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            id_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2188,7 +2393,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // required int32 instructionType = 2;
       private int instructionType_ ;
       /**
        * <code>required int32 instructionType = 2;</code>
@@ -2221,7 +2425,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional int64 time = 3;
       private long time_ ;
       /**
        * <code>optional int64 time = 3;</code>
@@ -2254,7 +2457,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional int32 a = 4;
       private int a_ ;
       /**
        * <code>optional int32 a = 4;</code>
@@ -2287,7 +2489,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional int32 b = 5;
       private int b_ ;
       /**
        * <code>optional int32 b = 5;</code>
@@ -2320,7 +2521,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional string message = 6;
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 6;</code>
@@ -2334,9 +2534,12 @@ public final class InstructionProto {
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          message_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            message_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2394,6 +2597,322 @@ public final class InstructionProto {
         return this;
       }
 
+      private java.lang.Object arrivalCompany_ = "";
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public boolean hasArrivalCompany() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public java.lang.String getArrivalCompany() {
+        java.lang.Object ref = arrivalCompany_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            arrivalCompany_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getArrivalCompanyBytes() {
+        java.lang.Object ref = arrivalCompany_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          arrivalCompany_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public Builder setArrivalCompany(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        arrivalCompany_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public Builder clearArrivalCompany() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        arrivalCompany_ = getDefaultInstance().getArrivalCompany();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalCompany = 7;</code>
+       */
+      public Builder setArrivalCompanyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000040;
+        arrivalCompany_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> containers_ =
+        java.util.Collections.emptyList();
+      private void ensureContainersIsMutable() {
+        if (!((bitField0_ & 0x00000080) == 0x00000080)) {
+          containers_ = new java.util.ArrayList<nhl.containing.networking.protobuf.InstructionProto.Container>(containers_);
+          bitField0_ |= 0x00000080;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          nhl.containing.networking.protobuf.InstructionProto.Container, nhl.containing.networking.protobuf.InstructionProto.Container.Builder, nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> containersBuilder_;
+
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> getContainersList() {
+        if (containersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(containers_);
+        } else {
+          return containersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public int getContainersCount() {
+        if (containersBuilder_ == null) {
+          return containers_.size();
+        } else {
+          return containersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index) {
+        if (containersBuilder_ == null) {
+          return containers_.get(index);
+        } else {
+          return containersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder setContainers(
+          int index, nhl.containing.networking.protobuf.InstructionProto.Container value) {
+        if (containersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureContainersIsMutable();
+          containers_.set(index, value);
+          onChanged();
+        } else {
+          containersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder setContainers(
+          int index, nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
+        if (containersBuilder_ == null) {
+          ensureContainersIsMutable();
+          containers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          containersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder addContainers(nhl.containing.networking.protobuf.InstructionProto.Container value) {
+        if (containersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureContainersIsMutable();
+          containers_.add(value);
+          onChanged();
+        } else {
+          containersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder addContainers(
+          int index, nhl.containing.networking.protobuf.InstructionProto.Container value) {
+        if (containersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureContainersIsMutable();
+          containers_.add(index, value);
+          onChanged();
+        } else {
+          containersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder addContainers(
+          nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
+        if (containersBuilder_ == null) {
+          ensureContainersIsMutable();
+          containers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          containersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder addContainers(
+          int index, nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
+        if (containersBuilder_ == null) {
+          ensureContainersIsMutable();
+          containers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          containersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder addAllContainers(
+          java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.Container> values) {
+        if (containersBuilder_ == null) {
+          ensureContainersIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, containers_);
+          onChanged();
+        } else {
+          containersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder clearContainers() {
+        if (containersBuilder_ == null) {
+          containers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000080);
+          onChanged();
+        } else {
+          containersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public Builder removeContainers(int index) {
+        if (containersBuilder_ == null) {
+          ensureContainersIsMutable();
+          containers_.remove(index);
+          onChanged();
+        } else {
+          containersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public nhl.containing.networking.protobuf.InstructionProto.Container.Builder getContainersBuilder(
+          int index) {
+        return getContainersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
+          int index) {
+        if (containersBuilder_ == null) {
+          return containers_.get(index);  } else {
+          return containersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
+           getContainersOrBuilderList() {
+        if (containersBuilder_ != null) {
+          return containersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(containers_);
+        }
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public nhl.containing.networking.protobuf.InstructionProto.Container.Builder addContainersBuilder() {
+        return getContainersFieldBuilder().addBuilder(
+            nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public nhl.containing.networking.protobuf.InstructionProto.Container.Builder addContainersBuilder(
+          int index) {
+        return getContainersFieldBuilder().addBuilder(
+            index, nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 8;</code>
+       */
+      public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container.Builder> 
+           getContainersBuilderList() {
+        return getContainersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          nhl.containing.networking.protobuf.InstructionProto.Container, nhl.containing.networking.protobuf.InstructionProto.Container.Builder, nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
+          getContainersFieldBuilder() {
+        if (containersBuilder_ == null) {
+          containersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              nhl.containing.networking.protobuf.InstructionProto.Container, nhl.containing.networking.protobuf.InstructionProto.Container.Builder, nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder>(
+                  containers_,
+                  ((bitField0_ & 0x00000080) == 0x00000080),
+                  getParentForChildren(),
+                  isClean());
+          containers_ = null;
+        }
+        return containersBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.Instruction)
     }
 
@@ -2405,10 +2924,10 @@ public final class InstructionProto {
     // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.Instruction)
   }
 
-  public interface InstructionResponseOrBuilder
-      extends com.google.protobuf.MessageOrBuilder {
+  public interface InstructionResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:nhl.containing.networking.protobuf.InstructionResponse)
+      com.google.protobuf.MessageOrBuilder {
 
-    // required string id = 1;
     /**
      * <code>required string id = 1;</code>
      */
@@ -2423,7 +2942,6 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getIdBytes();
 
-    // required string instructionId = 2;
     /**
      * <code>required string instructionId = 2;</code>
      */
@@ -2438,7 +2956,6 @@ public final class InstructionProto {
     com.google.protobuf.ByteString
         getInstructionIdBytes();
 
-    // optional string message = 3;
     /**
      * <code>optional string message = 3;</code>
      */
@@ -2457,8 +2974,9 @@ public final class InstructionProto {
    * Protobuf type {@code nhl.containing.networking.protobuf.InstructionResponse}
    */
   public static final class InstructionResponse extends
-      com.google.protobuf.GeneratedMessage
-      implements InstructionResponseOrBuilder {
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:nhl.containing.networking.protobuf.InstructionResponse)
+      InstructionResponseOrBuilder {
     // Use InstructionResponse.newBuilder() to construct.
     private InstructionResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
@@ -2505,18 +3023,21 @@ public final class InstructionProto {
               break;
             }
             case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              id_ = input.readBytes();
+              id_ = bs;
               break;
             }
             case 18: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              instructionId_ = input.readBytes();
+              instructionId_ = bs;
               break;
             }
             case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              message_ = input.readBytes();
+              message_ = bs;
               break;
             }
           }
@@ -2559,7 +3080,6 @@ public final class InstructionProto {
     }
 
     private int bitField0_;
-    // required string id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private java.lang.Object id_;
     /**
@@ -2602,7 +3122,6 @@ public final class InstructionProto {
       }
     }
 
-    // required string instructionId = 2;
     public static final int INSTRUCTIONID_FIELD_NUMBER = 2;
     private java.lang.Object instructionId_;
     /**
@@ -2645,7 +3164,6 @@ public final class InstructionProto {
       }
     }
 
-    // optional string message = 3;
     public static final int MESSAGE_FIELD_NUMBER = 3;
     private java.lang.Object message_;
     /**
@@ -2696,7 +3214,8 @@ public final class InstructionProto {
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized != -1) return isInitialized == 1;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -2825,8 +3344,9 @@ public final class InstructionProto {
      * Protobuf type {@code nhl.containing.networking.protobuf.InstructionResponse}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:nhl.containing.networking.protobuf.InstructionResponse)
+        nhl.containing.networking.protobuf.InstructionProto.InstructionResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
@@ -2971,7 +3491,6 @@ public final class InstructionProto {
       }
       private int bitField0_;
 
-      // required string id = 1;
       private java.lang.Object id_ = "";
       /**
        * <code>required string id = 1;</code>
@@ -2985,9 +3504,12 @@ public final class InstructionProto {
       public java.lang.String getId() {
         java.lang.Object ref = id_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          id_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            id_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3045,7 +3567,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // required string instructionId = 2;
       private java.lang.Object instructionId_ = "";
       /**
        * <code>required string instructionId = 2;</code>
@@ -3059,9 +3580,12 @@ public final class InstructionProto {
       public java.lang.String getInstructionId() {
         java.lang.Object ref = instructionId_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          instructionId_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            instructionId_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3119,7 +3643,6 @@ public final class InstructionProto {
         return this;
       }
 
-      // optional string message = 3;
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 3;</code>
@@ -3133,9 +3656,12 @@ public final class InstructionProto {
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
         if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          message_ = s;
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            message_ = s;
+          }
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3204,21 +3730,2573 @@ public final class InstructionProto {
     // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.InstructionResponse)
   }
 
-  private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor;
+  public interface ContainerOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:nhl.containing.networking.protobuf.Container)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    boolean hasOwnerName();
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    java.lang.String getOwnerName();
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getOwnerNameBytes();
+
+    /**
+     * <code>required int32 containerNumber = 2;</code>
+     */
+    boolean hasContainerNumber();
+    /**
+     * <code>required int32 containerNumber = 2;</code>
+     */
+    int getContainerNumber();
+
+    /**
+     * <code>required string length = 3;</code>
+     */
+    boolean hasLength();
+    /**
+     * <code>required string length = 3;</code>
+     */
+    java.lang.String getLength();
+    /**
+     * <code>required string length = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getLengthBytes();
+
+    /**
+     * <code>required string width = 4;</code>
+     */
+    boolean hasWidth();
+    /**
+     * <code>required string width = 4;</code>
+     */
+    java.lang.String getWidth();
+    /**
+     * <code>required string width = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getWidthBytes();
+
+    /**
+     * <code>required string height = 5;</code>
+     */
+    boolean hasHeight();
+    /**
+     * <code>required string height = 5;</code>
+     */
+    java.lang.String getHeight();
+    /**
+     * <code>required string height = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getHeightBytes();
+
+    /**
+     * <code>required int32 x = 6;</code>
+     */
+    boolean hasX();
+    /**
+     * <code>required int32 x = 6;</code>
+     */
+    int getX();
+
+    /**
+     * <code>required int32 y = 7;</code>
+     */
+    boolean hasY();
+    /**
+     * <code>required int32 y = 7;</code>
+     */
+    int getY();
+
+    /**
+     * <code>required int32 z = 8;</code>
+     */
+    boolean hasZ();
+    /**
+     * <code>required int32 z = 8;</code>
+     */
+    int getZ();
+
+    /**
+     * <code>required int32 weightEmpty = 9;</code>
+     */
+    boolean hasWeightEmpty();
+    /**
+     * <code>required int32 weightEmpty = 9;</code>
+     */
+    int getWeightEmpty();
+
+    /**
+     * <code>required int32 weightLoaded = 10;</code>
+     */
+    boolean hasWeightLoaded();
+    /**
+     * <code>required int32 weightLoaded = 10;</code>
+     */
+    int getWeightLoaded();
+
+    /**
+     * <code>required string content = 11;</code>
+     */
+    boolean hasContent();
+    /**
+     * <code>required string content = 11;</code>
+     */
+    java.lang.String getContent();
+    /**
+     * <code>required string content = 11;</code>
+     */
+    com.google.protobuf.ByteString
+        getContentBytes();
+
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    boolean hasContentType();
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    java.lang.String getContentType();
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    com.google.protobuf.ByteString
+        getContentTypeBytes();
+
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    boolean hasConentDanger();
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    java.lang.String getConentDanger();
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    com.google.protobuf.ByteString
+        getConentDangerBytes();
+
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    boolean hasIso();
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    java.lang.String getIso();
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    com.google.protobuf.ByteString
+        getIsoBytes();
+
+    /**
+     * <code>optional int64 departmentData = 15;</code>
+     */
+    boolean hasDepartmentData();
+    /**
+     * <code>optional int64 departmentData = 15;</code>
+     */
+    long getDepartmentData();
+
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    boolean hasDepartmentTransport();
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    java.lang.String getDepartmentTransport();
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    com.google.protobuf.ByteString
+        getDepartmentTransportBytes();
+
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    boolean hasDepartmentCompany();
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    java.lang.String getDepartmentCompany();
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    com.google.protobuf.ByteString
+        getDepartmentCompanyBytes();
+  }
+  /**
+   * Protobuf type {@code nhl.containing.networking.protobuf.Container}
+   */
+  public static final class Container extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:nhl.containing.networking.protobuf.Container)
+      ContainerOrBuilder {
+    // Use Container.newBuilder() to construct.
+    private Container(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Container(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Container defaultInstance;
+    public static Container getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Container getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Container(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              ownerName_ = bs;
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              containerNumber_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              length_ = bs;
+              break;
+            }
+            case 34: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000008;
+              width_ = bs;
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000010;
+              height_ = bs;
+              break;
+            }
+            case 48: {
+              bitField0_ |= 0x00000020;
+              x_ = input.readInt32();
+              break;
+            }
+            case 56: {
+              bitField0_ |= 0x00000040;
+              y_ = input.readInt32();
+              break;
+            }
+            case 64: {
+              bitField0_ |= 0x00000080;
+              z_ = input.readInt32();
+              break;
+            }
+            case 72: {
+              bitField0_ |= 0x00000100;
+              weightEmpty_ = input.readInt32();
+              break;
+            }
+            case 80: {
+              bitField0_ |= 0x00000200;
+              weightLoaded_ = input.readInt32();
+              break;
+            }
+            case 90: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000400;
+              content_ = bs;
+              break;
+            }
+            case 98: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000800;
+              contentType_ = bs;
+              break;
+            }
+            case 106: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00001000;
+              conentDanger_ = bs;
+              break;
+            }
+            case 114: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00002000;
+              iso_ = bs;
+              break;
+            }
+            case 120: {
+              bitField0_ |= 0x00004000;
+              departmentData_ = input.readInt64();
+              break;
+            }
+            case 130: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00008000;
+              departmentTransport_ = bs;
+              break;
+            }
+            case 138: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00010000;
+              departmentCompany_ = bs;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Container_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Container_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              nhl.containing.networking.protobuf.InstructionProto.Container.class, nhl.containing.networking.protobuf.InstructionProto.Container.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Container> PARSER =
+        new com.google.protobuf.AbstractParser<Container>() {
+      public Container parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Container(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Container> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int OWNERNAME_FIELD_NUMBER = 1;
+    private java.lang.Object ownerName_;
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    public boolean hasOwnerName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    public java.lang.String getOwnerName() {
+      java.lang.Object ref = ownerName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          ownerName_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string ownerName = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOwnerNameBytes() {
+      java.lang.Object ref = ownerName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ownerName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONTAINERNUMBER_FIELD_NUMBER = 2;
+    private int containerNumber_;
+    /**
+     * <code>required int32 containerNumber = 2;</code>
+     */
+    public boolean hasContainerNumber() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 containerNumber = 2;</code>
+     */
+    public int getContainerNumber() {
+      return containerNumber_;
+    }
+
+    public static final int LENGTH_FIELD_NUMBER = 3;
+    private java.lang.Object length_;
+    /**
+     * <code>required string length = 3;</code>
+     */
+    public boolean hasLength() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required string length = 3;</code>
+     */
+    public java.lang.String getLength() {
+      java.lang.Object ref = length_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          length_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string length = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLengthBytes() {
+      java.lang.Object ref = length_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        length_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int WIDTH_FIELD_NUMBER = 4;
+    private java.lang.Object width_;
+    /**
+     * <code>required string width = 4;</code>
+     */
+    public boolean hasWidth() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required string width = 4;</code>
+     */
+    public java.lang.String getWidth() {
+      java.lang.Object ref = width_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          width_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string width = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getWidthBytes() {
+      java.lang.Object ref = width_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        width_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int HEIGHT_FIELD_NUMBER = 5;
+    private java.lang.Object height_;
+    /**
+     * <code>required string height = 5;</code>
+     */
+    public boolean hasHeight() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>required string height = 5;</code>
+     */
+    public java.lang.String getHeight() {
+      java.lang.Object ref = height_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          height_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string height = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getHeightBytes() {
+      java.lang.Object ref = height_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        height_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int X_FIELD_NUMBER = 6;
+    private int x_;
+    /**
+     * <code>required int32 x = 6;</code>
+     */
+    public boolean hasX() {
+      return ((bitField0_ & 0x00000020) == 0x00000020);
+    }
+    /**
+     * <code>required int32 x = 6;</code>
+     */
+    public int getX() {
+      return x_;
+    }
+
+    public static final int Y_FIELD_NUMBER = 7;
+    private int y_;
+    /**
+     * <code>required int32 y = 7;</code>
+     */
+    public boolean hasY() {
+      return ((bitField0_ & 0x00000040) == 0x00000040);
+    }
+    /**
+     * <code>required int32 y = 7;</code>
+     */
+    public int getY() {
+      return y_;
+    }
+
+    public static final int Z_FIELD_NUMBER = 8;
+    private int z_;
+    /**
+     * <code>required int32 z = 8;</code>
+     */
+    public boolean hasZ() {
+      return ((bitField0_ & 0x00000080) == 0x00000080);
+    }
+    /**
+     * <code>required int32 z = 8;</code>
+     */
+    public int getZ() {
+      return z_;
+    }
+
+    public static final int WEIGHTEMPTY_FIELD_NUMBER = 9;
+    private int weightEmpty_;
+    /**
+     * <code>required int32 weightEmpty = 9;</code>
+     */
+    public boolean hasWeightEmpty() {
+      return ((bitField0_ & 0x00000100) == 0x00000100);
+    }
+    /**
+     * <code>required int32 weightEmpty = 9;</code>
+     */
+    public int getWeightEmpty() {
+      return weightEmpty_;
+    }
+
+    public static final int WEIGHTLOADED_FIELD_NUMBER = 10;
+    private int weightLoaded_;
+    /**
+     * <code>required int32 weightLoaded = 10;</code>
+     */
+    public boolean hasWeightLoaded() {
+      return ((bitField0_ & 0x00000200) == 0x00000200);
+    }
+    /**
+     * <code>required int32 weightLoaded = 10;</code>
+     */
+    public int getWeightLoaded() {
+      return weightLoaded_;
+    }
+
+    public static final int CONTENT_FIELD_NUMBER = 11;
+    private java.lang.Object content_;
+    /**
+     * <code>required string content = 11;</code>
+     */
+    public boolean hasContent() {
+      return ((bitField0_ & 0x00000400) == 0x00000400);
+    }
+    /**
+     * <code>required string content = 11;</code>
+     */
+    public java.lang.String getContent() {
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          content_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string content = 11;</code>
+     */
+    public com.google.protobuf.ByteString
+        getContentBytes() {
+      java.lang.Object ref = content_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        content_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONTENTTYPE_FIELD_NUMBER = 12;
+    private java.lang.Object contentType_;
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    public boolean hasContentType() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    public java.lang.String getContentType() {
+      java.lang.Object ref = contentType_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          contentType_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string contentType = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getContentTypeBytes() {
+      java.lang.Object ref = contentType_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        contentType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CONENTDANGER_FIELD_NUMBER = 13;
+    private java.lang.Object conentDanger_;
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    public boolean hasConentDanger() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    public java.lang.String getConentDanger() {
+      java.lang.Object ref = conentDanger_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          conentDanger_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string conentDanger = 13;</code>
+     */
+    public com.google.protobuf.ByteString
+        getConentDangerBytes() {
+      java.lang.Object ref = conentDanger_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        conentDanger_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ISO_FIELD_NUMBER = 14;
+    private java.lang.Object iso_;
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    public boolean hasIso() {
+      return ((bitField0_ & 0x00002000) == 0x00002000);
+    }
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    public java.lang.String getIso() {
+      java.lang.Object ref = iso_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          iso_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string iso = 14;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIsoBytes() {
+      java.lang.Object ref = iso_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        iso_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DEPARTMENTDATA_FIELD_NUMBER = 15;
+    private long departmentData_;
+    /**
+     * <code>optional int64 departmentData = 15;</code>
+     */
+    public boolean hasDepartmentData() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    /**
+     * <code>optional int64 departmentData = 15;</code>
+     */
+    public long getDepartmentData() {
+      return departmentData_;
+    }
+
+    public static final int DEPARTMENTTRANSPORT_FIELD_NUMBER = 16;
+    private java.lang.Object departmentTransport_;
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    public boolean hasDepartmentTransport() {
+      return ((bitField0_ & 0x00008000) == 0x00008000);
+    }
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    public java.lang.String getDepartmentTransport() {
+      java.lang.Object ref = departmentTransport_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          departmentTransport_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string departmentTransport = 16;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDepartmentTransportBytes() {
+      java.lang.Object ref = departmentTransport_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        departmentTransport_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DEPARTMENTCOMPANY_FIELD_NUMBER = 17;
+    private java.lang.Object departmentCompany_;
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    public boolean hasDepartmentCompany() {
+      return ((bitField0_ & 0x00010000) == 0x00010000);
+    }
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    public java.lang.String getDepartmentCompany() {
+      java.lang.Object ref = departmentCompany_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          departmentCompany_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string departmentCompany = 17;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDepartmentCompanyBytes() {
+      java.lang.Object ref = departmentCompany_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        departmentCompany_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      ownerName_ = "";
+      containerNumber_ = 0;
+      length_ = "";
+      width_ = "";
+      height_ = "";
+      x_ = 0;
+      y_ = 0;
+      z_ = 0;
+      weightEmpty_ = 0;
+      weightLoaded_ = 0;
+      content_ = "";
+      contentType_ = "";
+      conentDanger_ = "";
+      iso_ = "";
+      departmentData_ = 0L;
+      departmentTransport_ = "";
+      departmentCompany_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasOwnerName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasContainerNumber()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasLength()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasWidth()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasHeight()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasX()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasY()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasZ()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasWeightEmpty()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasWeightLoaded()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasContent()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasContentType()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasConentDanger()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIso()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getOwnerNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, containerNumber_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getLengthBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getWidthBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getHeightBytes());
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeInt32(6, x_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeInt32(7, y_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        output.writeInt32(8, z_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeInt32(9, weightEmpty_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        output.writeInt32(10, weightLoaded_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        output.writeBytes(11, getContentBytes());
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeBytes(12, getContentTypeBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeBytes(13, getConentDangerBytes());
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        output.writeBytes(14, getIsoBytes());
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        output.writeInt64(15, departmentData_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        output.writeBytes(16, getDepartmentTransportBytes());
+      }
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+        output.writeBytes(17, getDepartmentCompanyBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getOwnerNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, containerNumber_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getLengthBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getWidthBytes());
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getHeightBytes());
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(6, x_);
+      }
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(7, y_);
+      }
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(8, z_);
+      }
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(9, weightEmpty_);
+      }
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(10, weightLoaded_);
+      }
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(11, getContentBytes());
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, getContentTypeBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(13, getConentDangerBytes());
+      }
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(14, getIsoBytes());
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(15, departmentData_);
+      }
+      if (((bitField0_ & 0x00008000) == 0x00008000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(16, getDepartmentTransportBytes());
+      }
+      if (((bitField0_ & 0x00010000) == 0x00010000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(17, getDepartmentCompanyBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static nhl.containing.networking.protobuf.InstructionProto.Container parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(nhl.containing.networking.protobuf.InstructionProto.Container prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code nhl.containing.networking.protobuf.Container}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:nhl.containing.networking.protobuf.Container)
+        nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Container_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Container_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                nhl.containing.networking.protobuf.InstructionProto.Container.class, nhl.containing.networking.protobuf.InstructionProto.Container.Builder.class);
+      }
+
+      // Construct using nhl.containing.networking.protobuf.InstructionProto.Container.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        ownerName_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        containerNumber_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        length_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        width_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        height_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        x_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        y_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000040);
+        z_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000080);
+        weightEmpty_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000100);
+        weightLoaded_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        content_ = "";
+        bitField0_ = (bitField0_ & ~0x00000400);
+        contentType_ = "";
+        bitField0_ = (bitField0_ & ~0x00000800);
+        conentDanger_ = "";
+        bitField0_ = (bitField0_ & ~0x00001000);
+        iso_ = "";
+        bitField0_ = (bitField0_ & ~0x00002000);
+        departmentData_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00004000);
+        departmentTransport_ = "";
+        bitField0_ = (bitField0_ & ~0x00008000);
+        departmentCompany_ = "";
+        bitField0_ = (bitField0_ & ~0x00010000);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return nhl.containing.networking.protobuf.InstructionProto.internal_static_nhl_containing_networking_protobuf_Container_descriptor;
+      }
+
+      public nhl.containing.networking.protobuf.InstructionProto.Container getDefaultInstanceForType() {
+        return nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance();
+      }
+
+      public nhl.containing.networking.protobuf.InstructionProto.Container build() {
+        nhl.containing.networking.protobuf.InstructionProto.Container result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public nhl.containing.networking.protobuf.InstructionProto.Container buildPartial() {
+        nhl.containing.networking.protobuf.InstructionProto.Container result = new nhl.containing.networking.protobuf.InstructionProto.Container(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.ownerName_ = ownerName_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.containerNumber_ = containerNumber_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.length_ = length_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.width_ = width_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.height_ = height_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
+        }
+        result.x_ = x_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
+          to_bitField0_ |= 0x00000040;
+        }
+        result.y_ = y_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
+          to_bitField0_ |= 0x00000080;
+        }
+        result.z_ = z_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
+          to_bitField0_ |= 0x00000100;
+        }
+        result.weightEmpty_ = weightEmpty_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
+          to_bitField0_ |= 0x00000200;
+        }
+        result.weightLoaded_ = weightLoaded_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
+          to_bitField0_ |= 0x00000400;
+        }
+        result.content_ = content_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        result.contentType_ = contentType_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.conentDanger_ = conentDanger_;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
+          to_bitField0_ |= 0x00002000;
+        }
+        result.iso_ = iso_;
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
+        }
+        result.departmentData_ = departmentData_;
+        if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
+          to_bitField0_ |= 0x00008000;
+        }
+        result.departmentTransport_ = departmentTransport_;
+        if (((from_bitField0_ & 0x00010000) == 0x00010000)) {
+          to_bitField0_ |= 0x00010000;
+        }
+        result.departmentCompany_ = departmentCompany_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof nhl.containing.networking.protobuf.InstructionProto.Container) {
+          return mergeFrom((nhl.containing.networking.protobuf.InstructionProto.Container)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(nhl.containing.networking.protobuf.InstructionProto.Container other) {
+        if (other == nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance()) return this;
+        if (other.hasOwnerName()) {
+          bitField0_ |= 0x00000001;
+          ownerName_ = other.ownerName_;
+          onChanged();
+        }
+        if (other.hasContainerNumber()) {
+          setContainerNumber(other.getContainerNumber());
+        }
+        if (other.hasLength()) {
+          bitField0_ |= 0x00000004;
+          length_ = other.length_;
+          onChanged();
+        }
+        if (other.hasWidth()) {
+          bitField0_ |= 0x00000008;
+          width_ = other.width_;
+          onChanged();
+        }
+        if (other.hasHeight()) {
+          bitField0_ |= 0x00000010;
+          height_ = other.height_;
+          onChanged();
+        }
+        if (other.hasX()) {
+          setX(other.getX());
+        }
+        if (other.hasY()) {
+          setY(other.getY());
+        }
+        if (other.hasZ()) {
+          setZ(other.getZ());
+        }
+        if (other.hasWeightEmpty()) {
+          setWeightEmpty(other.getWeightEmpty());
+        }
+        if (other.hasWeightLoaded()) {
+          setWeightLoaded(other.getWeightLoaded());
+        }
+        if (other.hasContent()) {
+          bitField0_ |= 0x00000400;
+          content_ = other.content_;
+          onChanged();
+        }
+        if (other.hasContentType()) {
+          bitField0_ |= 0x00000800;
+          contentType_ = other.contentType_;
+          onChanged();
+        }
+        if (other.hasConentDanger()) {
+          bitField0_ |= 0x00001000;
+          conentDanger_ = other.conentDanger_;
+          onChanged();
+        }
+        if (other.hasIso()) {
+          bitField0_ |= 0x00002000;
+          iso_ = other.iso_;
+          onChanged();
+        }
+        if (other.hasDepartmentData()) {
+          setDepartmentData(other.getDepartmentData());
+        }
+        if (other.hasDepartmentTransport()) {
+          bitField0_ |= 0x00008000;
+          departmentTransport_ = other.departmentTransport_;
+          onChanged();
+        }
+        if (other.hasDepartmentCompany()) {
+          bitField0_ |= 0x00010000;
+          departmentCompany_ = other.departmentCompany_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasOwnerName()) {
+          
+          return false;
+        }
+        if (!hasContainerNumber()) {
+          
+          return false;
+        }
+        if (!hasLength()) {
+          
+          return false;
+        }
+        if (!hasWidth()) {
+          
+          return false;
+        }
+        if (!hasHeight()) {
+          
+          return false;
+        }
+        if (!hasX()) {
+          
+          return false;
+        }
+        if (!hasY()) {
+          
+          return false;
+        }
+        if (!hasZ()) {
+          
+          return false;
+        }
+        if (!hasWeightEmpty()) {
+          
+          return false;
+        }
+        if (!hasWeightLoaded()) {
+          
+          return false;
+        }
+        if (!hasContent()) {
+          
+          return false;
+        }
+        if (!hasContentType()) {
+          
+          return false;
+        }
+        if (!hasConentDanger()) {
+          
+          return false;
+        }
+        if (!hasIso()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        nhl.containing.networking.protobuf.InstructionProto.Container parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (nhl.containing.networking.protobuf.InstructionProto.Container) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object ownerName_ = "";
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public boolean hasOwnerName() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public java.lang.String getOwnerName() {
+        java.lang.Object ref = ownerName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            ownerName_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOwnerNameBytes() {
+        java.lang.Object ref = ownerName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          ownerName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public Builder setOwnerName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        ownerName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public Builder clearOwnerName() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ownerName_ = getDefaultInstance().getOwnerName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string ownerName = 1;</code>
+       */
+      public Builder setOwnerNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        ownerName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int containerNumber_ ;
+      /**
+       * <code>required int32 containerNumber = 2;</code>
+       */
+      public boolean hasContainerNumber() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 containerNumber = 2;</code>
+       */
+      public int getContainerNumber() {
+        return containerNumber_;
+      }
+      /**
+       * <code>required int32 containerNumber = 2;</code>
+       */
+      public Builder setContainerNumber(int value) {
+        bitField0_ |= 0x00000002;
+        containerNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 containerNumber = 2;</code>
+       */
+      public Builder clearContainerNumber() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        containerNumber_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object length_ = "";
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public boolean hasLength() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public java.lang.String getLength() {
+        java.lang.Object ref = length_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            length_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getLengthBytes() {
+        java.lang.Object ref = length_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          length_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public Builder setLength(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        length_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public Builder clearLength() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        length_ = getDefaultInstance().getLength();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string length = 3;</code>
+       */
+      public Builder setLengthBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        length_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object width_ = "";
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public boolean hasWidth() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public java.lang.String getWidth() {
+        java.lang.Object ref = width_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            width_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getWidthBytes() {
+        java.lang.Object ref = width_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          width_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public Builder setWidth(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        width_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public Builder clearWidth() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        width_ = getDefaultInstance().getWidth();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string width = 4;</code>
+       */
+      public Builder setWidthBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        width_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object height_ = "";
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public boolean hasHeight() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public java.lang.String getHeight() {
+        java.lang.Object ref = height_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            height_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getHeightBytes() {
+        java.lang.Object ref = height_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          height_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public Builder setHeight(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        height_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public Builder clearHeight() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        height_ = getDefaultInstance().getHeight();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string height = 5;</code>
+       */
+      public Builder setHeightBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        height_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int x_ ;
+      /**
+       * <code>required int32 x = 6;</code>
+       */
+      public boolean hasX() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>required int32 x = 6;</code>
+       */
+      public int getX() {
+        return x_;
+      }
+      /**
+       * <code>required int32 x = 6;</code>
+       */
+      public Builder setX(int value) {
+        bitField0_ |= 0x00000020;
+        x_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 x = 6;</code>
+       */
+      public Builder clearX() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        x_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int y_ ;
+      /**
+       * <code>required int32 y = 7;</code>
+       */
+      public boolean hasY() {
+        return ((bitField0_ & 0x00000040) == 0x00000040);
+      }
+      /**
+       * <code>required int32 y = 7;</code>
+       */
+      public int getY() {
+        return y_;
+      }
+      /**
+       * <code>required int32 y = 7;</code>
+       */
+      public Builder setY(int value) {
+        bitField0_ |= 0x00000040;
+        y_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 y = 7;</code>
+       */
+      public Builder clearY() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        y_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int z_ ;
+      /**
+       * <code>required int32 z = 8;</code>
+       */
+      public boolean hasZ() {
+        return ((bitField0_ & 0x00000080) == 0x00000080);
+      }
+      /**
+       * <code>required int32 z = 8;</code>
+       */
+      public int getZ() {
+        return z_;
+      }
+      /**
+       * <code>required int32 z = 8;</code>
+       */
+      public Builder setZ(int value) {
+        bitField0_ |= 0x00000080;
+        z_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 z = 8;</code>
+       */
+      public Builder clearZ() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        z_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int weightEmpty_ ;
+      /**
+       * <code>required int32 weightEmpty = 9;</code>
+       */
+      public boolean hasWeightEmpty() {
+        return ((bitField0_ & 0x00000100) == 0x00000100);
+      }
+      /**
+       * <code>required int32 weightEmpty = 9;</code>
+       */
+      public int getWeightEmpty() {
+        return weightEmpty_;
+      }
+      /**
+       * <code>required int32 weightEmpty = 9;</code>
+       */
+      public Builder setWeightEmpty(int value) {
+        bitField0_ |= 0x00000100;
+        weightEmpty_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 weightEmpty = 9;</code>
+       */
+      public Builder clearWeightEmpty() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        weightEmpty_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int weightLoaded_ ;
+      /**
+       * <code>required int32 weightLoaded = 10;</code>
+       */
+      public boolean hasWeightLoaded() {
+        return ((bitField0_ & 0x00000200) == 0x00000200);
+      }
+      /**
+       * <code>required int32 weightLoaded = 10;</code>
+       */
+      public int getWeightLoaded() {
+        return weightLoaded_;
+      }
+      /**
+       * <code>required int32 weightLoaded = 10;</code>
+       */
+      public Builder setWeightLoaded(int value) {
+        bitField0_ |= 0x00000200;
+        weightLoaded_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 weightLoaded = 10;</code>
+       */
+      public Builder clearWeightLoaded() {
+        bitField0_ = (bitField0_ & ~0x00000200);
+        weightLoaded_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object content_ = "";
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public boolean hasContent() {
+        return ((bitField0_ & 0x00000400) == 0x00000400);
+      }
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public java.lang.String getContent() {
+        java.lang.Object ref = content_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            content_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public com.google.protobuf.ByteString
+          getContentBytes() {
+        java.lang.Object ref = content_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          content_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public Builder setContent(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        content_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public Builder clearContent() {
+        bitField0_ = (bitField0_ & ~0x00000400);
+        content_ = getDefaultInstance().getContent();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string content = 11;</code>
+       */
+      public Builder setContentBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000400;
+        content_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object contentType_ = "";
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public boolean hasContentType() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public java.lang.String getContentType() {
+        java.lang.Object ref = contentType_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            contentType_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public com.google.protobuf.ByteString
+          getContentTypeBytes() {
+        java.lang.Object ref = contentType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          contentType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public Builder setContentType(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        contentType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public Builder clearContentType() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        contentType_ = getDefaultInstance().getContentType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string contentType = 12;</code>
+       */
+      public Builder setContentTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        contentType_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object conentDanger_ = "";
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public boolean hasConentDanger() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public java.lang.String getConentDanger() {
+        java.lang.Object ref = conentDanger_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            conentDanger_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public com.google.protobuf.ByteString
+          getConentDangerBytes() {
+        java.lang.Object ref = conentDanger_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          conentDanger_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public Builder setConentDanger(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00001000;
+        conentDanger_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public Builder clearConentDanger() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        conentDanger_ = getDefaultInstance().getConentDanger();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string conentDanger = 13;</code>
+       */
+      public Builder setConentDangerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00001000;
+        conentDanger_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object iso_ = "";
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public boolean hasIso() {
+        return ((bitField0_ & 0x00002000) == 0x00002000);
+      }
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public java.lang.String getIso() {
+        java.lang.Object ref = iso_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            iso_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIsoBytes() {
+        java.lang.Object ref = iso_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          iso_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public Builder setIso(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00002000;
+        iso_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public Builder clearIso() {
+        bitField0_ = (bitField0_ & ~0x00002000);
+        iso_ = getDefaultInstance().getIso();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string iso = 14;</code>
+       */
+      public Builder setIsoBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00002000;
+        iso_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long departmentData_ ;
+      /**
+       * <code>optional int64 departmentData = 15;</code>
+       */
+      public boolean hasDepartmentData() {
+        return ((bitField0_ & 0x00004000) == 0x00004000);
+      }
+      /**
+       * <code>optional int64 departmentData = 15;</code>
+       */
+      public long getDepartmentData() {
+        return departmentData_;
+      }
+      /**
+       * <code>optional int64 departmentData = 15;</code>
+       */
+      public Builder setDepartmentData(long value) {
+        bitField0_ |= 0x00004000;
+        departmentData_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 departmentData = 15;</code>
+       */
+      public Builder clearDepartmentData() {
+        bitField0_ = (bitField0_ & ~0x00004000);
+        departmentData_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object departmentTransport_ = "";
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public boolean hasDepartmentTransport() {
+        return ((bitField0_ & 0x00008000) == 0x00008000);
+      }
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public java.lang.String getDepartmentTransport() {
+        java.lang.Object ref = departmentTransport_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            departmentTransport_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDepartmentTransportBytes() {
+        java.lang.Object ref = departmentTransport_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          departmentTransport_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public Builder setDepartmentTransport(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00008000;
+        departmentTransport_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public Builder clearDepartmentTransport() {
+        bitField0_ = (bitField0_ & ~0x00008000);
+        departmentTransport_ = getDefaultInstance().getDepartmentTransport();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string departmentTransport = 16;</code>
+       */
+      public Builder setDepartmentTransportBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00008000;
+        departmentTransport_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object departmentCompany_ = "";
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public boolean hasDepartmentCompany() {
+        return ((bitField0_ & 0x00010000) == 0x00010000);
+      }
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public java.lang.String getDepartmentCompany() {
+        java.lang.Object ref = departmentCompany_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            departmentCompany_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDepartmentCompanyBytes() {
+        java.lang.Object ref = departmentCompany_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          departmentCompany_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public Builder setDepartmentCompany(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00010000;
+        departmentCompany_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public Builder clearDepartmentCompany() {
+        bitField0_ = (bitField0_ & ~0x00010000);
+        departmentCompany_ = getDefaultInstance().getDepartmentCompany();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string departmentCompany = 17;</code>
+       */
+      public Builder setDepartmentCompanyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00010000;
+        departmentCompany_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.Container)
+    }
+
+    static {
+      defaultInstance = new Container(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:nhl.containing.networking.protobuf.Container)
+  }
+
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+      internal_static_nhl_containing_networking_protobuf_datablockSimulator_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_nhl_containing_networking_protobuf_Instruction_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_nhl_containing_networking_protobuf_Container_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_nhl_containing_networking_protobuf_Container_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3229,49 +6307,65 @@ public final class InstructionProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\021Instruction.proto\022\"nhl.containing.netw" +
-      "orking.protobuf\"\352\001\n\024InstructionDataBlock" +
-      "\022E\n\014instructions\030\001 \003(\0132/.nhl.containing." +
-      "networking.protobuf.Instruction\022J\n\trespo" +
-      "nses\030\002 \003(\01327.nhl.containing.networking.p" +
-      "rotobuf.InstructionResponse\022 \n\030recievedI" +
-      "nstructionUUIDs\030\003 \003(\t\022\035\n\025recievedRespons" +
-      "eUUIDs\030\004 \003(\t\"g\n\013Instruction\022\n\n\002id\030\001 \002(\t\022" +
-      "\027\n\017instructionType\030\002 \002(\005\022\014\n\004time\030\003 \001(\003\022\t" +
-      "\n\001a\030\004 \001(\005\022\t\n\001b\030\005 \001(\005\022\017\n\007message\030\006 \001(\t\"I\n",
-      "\023InstructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\rinst" +
-      "ructionId\030\002 \002(\t\022\017\n\007message\030\003 \001(\tB\022B\020Inst" +
-      "ructionProto"
+      "orking.protobuf\"\350\001\n\022datablockSimulator\022E" +
+      "\n\014instructions\030\001 \003(\0132/.nhl.containing.ne" +
+      "tworking.protobuf.Instruction\022J\n\trespons" +
+      "es\030\002 \003(\01327.nhl.containing.networking.pro" +
+      "tobuf.InstructionResponse\022 \n\030recievedIns" +
+      "tructionUUIDs\030\003 \003(\t\022\035\n\025recievedResponseU" +
+      "UIDs\030\004 \003(\t\"\302\001\n\013Instruction\022\n\n\002id\030\001 \002(\t\022\027" +
+      "\n\017instructionType\030\002 \002(\005\022\014\n\004time\030\003 \001(\003\022\t\n" +
+      "\001a\030\004 \001(\005\022\t\n\001b\030\005 \001(\005\022\017\n\007message\030\006 \001(\t\022\026\n\016",
+      "arrivalCompany\030\007 \001(\t\022A\n\ncontainers\030\010 \003(\013" +
+      "2-.nhl.containing.networking.protobuf.Co" +
+      "ntainer\"I\n\023InstructionResponse\022\n\n\002id\030\001 \002" +
+      "(\t\022\025\n\rinstructionId\030\002 \002(\t\022\017\n\007message\030\003 \001" +
+      "(\t\"\313\002\n\tContainer\022\021\n\townerName\030\001 \002(\t\022\027\n\017c" +
+      "ontainerNumber\030\002 \002(\005\022\016\n\006length\030\003 \002(\t\022\r\n\005" +
+      "width\030\004 \002(\t\022\016\n\006height\030\005 \002(\t\022\t\n\001x\030\006 \002(\005\022\t" +
+      "\n\001y\030\007 \002(\005\022\t\n\001z\030\010 \002(\005\022\023\n\013weightEmpty\030\t \002(" +
+      "\005\022\024\n\014weightLoaded\030\n \002(\005\022\017\n\007content\030\013 \002(\t" +
+      "\022\023\n\013contentType\030\014 \002(\t\022\024\n\014conentDanger\030\r ",
+      "\002(\t\022\013\n\003iso\030\016 \002(\t\022\026\n\016departmentData\030\017 \001(\003" +
+      "\022\033\n\023departmentTransport\030\020 \001(\t\022\031\n\021departm" +
+      "entCompany\030\021 \001(\tB\022B\020InstructionProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-        public com.google.protobuf.ExtensionRegistry assignDescriptors(
-            com.google.protobuf.Descriptors.FileDescriptor root) {
-          descriptor = root;
-          internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor =
-            getDescriptor().getMessageTypes().get(0);
-          internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_nhl_containing_networking_protobuf_InstructionDataBlock_descriptor,
-              new java.lang.String[] { "Instructions", "Responses", "RecievedInstructionUUIDs", "RecievedResponseUUIDs", });
-          internal_static_nhl_containing_networking_protobuf_Instruction_descriptor =
-            getDescriptor().getMessageTypes().get(1);
-          internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_nhl_containing_networking_protobuf_Instruction_descriptor,
-              new java.lang.String[] { "Id", "InstructionType", "Time", "A", "B", "Message", });
-          internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor =
-            getDescriptor().getMessageTypes().get(2);
-          internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor,
-              new java.lang.String[] { "Id", "InstructionId", "Message", });
-          return null;
-        }
-      };
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
+        };
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
+    internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_nhl_containing_networking_protobuf_datablockSimulator_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_nhl_containing_networking_protobuf_datablockSimulator_descriptor,
+        new java.lang.String[] { "Instructions", "Responses", "RecievedInstructionUUIDs", "RecievedResponseUUIDs", });
+    internal_static_nhl_containing_networking_protobuf_Instruction_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_nhl_containing_networking_protobuf_Instruction_descriptor,
+        new java.lang.String[] { "Id", "InstructionType", "Time", "A", "B", "Message", "ArrivalCompany", "Containers", });
+    internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor,
+        new java.lang.String[] { "Id", "InstructionId", "Message", });
+    internal_static_nhl_containing_networking_protobuf_Container_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_nhl_containing_networking_protobuf_Container_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_nhl_containing_networking_protobuf_Container_descriptor,
+        new java.lang.String[] { "OwnerName", "ContainerNumber", "Length", "Width", "Height", "X", "Y", "Z", "WeightEmpty", "WeightLoaded", "Content", "ContentType", "ConentDanger", "Iso", "DepartmentData", "DepartmentTransport", "DepartmentCompany", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -1,9 +1,11 @@
 package nhl.containing.controller.simulation;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /**
- *
+ * Information about a shipment.
+ * 
  * @author henkmollema
  */
 public class Shipment
@@ -34,4 +36,13 @@ public class Shipment
      * Indicates whether the shipment is processed by the controller.
      */
     public boolean processed;
+
+    public static class ShipmentDateComparator implements Comparator<Shipment>
+    {
+        @Override
+        public int compare(Shipment o1, Shipment o2)
+        {
+            return o1.date.before(o2.date) ? -1 : o1.date.equals(o2.date) ? 0 : 1;
+        }
+    }
 }

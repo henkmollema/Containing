@@ -25,6 +25,22 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath
 
 /*
  * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (Ljava/awt/Point;Z)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied
+  (JNIEnv *, jclass, jobject, jboolean);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    getOccupied
+ * Signature: (Ljava/awt/Point;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_nhl_containing_controller_PathFinder_getOccupied
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
  * Method:    cleanup
  * Signature: ()V
  */

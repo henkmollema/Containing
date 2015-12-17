@@ -12,11 +12,14 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import nhl.containing.simulator.game.Crane;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
+import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
@@ -207,18 +210,16 @@ public final class WorldCreator {
     
     public static Vehicle createLorry(Vector3f from, Vector3f to) {
         Vehicle v = new Vehicle(
+                new Point3(1, 1, 1),
                 5.0f,// speed
-                "", // front model
                 "Sietse/Truck/Mater.obj", // holder model
                 1.0f, // front scale
-                5.0f, // holder scale
-                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
-                new Vector3f(2.5f, 0.0f, 0.0f) // holder offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         
         v.from = new Vector3f[] { new Vector3f(from), new Vector3f(to) };
         v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
-        v.m_holderSpatial.setMaterial(v.m_holderMaterial = MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
+        v.m_frontSpatial.setMaterial(v.m_frontMaterial = MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
         v.state(Vehicle.VehicleState.Disposed);
         v.containerOffset(new Vector3f(0.0f, -5.0f, 60.0f));
         
@@ -232,32 +233,48 @@ public final class WorldCreator {
      * @return 
      */
     public static Vehicle createTrain(Vector3f from, Vector3f to) {
+        final int size = 30;
+        
         Vehicle v = new Vehicle(
+                new Point3(1, 1, size),
                 10.0f,//speed
                 "Sietse/Train/Thomas_Train.obj", // front model
-                "henk/Container/Container.obj", // holder model
-                4.0f, // front scale
-                1.0f, // holder scale
-                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
-                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+                7.0f, // front scale
+                new Vector3f(World.containerSize().x, -10, 40 + 2 * size * World.containerSize().z) // front offset
         );
         v.m_frontSpatial.setMaterial(v.m_frontMaterial = MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
+        v.state(Vehicle.VehicleState.Disposed);
         
         v.from = new Vector3f[] { new Vector3f(from), new Vector3f(to) };
         v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
+        v.path().setPosition(from);
+        
+        for (int i = 0; i < 12; i++) {
+            Spatial s = Main.assets().loadModel("models/elo/low/train/wagon.j3o");
+            s.setMaterial(MaterialCreator.unshadedRandom());
+            s.scale(4.0f);
+            
+            v.attachChild(s);
+            
+            Vector3f off = World.containerSize();
+            off.y -= 7.5f;
+            off.z *= (0.8 + i) * 5;
+            
+            s.setLocalTranslation(off);
+            s.setLocalRotation(Utilities.euler2Quaternion(new Vector3f(0.0f, 0.0f, 90.0f)));
+            System.out.println(s.getLocalRotation().toString());
+        }
         
         return v;
     }
     
     public static Vehicle createInland(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
+                new Point3(),
                 10.0f,// speed
-                "", // front model
-                "", // holder model
+                "henk/Voertuigen/seaShip.obj", // front model
                 1.0f, // front scale
-                1.0f, // holder scale
-                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
-                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         
         v.from = from;
@@ -267,13 +284,11 @@ public final class WorldCreator {
     }
     public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
+                new Point3(),
                 1.0f,// speed
                 "", // front model
-                "", // holder model
                 1.0f, // front scale
-                1.0f, // holder scale
-                new Vector3f(0.0f, 0.0f, 0.0f), // front offset
-                new Vector3f(0.0f, 0.0f, 0.0f) // holder offset
+                new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         
         v.from = from;

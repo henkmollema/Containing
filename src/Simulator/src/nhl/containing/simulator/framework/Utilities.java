@@ -119,5 +119,11 @@ public final class Utilities {
         
         return __new;
     }
-
+    
+    public static Quaternion euler2Quaternion(Vector3f v) {
+        Quaternion q = new Quaternion();
+        return q.fromAngles(v.x * Mathf.Deg2Rad, v.y * Mathf.Deg2Rad, v.x * Mathf.Deg2Rad);
+    }
+    
+    
 }

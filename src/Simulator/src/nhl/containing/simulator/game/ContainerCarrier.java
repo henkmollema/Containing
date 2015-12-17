@@ -47,7 +47,7 @@ public class ContainerCarrier extends Transform {
      * Constructor
      */
     public ContainerCarrier() {
-        super();
+        super(null);
         initSpots(Point3.one());
     }
     /**

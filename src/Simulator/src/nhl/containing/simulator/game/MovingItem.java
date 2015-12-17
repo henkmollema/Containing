@@ -50,6 +50,10 @@ public class MovingItem extends ContainerCarrier {
         this.m_empySpeed = emptySpeed;
         this.m_loadedSpeed = loadedSpeed;
     }
+    public MovingItem(Point3 size, float speed) {
+        super(null, size);
+        this.m_empySpeed = this.m_loadedSpeed = speed;
+    }
     
     /**
      * Set path

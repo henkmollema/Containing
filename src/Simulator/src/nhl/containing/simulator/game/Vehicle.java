@@ -10,6 +10,7 @@ import com.jme3.scene.Spatial;
 import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
+import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
@@ -27,16 +28,14 @@ public class Vehicle extends MovingItem {
         ToOut
     }
     
+    private boolean m_initialized = false;
     private final static String BASE_MODEL_PATH = "models/";
     
     public Spatial m_frontSpatial;
-    public Spatial m_holderSpatial;
     
     public Material m_frontMaterial;
-    public Material m_holderMaterial;
     
     private Vector3f m_frontOffset;
-    private Vector3f m_holderOffset;
     
     public Vector3f[] from;
     public Vector3f[] to;
@@ -44,14 +43,13 @@ public class Vehicle extends MovingItem {
     private VehicleState m_currentState;
     
     
-    public Vehicle(float speed, String frontModel, String holderModel, float frontScale, float holderScale, Vector3f frontOffset, Vector3f holderOffset) {
-        super(null, speed, speed);
-        init(frontModel, holderModel, frontScale, holderScale, frontOffset, holderOffset);
+    public Vehicle(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
+        super(size, speed);
+        init(frontModel, frontScale, frontOffset);
     }
     
-    private void init(String frontModel, String holderModel, float frontScale, float holderScale, Vector3f frontOffset, Vector3f holderOffset) {
+    private void init(String frontModel, float frontScale, Vector3f frontOffset) {
         m_frontOffset = frontOffset == null ? Utilities.zero() : frontOffset;
-        m_holderOffset = holderOffset == null ? Utilities.zero() : holderOffset;
         
         if (!Utilities.nullOrEmpty(frontModel)) {
             if (m_frontMaterial == null)
@@ -63,15 +61,6 @@ public class Vehicle extends MovingItem {
             this.attachChild(m_frontSpatial);
             m_frontSpatial.setLocalTranslation(m_frontOffset);
         }
-        
-        if (m_holderMaterial == null) {
-            m_holderMaterial = MaterialCreator.unshadedRandom();
-        }
-        m_holderSpatial = Main.assets().loadModel(BASE_MODEL_PATH + holderModel);
-        m_holderSpatial.setMaterial(m_holderMaterial);
-        m_holderSpatial.scale(holderScale);
-        this.attachChild(m_holderSpatial);
-        m_holderSpatial.setLocalTranslation(m_holderOffset);
         
         // Init path
         path(new Path());
@@ -104,6 +93,10 @@ public class Vehicle extends MovingItem {
     }
     
     public void update() {
+        if (!m_initialized) {
+            m_initialized = true;
+            return;
+        }
         
         switch (m_currentState) {
             case ToLoad:

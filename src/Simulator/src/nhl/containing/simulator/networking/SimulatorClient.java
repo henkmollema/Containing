@@ -157,7 +157,7 @@ public class SimulatorClient implements Runnable
             }
 
             p("result is " + result);
-            return false;
+            return true;
         }
         catch (IOException ex)
         {
@@ -180,22 +180,6 @@ public class SimulatorClient implements Runnable
                 .build();
         
         controllerCom.sendInstruction(timeUpdate);
-    }
-    
-    public void sendTimeScale(float tScale)
-    {
-        /*try
-	{
-            OutputStream out = _socket.getOutputStream();
-            byte[] mesg = ByteBuffer.allocate(64).putDouble(Time.time()).array();
-            byte[] resp = controllerCom.processInput(mesg);//Time.time();// send time to simulator
-            //StreamHelper.writeMessage(output, resp);
-	}
-	catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }*/
-        
     }
 
     private boolean instructionLoop()
@@ -275,6 +259,6 @@ public class SimulatorClient implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("Simulator: " + s);
+        System.out.println("Simulator " +System.currentTimeMillis() +" :" + s);
     }
 }

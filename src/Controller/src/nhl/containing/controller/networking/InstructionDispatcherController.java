@@ -51,35 +51,8 @@ public class InstructionDispatcherController implements InstructionDispatcher
                 break;
 
             case InstructionType.CLIENT_TIME_UPDATE:
-                futures.add(executorService.submit(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        // Time sent by the client.
-                        long time = inst.getTime();
-                        System.out.println("Received client time: " + time);
-
-                        // Get the first shipment from the simulation context.
-                        SimulationContext context = Simulator.instance().getController().getContext();
-                        Shipment first = context.getFirstShipment();
-
-                        // Determine the current date/time.
-                        Date date = new Date(first.date.getTime() + time);
-                        
-                        // Get shipments by date.
-                        //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
-                        for (Shipment s : context.getShipmentsByDate(date))
-                        {
-                            s.processed = true;
-                            System.out.println("Process " + s.key);
-                            Simulator.instance().server().simCom().sendInstruction(inst);
-                            // todo: create proto for shipment.
-                        }
-                    }
-                }));
+                futures.add(executorService.submit(new Tickhandler(inst)));
                 break;
-
             //More instruction types here..
         }
     }

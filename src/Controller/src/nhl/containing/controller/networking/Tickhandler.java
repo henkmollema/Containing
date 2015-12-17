@@ -5,12 +5,14 @@
  */
 package nhl.containing.controller.networking;
 
+import java.util.Date;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
+import nhl.containing.controller.simulation.SimulationContext;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -23,16 +25,34 @@ import nhl.containing.networking.protocol.CommunicationProtocol;
  */
 public class Tickhandler implements Runnable
 {
-    private Instruction _insInstruction;
+    private Instruction _instruction;
     public Tickhandler(Instruction instruction)
     {
-        _insInstruction = instruction;
+        _instruction = instruction;
     }
 
     @Override
     public void run()
     {
-        
+        // Time sent by the client.
+        long time = _instruction.getTime();
+        System.out.println("Received client time: " + time);
+
+        // Get the first shipment from the simulation context.
+        SimulationContext context = Simulator.instance().getController().getContext();
+        Shipment first = context.getFirstShipment();
+
+        // Determine the current date/time.
+        Date date = new Date(first.date.getTime() + time);
+
+                        // Get shipments by date.
+        //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
+        for (Shipment s : context.getShipmentsByDate(date))
+        {
+            s.processed = true;
+            System.out.println("Process " + s.key);
+            createProto(s);
+        }
     }
     
     

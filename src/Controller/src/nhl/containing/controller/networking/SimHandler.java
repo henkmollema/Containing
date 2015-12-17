@@ -117,7 +117,7 @@ public class SimHandler implements Runnable
             {
                 p("error");
                 StreamHelper.writeString(_socket.getOutputStream(), "error");
-                return true;
+                return false;
             }
         }
         catch (Exception ex)

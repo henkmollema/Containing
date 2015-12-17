@@ -1,15 +1,12 @@
 package nhl.containing.controller.networking;
 
-import java.util.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import nhl.containing.controller.Simulator;
-import nhl.containing.controller.simulation.*;
 import nhl.containing.networking.protobuf.*;
-import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.*;
 
 /**

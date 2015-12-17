@@ -19,16 +19,23 @@ import nhl.containing.networking.protocol.InstructionType;
 
 /**
  * Handles the App requests
+ *
  * @author Jens
  */
-public class AppHandler implements Runnable{
-    
+public class AppHandler implements Runnable
+{
+
     public boolean shouldRun = true;
     private Socket socket;
     private Server server;
-    
+    private ContainerCategory[] categories = new ContainerCategory[]
+    {
+        ContainerCategory.TRAIN, ContainerCategory.TRUCK, ContainerCategory.INLINESHIP, ContainerCategory.SEASHIP, ContainerCategory.STORAGE, ContainerCategory.AGV, ContainerCategory.REMAINDER
+    };
+
     /**
      * The constructor
+     *
      * @param _server The server
      * @param _socket the socket where the app listens on
      */
@@ -37,22 +44,23 @@ public class AppHandler implements Runnable{
         socket = _socket;
         server = _server;
     }
-    
+
     /**
      * Send Okay message
+     *
      * @return true when succeeded, else false
      */
-    public boolean initAppData() {
+    public boolean initAppData()
+    {
         try
         {
             Instruction okayMessage = Instruction.newBuilder()
-                .setId(CommunicationProtocol.newUUID())
-                .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
-                .build();
+                    .setId(CommunicationProtocol.newUUID())
+                    .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
+                    .build();
             StreamHelper.writeMessage(socket.getOutputStream(), okayMessage.toByteArray());
             return true;
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             ex.printStackTrace();
             return false;
@@ -60,20 +68,25 @@ public class AppHandler implements Runnable{
     }
 
     /**
-     *  The run function
+     * The run function
      */
     @Override
-    public void run() {
+    public void run()
+    {
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
-            if (initAppData()) {
-                if (appDataLoop()) {
+            if (initAppData())
+            {
+                if (appDataLoop())
+                {
                     p("Closed peacefully");
-                } else {
+                } else
+                {
                     p("Lost connection during instructionloop");
                     break;
                 }
-            } else {
+            } else
+            {
                 p("Error while initialising app connection..");
                 break;
             }
@@ -82,42 +95,49 @@ public class AppHandler implements Runnable{
         try //Clean 
         {
             socket.close();
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             ex.printStackTrace();
         }
 
         //isAppConnected = false;
     }
-    
+
     /**
      * Gets the requests and sends the requested data
+     *
      * @return false when Error, otherwise true
      */
     public boolean appDataLoop()
     {
         p("Starting appLoop");
-        try {
+        try
+        {
             InputStream input = socket.getInputStream();
             OutputStream output = socket.getOutputStream();
-            while (shouldRun) {
+            while (shouldRun)
+            {
                 byte[] data = StreamHelper.readByteArray(input);
                 byte[] response = processInstruction(data);
                 StreamHelper.writeMessage(output, response); //Send
             }
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
             return false;
         }
 
         return true;
     }
-    
+
     /**
-     * parses the instruction class from a byte array and serializes the right information to an byte array
+     * parses the instruction class from a byte array and serializes the right
+     * information to an byte array
+     *
      * @param inst instruction byte array
      * @return information byte array
      */
-    private byte [] processInstruction(byte[] inst)
+    private byte[] processInstruction(byte[] inst)
     {
         SimulatorController controller = server.getSimulator().getController();
         SimulationContext context = controller.getContext();
@@ -126,49 +146,81 @@ public class AppHandler implements Runnable{
         try
         {
             instruction = Instruction.parseFrom(inst);
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             return builder.build().toByteArray();
         }
         ContainerGraphData.Builder b = ContainerGraphData.newBuilder();
         //check timing
+        int[] numbers;
         switch (instruction.getA())
         {
             case 0:
-                //actual graph [WIP]
+
                 break;
-            case 1: case 2:
+            case 1:
+            case 2:
                 //in and out graph
+                numbers = new int[5];
                 boolean incoming = instruction.getA() == 1;
-                b.setCategory(ContainerCategory.TRAIN);
-                b.setAantal(0);
-                for(Train train : context.getTrains(incoming))
+                for (Shipment shipment : context.getShipments())
                 {
-                    b.setAantal(b.getAantal() + train.containers.size());
+                    if (shipment.processed && shipment.incoming == incoming)
+                    {
+                        int type;
+                        if (shipment.carrier instanceof Train)
+                        {
+                            type = 0;
+                        } else if (shipment.carrier instanceof Truck)
+                        {
+                            type = 1;
+                        } else if (shipment.carrier instanceof InlandShip)
+                        {
+                            type = 2;
+                        } else if (shipment.carrier instanceof SeaShip)
+                        {
+                            type = 3;
+                        } else
+                        {
+                            type = 4;
+                        }
+                        numbers[type] += shipment.carrier.containers.size();
+                    }
                 }
-                builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.TRUCK);
-                b.setAantal(0);
-                for(Truck truck : context.getTrucks(incoming))
+                for (int i = 0; i < 4; i++)
                 {
-                    b.setAantal(b.getAantal() + truck.containers.size());
+                    b.setCategory(categories[i]);
+                    b.setAantal(numbers[i]);
+                    builder.addGraphs(b.build());
                 }
-                builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.INLINESHIP);
-                b.setAantal(0);
-                for(InlandShip inlineShip : context.getInlandShips(incoming))
-                {
-                    b.setAantal(b.getAantal() + inlineShip.containers.size());
-                }
-                builder.addGraphs(b.build());
-                b.setCategory(ContainerCategory.SEASHIP);
-                b.setAantal(0);
-                for(SeaShip seaShip : context.getSeaShips(incoming))
-                {
-                    b.setAantal(b.getAantal() + seaShip.containers.size());
-                }
-               builder.addGraphs(b.build());
+//                b.setCategory(ContainerCategory.TRAIN);
+//                b.setAantal(0);
+//                for(Train train : context.getTrains(incoming))
+//                {
+//                    b.setAantal(b.getAantal() + train.containers.size());
+//                }
+//                builder.addGraphs(b.build());
+//                b.setCategory(ContainerCategory.TRUCK);
+//                b.setAantal(0);
+//                for(Truck truck : context.getTrucks(incoming))
+//                {
+//                    b.setAantal(b.getAantal() + truck.containers.size());
+//                }
+//                builder.addGraphs(b.build());
+//                b.setCategory(ContainerCategory.INLINESHIP);
+//                b.setAantal(0);
+//                for(InlandShip inlineShip : context.getInlandShips(incoming))
+//                {
+//                    b.setAantal(b.getAantal() + inlineShip.containers.size());
+//                }
+//                builder.addGraphs(b.build());
+//                b.setCategory(ContainerCategory.SEASHIP);
+//                b.setAantal(0);
+//                for(SeaShip seaShip : context.getSeaShips(incoming))
+//                {
+//                    b.setAantal(b.getAantal() + seaShip.containers.size());
+//                }
+//               builder.addGraphs(b.build());
                 break;
             case 3:
                 //unkown graph [WIP]
@@ -177,13 +229,32 @@ public class AppHandler implements Runnable{
                 //containerlist
                 ContainerDataListItem.Builder itemBuilder = ContainerDataListItem.newBuilder();
                 Collection<ShippingContainer> containers = context.getAllContainers();
-                ContainerCategory category = ContainerCategory.SEASHIP; //change to actual
-                for(ShippingContainer container : containers)
+                for (Shipment shipment : context.getShipments())
                 {
-                    itemBuilder.setCategory(category);
-                    itemBuilder.setEigenaar(container.ownerName);
-                    itemBuilder.setID(container.containerNumber);
-                    builder.addItems(itemBuilder.build());
+                    if (shipment.processed)
+                    {
+                        ContainerCategory category = categories[6];
+                        if (shipment.carrier instanceof Train)
+                        {
+                            category = categories[0];
+                        } else if (shipment.carrier instanceof Truck)
+                        {
+                            category = categories[1];
+                        } else if (shipment.carrier instanceof InlandShip)
+                        {
+                            category = categories[2];
+                        } else if (shipment.carrier instanceof SeaShip)
+                        {
+                            category = categories[3];
+                        }
+                        for (ShippingContainer container : shipment.carrier.containers)
+                        {
+                            itemBuilder.setCategory(category);
+                            itemBuilder.setEigenaar(container.ownerName);
+                            itemBuilder.setID(container.containerNumber);
+                            builder.addItems(itemBuilder.build());
+                        }
+                    }
                 }
                 break;
             case 5:
@@ -207,40 +278,49 @@ public class AppHandler implements Runnable{
                     infoBuilder.setVervoerVertrek(getCategory(container.departureShipment.carrier));
                     ContainerInfo test = infoBuilder.build();
                     builder.setContainer(test);
-                }
-                catch(Exception e){
+                } catch (Exception e)
+                {
                     e.printStackTrace();
                 }
                 break;
         }
         return builder.build().toByteArray();
     }
-    
+
     /**
      * Gets the right containercategory by a specific type of carrier
+     *
      * @param carrier The carrier
      * @return the container category
      */
     private ContainerCategory getCategory(Carrier carrier)
     {
-        if(carrier instanceof InlandShip)
+        if (carrier instanceof InlandShip)
+        {
             return ContainerCategory.INLINESHIP;
-        else if(carrier instanceof SeaShip)
+        } else if (carrier instanceof SeaShip)
+        {
             return ContainerCategory.SEASHIP;
-        else if(carrier instanceof Train)
+        } else if (carrier instanceof Train)
+        {
             return ContainerCategory.TRAIN;
-        else if(carrier instanceof Truck)
+        } else if (carrier instanceof Truck)
+        {
             return ContainerCategory.TRUCK;
-        else
+        } else
+        {
             return ContainerCategory.REMAINDER;
+        }
     }
-    
+
     /**
      * Prints a string
+     *
      * @param s the string to print
      */
-    private static void p(String s) {
+    private static void p(String s)
+    {
         System.out.println("Controller: " + s);
     }
-    
+
 }

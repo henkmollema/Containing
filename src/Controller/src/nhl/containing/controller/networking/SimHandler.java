@@ -7,9 +7,6 @@ package nhl.containing.controller.networking;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
-import nhl.containing.controller.Time;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
@@ -27,7 +24,6 @@ public class SimHandler implements Runnable
     public boolean shouldRun = true;
     private Socket _socket;
     private Server _server;
-    private Timer _timer;
     private InstructionDispatcher _instructionDispatcher;
     private CommunicationProtocol _comProtocol;
 
@@ -160,14 +156,5 @@ public class SimHandler implements Runnable
     private static void p(String s)
     {
         System.out.println("Controller: " + s);
-    }
-
-    private class TimeUpdater extends TimerTask
-    {
-        @Override
-        public void run()
-        {
-            Time._updateTime(5.0 / 1000.0);
-        }
     }
 }

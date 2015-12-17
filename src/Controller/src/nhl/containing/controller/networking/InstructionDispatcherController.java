@@ -1,7 +1,12 @@
 package nhl.containing.controller.networking;
 
 import java.nio.ByteBuffer;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import nhl.containing.controller.Simulator;
 import nhl.containing.networking.protobuf.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
@@ -15,10 +20,14 @@ public class InstructionDispatcherController implements InstructionDispatcher {
 
     Simulator _sim;
     CommunicationProtocol _com;
+    private ExecutorService executorService;
+    private Queue<Future> futures;
 
     public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
         _sim = sim;
         _com = com;
+        executorService = Executors.newSingleThreadExecutor();
+        futures = new LinkedList<>();
     }
 
     /**
@@ -39,8 +48,15 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 break;
                 
             case InstructionType.CLIENT_TIME_UPDATE:
-                System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getDouble());
+                System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getFloat());
                 //Here react on the new time, call the tick function or something like that.
+                futures.add(executorService.submit(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                }));
                 break;
 
             //More instruction types here..

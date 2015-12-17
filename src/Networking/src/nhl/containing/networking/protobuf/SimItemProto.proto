@@ -3,11 +3,17 @@ package nhl.containing.networking.protobuf;
 option java_outer_classname = "SimulationItemProto";
 
 message SimulationItem {
-    required string id = 1;
+    required int64 id = 1;
 
     enum SimulationItemType {
         CRANE = 0;
-        PLATFORM = 1;        
+        PLATFORM = 1;  
+		NODES = 2;
+		TRAIN = 3;
+		SEASHIP = 4;
+		INLANDSHIP = 5;
+		LORRY = 6;
+		AGV = 7;		
     }
     required SimulationItemType type = 2;
     optional float x = 3;

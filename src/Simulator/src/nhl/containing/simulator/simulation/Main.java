@@ -19,6 +19,8 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.*;
 
 /**
@@ -35,6 +37,11 @@ public class Main extends SimpleApplication {
     private static Main m_instance;
     public static Main instance() {
         return m_instance;
+    }
+    
+    private static ExecutorService m_executor;
+    public static ExecutorService executorService() {
+        return m_executor;
     }
     
     // Time
@@ -107,6 +114,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         m_instance = this; // init singleton
+        m_executor = Executors.newSingleThreadExecutor();
         initBehaviours();
         flyCam.setEnabled(false);
     }
@@ -254,10 +262,10 @@ public class Main extends SimpleApplication {
         app.start();
         
         //Init networking
-        app._simClient = new SimulatorClient();
+        _simClient = new SimulatorClient();
         app._dispatcher = new InstructionDispatcherSimulator(app);
-        app._simClient.controllerCom().setDispatcher(app._dispatcher);
-        Thread networkThread = new Thread(app._simClient);
+        _simClient.controllerCom().setDispatcher(app._dispatcher);
+        Thread networkThread = new Thread(_simClient);
         networkThread.setDaemon(true);
         networkThread.setName("Network Simulator");
         networkThread.start();

@@ -60,14 +60,16 @@ public class SimulatorClient implements Runnable
         shouldRun = false;
     }
     
-    public void addSimulationItem(String id,int type, Vector3f position)
+    public void addSimulationItem(long id,SimulationItem.SimulationItemType type, Vector3f position)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(id);
-        builder.setType(SimulationItem.SimulationItemType.values()[type]);
-        builder.setX(position.x);
-        builder.setY(position.y);
-        builder.setZ(position.z);
+        builder.setType(type);
+        if(position != null){
+            builder.setX(position.x);
+            builder.setY(position.y);
+            builder.setZ(position.z);
+        }
         metaList.addItems(builder.build());
     }
     
@@ -170,7 +172,7 @@ public class SimulatorClient implements Runnable
     public static void sendTimeUpdate()
     {
         byte[] timeBytes = new byte[8];
-        ByteBuffer.wrap(timeBytes).putDouble(Time.time());
+        ByteBuffer.wrap(timeBytes).putFloat(Time.time());
         ByteString bs = ByteString.copyFrom(timeBytes);
         
         Instruction timeUpdate = Instruction.newBuilder()

@@ -20,7 +20,7 @@ public class SimulatorController
         _db = new Database();
     }
 
-    public SimulationContext getSimulationContext()
+    public SimulationContext getContext()
     {
         return _context;
     }

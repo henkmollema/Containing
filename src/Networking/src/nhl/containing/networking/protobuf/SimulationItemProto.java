@@ -13,18 +13,13 @@ public final class SimulationItemProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required string id = 1;</code>
+     * <code>required int64 id = 1;</code>
      */
     boolean hasId();
     /**
-     * <code>required string id = 1;</code>
+     * <code>required int64 id = 1;</code>
      */
-    java.lang.String getId();
-    /**
-     * <code>required string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
+    long getId();
 
     /**
      * <code>required .nhl.containing.networking.protobuf.SimulationItem.SimulationItemType type = 2;</code>
@@ -114,10 +109,9 @@ public final class SimulationItemProto {
               }
               break;
             }
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 8: {
               bitField0_ |= 0x00000001;
-              id_ = bs;
+              id_ = input.readInt64();
               break;
             }
             case 16: {
@@ -198,6 +192,30 @@ public final class SimulationItemProto {
        * <code>PLATFORM = 1;</code>
        */
       PLATFORM(1, 1),
+      /**
+       * <code>NODES = 2;</code>
+       */
+      NODES(2, 2),
+      /**
+       * <code>TRAIN = 3;</code>
+       */
+      TRAIN(3, 3),
+      /**
+       * <code>SEASHIP = 4;</code>
+       */
+      SEASHIP(4, 4),
+      /**
+       * <code>INLANDSHIP = 5;</code>
+       */
+      INLANDSHIP(5, 5),
+      /**
+       * <code>LORRY = 6;</code>
+       */
+      LORRY(6, 6),
+      /**
+       * <code>AGV = 7;</code>
+       */
+      AGV(7, 7),
       ;
 
       /**
@@ -208,6 +226,30 @@ public final class SimulationItemProto {
        * <code>PLATFORM = 1;</code>
        */
       public static final int PLATFORM_VALUE = 1;
+      /**
+       * <code>NODES = 2;</code>
+       */
+      public static final int NODES_VALUE = 2;
+      /**
+       * <code>TRAIN = 3;</code>
+       */
+      public static final int TRAIN_VALUE = 3;
+      /**
+       * <code>SEASHIP = 4;</code>
+       */
+      public static final int SEASHIP_VALUE = 4;
+      /**
+       * <code>INLANDSHIP = 5;</code>
+       */
+      public static final int INLANDSHIP_VALUE = 5;
+      /**
+       * <code>LORRY = 6;</code>
+       */
+      public static final int LORRY_VALUE = 6;
+      /**
+       * <code>AGV = 7;</code>
+       */
+      public static final int AGV_VALUE = 7;
 
 
       public final int getNumber() { return value; }
@@ -216,6 +258,12 @@ public final class SimulationItemProto {
         switch (value) {
           case 0: return CRANE;
           case 1: return PLATFORM;
+          case 2: return NODES;
+          case 3: return TRAIN;
+          case 4: return SEASHIP;
+          case 5: return INLANDSHIP;
+          case 6: return LORRY;
+          case 7: return AGV;
           default: return null;
         }
       }
@@ -269,45 +317,18 @@ public final class SimulationItemProto {
 
     private int bitField0_;
     public static final int ID_FIELD_NUMBER = 1;
-    private java.lang.Object id_;
+    private long id_;
     /**
-     * <code>required string id = 1;</code>
+     * <code>required int64 id = 1;</code>
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string id = 1;</code>
+     * <code>required int64 id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          id_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getId() {
+      return id_;
     }
 
     public static final int TYPE_FIELD_NUMBER = 2;
@@ -371,7 +392,7 @@ public final class SimulationItemProto {
     }
 
     private void initFields() {
-      id_ = "";
+      id_ = 0L;
       type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
       x_ = 0F;
       y_ = 0F;
@@ -399,7 +420,7 @@ public final class SimulationItemProto {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getIdBytes());
+        output.writeInt64(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeEnum(2, type_.getNumber());
@@ -424,7 +445,7 @@ public final class SimulationItemProto {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getIdBytes());
+          .computeInt64Size(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
@@ -559,7 +580,7 @@ public final class SimulationItemProto {
 
       public Builder clear() {
         super.clear();
-        id_ = "";
+        id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
         type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -634,9 +655,7 @@ public final class SimulationItemProto {
       public Builder mergeFrom(nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem other) {
         if (other == nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.getDefaultInstance()) return this;
         if (other.hasId()) {
-          bitField0_ |= 0x00000001;
-          id_ = other.id_;
-          onChanged();
+          setId(other.getId());
         }
         if (other.hasType()) {
           setType(other.getType());
@@ -685,78 +704,34 @@ public final class SimulationItemProto {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
+      private long id_ ;
       /**
-       * <code>required string id = 1;</code>
+       * <code>required int64 id = 1;</code>
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string id = 1;</code>
+       * <code>required int64 id = 1;</code>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            id_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getId() {
+        return id_;
       }
       /**
-       * <code>required string id = 1;</code>
+       * <code>required int64 id = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
+      public Builder setId(long value) {
+        bitField0_ |= 0x00000001;
         id_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string id = 1;</code>
+       * <code>required int64 id = 1;</code>
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
-        id_ = value;
+        id_ = 0L;
         onChanged();
         return this;
       }
@@ -1611,15 +1586,16 @@ public final class SimulationItemProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022SimItemProto.proto\022\"nhl.containing.net" +
-      "working.protobuf\"\301\001\n\016SimulationItem\022\n\n\002i" +
-      "d\030\001 \002(\t\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
+      "working.protobuf\"\210\002\n\016SimulationItem\022\n\n\002i" +
+      "d\030\001 \002(\003\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
       "etworking.protobuf.SimulationItem.Simula" +
       "tionItemType\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 \001(\002\022\t\n\001z\030" +
-      "\005 \001(\002\"-\n\022SimulationItemType\022\t\n\005CRANE\020\000\022\014" +
-      "\n\010PLATFORM\020\001\"V\n\021SimulatorItemList\022A\n\005ite" +
-      "ms\030\001 \003(\01322.nhl.containing.networking.pro" +
-      "tobuf.SimulationItemB\025B\023SimulationItemPr" +
-      "oto"
+      "\005 \001(\002\"t\n\022SimulationItemType\022\t\n\005CRANE\020\000\022\014" +
+      "\n\010PLATFORM\020\001\022\t\n\005NODES\020\002\022\t\n\005TRAIN\020\003\022\013\n\007SE" +
+      "ASHIP\020\004\022\016\n\nINLANDSHIP\020\005\022\t\n\005LORRY\020\006\022\007\n\003AG" +
+      "V\020\007\"V\n\021SimulatorItemList\022A\n\005items\030\001 \003(\0132" +
+      "2.nhl.containing.networking.protobuf.Sim",
+      "ulationItemB\025B\023SimulationItemProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

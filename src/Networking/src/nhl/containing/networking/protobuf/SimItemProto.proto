@@ -9,6 +9,11 @@ message SimulationItem {
         CRANE = 0;
         PLATFORM = 1;  
 		NODES = 2;
+		TRAIN = 3;
+		SEASHIP = 4;
+		INLANDSHIP = 5;
+		LORRY = 6;
+		AGV = 7;		
     }
     required SimulationItemType type = 2;
     optional float x = 3;

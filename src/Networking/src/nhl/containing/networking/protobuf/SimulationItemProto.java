@@ -196,6 +196,26 @@ public final class SimulationItemProto {
        * <code>NODES = 2;</code>
        */
       NODES(2, 2),
+      /**
+       * <code>TRAIN = 3;</code>
+       */
+      TRAIN(3, 3),
+      /**
+       * <code>SEASHIP = 4;</code>
+       */
+      SEASHIP(4, 4),
+      /**
+       * <code>INLANDSHIP = 5;</code>
+       */
+      INLANDSHIP(5, 5),
+      /**
+       * <code>LORRY = 6;</code>
+       */
+      LORRY(6, 6),
+      /**
+       * <code>AGV = 7;</code>
+       */
+      AGV(7, 7),
       ;
 
       /**
@@ -210,6 +230,26 @@ public final class SimulationItemProto {
        * <code>NODES = 2;</code>
        */
       public static final int NODES_VALUE = 2;
+      /**
+       * <code>TRAIN = 3;</code>
+       */
+      public static final int TRAIN_VALUE = 3;
+      /**
+       * <code>SEASHIP = 4;</code>
+       */
+      public static final int SEASHIP_VALUE = 4;
+      /**
+       * <code>INLANDSHIP = 5;</code>
+       */
+      public static final int INLANDSHIP_VALUE = 5;
+      /**
+       * <code>LORRY = 6;</code>
+       */
+      public static final int LORRY_VALUE = 6;
+      /**
+       * <code>AGV = 7;</code>
+       */
+      public static final int AGV_VALUE = 7;
 
 
       public final int getNumber() { return value; }
@@ -219,6 +259,11 @@ public final class SimulationItemProto {
           case 0: return CRANE;
           case 1: return PLATFORM;
           case 2: return NODES;
+          case 3: return TRAIN;
+          case 4: return SEASHIP;
+          case 5: return INLANDSHIP;
+          case 6: return LORRY;
+          case 7: return AGV;
           default: return null;
         }
       }
@@ -1541,15 +1586,16 @@ public final class SimulationItemProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022SimItemProto.proto\022\"nhl.containing.net" +
-      "working.protobuf\"\314\001\n\016SimulationItem\022\n\n\002i" +
+      "working.protobuf\"\210\002\n\016SimulationItem\022\n\n\002i" +
       "d\030\001 \002(\003\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
       "etworking.protobuf.SimulationItem.Simula" +
       "tionItemType\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 \001(\002\022\t\n\001z\030" +
-      "\005 \001(\002\"8\n\022SimulationItemType\022\t\n\005CRANE\020\000\022\014" +
-      "\n\010PLATFORM\020\001\022\t\n\005NODES\020\002\"V\n\021SimulatorItem" +
-      "List\022A\n\005items\030\001 \003(\01322.nhl.containing.net" +
-      "working.protobuf.SimulationItemB\025B\023Simul" +
-      "ationItemProto"
+      "\005 \001(\002\"t\n\022SimulationItemType\022\t\n\005CRANE\020\000\022\014" +
+      "\n\010PLATFORM\020\001\022\t\n\005NODES\020\002\022\t\n\005TRAIN\020\003\022\013\n\007SE" +
+      "ASHIP\020\004\022\016\n\nINLANDSHIP\020\005\022\t\n\005LORRY\020\006\022\007\n\003AG" +
+      "V\020\007\"V\n\021SimulatorItemList\022A\n\005items\030\001 \003(\0132" +
+      "2.nhl.containing.networking.protobuf.Sim",
+      "ulationItemB\025B\023SimulationItemProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

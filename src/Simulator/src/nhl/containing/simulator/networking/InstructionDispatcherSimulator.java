@@ -4,6 +4,10 @@
  */
 package nhl.containing.simulator.networking;
 
+import java.nio.ByteBuffer;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.Future;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protocol.InstructionType;
@@ -16,9 +20,11 @@ import nhl.containing.networking.protocol.InstructionDispatcher;
 public class InstructionDispatcherSimulator implements InstructionDispatcher {
 
     Main _sim;
+    private Queue<Future> futures;
 
     public InstructionDispatcherSimulator(Main sim) {
         _sim = sim;
+        futures = new LinkedList<>();
     }
 
     /**
@@ -37,7 +43,17 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
                 System.out.println("Got MOVE AGV instruction");
 
                 break;
-
+            case InstructionType.CLIENT_TIME_UPDATE:
+                System.out.println("SENT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getFloat());
+                //Here react on the new time, call the tick function or something like that.
+                futures.add(Main.executorService().submit(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                }));
+                break;
             //More instruction types here..
         }
 

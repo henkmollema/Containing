@@ -55,7 +55,11 @@ public class GUI extends Behaviour{
         //Main.guiRoot().detachAllChildren();
         /*Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
-        BitmapText helloText = new BitmapText(Main.guiFont(), false);
+        m_containerInfo = new BitmapText(Main.guiFont(), false);
+        m_containerInfo.setText("hoi,\nik ben een\nheleboel informatie");
+        m_containerInfo.setLocalTranslation(screenWidth() - 150, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
+        Main.guiRoot().attachChild(m_containerInfo);
+        /*BitmapText helloText = new BitmapText(Main.guiFont(), false);
         helloText.setSize(Main.guiFont().getCharSet().getRenderedSize());
         helloText.setText("hoi,\nik ben een\nheleboel informatie");
         helloText.setLocalTranslation(screenWidth() - 150, (screenHeight() - 75) + helloText.getHeight(), 0);

@@ -13,7 +13,7 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial;
+import com.jme3.util.SkyFactory;
 import java.util.ArrayList;
 import java.util.List;
 import nhl.containing.simulator.game.AGV;
@@ -82,6 +82,8 @@ public class World extends Behaviour {
     
     @Override
     public void start() {
+        createSky();
+        createSea();
         createGround();
         createInlandCell();
         createLorryCell();
@@ -187,6 +189,18 @@ public class World extends Behaviour {
                 new Vector3f(-200.0f, 10.0f, zOff));
         m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.rotate(0.0f, -90.0f, 0.0f);
+    }
+    
+    private void createSky()
+    {
+        Main.instance().getRootNode().attachChild(SkyFactory.createSky(
+        Main.instance().getAssetManager(), "Textures/BrightSky.dds", false));
+    }
+    
+    private void createSea()
+    {
+        Geometry waterplane = WorldCreator.createWaterPlane(new Vector3f(-8000,-30,8000), 16000, 40, 0.05f, 0.05f, 6f);
+        Main.instance().getRootNode().attachChild(waterplane);
     }
     
     private void createGround() {

@@ -3,8 +3,6 @@
 
 #include "node.h"
 
-
-
 node::node()
 {
     this->m_id = -1;

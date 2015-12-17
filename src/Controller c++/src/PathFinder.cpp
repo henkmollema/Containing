@@ -8,6 +8,12 @@ using namespace std;
 
 road_map* roadmap;
 
+void throw_java_exception(JNIEnv *env, char *className, char *message)
+{
+    jclass ex = env->FindClass(className);
+    env->ThrowNew(ex, message);
+}
+
 /*
  * Class:     nhl_containing_controller_PathFinder
  * Method:    initPath
@@ -16,8 +22,14 @@ road_map* roadmap;
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv *env, jclass, jobject dimension)
 {
     vector<road_map::node_base> temp = { };
+    if (dimension == NULL)
+    {
+        string className = "java/lang/IllegalArgumentException";
+        string message = "dimension can't be null";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
     jclass dimensionCls = env->GetObjectClass(dimension);
-    if (env->ExceptionCheck()) return;
     jfieldID dimensionXField = env->GetFieldID(dimensionCls, "width", "I");
     jfieldID dimensionYField = env->GetFieldID(dimensionCls, "height", "I");
     if (env->ExceptionCheck()) return;
@@ -41,12 +53,6 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
 vector<int> getPath(int from, int to, float speed)
 {
     return roadmap->get_path(from, to, speed);
-}
-
-void throw_java_exception(JNIEnv *env, char *className, char *message)
-{
-    jclass ex = env->FindClass(className);
-    env->ThrowNew(ex, message);
 }
 
 /*
@@ -81,6 +87,41 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
     return res;
 }
 
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied(JNIEnv *env, jclass, jobject point, jboolean occ)
+{
+    if (point == NULL)
+    {
+        string className = "java/lang/IllegalArgumentException";
+        string message = "point can't be null";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
+    jclass pointCls = env->GetObjectClass(point);
+    jfieldID pointXField = env->GetFieldID(pointCls, "x", "I");
+    jfieldID pointYField = env->GetFieldID(pointCls, "y", "I");
+    if (env->ExceptionCheck()) return;
+    int pointX = env->GetIntField(point, pointXField);
+    int pointY = env->GetIntField(point, pointYField);
+    string className = "java/lang/NotImplementedException";
+    string message = "Not supported yet.";
+    throw_java_exception(env, &className[0], &message[0]);
+    return;
+}
+
+JNIEXPORT jboolean JNICALL Java_nhl_containing_controller_PathFinder_getOccupied(JNIEnv *env, jclass, jobject point)
+{
+    jclass pointCls = env->GetObjectClass(point);
+    if (env->ExceptionCheck()) return false;
+    jfieldID pointXField = env->GetFieldID(pointCls, "x", "I");
+    jfieldID pointYField = env->GetFieldID(pointCls, "y", "I");
+    if (env->ExceptionCheck()) return false;
+    int pointX = env->GetIntField(point, pointXField);
+    int pointY = env->GetIntField(point, pointYField);
+    string className = "java/lang/NotImplementedException";
+    string message = "Not supported yet.";
+    throw_java_exception(env, &className[0], &message[0]);
+    return false;
+}
 /*
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_helloFromC(JNIEnv *, jclass )
 {

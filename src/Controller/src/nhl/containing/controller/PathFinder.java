@@ -23,6 +23,10 @@ public class PathFinder
     public static native void initPath(Dimension dimension);
     
     public static native int[] getPath(int from, int to, float speed);
+    
+    public static native void setOccupied(Point loc, boolean occupied);
+    
+    public static native boolean getOccupied(Point loc);
     /*
     public static native void helloFromC();
     

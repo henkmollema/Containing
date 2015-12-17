@@ -1,10 +1,9 @@
 #include <limits>
 #include <iostream>
-
 #include "road_map.h"
+
 #define HIGH_NUMBER 1000.0f
 #define G_MULTIPLIER 10.0f
-
 
 void road_map::reset_nodes()
 {
@@ -30,7 +29,6 @@ vector<node> road_map::get_copy()
             temp_nodes[i].add_connection(&temp_nodes[tester]);
         }
     }
-
     return temp_nodes;
 }
 
@@ -82,7 +80,6 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 
     while (1)
     {
-
         // move to visited
         open_list.erase(std::remove(open_list.begin(), open_list.end(), current), open_list.end());
         closed_list.push_back(current);
@@ -146,7 +143,6 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
                 lowest_i = i;
             }
         }
-
         current = open_list[lowest_i];
     }
 }
@@ -154,4 +150,14 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 vector<int> road_map::get_path(int from, int to, float speed)
 {
     return get_path(m_nodes[from], m_nodes[to], speed);
+}
+
+bool road_map::get_occupied(int id)
+{
+    return m_nodes[id]->is_occupied_at(0);
+}
+
+bool road_map::get_occupied(int x, int y)
+{
+    return get_occupied(x * sqrt(m_nodes.size()) + y);
 }

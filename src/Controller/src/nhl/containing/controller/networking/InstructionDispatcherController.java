@@ -1,13 +1,13 @@
 package nhl.containing.controller.networking;
 
-import java.nio.ByteBuffer;
+import java.util.*;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.simulation.*;
 import nhl.containing.networking.protobuf.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.*;
@@ -16,14 +16,15 @@ import nhl.containing.networking.protocol.*;
  *
  * @author Jens
  */
-public class InstructionDispatcherController implements InstructionDispatcher {
-
+public class InstructionDispatcherController implements InstructionDispatcher
+{
     Simulator _sim;
     CommunicationProtocol _com;
     private ExecutorService executorService;
     private Queue<Future> futures;
 
-    public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
+    public InstructionDispatcherController(Simulator sim, CommunicationProtocol com)
+    {
         _sim = sim;
         _com = com;
         executorService = Executors.newSingleThreadExecutor();
@@ -38,41 +39,54 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      * @return the byte array to return to the sender
      */
     @Override
-    public void forwardInstruction(InstructionProto.Instruction inst) {
+    public void forwardInstruction(final InstructionProto.Instruction inst)
+    {
 
-        switch (inst.getInstructionType()) {
+        switch (inst.getInstructionType())
+        {
             case InstructionType.CONSOLE_COMMAND:
                 String message = inst.getMessage();
                 System.out.println("GOT CONSOLECOMAND: " + message);
                 //rdataBuilder.setMessage(_sim.parseCommand(message));
                 break;
-                
+
             case InstructionType.CLIENT_TIME_UPDATE:
-                System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getFloat());
-                //Here react on the new time, call the tick function or something like that.
                 futures.add(executorService.submit(new Runnable()
                 {
                     @Override
-                    public void run() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    public void run()
+                    {
+                        // Time sent by the client.
+                        long time = inst.getTime();
+                        System.out.println("Received client time: " + time);
+
+                        // Get the first shipment from the simulation context.
+                        SimulationContext context = Simulator.instance().getController().getContext();
+                        Shipment first = context.getFirstShipment();
+
+                        // Determine the current date/time.
+                        Date date = new Date(first.date.getTime() + time);
+                        
+                        // Get shipments by date.
+                        //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
+                        for (Shipment s : context.getShipmentsByDate(date))
+                        {
+                            s.processed = true;
+                            System.out.println("Process " + s.key);
+                            Simulator.instance().server().simCom().sendInstruction(inst);
+                            // todo: create proto for shipment.
+                        }
                     }
                 }));
                 break;
 
             //More instruction types here..
         }
-//
-//        InstructionResponse.Builder rbuilder = InstructionResponse.newBuilder();
-//        rbuilder.setInstructionId(inst.getId());
-//        rbuilder.setId(UUID.randomUUID().toString());
-//        InstructionResponse response = rbuilder.build();
-//
-//        _com.sendResponse(response);
-
     }
 
     @Override
-    public void forwardResponse(InstructionProto.InstructionResponse resp) {
+    public void forwardResponse(InstructionProto.InstructionResponse resp)
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

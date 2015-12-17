@@ -59,6 +59,7 @@ public class SimulationContext
 
         return null;
     }
+    private Shipment _firstShipment;
 
     /**
      * Gets the first shipment within this simuation context.
@@ -67,6 +68,11 @@ public class SimulationContext
      */
     public Shipment getFirstShipment()
     {
+        if (_firstShipment != null)
+        {
+            return _firstShipment;
+        }
+
         Shipment shipment = null;
         for (Shipment s : shipments.values())
         {
@@ -76,6 +82,8 @@ public class SimulationContext
                 continue;
             }
         }
+        
+        _firstShipment = shipment;
         return shipment;
     }
 
@@ -90,7 +98,7 @@ public class SimulationContext
         List<Shipment> result = new ArrayList<>();
         for (Shipment s : shipments.values())
         {
-            if (s.date == date)
+            if (!s.processed && s.date.before(date))
             {
                 result.add(s);
             }
@@ -158,7 +166,7 @@ public class SimulationContext
                 c.length = r.length;
                 c.ownerName = r.ownerName;
                 c.weightLoaded = r.weightLoaded;
-                c.weigthEmpty = r.weigthEmpty;
+                c.weightEmpty = r.weightEmpty;
                 c.width = r.width;
 
                 context.containers.put(r.containerNumber, c);
@@ -196,6 +204,19 @@ public class SimulationContext
         carrier.company = aod.company;
         shipment.carrier = carrier;
         shipment.date = aod.date.getDate();
+
+        // Incoming date.
+        String fromHour = aod.time.from.split("\\.")[0];
+        String fromMin = aod.time.from.split("\\.")[1];
+        shipment.date.setHours(Integer.parseInt(fromHour));
+        shipment.date.setMinutes(Integer.parseInt(fromMin));
+
+        // Date when processed.
+        shipment.dateProcessed = aod.date.getDate();
+        String untilHour = aod.time.until.split("\\.")[0];
+        String untilMinute = aod.time.until.split("\\.")[1];
+        shipment.dateProcessed.setHours(Integer.parseInt(untilHour));
+        shipment.dateProcessed.setMinutes(Integer.parseInt(untilMinute));
     }
 
     private static Carrier parseCarrier(String transportType) throws Exception

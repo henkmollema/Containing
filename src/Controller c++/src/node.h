@@ -1,7 +1,6 @@
 #pragma once
 
 #include<vector>
-
 #include"vector2.h"
 
 using namespace std;

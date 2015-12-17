@@ -45,7 +45,7 @@ public class Tickhandler implements Runnable
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
 
-                        // Get shipments by date.
+        // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {

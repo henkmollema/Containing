@@ -51,27 +51,22 @@ public class SimHandler implements Runnable
     {
         boolean shouldDie = false;
         
-        // When connection is lost, start listening for a new one
-        while (shouldRun && !shouldDie)
+        if (initSimData(_socket))
         {
-            if (initSimData(_socket))
+            if (instructionResponseLoop(_socket)) //<-- This method contains an indefinite while loop
             {
-                if (instructionResponseLoop(_socket))
-                {
-                    p("Closed peacefully");
-                }
-                else
-                {
-                    p("Lost connection during instructionloop");
-                }
+                p("Closed peacefully");
             }
             else
             {
-                p("Error while initialising simulator data..");
+                p("Lost connection during instructionloop");
             }
-
-            //shouldDie = true;
         }
+        else
+        {
+            p("Error while initialising simulator data..");
+        }
+
 
         try //Clean 
         {
@@ -83,8 +78,6 @@ public class SimHandler implements Runnable
         }
 
         _server.onSimDisconnect();
-
-        //server.isSimulatorConnected = false;
     }
 
     private boolean initSimData(Socket _socket)
@@ -117,7 +110,7 @@ public class SimHandler implements Runnable
             {
                 p("error");
                 StreamHelper.writeString(_socket.getOutputStream(), "error");
-                return true;
+                return false;
             }
         }
         catch (Exception ex)

@@ -6,15 +6,20 @@
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.simulation.Main;
-import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Plane;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.queue.RenderQueue;
+import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType;
+import com.jme3.scene.shape.Quad;
+import com.jme3.water.SimpleWaterProcessor;
 import nhl.containing.simulator.game.Crane;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
@@ -296,5 +301,36 @@ public final class WorldCreator {
         v.to = to;
         
         return v;
+    }
+    
+    public static Geometry createWaterPlane(Vector3f location, float size, float depth, float distortionScale, float waveSpeed, float waveSize)
+    {
+        //From: http://wiki.jmonkeyengine.org/doku.php/jme3:advanced:water
+        // we create a water processor
+        SimpleWaterProcessor waterProcessor = new SimpleWaterProcessor(Main.instance().getAssetManager());
+        waterProcessor.setReflectionScene(Main.instance().getRootNode());
+
+        // we set the water plane
+        Vector3f waterLocation=new Vector3f(0,-9,0);
+        waterProcessor.setPlane(new Plane(Vector3f.UNIT_Y, waterLocation.dot(Vector3f.UNIT_Y)));
+        Main.instance().getViewPort().addProcessor(waterProcessor);
+
+        // we set wave properties
+        waterProcessor.setWaterDepth(depth);         // transparency of water
+        waterProcessor.setDistortionScale(distortionScale); // strength of waves
+        waterProcessor.setWaveSpeed(waveSpeed);       // speed of waves
+
+        // we define the wave size by setting the size of the texture coordinates
+        Quad quad = new Quad(size,size);
+        quad.scaleTextureCoordinates(new Vector2f(waveSize,waveSize));
+
+        // we create the water geometry from the quad
+        Geometry waterPlane=new Geometry("water", quad);
+        waterPlane.setLocalRotation(new Quaternion().fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X));
+        waterPlane.setLocalTranslation(location);
+        waterPlane.setShadowMode(ShadowMode.Receive);
+        waterPlane.setMaterial(waterProcessor.getMaterial());
+
+        return waterPlane;
     }
 }

@@ -156,7 +156,7 @@ public class SimulatorClient implements Runnable
             }
 
             p("result is " + result);
-            return true;
+            return false;
         }
         catch (IOException ex)
         {

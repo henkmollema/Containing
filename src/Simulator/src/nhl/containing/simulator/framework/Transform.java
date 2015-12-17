@@ -10,6 +10,7 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType;
 import nhl.containing.simulator.simulation.Main;
 
 /**
@@ -45,6 +46,14 @@ public class Transform extends Node {
         this.setCullHint(CullHint.Dynamic);
         m_id = Main.register(this);
         position(Utilities.zero());
+    }
+    
+    /**
+     * Adds the transform to the metalist
+     * @param type type of the transform
+     */
+    public void register(SimulationItemType type){
+        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()));
     }
     
     /**

@@ -16,7 +16,7 @@ hs_err_pid*
 
 # Don't ignore ibraries in /lib/ folder
 !simple-xml-2.7.1.jar
-!protobuf-java-2.5.0.jar
+!protobuf-java-2.6.1.jar
 !junit-4.12.jar
 !hamcrest-core-1.3.jar
 

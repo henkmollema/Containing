@@ -24,6 +24,7 @@ import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Tuple;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
@@ -32,7 +33,7 @@ import nhl.containing.simulator.game.Vehicle;
  */
 public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
-    public static final Point2 STORAGE_SIZE = new Point2(/*45*/ 45, 3/*72*/); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(/*45*/ 5, 3/*72*/); // x = containers length per storage; y = storage amount
     
     public static final float WORLD_HEIGHT =  0.0f;
     public static final float WORLD_DEPTH = -150.0f;
@@ -57,6 +58,8 @@ public class World extends Behaviour {
     
     // Main
     private DirectionalLight m_sun;
+    private int m_waitFrames = 0;
+    private final int FRAMES_TO_WAIT = 20;
     
     // World
     private List<PlatformInland > m_inlandCells  = new ArrayList<>(0);
@@ -67,7 +70,8 @@ public class World extends Behaviour {
     
     // Vehicles
     private Vehicle m_train;
-    
+    private Vehicle m_seaShip;
+    private Vehicle m_inlandShip;
     
     @Override
     public void awake() {
@@ -90,6 +94,9 @@ public class World extends Behaviour {
     
     @Override
     public void update() {
+        if (m_waitFrames++ < FRAMES_TO_WAIT)
+            return;
+        
         for(PlatformInland  s : m_inlandCells  ) s.update();
         for(PlatformSea     s : m_seaCells     ) s.update();
         for(PlatformStorage s : m_storageCells ) s.update();
@@ -101,17 +108,12 @@ public class World extends Behaviour {
         }
         
         m_train.update();
+        
+        
+        
+        
     }
     private void createAGV() {
-        //Spatial teapot = Main.assets().loadModel("models/Sietse/Train/Thomas_Train.obj");
-        //teapot.setMaterial(MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
-        //Main.root().attachChild(teapot);
-        
-        
-        Spatial mater = Main.assets().loadModel("models/Sietse/Truck/Mater.obj");
-        mater.setMaterial(MaterialCreator.unshaded("models/Sietse/Truck/mater1_lod0.png"));
-        mater.setLocalTranslation(-15.0f, 0, 0);
-        Main.root().attachChild(mater);
         
         AGV agv = new AGV();
         agv.setContainer(new Container(null));
@@ -134,6 +136,9 @@ public class World extends Behaviour {
             m_inlandCells.add(new PlatformInland(offset));
             offset.x -= 10.0f;
         }
+        
+        //m_inlandShip = WorldCreator.createInland(from, to);
+        WorldCreator.createInland(new Vector3f[] {Utilities.zero()}, new Vector3f[] {Utilities.zero()});
     }
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
@@ -178,8 +183,8 @@ public class World extends Behaviour {
         
         final float zOff = -STORAGE_WIDTH - EXTENDS - LANE_WIDTH * LANE_COUNT;
         m_train = WorldCreator.createTrain(
-                new Vector3f(STORAGE_LENGTH, 0.0f,  zOff), 
-                new Vector3f(-100.0f, 0.0f, zOff));
+                new Vector3f(2000.0f, 10.0f,  zOff),
+                new Vector3f(-200.0f, 10.0f, zOff));
         m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.rotate(0.0f, -90.0f, 0.0f);
     }

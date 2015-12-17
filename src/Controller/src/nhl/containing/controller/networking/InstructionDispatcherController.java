@@ -40,7 +40,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 
             case InstructionType.CLIENT_TIME_UPDATE:
                 System.out.println("GOT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getDouble());
-                //Here react on the new time, call the tick function or something like that.
+                //Here react on the new time, call the tick function or something like that.                        
                 break;
 
             //More instruction types here..

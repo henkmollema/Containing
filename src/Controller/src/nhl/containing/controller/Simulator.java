@@ -1,7 +1,6 @@
 package nhl.containing.controller;
 
 import nhl.containing.controller.networking.*;
-import nhl.containing.networking.protocol.*;
 
 /**
  * Provides interaction with the simulator.
@@ -12,24 +11,40 @@ public class Simulator {
 
     private final SimulatorController _controller;
     private Thread _thread;
-    private Server _server;
-    //private InstructionDispatcher _instructionDispatcher;
-
-    /*public CommunicationProtocol communication() {
-        return _server.getComProtocol();
-    }*/
+    private Server _server;   
 
     public Simulator(SimulatorController controller) {
         _controller = controller;
         
-
+        _instance = this;
+    } 
+    
+    private static Simulator _instance;    
+    
+    /**
+     * Gets a instance of the {@code Simulator}.
+     * 
+     * @return A {@code Simulator}.
+     */
+    public static Simulator instance()
+    {
+        return _instance;
+    }
+    
+    /**
+     * Gets an instance of the associated {@code Server} class.
+     * @return A {@code Server}.
+     */
+    public Server server()
+    {
+        return _server;
     }
     
     /**
      * Gets an instance of the simulator controller
      * @return simulator controller
      */
-    public SimulatorController getSimulatorController()
+    public SimulatorController getController()
     {
         return _controller;
     }

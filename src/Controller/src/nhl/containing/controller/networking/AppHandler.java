@@ -119,8 +119,8 @@ public class AppHandler implements Runnable{
      */
     private byte [] processInstruction(byte[] inst)
     {
-        SimulatorController controller = server.getSimulator().getSimulatorController();
-        SimulationContext context = controller.getSimulationContext();
+        SimulatorController controller = server.getSimulator().getController();
+        SimulationContext context = controller.getContext();
         Instruction instruction;
         datablockApp.Builder builder = datablockApp.newBuilder();
         try

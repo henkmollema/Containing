@@ -14,6 +14,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType;
 import nhl.containing.simulator.game.Crane;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;

@@ -2,6 +2,7 @@ package nhl.containing.simulator.game;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType;
 import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.world.WorldCreator;
@@ -24,6 +25,7 @@ public class ParkingSpot extends Transform {
         m_agv = null;
         create();
         this.localPosition(offset);
+        this.register(SimulationItemType.PLATFORM);
     }
     
     /**

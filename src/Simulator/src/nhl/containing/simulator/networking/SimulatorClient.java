@@ -33,7 +33,6 @@ public class SimulatorClient implements Runnable
     private SimulatorItemList.Builder metaList = SimulatorItemList.newBuilder();
     private Socket _socket = null;
     public static CommunicationProtocol controllerCom;
-    
 
     public SimulatorClient()
     {
@@ -59,20 +58,21 @@ public class SimulatorClient implements Runnable
     {
         shouldRun = false;
     }
-    
-    public void addSimulationItem(long id,SimulationItem.SimulationItemType type, Vector3f position)
+
+    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(id);
         builder.setType(type);
-        if(position != null){
+        if (position != null)
+        {
             builder.setX(position.x);
             builder.setY(position.y);
             builder.setZ(position.z);
         }
         metaList.addItems(builder.build());
     }
-    
+
     public void Start()
     {
         this.start = true;
@@ -119,31 +119,28 @@ public class SimulatorClient implements Runnable
 
         try
         {
-            InputStream input = _socket.getInputStream();
-            OutputStream output = _socket.getOutputStream();
-            
-            //Tell the Controller we are the simulator
+            // Tell the Controller we are the simulator
             ClientIdentity.Builder idBuilder = ClientIdentity.newBuilder();
             idBuilder.setClientType(ClientIdentity.ClientType.SIMULATOR)
                     .setVersion(CommunicationProtocol.PROTOCOL_VERSION);
 
+            // Write the message to the socket.
+            OutputStream output = _socket.getOutputStream();
             StreamHelper.writeMessage(output, idBuilder.build().toByteArray());
 
-            //Wait for an okay response..
+            // Wait for an okay response..
+            InputStream input = _socket.getInputStream();
             byte[] ba = StreamHelper.readByteArray(input);
             Instruction i = Instruction.parseFrom(ba);
+            
             if (i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
             {
-                throw new IOException();
-            }         
+                throw new IOException("Server did not respond with Client OK.");
+            }
 
+            // Send metadata to controller.
             byte[] message = metaList.build().toByteArray();
-            p("Sending " + message.length + " bytes...");
-
             StreamHelper.writeMessage(output, message);
-
-            p("Message sent to controller, start reading input..");
-
             String result = StreamHelper.readString(input);
 
             if (result.equals(""))
@@ -168,15 +165,15 @@ public class SimulatorClient implements Runnable
 
         return false;
     }
-    
+
     public static void sendTimeUpdate()
-    {        
+    {
         Instruction timeUpdate = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setInstructionType(InstructionType.CLIENT_TIME_UPDATE)
-                .setTime((long)(Time.time() * 1000)) // convert float to long ms
+                .setTime((long) (Time.time() * 1000)) // convert float to long ms
                 .build();
-        
+
         controllerCom.sendInstruction(timeUpdate);
     }
 
@@ -189,7 +186,10 @@ public class SimulatorClient implements Runnable
             OutputStream output = _socket.getOutputStream();
 
             // Send empty message to start conversation..
-            StreamHelper.writeMessage(output, new byte[] { 0 });
+            StreamHelper.writeMessage(output, new byte[]
+            {
+                0
+            });
 
             while (shouldRun)
             {
@@ -198,6 +198,8 @@ public class SimulatorClient implements Runnable
 
                 StreamHelper.writeMessage(output, response);
             }
+
+            p("End loop");
         }
         catch (IOException ex)
         {
@@ -212,14 +214,16 @@ public class SimulatorClient implements Runnable
     public void run()
     {
         shouldRun = true;
-        while(!start){}
+        while (!start)
+        {
+        }
         while (shouldRun)//While shouldRun, when connection is lost, start listening for a new one
         {
             if (start())
             {
                 if (sendSimulatorMetadata())
                 {
-                   
+
                     if (instructionLoop())
                     {
                         p("Closed peacefully");
@@ -257,6 +261,6 @@ public class SimulatorClient implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("Simulator " +System.currentTimeMillis() +" :" + s);
+        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 }

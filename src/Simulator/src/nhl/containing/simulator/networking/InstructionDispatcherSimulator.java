@@ -43,6 +43,14 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
                 System.out.println("Got MOVE AGV instruction");
 
                 break;
+                
+            case InstructionType.ARRIVAL_INLANDSHIP:
+            case InstructionType.ARRIVAL_SEASHIP:
+            case InstructionType.ARRIVAL_TRAIN:
+            case InstructionType.ARRIVAL_TRUCK:
+                p("Received arrival of " + inst.getContainersCount());
+                break;
+                
             case InstructionType.CLIENT_TIME_UPDATE:
                 System.out.println("SENT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getFloat());
                 //Here react on the new time, call the tick function or something like that.
@@ -58,6 +66,11 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
         }
 
         _sim.simClient().controllerCom().sendResponse(responseBuilder.build());
+    }
+    
+    private static void p(String s)
+    {
+        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 
     @Override

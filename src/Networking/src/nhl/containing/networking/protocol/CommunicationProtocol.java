@@ -20,8 +20,8 @@ public class CommunicationProtocol {
     public long bytesSent = 0;
 
     private InstructionDispatcher _dispatcher;
-    private LinkedList<Instruction> instructionQueue;
-    private LinkedList<InstructionResponse> responseQueue;
+    private final LinkedList<Instruction> instructionQueue;
+    private final LinkedList<InstructionResponse> responseQueue;
 
     volatile boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     

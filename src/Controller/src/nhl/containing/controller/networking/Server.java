@@ -77,6 +77,8 @@ public class Server implements Runnable
         catch (Exception ex)
         {
             ex.printStackTrace();
+            System.out.println("Failed to connect to the socket: " + ex.getMessage());
+            return;
         }
 
         while (shouldRun)//TODO: Also check for app connection, and start appropriate thread

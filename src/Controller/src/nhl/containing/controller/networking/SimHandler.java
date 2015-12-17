@@ -104,7 +104,9 @@ public class SimHandler implements Runnable
             SimulatorItemList platform = null;
             try{
                  platform = SimulatorItemList.parseFrom(data);
-            }catch(Exception e){}
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             
             if (platform != null) {
                 p("ok");
@@ -115,7 +117,7 @@ public class SimHandler implements Runnable
             {
                 p("error");
                 StreamHelper.writeString(_socket.getOutputStream(), "error");
-                return false;
+                return true;
             }
         }
         catch (Exception ex)
@@ -155,6 +157,6 @@ public class SimHandler implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("Controller: " + s);
+        System.out.println("Controller "+System.currentTimeMillis() +" :" + s);
     }
 }

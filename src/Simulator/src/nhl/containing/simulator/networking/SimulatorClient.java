@@ -139,6 +139,9 @@ public class SimulatorClient implements Runnable
             }
 
             // Send metadata to controller.
+            if(metaList.getItemsCount() == 0)
+                addSimulationItem(0, SimulationItem.SimulationItemType.AGV, Vector3f.ZERO);//Add dummy item..
+            
             byte[] message = metaList.build().toByteArray();
             StreamHelper.writeMessage(output, message);
             String result = StreamHelper.readString(input);

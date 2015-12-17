@@ -6,6 +6,7 @@ import nhl.containing.controller.networking.Server;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.InstructionProto.InstructionResponse;
+import nhl.containing.networking.protobuf.SimulationItemProto;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.networking.protocol.InstructionType;
@@ -33,7 +34,7 @@ public class CommunicationTests {
 
         instructionsRecieved = 0;
         repsonsesRecieved = 0;
-        int instructionsToSend = 10000; //These will be sent twice, in batches of this number
+        int instructionsToSend = 10; //These will be sent twice, in batches of this number
         //When instructionsToSend is around 10 000 the TCP write and read buffer will fill up and hang the program TODO: Find a fix, or make sure the batches are less than 10 000 in size
 
         System.out.println("===== instructionResponseBatchTest =====");
@@ -57,13 +58,13 @@ public class CommunicationTests {
                         .build();
 
                 simulator.controllerCom().sendResponse(response);
-                //System.out.println("instruction recieved: " + inst.getId());
+                System.out.println("instruction recieved: " + inst.getId());
             }
 
             @Override
             public void forwardResponse(InstructionProto.InstructionResponse resp) {
                 repsonsesRecieved++;
-                //System.out.println("Response recieved for : " + resp.getInstructionId());
+                System.out.println("Response recieved for : " + resp.getInstructionId());
             }
         };
 
@@ -73,15 +74,20 @@ public class CommunicationTests {
 
         controllerThread.start();
         simulatorThread.start();
+        
+        simulator.Start();
+        
+        
 
         for (int i = 0; i < instructionsToSend; i++) {
             Instruction instruction = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
-                    .setInstructionType(InstructionType.CONSOLE_COMMAND)
+                    .setInstructionType(InstructionType.MOVE_AGV)
                     .setMessage("Got response!")
                     .build();
 
-            controller.simCom().sendInstruction(instruction);
+            //controller.simCom().sendInstruction(instruction);
+            simulator.controllerCom().sendInstruction(instruction);
         }
         System.out.println("Test: Added "+instructionsToSend+" to the instruction queue");
          try {
@@ -94,12 +100,12 @@ public class CommunicationTests {
         for (int i = 0; i < instructionsToSend; i++) {
             Instruction instruction = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
-                    .setInstructionType(InstructionType.CONSOLE_COMMAND)
+                    .setInstructionType(InstructionType.MOVE_AGV)
                     .setMessage("Got response!")
                     .build();
 
-            simulator.controllerCom().sendInstruction(instruction);
-             
+            //controller.simCom().sendInstruction(instruction);
+             simulator.controllerCom().sendInstruction(instruction);
             
         }
         instructionsToSend *= 2;

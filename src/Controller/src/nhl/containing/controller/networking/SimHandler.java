@@ -26,14 +26,13 @@ public class SimHandler implements Runnable
     private InstructionDispatcher _instructionDispatcher;
     private CommunicationProtocol _comProtocol;
 
-    public SimHandler(Server server, Socket socket)
+    public SimHandler(Server server, Socket socket, CommunicationProtocol comProtocol)
     {
         _socket = socket;
         _server = server;
 
-        _comProtocol = new CommunicationProtocol();
-        _instructionDispatcher = new InstructionDispatcherController(server.simulator, _comProtocol);
-        _comProtocol.setDispatcher(_instructionDispatcher);
+        _comProtocol = comProtocol;
+        _instructionDispatcher = comProtocol.dispatcher();
     }
 
     /**

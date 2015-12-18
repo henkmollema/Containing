@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.controller.networking;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Collection;
 import nhl.containing.controller.SimulatorController;
 import nhl.containing.controller.simulation.*;
 import nhl.containing.networking.messaging.StreamHelper;
@@ -193,34 +188,6 @@ public class AppHandler implements Runnable
                     b.setAantal(numbers[i]);
                     builder.addGraphs(b.build());
                 }
-//                b.setCategory(ContainerCategory.TRAIN);
-//                b.setAantal(0);
-//                for(Train train : context.getTrains(incoming))
-//                {
-//                    b.setAantal(b.getAantal() + train.containers.size());
-//                }
-//                builder.addGraphs(b.build());
-//                b.setCategory(ContainerCategory.TRUCK);
-//                b.setAantal(0);
-//                for(Truck truck : context.getTrucks(incoming))
-//                {
-//                    b.setAantal(b.getAantal() + truck.containers.size());
-//                }
-//                builder.addGraphs(b.build());
-//                b.setCategory(ContainerCategory.INLINESHIP);
-//                b.setAantal(0);
-//                for(InlandShip inlineShip : context.getInlandShips(incoming))
-//                {
-//                    b.setAantal(b.getAantal() + inlineShip.containers.size());
-//                }
-//                builder.addGraphs(b.build());
-//                b.setCategory(ContainerCategory.SEASHIP);
-//                b.setAantal(0);
-//                for(SeaShip seaShip : context.getSeaShips(incoming))
-//                {
-//                    b.setAantal(b.getAantal() + seaShip.containers.size());
-//                }
-//               builder.addGraphs(b.build());
                 break;
             case 3:
                 //unkown graph [WIP]
@@ -228,32 +195,28 @@ public class AppHandler implements Runnable
             case 4:
                 //containerlist
                 ContainerDataListItem.Builder itemBuilder = ContainerDataListItem.newBuilder();
-                Collection<ShippingContainer> containers = context.getAllContainers();
-                for (Shipment shipment : context.getShipments())
+                for(ShippingContainer container : context.getAllContainers())
                 {
-                    if (shipment.processed)
+                    if(container.arrivalShipment.processed && !container.departureShipment.processed)
                     {
-                        ContainerCategory category = categories[6];
-                        if (shipment.carrier instanceof Train)
+                         ContainerCategory category = categories[6];
+                        if (container.arrivalShipment.carrier instanceof Train)
                         {
                             category = categories[0];
-                        } else if (shipment.carrier instanceof Truck)
+                        } else if (container.arrivalShipment.carrier instanceof Truck)
                         {
                             category = categories[1];
-                        } else if (shipment.carrier instanceof InlandShip)
+                        } else if (container.arrivalShipment.carrier instanceof InlandShip)
                         {
                             category = categories[2];
-                        } else if (shipment.carrier instanceof SeaShip)
+                        } else if (container.arrivalShipment.carrier instanceof SeaShip)
                         {
                             category = categories[3];
                         }
-                        for (ShippingContainer container : shipment.carrier.containers)
-                        {
-                            itemBuilder.setCategory(category);
-                            itemBuilder.setEigenaar(container.ownerName);
-                            itemBuilder.setID(container.containerNumber);
-                            builder.addItems(itemBuilder.build());
-                        }
+                        itemBuilder.setCategory(category);
+                        itemBuilder.setEigenaar(container.ownerName);
+                        itemBuilder.setID(container.containerNumber);
+                        builder.addItems(itemBuilder.build());
                     }
                 }
                 break;

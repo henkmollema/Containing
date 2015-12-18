@@ -1,13 +1,14 @@
-package nhl.containing.managmentinterface;
+package nhl.containing.managmentinterface.activity;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import nhl.containing.managmentinterface.R;
 
 /**
  * Fragment for the settings

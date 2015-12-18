@@ -14,10 +14,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import nhl.containing.managmentinterface.MainActivity;
+import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
+import nhl.containing.managmentinterface.data.ContainerListItem;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protocol.CommunicationProtocol;
@@ -29,7 +30,7 @@ import nhl.containing.networking.protocol.InstructionType;
 public class ContainersFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
-    private ContainerArrayAdapter items;
+    private ContainerArrayAdapter adapter;
     private MainActivity main;
 
     /**
@@ -46,9 +47,9 @@ public class ContainersFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<ContainerDataListItem> list = new ArrayList<>();
-        items = new ContainerArrayAdapter(getActivity(),list);
-        setListAdapter(items);
+        List<ContainerListItem> list = new ArrayList<>();
+        adapter = new ContainerArrayAdapter(getActivity(),list);
+        setListAdapter(adapter);
         if(MainActivity.getInstance() == null)
         {
             Toast.makeText(getActivity(), R.string.containerlist_error_initialized,Toast.LENGTH_SHORT).show();
@@ -77,7 +78,8 @@ public class ContainersFragment extends ListFragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        final View view = inflater.inflate(R.layout.listfragment, null);
+        //final View view = super.onCreateView(inflater, container, savedInstanceState);
         if(view != null)
         {
             ViewTreeObserver vto = view.getViewTreeObserver();
@@ -88,10 +90,12 @@ public class ContainersFragment extends ListFragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            try{
+                            try {
                                 Thread.sleep(500);
-                            }catch (Exception e){};
-                            if(!main.checkAutoRefresh())
+                            } catch (Exception e) {
+                            }
+                            ;
+                            if (!main.checkAutoRefresh())
                                 getActivity().runOnUiThread(main.refreshRunnable);
                         }
                     }).start();
@@ -99,6 +103,22 @@ public class ContainersFragment extends ListFragment {
             });
         }
         return view;
+    }
+
+    /**
+     * Attach to list view once the view hierarchy has been created.
+     *
+     * @param view
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+        if(getListView() != null)
+        {
+            getListView().setEmptyView(view.findViewById(R.id.empty));
+        }
     }
 
     /**
@@ -142,7 +162,7 @@ public class ContainersFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(items.getItem(position).getID());
+            mListener.onFragmentInteraction(adapter.getItem(position).ID);
         }
     }
 
@@ -195,18 +215,31 @@ public class ContainersFragment extends ListFragment {
 
 
     /**
-     * Puts the block items in the ArrayAdapter of the list
-     * @param listItems list with container items
+     * Puts the block adapter in the ArrayAdapter of the list
+     * @param listItems list with container adapter
      */
     private void updateList(final List<ContainerDataListItem> listItems)
     {
+        final List<ContainerListItem> itemsList = new ArrayList<>();
+        for(ContainerDataListItem item : listItems){
+            itemsList.add(new ContainerListItem(item.getID(),item.getEigenaar(),item.getCategory()));
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                items.Update(listItems);
+                adapter.Update(itemsList);
                 main.completeRefresh.run();
             }
         });
+    }
+
+    /**
+     * Used to search in the ArrayAdapter of the listview
+     * @param s search string
+     */
+    public void find(String s)
+    {
+        adapter.getFilter().filter(s);
     }
 
     /**

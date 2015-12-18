@@ -47,6 +47,7 @@
     <!-- Strings related to Containerlist Fragment-->
     <string name="containerlist_error_initialized">Containerfragement couldn\'t be initialized</string>
     <string name="containerlist_error_wrong">Something went wrong</string>
+    <string name="containerlist_no_items">No containers found</string>
 
     <!-- Strings related to Graph Fragment-->
     <string-array name="graph_items">
@@ -62,14 +63,15 @@
     <string name="graph_error_wrong">Something went wrong</string>
 
     <!-- String related to Container ArrayAdapter-->
-    <string name="container_title">Container %1$i</string>
+    <string name="container_title">Container %1$d</string>
 
     <!-- Strings related to Communicator-->
     <string name="communicator_error_host_port">Host or Port are not defined. Please go to settings to add a Host and Port</string>
-    <string name="communicator_error_settings">Host or Port are not defined. Please check your settings</string>
+    <string name="communicator_error_settings">Couldn\'t connect to the Host. Please check your settings</string>
     <string name="communicator_error_wrong">Something went wrong</string>
     <string name="communicator_error_not_connected">Not connected</string>
     <string name="communicator_error_no_data">Couldn\'t get data</string>
+    <string name="communicator_no_data">There isn\'t any data yet</string>
     <!-- Strings related to Container Activity -->
 
     <!-- Strings related to Loading Dialog-->

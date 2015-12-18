@@ -1,9 +1,11 @@
-package nhl.containing.managmentinterface;
+package nhl.containing.managmentinterface.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import nhl.containing.managmentinterface.R;
 
 /**
  * Activity that holds a PreferencesFragment

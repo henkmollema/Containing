@@ -1,5 +1,7 @@
 package nhl.containing.managmentinterface.navigationdrawer;
 
+import java.util.NavigableMap;
+
 /**
  * Nav item class for the navigation drawer
  */

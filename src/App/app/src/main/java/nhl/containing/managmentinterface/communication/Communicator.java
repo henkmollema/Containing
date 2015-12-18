@@ -5,13 +5,14 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
 import nhl.containing.managmentinterface.*;
+import nhl.containing.managmentinterface.activity.ContainerActivity;
+import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.navigationdrawer.*;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.AppDataProto.*;
@@ -142,6 +143,8 @@ public class Communicator implements Runnable{
                             StreamHelper.writeMessage(output,request.toByteArray());
                             request = null;
                             bytes = StreamHelper.readByteArray(input);
+                            if(bytes.length <= 1)
+                                throw new Exception("No data yet");
                             datablockApp inputBlock = datablockApp.parseFrom(bytes);
                             if(containerActivity != null)
                                 containerActivity.setData(inputBlock);
@@ -156,17 +159,30 @@ public class Communicator implements Runnable{
                         }
                         catch (Exception e)
                         {
-                            e.printStackTrace();
-                            mainActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(mainActivity, R.string.communicator_error_no_data, Toast.LENGTH_SHORT).show();
-                                    if(containerActivity != null)
-                                        containerActivity.goBack();
-                                    else
-                                        mainActivity.completeRefresh.run();
-                                }
-                            });
+                            if(e.getMessage().equals("No data yet"))
+                                mainActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mainActivity, R.string.communicator_no_data, Toast.LENGTH_SHORT).show();
+                                        if (containerActivity != null)
+                                            containerActivity.goBack();
+                                        else
+                                            mainActivity.completeRefresh.run();
+                                    }
+                                });
+                            else{
+                                e.printStackTrace();
+                                mainActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(mainActivity, R.string.communicator_error_no_data, Toast.LENGTH_SHORT).show();
+                                        if(containerActivity != null)
+                                            containerActivity.goBack();
+                                        else
+                                            mainActivity.completeRefresh.run();
+                                    }
+                                });
+                            }
                         }
                     }
                 }

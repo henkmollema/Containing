@@ -1,5 +1,6 @@
-package nhl.containing.managmentinterface;
+package nhl.containing.managmentinterface.activity;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
 import android.view.LayoutInflater;
@@ -38,13 +41,14 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.managmentinterface.navigationdrawer.*;
 
 /**
  * Main activity for the app
  */
-public class MainActivity extends AppCompatActivity implements ContainersFragment.OnFragmentInteractionListener
+public class MainActivity extends AppCompatActivity implements ContainersFragment.OnFragmentInteractionListener, SearchView.OnQueryTextListener,MenuItemCompat.OnActionExpandListener
 {
     private static MainActivity main;
     //navigation drawer
@@ -111,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         dialog.setMessage(R.string.exit_message);
         dialog.setPositiveButton(R.string.exit_pos, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {finish();
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
             }
         });
         dialog.setNegativeButton(R.string.exit_neg, null);
@@ -285,6 +290,19 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(GravityCompat.START);
         for(int i : items)
             menu.findItem(i).setVisible(!drawerOpen);
+        if(!drawerOpen && fragment instanceof ContainersFragment)
+        {
+            MenuItem item = menu.findItem(R.id.search);
+            item.setVisible(true);
+            MenuItemCompat.setOnActionExpandListener(item,this);
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView = (SearchView) item.getActionView();
+            searchView.setOnQueryTextListener(this);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        }
+        else{
+            menu.findItem(R.id.search).setVisible(false);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -503,5 +521,72 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
         {
             isRunning = false;
         }
+    }
+
+
+    //implements listener for search
+
+    /**
+     * Called when the query text is changed by the user.
+     *
+     * @param newText the new content of the query text field.
+     * @return false if the SearchView should perform the default action of showing any
+     * suggestions if available, true if the action was handled by the listener.
+     */
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    /**
+     * Called when the user submits the query. This could be due to a key press on the
+     * keyboard or due to pressing a submit button.
+     * The listener can override the standard behavior by returning true
+     * to indicate that it has handled the submit request. Otherwise return false to
+     * let the SearchView handle the submission by launching any associated intent.
+     *
+     * @param query the query text that is to be submitted
+     * @return true if the query has been handled by the listener, false to let the
+     * SearchView perform the default action.
+     */
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        if(fragment instanceof ContainersFragment)
+        {
+            ContainersFragment cf = (ContainersFragment)fragment;
+            cf.find(query);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Called when a menu item with {@link MenuItem#SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW}
+     * is collapsed.
+     *
+     * @param item Item that was collapsed
+     * @return true if the item should collapse, false if collapsing should be suppressed.
+     */
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        if(fragment instanceof ContainersFragment)
+        {
+            ContainersFragment cf = (ContainersFragment)fragment;
+            cf.find(null);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Called when a menu item with {@link MenuItem#SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW}
+     * is expanded.
+     *
+     * @param item Item that was expanded
+     * @return true if the item should expand, false if expansion should be suppressed.
+     */
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
     }
 }

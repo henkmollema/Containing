@@ -1,4 +1,4 @@
-package nhl.containing.managmentinterface;
+package nhl.containing.managmentinterface.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 
@@ -22,6 +23,7 @@ public class ContainerActivity extends AppCompatActivity {
 
     public int ID;
     private ProgressDialog dialog;
+    private String[] types = getResources().getStringArray(R.array.graph_items);
 
     /**
      * Creates the containeractivity
@@ -115,13 +117,13 @@ public class ContainerActivity extends AppCompatActivity {
         switch (category)
         {
             case TRUCK:
-                return "Truck";
+                return types[1];
             case SEASHIP:
-                return "Seagoing vessel";
+                return types[2];
             case INLINESHIP:
-                return "Barge";
+                return types[3];
             case TRAIN:
-                return "Train";
+                return types[0];
             default:
                 return "-";
         }

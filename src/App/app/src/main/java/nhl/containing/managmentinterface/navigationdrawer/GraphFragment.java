@@ -12,10 +12,9 @@ import android.widget.Toast;
 import com.syncfusion.charts.*;
 import com.syncfusion.charts.enums.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import nhl.containing.managmentinterface.MainActivity;
+import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
 import nhl.containing.networking.protobuf.AppDataProto.*;

@@ -3,15 +3,10 @@ package nhl.containing.managmentinterface.communication;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-import java.util.prefs.Preferences;
-
-import nhl.containing.managmentinterface.MainActivity;
+import nhl.containing.managmentinterface.activity.MainActivity;
 
 /**
  * Listens to connectivity changes

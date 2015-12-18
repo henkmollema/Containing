@@ -20,17 +20,25 @@ import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 
 /**
- *
+ *  Handles a timer tick
  * @author Niels
  */
 public class Tickhandler implements Runnable
 {
     private Instruction _instruction;
+    
+    /**
+     * Constructor
+     * @param instruction 
+     */
     public Tickhandler(Instruction instruction)
     {
         _instruction = instruction;
     }
 
+    /**
+     * Run method of the Runnable
+     */
     @Override
     public void run()
     {
@@ -55,7 +63,10 @@ public class Tickhandler implements Runnable
         }
     }
     
-    
+    /**
+     * Creates the profofiles for a shipment and puts them on the queue
+     * @param shipment shipment
+     */
     private void createProto(Shipment shipment){
         Instruction.Builder builder = Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
@@ -105,6 +116,11 @@ public class Tickhandler implements Runnable
         Simulator.instance().server().simCom().sendInstruction(builder.build());
     }
     
+    /**
+     * Gets the category by a carrier
+     * @param carrier carrier
+     * @return string
+     */
     private String getCategory(Carrier carrier)
     {
         if(carrier instanceof InlandShip)

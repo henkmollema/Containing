@@ -5,6 +5,7 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.*;
 
+import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.navigationdrawer.GraphFragment;
 
 /**

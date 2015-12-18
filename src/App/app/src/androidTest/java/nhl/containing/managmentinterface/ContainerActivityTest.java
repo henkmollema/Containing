@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.view.ContextThemeWrapper;
 import android.test.ActivityUnitTestCase;
 
-import junit.framework.TestCase;
+import nhl.containing.managmentinterface.activity.ContainerActivity;
 
 /**
  * Created by Niels on 26-11-2015.

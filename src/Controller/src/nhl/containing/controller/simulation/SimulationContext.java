@@ -21,6 +21,8 @@ public class SimulationContext
 {
     private final Map<String, Shipment> shipments = new HashMap<>();
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
+    private List<Shipment> allShipments;
+    private Shipment firstShipment;
 
     /**
      * Gets a (immutable) collection of all the {@code Shipment}'s
@@ -28,9 +30,16 @@ public class SimulationContext
      *
      * @return A {@code Collection<Shipment>}.
      */
-    public Collection<Shipment> getShipments()
+    public List<Shipment> getShipments()
     {
-        return Collections.unmodifiableCollection(shipments.values());
+        if (allShipments == null)
+        {
+            // Sort the shipments and save in the field.
+            allShipments = new ArrayList(shipments.values());
+            Collections.sort(allShipments, new Shipment.ShipmentDateComparator());
+        }
+
+        return allShipments;
     }
 
     /**
@@ -41,7 +50,7 @@ public class SimulationContext
      */
     public Collection<ShippingContainer> getAllContainers()
     {
-        return Collections.unmodifiableCollection(containers.values());
+        return containers.values();
     }
 
     /**
@@ -59,7 +68,6 @@ public class SimulationContext
 
         return null;
     }
-    private Shipment _firstShipment;
 
     /**
      * Gets the first shipment within this simuation context.
@@ -68,23 +76,13 @@ public class SimulationContext
      */
     public Shipment getFirstShipment()
     {
-        if (_firstShipment != null)
+        if (firstShipment == null)
         {
-            return _firstShipment;
+            // The list is sorted, so we can get the first shipment.
+            firstShipment = getShipments().get(0);
         }
 
-        Shipment shipment = null;
-        for (Shipment s : shipments.values())
-        {
-            if (shipment == null || s.date.before(shipment.date))
-            {
-                shipment = s;
-                continue;
-            }
-        }
-        
-        _firstShipment = shipment;
-        return shipment;
+        return firstShipment;
     }
 
     /**
@@ -96,13 +94,22 @@ public class SimulationContext
     public Collection<Shipment> getShipmentsByDate(Date date)
     {
         List<Shipment> result = new ArrayList<>();
-        for (Shipment s : shipments.values())
+        for (Shipment s : getShipments())
         {
-            if (!s.processed && s.date.before(date))
+            if (s.date.before(date) || s.date.equals(date))
             {
-                result.add(s);
+                if (!s.processed)
+                {
+                    result.add(s);
+                }
+            }
+            else
+            {
+                // There should be no remaining shipments after this date in the list.
+                break;
             }
         }
+
         return result;
     }
 
@@ -280,7 +287,7 @@ public class SimulationContext
     private <T extends Carrier> Collection<T> filter(Class<T> t, Boolean incoming)
     {
         List<T> carriers = new ArrayList<>();
-        for (Shipment candidate : shipments.values())
+        for (Shipment candidate : getShipments())
         {
             if (shouldSkip(incoming, candidate.incoming))
             {
@@ -292,6 +299,6 @@ public class SimulationContext
                 carriers.add((T) candidate.carrier);
             }
         }
-        return Collections.unmodifiableCollection(carriers);
+        return carriers;
     }
 }

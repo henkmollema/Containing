@@ -3,10 +3,10 @@ package nhl.containing.controller;
 import java.net.*;
 import java.nio.file.*;
 import java.util.HashSet;
-import nhl.containing.controller.simulation.SimulationContext;
+import nhl.containing.controller.simulation.*;
 
 /**
- * Controller for the system.
+ * Controller for the simulator.
  *
  * @author henkmollema
  */
@@ -43,10 +43,12 @@ public class SimulatorController
 
         writeAnalyzeResults();
 
+        // Warm-up the simulation context.
+        _context.getShipments();
+        _context.getFirstShipment();
+
         Simulator sim = new Simulator(this);
-        if (sim.start())
-        {
-        }
+        sim.start();
     }
 
     private void writeAnalyzeResults()

@@ -96,7 +96,7 @@ public class CommunicationProtocol {
                 ex.printStackTrace();
             }
 
-            if (dbRecieved != null) {
+            if (dbRecieved != null && this._dispatcher != null) {
                 //Instructions and responses are forwarded into the simulator, 
 
                 for (Instruction i : dbRecieved.getInstructionsList()) {

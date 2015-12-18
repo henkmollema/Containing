@@ -65,7 +65,7 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
             //More instruction types here..
         }
 
-        _sim.simClient().controllerCom().sendResponse(responseBuilder.build());
+        //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
     }
     
     private static void p(String s)

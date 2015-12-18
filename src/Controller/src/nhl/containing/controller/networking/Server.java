@@ -31,7 +31,7 @@ public class Server implements Runnable
     {
         simulator = _simulator;
         simCom = new CommunicationProtocol(); //The communication protocol used for the simulator connection
-
+        simCom.setDispatcher(new InstructionDispatcherController(simulator, simCom));
     }
 
     public Simulator getSimulator()
@@ -103,7 +103,7 @@ public class Server implements Runnable
                             return;
                         }
 
-                        SimHandler simHandler = new SimHandler(this, tmpSocket);
+                        SimHandler simHandler = new SimHandler(this, tmpSocket, simCom);
                         // Start anonymous thread
                         new Thread(simHandler).start();
 

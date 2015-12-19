@@ -110,10 +110,8 @@ public class World extends Behaviour {
         }
         
         m_train.update();
-        
-        
-        
-        
+        m_inlandShip.update();
+        m_seaShip.update();
     }
     private void createAGV() {
         
@@ -128,7 +126,11 @@ public class World extends Behaviour {
         }
         //m_storageCells.get(0).place(0, new Point3(4, 5, 1));
         
-        m_lorryCells.get(0).b.state(Vehicle.VehicleState.ToLoad);
+        for (int i = 0; i < m_lorryCells.size(); i++) {
+            m_lorryCells.get(i).b.state(Vehicle.VehicleState.ToLoad);
+        }
+        
+        
         
     }
     
@@ -139,8 +141,23 @@ public class World extends Behaviour {
             offset.x -= 10.0f;
         }
         
-        //m_inlandShip = WorldCreator.createInland(from, to);
-        WorldCreator.createInland(new Vector3f[] {Utilities.zero()}, new Vector3f[] {Utilities.zero()});
+        Vector3f _dest = new Vector3f(0.0f, 0.0f, 0.0f);
+        m_inlandShip = WorldCreator.createInland(
+                new Vector3f[] {
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(_dest)
+                }, 
+                new Vector3f[] {
+                    new Vector3f(_dest),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f)
+                }
+                );
     }
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
@@ -165,6 +182,25 @@ public class World extends Behaviour {
             m_seaCells.add(new PlatformSea(offset));
             offset.z -= 10.0f;
         }
+        
+        
+        Vector3f _dest = new Vector3f(0.0f, 0.0f, 0.0f);
+        m_seaShip = WorldCreator.createSea(
+                new Vector3f[]{
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(_dest)
+                },
+                new Vector3f[] {
+                    new Vector3f(_dest),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(0.0f, 0.0f, 0.0f),
+                }
+                );
     }
     private void createStorageCell() {
         Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);

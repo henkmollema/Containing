@@ -219,7 +219,7 @@ public final class WorldCreator {
                 new Point3(1, 1, 1),
                 5.0f,// speed
                 "Sietse/Truck/Mater.obj", // holder model
-                1.0f, // front scale
+                5.0f, // front scale
                 new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         
@@ -282,9 +282,11 @@ public final class WorldCreator {
                 1.0f, // front scale
                 new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
+        v.state(Vehicle.VehicleState.Disposed);
         
         v.from = from;
         v.to = to;
+        v.path().setPosition(from[0]);
         
         return v;
     }
@@ -296,9 +298,11 @@ public final class WorldCreator {
                 1.0f, // front scale
                 new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
+        v.state(Vehicle.VehicleState.Disposed);
         
         v.from = from;
         v.to = to;
+        v.path().setPosition(from[0]);
         
         return v;
     }

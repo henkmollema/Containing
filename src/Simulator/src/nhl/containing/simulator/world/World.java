@@ -23,6 +23,7 @@ import nhl.containing.simulator.game.PlatformLorry;
 import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
+import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Tuple;
 import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.Vehicle;
@@ -59,7 +60,7 @@ public class World extends Behaviour {
     // Main
     private DirectionalLight m_sun;
     private int m_waitFrames = 0;
-    private final int FRAMES_TO_WAIT = 20;
+    private final int FRAMES_TO_WAIT = 2;
     
     // World
     private List<PlatformInland > m_inlandCells  = new ArrayList<>(0);
@@ -112,6 +113,11 @@ public class World extends Behaviour {
         m_train.update();
         m_inlandShip.update();
         m_seaShip.update();
+        
+        if (Time.time() < 12.0f && Time.time() + Time.deltaTime() >= 12.0f) {
+            m_train.state(Vehicle.VehicleState.ToLoad);
+        }
+        
     }
     private void createAGV() {
         
@@ -119,6 +125,7 @@ public class World extends Behaviour {
         agv.setContainer(new Container(null));
         agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
         //m_storageCells.get(0).getParkingSpot(0).agv(agv);
+        
         
         
         for (int i = 0; i < 3; i++) {
@@ -223,10 +230,9 @@ public class World extends Behaviour {
         
         final float zOff = -STORAGE_WIDTH - EXTENDS - LANE_WIDTH * LANE_COUNT;
         m_train = WorldCreator.createTrain(
-                new Vector3f(2000.0f, 10.0f,  zOff),
+                new Vector3f(2600.0f, 10.0f,  zOff),
                 new Vector3f(-200.0f, 10.0f, zOff));
         
-        m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.rotate(0.0f, -90.0f, 0.0f);
     }
     

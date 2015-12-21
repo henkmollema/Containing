@@ -65,8 +65,7 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
                 // Nadat de trein klaar is moet deze leeg weer wegrijden,
                 // of wellicht gewoon verdwijnen:
                 
-                world.getTrain().state(Vehicle.VehicleState.ToOut);                
-                //world.getTrain().state(Vehicle.VehicleState.Disposed);
+                world.getTrain().state(Vehicle.VehicleState.ToOut);
                 
                 break;
                 

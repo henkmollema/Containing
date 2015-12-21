@@ -79,9 +79,6 @@ public class Vehicle extends MovingItem {
                 } else if (path().atFirst()) {
                     
                 }
-                
-                // todo: moet hier ook geen update?
-                //path().update();
                 break;
             case ToOut:
                 if (path().atLast()) {
@@ -89,8 +86,6 @@ public class Vehicle extends MovingItem {
                 } else if (path().atFirst()) {
                     
                 }
-                
-                path().update();
                 break;
         }
     }

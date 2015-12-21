@@ -243,7 +243,7 @@ public final class WorldCreator {
         
         Vehicle v = new Vehicle(
                 new Point3(1, 1, size),
-                10.0f,//speed
+                30.0f,//speed
                 "Sietse/Train/Thomas_Train.obj", // front model
                 7.0f, // front scale
                 new Vector3f(World.containerSize().x, -10, 40 + 2 * size * World.containerSize().z) // front offset

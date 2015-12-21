@@ -112,13 +112,9 @@ public class World extends Behaviour {
         
         m_train.update();
         m_inlandShip.update();
-        m_seaShip.update();
-        
-        if (Time.time() < 12.0f && Time.time() + Time.deltaTime() >= 12.0f) {
-            m_train.state(Vehicle.VehicleState.ToLoad);
-        }
-        
+        m_seaShip.update();        
     }
+    
     private void createAGV() {
         
         AGV agv = new AGV();

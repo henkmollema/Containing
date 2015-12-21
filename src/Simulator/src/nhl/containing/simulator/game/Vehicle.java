@@ -19,84 +19,106 @@ import nhl.containing.simulator.world.MaterialCreator;
  *
  * @author sietse
  */
-public class Vehicle extends MovingItem {
-    
-    public enum VehicleState {
+public class Vehicle extends MovingItem
+{
+    public enum VehicleState
+    {
         Disposed,
         Waiting,
         ToLoad,
         ToOut
     }
-    
     private boolean m_initialized = false;
     private final static String BASE_MODEL_PATH = "models/";
-    
     public Spatial m_frontSpatial;
-    
     public Material m_frontMaterial;
-    
     private Vector3f m_frontOffset;
-    
     public Vector3f[] from;
     public Vector3f[] to;
-    
     private VehicleState m_currentState;
-    
-    
-    public Vehicle(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
+    private boolean _busy;
+    private VehicleStateApplied _callback;
+
+    public Vehicle(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset)
+    {
         super(size, speed);
         init(frontModel, frontScale, frontOffset);
     }
-    
-    private void init(String frontModel, float frontScale, Vector3f frontOffset) {
+
+    private void init(String frontModel, float frontScale, Vector3f frontOffset)
+    {
         m_frontOffset = frontOffset == null ? Utilities.zero() : frontOffset;
-        
-        if (!Utilities.nullOrEmpty(frontModel)) {
+
+        if (!Utilities.nullOrEmpty(frontModel))
+        {
             if (m_frontMaterial == null)
+            {
                 m_frontMaterial = MaterialCreator.unshadedRandom();
-            
+            }
+
             m_frontSpatial = Main.assets().loadModel(BASE_MODEL_PATH + frontModel);
             m_frontSpatial.setMaterial(m_frontMaterial);
             m_frontSpatial.scale(frontScale);
             this.attachChild(m_frontSpatial);
             m_frontSpatial.setLocalTranslation(m_frontOffset);
         }
-        
+
         // Init path
         path(new Path());
         path().m_callback = new Callback(this, "onVehicle");
-        path().m_loopMode = LoopMode.Once;
+        path().m_loopMode = LoopMode.Loop;
         path().setSpeed(m_loadedSpeed);
         path().m_waitTime = 0.0f;
         path().m_useTimeInsteadOfSpeed = false;
     }
-    
-    public void onVehicle() {
-        switch (m_currentState) {
+
+    public void onVehicle()
+    {
+        switch (m_currentState)
+        {
             case ToLoad:
-                if (path().atLast()) {
+                if (path().atLast())
+                {
                     state(VehicleState.Waiting);
-                } else if (path().atFirst()) {
-                    
+                    if (_busy && _callback != null)
+                    {
+                        _busy = false;
+                        _callback.done(this);
+                        _callback = null;
+                    }
+                }
+                else if (path().atFirst())
+                {
                 }
                 break;
             case ToOut:
-                if (path().atLast()) {
+                if (path().atLast())
+                {
                     state(VehicleState.Disposed);
-                } else if (path().atFirst()) {
-                    
+                    if (_busy && _callback != null)
+                    {
+                        _busy = false;
+                        _callback.done(this);
+                        _callback = null;
+                    }
+                }
+                else if (path().atFirst())
+                {
                 }
                 break;
         }
     }
-    
-    public void update() {
-        if (!m_initialized) {
+
+    public void update()
+    {
+        if (!m_initialized)
+        {
             m_initialized = true;
             return;
         }
-        
-        switch (m_currentState) {
+
+        switch (m_currentState)
+        {
             case ToLoad:
                 path().update();
                 position(path().getPosition());
@@ -106,22 +128,41 @@ public class Vehicle extends MovingItem {
                 position(path().getPosition());
                 break;
         }
-        
+
     }
-    
-    public void state(VehicleState state) {
+
+    public void state(VehicleState state)
+    {
+        state(state, null);
+    }
+
+    public void state(VehicleState state, VehicleStateApplied callback)
+    {
         if (m_currentState == state)
+        {
             return;
-        
-        switch (state) {
+        }
+
+        switch (state)
+        {
             case Disposed:
                 this.setCullHint(CullHint.Always);
                 break;
             case ToLoad:
+                if (!_busy && callback != null)
+                {
+                    _busy = true;
+                    _callback = callback;
+                }
                 this.setCullHint(CullHint.Dynamic);
                 path().setPathf(from[0], from);
                 break;
             case ToOut:
+                if (!_busy && callback != null)
+                {
+                    _busy = true;
+                    _callback = callback;
+                }
                 path().setPathf(to[0], to);
                 break;
             case Waiting:
@@ -129,8 +170,17 @@ public class Vehicle extends MovingItem {
         }
         m_currentState = state;
     }
-    public VehicleState state() {
+
+    public VehicleState state()
+    {
         return m_currentState;
     }
-    
+
+    /**
+     * Callback when a vehicle arrives in a certain state.
+     */
+    public interface VehicleStateApplied
+    {
+        void done(Vehicle v);
+    }
 }

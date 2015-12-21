@@ -57,6 +57,7 @@ public class Main extends SimpleApplication {
     private nhl.containing.simulator.simulation.Camera m_camera;
     private Input m_input;
     private GUI m_gui;
+    private World _world;
     
     //Networking
     private static SimulatorClient _simClient;
@@ -84,6 +85,7 @@ public class Main extends SimpleApplication {
         m_camera = new nhl.containing.simulator.simulation.Camera();
         m_input = new Input();
         m_gui = new GUI();
+        _world = new World();
 
         // Init all behaviours
         Behaviour[] behaviours = new Behaviour[]{
@@ -92,7 +94,7 @@ public class Main extends SimpleApplication {
             m_camera,
             
             // Non-Main
-            new World(), // Here we create a new world without any help of "the Creator" ;-)
+            _world, // Here we create a new world without any help of "the Creator" ;-)
         };
         
         // Init all behaviours
@@ -106,6 +108,10 @@ public class Main extends SimpleApplication {
      */
     public static SimulatorClient getSimClient(){
         return _simClient;
+    }
+    
+    public World getWorld() {
+        return _world;
     }
     
     /**

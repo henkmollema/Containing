@@ -43,8 +43,8 @@ public class Tickhandler implements Runnable
     public void run()
     {
         // Time sent by the client.
-        long time = _instruction.getTime();
-        System.out.println("Received client time: " + time);
+        long time = _instruction.getTime();// * 100;
+        //p("Received client time: " + time);
 
         // Get the first shipment from the simulation context.
         SimulationContext context = Simulator.instance().getController().getContext();
@@ -52,13 +52,14 @@ public class Tickhandler implements Runnable
 
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
+        p("Ingame time: " + date.toString());
 
         // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
             s.processed = true;
-            System.out.println("Process " + s.key);
+            p("Process shipment: " + s.key);
             createProto(s);
         }
     }
@@ -133,5 +134,10 @@ public class Tickhandler implements Runnable
             return "Truck";
         else
             return "Remainder";
+    }
+    
+    private static void p(String s)
+    {
+        System.out.println("[" + System.currentTimeMillis() + "] Controller: " + s);
     }
 }

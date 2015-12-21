@@ -129,9 +129,6 @@ public class World extends Behaviour {
         for (int i = 0; i < m_lorryCells.size(); i++) {
             m_lorryCells.get(i).b.state(Vehicle.VehicleState.ToLoad);
         }
-        
-        
-        
     }
     
     private void createInlandCell() {
@@ -212,6 +209,11 @@ public class World extends Behaviour {
             offset.x += containerSize().x * 6 + 27.5f;
         }
     }
+    
+    public Vehicle getTrain() {
+        return m_train;
+    }
+    
     private void createTrainCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
         for (int i = 0; i < 0; ++i) {
@@ -223,6 +225,7 @@ public class World extends Behaviour {
         m_train = WorldCreator.createTrain(
                 new Vector3f(2000.0f, 10.0f,  zOff),
                 new Vector3f(-200.0f, 10.0f, zOff));
+        
         m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.rotate(0.0f, -90.0f, 0.0f);
     }

@@ -12,6 +12,8 @@ import nhl.containing.simulator.simulation.Main;
 import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.networking.protocol.InstructionDispatcher;
+import nhl.containing.simulator.game.*;
+import nhl.containing.simulator.world.World;
 
 /**
  *
@@ -36,33 +38,57 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher {
      */
     @Override
     public void forwardInstruction(InstructionProto.Instruction inst) {
+        World world = _sim.getWorld();
         InstructionProto.InstructionResponse.Builder responseBuilder = InstructionProto.InstructionResponse.newBuilder();
 
         switch (inst.getInstructionType()) {
             case InstructionType.MOVE_AGV:
-                System.out.println("Got MOVE AGV instruction");
-
+                p("Got MOVE AGV instruction");
                 break;
                 
             case InstructionType.ARRIVAL_INLANDSHIP:
-            case InstructionType.ARRIVAL_SEASHIP:
-            case InstructionType.ARRIVAL_TRAIN:
-            case InstructionType.ARRIVAL_TRUCK:
-                p("Received arrival of " + inst.getContainersCount());
+                p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
                 break;
                 
-            case InstructionType.CLIENT_TIME_UPDATE:
-                System.out.println("SENT TIME UPDATE: " + ByteBuffer.wrap(inst.getMessageBytes().toByteArray()).getFloat());
-                //Here react on the new time, call the tick function or something like that.
-                futures.add(Main.executorService().submit(new Runnable()
-                {
-                    @Override
-                    public void run() {
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-                }));
+            case InstructionType.ARRIVAL_SEASHIP:
+                p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
                 break;
-            //More instruction types here..
+                
+            case InstructionType.ARRIVAL_TRAIN:
+                p("Train arrived with " + inst.getContainersCount() + " containers.");
+                
+                // Hier komt een trein binnen en moet dus vanaf z'n 
+                // begin positie naar het laad platform rijden:
+                
+                world.getTrain().state(Vehicle.VehicleState.ToLoad);
+                
+                // Nadat de trein klaar is moet deze leeg weer wegrijden,
+                // of wellicht gewoon verdwijnen:
+                
+                world.getTrain().state(Vehicle.VehicleState.ToOut);                
+                //world.getTrain().state(Vehicle.VehicleState.Disposed);
+                
+                break;
+                
+            case InstructionType.ARRIVAL_TRUCK:
+                p("Trucks arrived with " + inst.getContainersCount() + " containers.");
+                break;
+                
+            case InstructionType.DEPARTMENT_INLANDSHIP:
+                p("Inland ship departed with " + inst.getContainersCount() + " containers.");
+                break;
+                
+            case InstructionType.DEPARTMENT_SEASHIP:
+                p("Sea ship departed with " + inst.getContainersCount() + " containers.");
+                break;
+                
+            case InstructionType.DEPARTMENT_TRAIN:
+                p("Train departed with " + inst.getContainersCount() + " containers.");
+                break;
+                
+            case InstructionType.DEPARTMENT_TRUCK:
+                p("Trucks departed with " + inst.getContainersCount() + " containers.");
+                break;
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());

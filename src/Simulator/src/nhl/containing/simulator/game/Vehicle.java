@@ -44,6 +44,11 @@ public class Vehicle extends MovingItem
         super(size, speed);
         init(frontModel, frontScale, frontOffset);
     }
+    
+    public void setFrontOffset(Vector3f frontOffset)
+    {
+        m_frontSpatial.setLocalTranslation(frontOffset);
+    }
 
     private void init(String frontModel, float frontScale, Vector3f frontOffset)
     {
@@ -66,7 +71,7 @@ public class Vehicle extends MovingItem
         // Init path
         path(new Path());
         path().m_callback = new Callback(this, "onVehicle");
-        path().m_loopMode = LoopMode.Loop;
+        path().m_loopMode = LoopMode.Once;
         path().setSpeed(m_loadedSpeed);
         path().m_waitTime = 0.0f;
         path().m_useTimeInsteadOfSpeed = false;
@@ -87,9 +92,6 @@ public class Vehicle extends MovingItem
                         _callback = null;
                     }
                 }
-                else if (path().atFirst())
-                {
-                }
                 break;
             case ToOut:
                 if (path().atLast())
@@ -101,9 +103,6 @@ public class Vehicle extends MovingItem
                         _callback.done(this);
                         _callback = null;
                     }
-                }
-                else if (path().atFirst())
-                {
                 }
                 break;
         }

@@ -14,6 +14,7 @@ import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.simulator.game.*;
 import nhl.containing.simulator.world.World;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
@@ -59,6 +60,7 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher
 
             case InstructionType.ARRIVAL_TRAIN:
                 p("Train arrived with " + inst.getContainersCount() + " containers.");
+                TrainHelper.attachWagonToTrain(world.getTrain(), inst.getContainersCount());
                 world.getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
                 {
                     @Override

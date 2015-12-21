@@ -246,7 +246,7 @@ public final class WorldCreator {
                 30.0f,//speed
                 "Sietse/Train/Thomas_Train.obj", // front model
                 7.0f, // front scale
-                new Vector3f(World.containerSize().x, -10, 40 + 2 * size * World.containerSize().z) // front offset
+                new Vector3f(World.containerSize().x, -10, 350 + 2 * size * World.containerSize().z) // front offset
         );
         v.m_frontSpatial.setMaterial(v.m_frontMaterial = MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
         v.state(Vehicle.VehicleState.Disposed);
@@ -255,21 +255,7 @@ public final class WorldCreator {
         v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
         v.path().setPosition(from);
         
-        for (int i = 0; i < 12; i++) {
-            Spatial s = Main.assets().loadModel("models/elo/low/train/wagon.j3o");
-            s.setMaterial(MaterialCreator.unshadedRandom());
-            s.scale(4.0f);
-            
-            v.attachChild(s);
-            
-            Vector3f off = World.containerSize();
-            off.y -= 7.5f;
-            off.z *= (0.8 + i) * 5;
-            
-            s.setLocalTranslation(off);
-            s.setLocalRotation(Utilities.euler2Quaternion(new Vector3f(0.0f, 0.0f, 90.0f)));
-            System.out.println(s.getLocalRotation().toString());
-        }
+        
         
         return v;
     }

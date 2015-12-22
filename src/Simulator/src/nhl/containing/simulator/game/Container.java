@@ -4,6 +4,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
 
@@ -14,6 +15,7 @@ import nhl.containing.simulator.world.MaterialCreator;
 public class Container {
     
     public Transform transform = null;
+    private long m_id;
     
     private final RFID m_rfid;                // Container properties
     private final Material m_material;  // Container material (saved here for pool system)
@@ -25,6 +27,7 @@ public class Container {
     public Container(RFID id) {
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        m_id = Main.register(this);
         show();
     }
     /**
@@ -35,6 +38,7 @@ public class Container {
     public Container(RFID id, Material material) {
         this.m_rfid = id;
         this.m_material = material;
+        m_id = Main.register(this);
         show();
     }
     /**
@@ -45,6 +49,7 @@ public class Container {
     public Container(Transform parent, RFID id) {
         this.m_rfid = id;
         this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        m_id = Main.register(this);
         show();
     }
     /**
@@ -56,7 +61,12 @@ public class Container {
     public Container(Transform parent, Material material, RFID id) {
         this.m_rfid = id;
         this.m_material = material;
+        m_id = Main.register(this);
         show();
+    }
+    public long id()
+    {
+        return m_id;
     }
     public final void show(Vector3f pos) {
         show();
@@ -65,17 +75,14 @@ public class Container {
     public final void show() {
         if (transform != null)
             return;
-        
         ContainerPool.get(this);
         transform.setMaterial(this.m_material);
     }
     public final void hide() {
         if (transform == null)
             return;
-        
         ContainerPool.dispose(this);
     }
-    
     /**
      * Get ID
      * @return 

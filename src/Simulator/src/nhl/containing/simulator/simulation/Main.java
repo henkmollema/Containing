@@ -8,6 +8,7 @@ import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.networking.InstructionDispatcherSimulator;
 import nhl.containing.simulator.networking.SimulatorClient;
+import nhl.containing.simulator.game.Container;
 import nhl.containing.simulator.framework.Utilities.*;
 import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
@@ -18,7 +19,9 @@ import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.*;
@@ -66,6 +69,7 @@ public class Main extends SimpleApplication {
     // Transforms
     private static long m_transformID = 0;
     private static List<Transform> m_transforms = new ArrayList<>();
+    private static Map<Long, Container> m_containers = new HashMap<>();
     
     // Lines
     private static List<Line3D> m_lines = new ArrayList<>();
@@ -170,6 +174,18 @@ public class Main extends SimpleApplication {
         return -1;
     }
     /**
+     * Register Container
+     * @param container
+     * @return 
+     */
+    public static long register(Container container) {
+        if (!m_containers.containsValue(container)) {
+            m_containers.put(Long.valueOf(m_transformID), container);
+            return m_transformID;
+        }
+        return -1;
+    }
+    /**
      * Register line
      * @param line 
      */
@@ -180,7 +196,6 @@ public class Main extends SimpleApplication {
         }
         return false;
     }
-    
     /**
      * Unregister behaviour
      * @param behaviour behaviour to unregister
@@ -196,6 +211,14 @@ public class Main extends SimpleApplication {
      */
     public static boolean unregister(Transform transform) {
         return m_transforms.remove(transform);
+    }
+    /**
+     * Unregister Container
+     * @param container
+     * @return 
+     */
+    public static boolean unregister(Container container) {
+        return m_containers.values().remove(container);
     }
     /**
      * Unregister line
@@ -217,6 +240,14 @@ public class Main extends SimpleApplication {
                 return t;
         }
         return null;
+    }
+    /**
+     * Get Container by id
+     * @param id
+     * @return 
+     */
+    public static Container getContainer(long id) {
+        return m_containers.get(id);
     }
 
     /**
@@ -335,13 +366,6 @@ public class Main extends SimpleApplication {
      */
     public static nhl.containing.simulator.simulation.Camera camera() {
         return instance().m_camera;
-    }
-    /**
-     * Get settings
-     * @return 
-     */
-    public static AppSettings settings() {
-        return instance().settings;
     }
     /**
      * Get simulator client

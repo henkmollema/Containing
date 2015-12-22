@@ -6,6 +6,7 @@ import com.jme3.font.BitmapText;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
+import nhl.containing.simulator.game.Container;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -18,7 +19,7 @@ public class GUI extends Behaviour{
     
     // Singleton
     private static GUI m_instance;
-    public static GUI instnace() {
+    public static GUI instance() {
         return m_instance;
     }
     
@@ -53,18 +54,21 @@ public class GUI extends Behaviour{
     public void start() {
                 /** Write text on the screen (HUD) */
         //Main.guiRoot().detachAllChildren();
-        /*Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
+        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         m_containerInfo = new BitmapText(Main.guiFont(), false);
         m_containerInfo.setText("hoi,\nik ben een\nheleboel informatie");
-        m_containerInfo.setLocalTranslation(screenWidth() - 150, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
+        m_containerInfo.setLocalTranslation(screenWidth() - 200, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
         Main.guiRoot().attachChild(m_containerInfo);
-        /*BitmapText helloText = new BitmapText(Main.guiFont(), false);
-        helloText.setSize(Main.guiFont().getCharSet().getRenderedSize());
-        helloText.setText("hoi,\nik ben een\nheleboel informatie");
-        helloText.setLocalTranslation(screenWidth() - 150, (screenHeight() - 75) + helloText.getHeight(), 0);
-        Main.guiRoot().attachChild(helloText);*/
  
+    }
+    public void setContainerText(String text)
+    {
+        m_containerInfo.setText(text);
+    }
+    public void setContainerInfo(Container container)
+    {
+        m_containerInfo.setText(container.toString());
     }
     @Override
     public void rawUpdate() {
@@ -74,14 +78,7 @@ public class GUI extends Behaviour{
             i._baseUpdate();
         }
         * */
-        
-        
-        
     }
-    
-    
-    
-    
     /*
     public static long register(GuiItem item) {
         if (!m_items.contains(item)) {

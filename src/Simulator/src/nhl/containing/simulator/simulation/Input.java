@@ -18,6 +18,7 @@ import java.util.List;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.gui.GUI;
 
 /**
  * Handles input
@@ -295,6 +296,8 @@ public class Input extends Behaviour {
         }
          // Set
         Main.camera().setTarget(Main.getTransform(transformID));
+        GUI.instance().setContainerInfo(Main.getContainer(transformID));
+        //GUI.instnace().setContainerText(String.valueOf(Main.getTransform(transformID).id() == Main.getContainer(transformID).id()));
     }
     
     /**

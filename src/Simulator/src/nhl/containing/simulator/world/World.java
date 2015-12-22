@@ -26,6 +26,7 @@ import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Tuple;
 import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
@@ -70,7 +71,7 @@ public class World extends Behaviour {
     private List<Tuple<PlatformLorry, Vehicle>> m_lorryCells = new ArrayList<>(0);
     
     // Vehicles
-    private Vehicle m_train;
+    private Train m_train;
     private Vehicle m_seaShip;
     private Vehicle m_inlandShip;
     
@@ -93,6 +94,8 @@ public class World extends Behaviour {
         createTrainCell();
         createAGV();
         Main.getSimClient().Start();
+        
+        test();
     }
     
     @Override
@@ -121,9 +124,9 @@ public class World extends Behaviour {
         agv.setContainer(new Container(null));
         agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
         //m_storageCells.get(0).getParkingSpot(0).agv(agv);
-        
-        
-        
+    }
+    private void test()
+    {
         for (int i = 0; i < 3; i++) {
             m_storageCells.get(0).take(new Point3(4, 4, i), 0);
         }
@@ -132,8 +135,10 @@ public class World extends Behaviour {
         for (int i = 0; i < m_lorryCells.size(); i++) {
             m_lorryCells.get(i).b.state(Vehicle.VehicleState.ToLoad);
         }
+        
+        m_train.state(Vehicle.VehicleState.ToLoad);
+        m_train.init(30);
     }
-    
     private void createInlandCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < 1; ++i) {
@@ -213,7 +218,7 @@ public class World extends Behaviour {
         }
     }
     
-    public Vehicle getTrain() {
+    public Train getTrain() {
         return m_train;
     }
     

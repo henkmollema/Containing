@@ -26,6 +26,7 @@ import nhl.containing.simulator.framework.Path;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
@@ -238,15 +239,14 @@ public final class WorldCreator {
      * @param to The point that is the loading platform
      * @return 
      */
-    public static Vehicle createTrain(Vector3f from, Vector3f to) {
-        final int size = 30;
+    public static Train createTrain(Vector3f from, Vector3f to) {
         
-        Vehicle v = new Vehicle(
-                new Point3(1, 1, size),
+        Train v = new Train(
+                new Point3(1, 1, 0),
                 30.0f,//speed
                 "Sietse/Train/Thomas_Train.obj", // front model
                 7.0f, // front scale
-                new Vector3f(World.containerSize().x, -10, 350 + 2 * size * World.containerSize().z) // front offset
+                new Vector3f(World.containerSize().x, -10, 0.0f) // front offset
         );
         v.m_frontSpatial.setMaterial(v.m_frontMaterial = MaterialCreator.unshaded("models/Sietse/Train/Thomas_Train.png"));
         v.state(Vehicle.VehicleState.Disposed);
@@ -255,7 +255,8 @@ public final class WorldCreator {
         v.to = new Vector3f[] { new Vector3f(to), new Vector3f(from) };
         v.path().setPosition(from);
         
-        
+        v.invZ = true;
+        v.containerOffset(new Vector3f(0.0f, 0.0f, -36.0f));
         
         return v;
     }

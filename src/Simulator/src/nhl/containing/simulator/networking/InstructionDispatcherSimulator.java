@@ -60,7 +60,13 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher
 
             case InstructionType.ARRIVAL_TRAIN:
                 p("Train arrived with " + inst.getContainersCount() + " containers.");
-                TrainHelper.attachWagonToTrain(world.getTrain(), inst.getContainersCount());
+                
+                // This is the new way to do it,
+                // TODO: the containers has to be initialized
+                world.getTrain().init(inst.getContainersCount());
+                //TrainHelper.attachWagonToTrain(world.getTrain(), inst.getContainersCount());
+                
+                
                 world.getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
                 {
                     @Override

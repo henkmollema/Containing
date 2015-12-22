@@ -6,6 +6,7 @@ import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.world.World;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Point2;
+import nhl.containing.simulator.world.ContainerPool;
 
 /**
  *
@@ -40,6 +41,7 @@ public class ContainerCarrier extends Transform {
         }
     }
     
+    public boolean invZ = false;
     private Vector3f m_containerOffset = Utilities.zero();                      // Offset
     protected ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];  // All container spots
     
@@ -150,14 +152,18 @@ public class ContainerCarrier extends Transform {
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     
                     // Set spot
-                    Vector3f _newPosition = new Vector3f(i * 2, j * 2, k * 2);
+                    Vector3f _newPosition = new Vector3f(i * 2, j * 2, k * (invZ ? -2 : 2));
                     _newPosition = _newPosition.mult(World.containerSize());
                     _newPosition = _newPosition.add(_baseOffset);
-                            
+                    
+                    if (m_containerSpots[i][j][k] != null) {
+                        ContainerPool.dispose(m_containerSpots[i][j][k].container);
+                    }
+                    
                     m_containerSpots[i][j][k] = new ContainerSpot(_newPosition);
                     
                     // Remove this, its for testing purposes
-                    setContainer(new Point3(i, j, k), new Container(new RFID()), false);
+                    //setContainer(new Point3(i, j, k), new Container(new RFID()), false);
                 }
             }
         }

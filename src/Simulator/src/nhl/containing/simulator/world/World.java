@@ -26,6 +26,7 @@ import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Tuple;
 import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.game.RFID;
 import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 
@@ -109,8 +110,24 @@ public class World extends Behaviour {
         for(PlatformTrain   s : m_trainCells   ) s.update();
         
         for(Tuple<PlatformLorry, Vehicle> s : m_lorryCells) {
+            Vehicle.VehicleState st = s.b.state();
+            
             s.a.update();
             s.b.update();
+            
+            if (st != s.b.state()) {
+                if (s.b.state() == Vehicle.VehicleState.Waiting) {
+                    if (s.b.getContainer() != null && s.b.getContainer().transform != null) {
+                        Container c = s.b.setContainer(null);
+                        s.a.setContainer(c);
+                        s.a.take(Point3.zero(), 0);
+                    } else {
+                        // Probably only here to get a container.
+                    }
+                }
+            } else if (s.b.state() == Vehicle.VehicleState.Waiting) {
+                // check if can go away
+            }
         }
         
         m_train.update();
@@ -134,6 +151,9 @@ public class World extends Behaviour {
         
         for (int i = 0; i < m_lorryCells.size(); i++) {
             m_lorryCells.get(i).b.state(Vehicle.VehicleState.ToLoad);
+            Container c = new Container(new RFID());
+            ContainerPool.get(c);
+            m_lorryCells.get(i).b.setContainer(c);
         }
         
         m_train.state(Vehicle.VehicleState.ToLoad);

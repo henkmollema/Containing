@@ -18,6 +18,7 @@ public class PlatformLorry extends Platform {
 
     public PlatformLorry(Vector3f offset) {
         super(offset);
+        initSpots(Point3.one());
     }
     
     @Override

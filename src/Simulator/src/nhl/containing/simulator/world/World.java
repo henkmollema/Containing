@@ -127,9 +127,15 @@ public class World extends Behaviour {
                 }
             } else if (s.b.state() == Vehicle.VehicleState.Waiting) {
                 // check if can go away
+                if (s.a.crane().isUp() /*&& !s.b.needsContainer*/) {
+                    if (true /*&& !s.b.needsContainer*/) {
+                        s.b.state(Vehicle.VehicleState.ToOut);
+                    } else if (true /*s.b.neededContainer() == s.b.getContainer()*/) {
+                        s.b.state(Vehicle.VehicleState.ToOut);
+                    }
+                }
             }
         }
-        
         m_train.update();
         m_inlandShip.update();
         m_seaShip.update();        
@@ -154,10 +160,14 @@ public class World extends Behaviour {
             Container c = new Container(new RFID());
             ContainerPool.get(c);
             m_lorryCells.get(i).b.setContainer(c);
+            m_lorryCells.get(i).a.getParkingSpot(0).agv(new AGV());
         }
         
         m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.init(30);
+        m_train.init(10);
+        
+        m_seaShip.state(Vehicle.VehicleState.ToLoad);
     }
     private void createInlandCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
@@ -208,22 +218,17 @@ public class World extends Behaviour {
             offset.z -= 10.0f;
         }
         
-        
-        Vector3f _dest = new Vector3f(0.0f, 0.0f, 0.0f);
+        Vector3f _dest = new Vector3f(-STORAGE_LENGTH - 400.0f, 0.0f, 0.0f);
         m_seaShip = WorldCreator.createSea(
                 new Vector3f[]{
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, 3000.0f),
+                    new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, 1000.0f),
                     new Vector3f(_dest)
                 },
                 new Vector3f[] {
                     new Vector3f(_dest),
                     new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(200.0f, 0.0f, 0.0f),
                 }
                 );
     }
@@ -244,7 +249,7 @@ public class World extends Behaviour {
     
     private void createTrainCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
-        for (int i = 0; i < 0; ++i) {
+        for (int i = 0; i < TRAIN_CRANE_COUNT; ++i) {
             m_trainCells.add(new PlatformTrain(offset));
             offset.x -= 10.0f;
         }

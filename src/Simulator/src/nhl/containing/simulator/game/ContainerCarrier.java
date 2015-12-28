@@ -171,6 +171,16 @@ public class ContainerCarrier extends Transform {
         updateOuter();
     }
     
+    protected final void clear() {
+        for (int x = 0; x < m_containerSpots      .length; ++x)
+        for (int y = 0; y < m_containerSpots[x]   .length; ++y)
+        for (int z = 0; z < m_containerSpots[x][y].length; ++z) {
+            if (m_containerSpots[x][y][z].container == null)
+                continue;
+            ContainerPool.dispose(m_containerSpots[x][y][z].container);
+        }
+    }
+    
     /**
      * Get height of a horizontal position
      * @param p point x and z index

@@ -280,13 +280,13 @@ public final class WorldCreator {
     public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
                 new Point3(),
-                1.0f,// speed
-                "", // front model
-                1.0f, // front scale
+                10.0f,// speed
+                "henk/Voertuigen/seaShip.obj", // front model
+                4.0f, // front scale
                 new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
-        
+        v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);

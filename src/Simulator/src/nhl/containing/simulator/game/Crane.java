@@ -261,6 +261,10 @@ public final class Crane extends MovingItem {
         path().setPath(newPath);
     }
     
+    public boolean isUp() {
+        return Mathf.inRange(path().getPosition().y, m_basePosition.y, 0.01f);
+    }
+    
     /**
      * 
      * @param c 

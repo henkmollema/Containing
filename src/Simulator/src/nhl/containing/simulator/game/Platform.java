@@ -61,6 +61,9 @@ public abstract class Platform extends ContainerCarrier {
     protected abstract ParkingSpot[] parkingSpots();
     protected abstract void createPlatform();
     
+    public Crane crane() {
+        return m_crane;
+    }
     /**
      * Update, called every frame
      */

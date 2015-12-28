@@ -48,6 +48,8 @@ public class Train extends Vehicle {
     }
     public void init(Container... containers)
     {
+        clear();
+        
         int size = containers.length;
         
         initSpots(new Point3(1, 1, size));
@@ -86,4 +88,11 @@ public class Train extends Vehicle {
         return s;
     }
     
+    @Override
+    public void update() {
+        super.update();
+        
+        
+        
+    }
 }

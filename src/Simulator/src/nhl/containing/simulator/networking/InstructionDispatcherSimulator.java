@@ -55,32 +55,69 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher
             case InstructionType.ARRIVAL_INLANDSHIP:
                 p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
+
+                // Let the ship arrive at the platform.
+                world.getInlandShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+                {
+                    @Override
+                    public void done(Vehicle v)
+                    {
+                        p("Inland ship " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: get the containers from the ship
+                        //
+
+                        // Depart the ship.
+                        v.state(Vehicle.VehicleState.ToOut);
+                    }
+                });
                 break;
 
             case InstructionType.ARRIVAL_SEASHIP:
                 p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
+
+                // Let the ship arrive at the platform.
+                world.getSeaShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+                {
+                    @Override
+                    public void done(Vehicle v)
+                    {
+                        p("Sea ship " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: get the containers from the ship
+                        //
+
+                        // Depart the ship.
+                        v.state(Vehicle.VehicleState.ToOut);
+                    }
+                });
                 break;
 
             case InstructionType.ARRIVAL_TRAIN:
                 p("Train arrived with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Aankomst:\nTrein\n" + inst.getContainersCount() + " container(s)");
 
-                // This is the new way to do it,
-                // TODO: the containers has to be initialized
-                //world.getTrain().init(inst.getContainersCount());
-                //TrainHelper.attachWagonToTrain(world.getTrain(), inst.getContainersCount());
+                // Re-init the train with amount of containers.
+                p("Init train with " + inst.getContainersCount() + " containers");
 
+                // todo: exception at this line:
+                //world.getTrain().init(inst.getContainersCount());
 
                 world.getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
                 {
                     @Override
                     public void done(Vehicle v)
                     {
-                        // todo: operate the crane.
-
-                        // Move train back when arrived.
                         p("Train " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: load the containers from the train
+                        //
+
+                        // Train departs.
                         v.state(Vehicle.VehicleState.ToOut);
                     }
                 });
@@ -88,31 +125,70 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher
                 break;
 
             case InstructionType.ARRIVAL_TRUCK:
-                p("Trucks arrived with " + inst.getContainersCount() + " containers.");
+                p("Truck arrived with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
                 break;
 
             case InstructionType.DEPARTMENT_INLANDSHIP:
                 p("Inland ship departed with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Vertrek:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
+
+                // Let the ship arrive at the platform.
+                world.getInlandShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+                {
+                    @Override
+                    public void done(Vehicle v)
+                    {
+                        p("Inland ship " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: get the containers from the ship
+                        //
+
+                        // Depart the ship.
+                        v.state(Vehicle.VehicleState.ToOut);
+                    }
+                });
                 break;
 
             case InstructionType.DEPARTMENT_SEASHIP:
                 p("Sea ship departed with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Vertrek:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
+
+                // Let the ship arrive at the platform.
+                world.getSeaShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+                {
+                    @Override
+                    public void done(Vehicle v)
+                    {
+                        p("Sea ship " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: load the ship with outgoing containers
+                        //
+
+                        // Depart the ship.
+                        v.state(Vehicle.VehicleState.ToOut);
+                    }
+                });
                 break;
 
             case InstructionType.DEPARTMENT_TRAIN:
+                p("Train departed with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Vertrek:\nTrein\n" + inst.getContainersCount() + " container(s)");
+
                 world.getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
                 {
                     @Override
                     public void done(Vehicle v)
                     {
-                        // todo: load the train.
-
-                        // Move train back when arrived.
                         p("Train " + v.id() + " arrived at loading platform.");
+
+                        //
+                        // todo: load the containers onto the train
+                        //
+
+                        // Depart the train.
                         v.state(Vehicle.VehicleState.ToOut);
                     }
                 });
@@ -120,7 +196,7 @@ public class InstructionDispatcherSimulator implements InstructionDispatcher
                 break;
 
             case InstructionType.DEPARTMENT_TRUCK:
-                p("Trucks departed with " + inst.getContainersCount() + " containers.");
+                p("Truck departed with " + inst.getContainersCount() + " containers.");
                 gui.setContainerText("Vertrek:\n vrachtwagen\n" + inst.getContainersCount() + " container(s).");
                 break;
         }

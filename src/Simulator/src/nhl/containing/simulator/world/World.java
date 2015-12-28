@@ -163,11 +163,11 @@ public class World extends Behaviour {
             m_lorryCells.get(i).a.getParkingSpot(0).agv(new AGV());
         }
         
-        m_train.state(Vehicle.VehicleState.ToLoad);
+        //m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.init(30);
         m_train.init(10);
         
-        m_seaShip.state(Vehicle.VehicleState.ToLoad);
+        //m_seaShip.state(Vehicle.VehicleState.ToLoad);
     }
     private void createInlandCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
@@ -245,6 +245,14 @@ public class World extends Behaviour {
     
     public Train getTrain() {
         return m_train;
+    }   
+    
+    public Vehicle getSeaShip() {
+        return m_seaShip;
+    }
+
+    public Vehicle getInlandShip() {
+        return m_inlandShip;
     }
     
     private void createTrainCell() {

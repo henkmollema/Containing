@@ -1,5 +1,6 @@
 package nhl.containing.simulator.gui;
 
+import com.jme3.font.*;
 import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
 import com.jme3.font.BitmapText;
@@ -57,8 +58,7 @@ public class GUI extends Behaviour{
         Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         m_containerInfo = new BitmapText(Main.guiFont(), false);
-        m_containerInfo.setText("hoi,\nik ben een\nheleboel informatie");
-        m_containerInfo.setLocalTranslation(screenWidth() - 200, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
+        m_containerInfo.setLocalTranslation(screenWidth() - 150, (screenHeight() - 50) + m_containerInfo.getHeight(), 0);
         Main.guiRoot().attachChild(m_containerInfo);
  
     }

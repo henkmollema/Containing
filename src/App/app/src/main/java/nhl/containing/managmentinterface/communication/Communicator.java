@@ -123,14 +123,14 @@ public class Communicator implements Runnable{
             {
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(host,port),3000);
-                BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
+                //BufferedInputStream input = new BufferedInputStream(socket.getInputStream());
                 OutputStream output = socket.getOutputStream();
                 //write client info
                 ClientIdentity.Builder clientBuilder = ClientIdentity.newBuilder();
                 clientBuilder.setClientType(ClientIdentity.ClientType.APP);
                 StreamHelper.writeMessage(output, clientBuilder.build().toByteArray());
                 //read status message
-                Instruction inst =  Instruction.parseFrom(StreamHelper.readByteArray(input));
+                Instruction inst =  Instruction.parseFrom(StreamHelper.readByteArray(socket.getInputStream()));
                 if(inst.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
                     throw new Exception(mainActivity.getString(R.string.communicator_error_not_connected));
                 byte[] bytes;
@@ -142,7 +142,10 @@ public class Communicator implements Runnable{
                         {
                             StreamHelper.writeMessage(output,request.toByteArray());
                             request = null;
-                            bytes = StreamHelper.readByteArray(input);
+                            socket.setSoTimeout(5000);
+                            System.out.println(socket.getSoTimeout());
+                            bytes = StreamHelper.readByteArray(socket.getInputStream());
+                            socket.setSoTimeout(0);
                             if(bytes.length <= 1)
                                 throw new Exception("No data yet");
                             datablockApp inputBlock = datablockApp.parseFrom(bytes);
@@ -159,7 +162,7 @@ public class Communicator implements Runnable{
                         }
                         catch (Exception e)
                         {
-                            if(e.getMessage().equals("No data yet"))
+                            if(e.getMessage() != null && e.getMessage().equals("No data yet"))
                                 mainActivity.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -186,7 +189,6 @@ public class Communicator implements Runnable{
                         }
                     }
                 }
-                input.close();
                 output.close();
                 socket.close();
             }

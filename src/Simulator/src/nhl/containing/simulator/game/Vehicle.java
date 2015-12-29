@@ -146,6 +146,7 @@ public class Vehicle extends MovingItem
         {
             case Disposed:
                 this.setCullHint(CullHint.Always);
+                _busy = false;
                 break;
             case ToLoad:
                 if (!_busy && callback != null)

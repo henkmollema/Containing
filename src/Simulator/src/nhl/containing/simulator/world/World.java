@@ -96,7 +96,7 @@ public class World extends Behaviour {
         createAGV();
         Main.getSimClient().Start();
         
-        test();
+        //test();
     }
     
     @Override

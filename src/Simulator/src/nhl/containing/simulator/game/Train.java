@@ -24,6 +24,10 @@ public class Train extends Vehicle {
     private List<Spatial> m_wagonInactivePool = new ArrayList<>();
     private List<Spatial> m_wagonActivePool = new ArrayList<>();
     
+    public List<Container> m_containers2take;
+    public List<Container> m_containers2bring;
+    
+    
     public Train(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
         super(size, speed, frontModel, frontScale, frontOffset);
     }
@@ -52,6 +56,7 @@ public class Train extends Vehicle {
         
         int size = containers.length;
         
+        position(Utilities.zero());
         initSpots(new Point3(1, 1, size));
         for (int i = 0; i < size; i++) {
             setContainer(new Point3(0, 0, i), containers[i]);
@@ -91,8 +96,5 @@ public class Train extends Vehicle {
     @Override
     public void update() {
         super.update();
-        
-        
-        
     }
 }

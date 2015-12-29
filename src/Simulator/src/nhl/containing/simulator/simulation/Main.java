@@ -96,6 +96,7 @@ public class Main extends SimpleApplication {
             m_input,
             m_gui,
             m_camera,
+            _dispatcher,
             
             // Non-Main
             _world, // Here we create a new world without any help of "the Creator" ;-)

@@ -92,7 +92,7 @@ public class Transform extends Node {
      * @param p 
      */
     public final void localPosition(Vector3f p) {
-        Vector3f pos = p == null ? Utilities.zero() : p.clone();
+        Vector3f pos = p == null ? Utilities.zero() : new Vector3f(p);
         move(pos.subtract(localPosition()));
     }
     
@@ -299,7 +299,8 @@ public class Transform extends Node {
     public int attachChild(Spatial spatial) {
         if (spatial == null)
             return - 1;
-        spatial.setUserData(Main.TRANSFORM_ID_KEY, m_id);
+        if (spatial.getUserData(Main.TRANSFORM_ID_KEY) == null)
+            spatial.setUserData(Main.TRANSFORM_ID_KEY, m_id);
         return super.attachChild(spatial);
     }
 }

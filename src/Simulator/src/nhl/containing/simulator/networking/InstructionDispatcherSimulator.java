@@ -30,7 +30,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private GUI m_gui;
     private World m_world;
     
-    private final int SAFE_FRAMES = 4;
+    private final int SAFE_FRAMES = 2;
     private int m_safeFrames = 0;
     
     
@@ -154,7 +154,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                     //
                     // todo: load the containers onto the train
                     //
-
+                    
                     // Depart the train.
                     v.state(Vehicle.VehicleState.ToOut);
                 }

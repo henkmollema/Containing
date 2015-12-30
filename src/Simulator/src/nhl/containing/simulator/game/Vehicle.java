@@ -84,13 +84,8 @@ public class Vehicle extends MovingItem
             case ToLoad:
                 if (path().atLast())
                 {
+                    onWaitingStart();
                     state(VehicleState.Waiting);
-                    if (_busy && _callback != null)
-                    {
-                        _busy = false;
-                        _callback.done(this);
-                        _callback = null;
-                    }
                 }
                 break;
             case ToOut:
@@ -118,6 +113,9 @@ public class Vehicle extends MovingItem
 
         switch (m_currentState)
         {
+            case Waiting:
+                onWaitingUpdate();
+                break;
             case ToLoad:
                 path().update();
                 position(path().getPosition());
@@ -129,7 +127,17 @@ public class Vehicle extends MovingItem
         }
 
     }
-
+    
+    public void onWaitingStart() { onDone(); }
+    public void onWaitingUpdate(){ }
+    protected void onDone() {
+        if (_busy && _callback != null) {
+            _busy = false;
+            _callback.done(this);
+            _callback = null;
+        }
+    }
+    
     public void state(VehicleState state)
     {
         state(state, null);

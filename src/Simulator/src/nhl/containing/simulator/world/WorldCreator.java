@@ -243,7 +243,7 @@ public final class WorldCreator {
         
         Train v = new Train(
                 new Point3(1, 1, 0),
-                30.0f,//speed
+                2000.0f,//speed
                 "Sietse/Train/Thomas_Train.obj", // front model
                 7.0f, // front scale
                 new Vector3f(World.containerSize().x, -10, 0.0f) // front offset

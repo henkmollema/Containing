@@ -3,9 +3,12 @@ package nhl.containing.simulator.game;
 import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
+import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.networking.SimulatorClient;
+import nhl.containing.simulator.simulation.Main;
 /**
  * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * also check line 206
@@ -18,6 +21,7 @@ public abstract class Platform extends ContainerCarrier {
     
     protected Crane m_crane;                                // Crane
     protected ParkingSpot[] m_parkingSpots;                 // AGV parking spots
+    protected int m_platformid;
     
     private List<CraneAction> m_queue = new ArrayList<>();  // Action queue
     private CraneAction m_currentAction;                    // Current action
@@ -26,22 +30,22 @@ public abstract class Platform extends ContainerCarrier {
     /**
      * Constructor
      */
-    public Platform(Vector3f offset) {
-        super();
-        m_parkingSpots = _parkingSpots(-1);
-        createPlatform();
-        this.position(offset);
-    }
+//    public Platform(Vector3f offset) {
+//        super();
+//        m_parkingSpots = _parkingSpots(-1);
+//        createPlatform();
+//        this.position(offset);
+//    }
     
     public Platform(Vector3f offset, int id){
         super();
-        m_parkingSpots = _parkingSpots(id);
+        m_parkingSpots = _parkingSpots();
         createPlatform();
         this.position(offset);
     }
     
-    private ParkingSpot[] _parkingSpots(int id) {
-        return parkingSpots(id);
+    private ParkingSpot[] _parkingSpots() {
+        return parkingSpots();
     }
     
     /**
@@ -64,7 +68,7 @@ public abstract class Platform extends ContainerCarrier {
      * Init parkingspots
      * @return 
      */
-    protected abstract ParkingSpot[] parkingSpots(int id);
+    protected abstract ParkingSpot[] parkingSpots();
     protected abstract void createPlatform();
     
     public Crane crane() {
@@ -297,6 +301,11 @@ public abstract class Platform extends ContainerCarrier {
                 }
             }
         }
+        
+        protected void sendTask(){
+            SimulatorClient.sendTaskDone(m_platformid, 0, InstructionType.CRANE_TO_STORAGE_READY, to.storageSpot); //change A & B!!
+        }
+        
         /**
          * Check if need to replace
          * @param point

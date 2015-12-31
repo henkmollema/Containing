@@ -199,85 +199,121 @@ public final class SimulationItemProto {
     public enum SimulationItemType
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>PLATFORM = 0;</code>
+       * <code>PLATFORM_STORAGE = 0;</code>
        */
-      PLATFORM(0, 0),
+      PLATFORM_STORAGE(0, 0),
       /**
-       * <code>PARKINGSPOT = 1;</code>
+       * <code>PARKINGSPOT_STORAGE = 1;</code>
        */
-      PARKINGSPOT(1, 1),
+      PARKINGSPOT_STORAGE(1, 1),
       /**
        * <code>NODES = 2;</code>
        */
       NODES(2, 2),
       /**
-       * <code>TRAIN = 3;</code>
+       * <code>PLATFORM_TRAIN = 3;</code>
        */
-      TRAIN(3, 3),
+      PLATFORM_TRAIN(3, 3),
       /**
-       * <code>SEASHIP = 4;</code>
+       * <code>PLATFORM_SEASHIP = 4;</code>
        */
-      SEASHIP(4, 4),
+      PLATFORM_SEASHIP(4, 4),
       /**
-       * <code>INLANDSHIP = 5;</code>
+       * <code>PLATFORM_INLANDSHIP = 5;</code>
        */
-      INLANDSHIP(5, 5),
+      PLATFORM_INLANDSHIP(5, 5),
       /**
-       * <code>LORRY = 6;</code>
+       * <code>PLATFORM_LORRY = 6;</code>
        */
-      LORRY(6, 6),
+      PLATFORM_LORRY(6, 6),
       /**
        * <code>AGV = 7;</code>
        */
       AGV(7, 7),
+      /**
+       * <code>PARKINGSPOT_TRAIN = 8;</code>
+       */
+      PARKINGSPOT_TRAIN(8, 8),
+      /**
+       * <code>PARKINGSPOT_SEASHIP = 9;</code>
+       */
+      PARKINGSPOT_SEASHIP(9, 9),
+      /**
+       * <code>PARKINGSPOT_INLANDSHIP = 10;</code>
+       */
+      PARKINGSPOT_INLANDSHIP(10, 10),
+      /**
+       * <code>PARKINGSPOT_LORRY = 11;</code>
+       */
+      PARKINGSPOT_LORRY(11, 11),
       ;
 
       /**
-       * <code>PLATFORM = 0;</code>
+       * <code>PLATFORM_STORAGE = 0;</code>
        */
-      public static final int PLATFORM_VALUE = 0;
+      public static final int PLATFORM_STORAGE_VALUE = 0;
       /**
-       * <code>PARKINGSPOT = 1;</code>
+       * <code>PARKINGSPOT_STORAGE = 1;</code>
        */
-      public static final int PARKINGSPOT_VALUE = 1;
+      public static final int PARKINGSPOT_STORAGE_VALUE = 1;
       /**
        * <code>NODES = 2;</code>
        */
       public static final int NODES_VALUE = 2;
       /**
-       * <code>TRAIN = 3;</code>
+       * <code>PLATFORM_TRAIN = 3;</code>
        */
-      public static final int TRAIN_VALUE = 3;
+      public static final int PLATFORM_TRAIN_VALUE = 3;
       /**
-       * <code>SEASHIP = 4;</code>
+       * <code>PLATFORM_SEASHIP = 4;</code>
        */
-      public static final int SEASHIP_VALUE = 4;
+      public static final int PLATFORM_SEASHIP_VALUE = 4;
       /**
-       * <code>INLANDSHIP = 5;</code>
+       * <code>PLATFORM_INLANDSHIP = 5;</code>
        */
-      public static final int INLANDSHIP_VALUE = 5;
+      public static final int PLATFORM_INLANDSHIP_VALUE = 5;
       /**
-       * <code>LORRY = 6;</code>
+       * <code>PLATFORM_LORRY = 6;</code>
        */
-      public static final int LORRY_VALUE = 6;
+      public static final int PLATFORM_LORRY_VALUE = 6;
       /**
        * <code>AGV = 7;</code>
        */
       public static final int AGV_VALUE = 7;
+      /**
+       * <code>PARKINGSPOT_TRAIN = 8;</code>
+       */
+      public static final int PARKINGSPOT_TRAIN_VALUE = 8;
+      /**
+       * <code>PARKINGSPOT_SEASHIP = 9;</code>
+       */
+      public static final int PARKINGSPOT_SEASHIP_VALUE = 9;
+      /**
+       * <code>PARKINGSPOT_INLANDSHIP = 10;</code>
+       */
+      public static final int PARKINGSPOT_INLANDSHIP_VALUE = 10;
+      /**
+       * <code>PARKINGSPOT_LORRY = 11;</code>
+       */
+      public static final int PARKINGSPOT_LORRY_VALUE = 11;
 
 
       public final int getNumber() { return value; }
 
       public static SimulationItemType valueOf(int value) {
         switch (value) {
-          case 0: return PLATFORM;
-          case 1: return PARKINGSPOT;
+          case 0: return PLATFORM_STORAGE;
+          case 1: return PARKINGSPOT_STORAGE;
           case 2: return NODES;
-          case 3: return TRAIN;
-          case 4: return SEASHIP;
-          case 5: return INLANDSHIP;
-          case 6: return LORRY;
+          case 3: return PLATFORM_TRAIN;
+          case 4: return PLATFORM_SEASHIP;
+          case 5: return PLATFORM_INLANDSHIP;
+          case 6: return PLATFORM_LORRY;
           case 7: return AGV;
+          case 8: return PARKINGSPOT_TRAIN;
+          case 9: return PARKINGSPOT_SEASHIP;
+          case 10: return PARKINGSPOT_INLANDSHIP;
+          case 11: return PARKINGSPOT_LORRY;
           default: return null;
         }
       }
@@ -422,7 +458,7 @@ public final class SimulationItemProto {
 
     private void initFields() {
       id_ = 0L;
-      type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+      type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM_STORAGE;
       parentID_ = 0;
       x_ = 0F;
       y_ = 0F;
@@ -619,7 +655,7 @@ public final class SimulationItemProto {
         super.clear();
         id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM_STORAGE;
         bitField0_ = (bitField0_ & ~0x00000002);
         parentID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -782,7 +818,7 @@ public final class SimulationItemProto {
         return this;
       }
 
-      private nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+      private nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM_STORAGE;
       /**
        * <code>required .nhl.containing.networking.protobuf.SimulationItem.SimulationItemType type = 2;</code>
        */
@@ -812,7 +848,7 @@ public final class SimulationItemProto {
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM_STORAGE;
         onChanged();
         return this;
       }
@@ -1664,17 +1700,21 @@ public final class SimulationItemProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022SimItemProto.proto\022\"nhl.containing.net" +
-      "working.protobuf\"\240\002\n\016SimulationItem\022\n\n\002i" +
+      "working.protobuf\"\270\003\n\016SimulationItem\022\n\n\002i" +
       "d\030\001 \002(\003\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
       "etworking.protobuf.SimulationItem.Simula" +
       "tionItemType\022\020\n\010parentID\030\003 \001(\005\022\t\n\001x\030\004 \001(" +
-      "\002\022\t\n\001y\030\005 \001(\002\022\t\n\001z\030\006 \001(\002\"z\n\022SimulationIte" +
-      "mType\022\014\n\010PLATFORM\020\000\022\017\n\013PARKINGSPOT\020\001\022\t\n\005" +
-      "NODES\020\002\022\t\n\005TRAIN\020\003\022\013\n\007SEASHIP\020\004\022\016\n\nINLAN" +
-      "DSHIP\020\005\022\t\n\005LORRY\020\006\022\007\n\003AGV\020\007\"V\n\021Simulator" +
-      "ItemList\022A\n\005items\030\001 \003(\01322.nhl.containing",
-      ".networking.protobuf.SimulationItemB\025B\023S" +
-      "imulationItemProto"
+      "\002\022\t\n\001y\030\005 \001(\002\022\t\n\001z\030\006 \001(\002\"\221\002\n\022SimulationIt" +
+      "emType\022\024\n\020PLATFORM_STORAGE\020\000\022\027\n\023PARKINGS" +
+      "POT_STORAGE\020\001\022\t\n\005NODES\020\002\022\022\n\016PLATFORM_TRA" +
+      "IN\020\003\022\024\n\020PLATFORM_SEASHIP\020\004\022\027\n\023PLATFORM_I" +
+      "NLANDSHIP\020\005\022\022\n\016PLATFORM_LORRY\020\006\022\007\n\003AGV\020\007",
+      "\022\025\n\021PARKINGSPOT_TRAIN\020\010\022\027\n\023PARKINGSPOT_S" +
+      "EASHIP\020\t\022\032\n\026PARKINGSPOT_INLANDSHIP\020\n\022\025\n\021" +
+      "PARKINGSPOT_LORRY\020\013\"V\n\021SimulatorItemList" +
+      "\022A\n\005items\030\001 \003(\01322.nhl.containing.network" +
+      "ing.protobuf.SimulationItemB\025B\023Simulatio" +
+      "nItemProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

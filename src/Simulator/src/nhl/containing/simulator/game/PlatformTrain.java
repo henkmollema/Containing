@@ -5,9 +5,8 @@
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
 import nhl.containing.simulator.framework.Point3;
-import nhl.containing.simulator.framework.Transform;
-import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**
@@ -16,15 +15,15 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformTrain extends Platform {
 
-    public PlatformTrain(Vector3f offset) {
-        super(offset);
+    public PlatformTrain(Vector3f offset,int id) {
+        super(offset,id);
         initSpots(new Point3(1, 1, 1));
     }
     
     @Override
-    protected ParkingSpot[] parkingSpots(int id) {
+    protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f))
+            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f),SimulationItemType.PARKINGSPOT_STORAGE)
         };
     }
 

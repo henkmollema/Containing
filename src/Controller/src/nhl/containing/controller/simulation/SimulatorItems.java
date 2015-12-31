@@ -23,10 +23,10 @@ public class SimulatorItems
         for(int i = list.getItemsList().size() - 1; i > 0; i--){
             SimulationItem item = list.getItemsList().get(i);
             switch(item.getType()){
-                case PLATFORM:
+                case PLATFORM_STORAGE:
                     addStorage((int)item.getId());
                     break;
-                case PARKINGSPOT:
+                case PARKINGSPOT_STORAGE:
                     Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()));
                     if(item.getParentID() != -1)
                         m_storages[item.getParentID()].addParkingspot(spot);

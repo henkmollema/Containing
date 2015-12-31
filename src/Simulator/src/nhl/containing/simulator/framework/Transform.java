@@ -46,7 +46,7 @@ public class Transform extends Node {
         m_id = Main.register(this);
         position(Utilities.zero());
     }
-        /**
+     /**
      * Adds the transform to the metalist
      * @param type type of the transform
      */

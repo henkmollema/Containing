@@ -14,6 +14,7 @@ import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulatorItemList;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Time;
 
 /**
@@ -179,6 +180,29 @@ public class SimulatorClient implements Runnable
         controllerCom.sendInstruction(timeUpdate);
     }
 
+    public static void sendTaskDone(int a, int b, int type){
+        Instruction taskDone = Instruction.newBuilder()
+                .setId(CommunicationProtocol.newUUID())
+                .setA(a)
+                .setB(a)
+                .setInstructionType(type)
+                .build();
+        controllerCom.sendInstruction(taskDone);
+    }
+    
+    public static void sendTaskDone(int a, int b, int type, Point3 point){
+        Instruction taskDone = Instruction.newBuilder()
+                .setId(CommunicationProtocol.newUUID())
+                .setA(a)
+                .setB(a)
+                .setInstructionType(type)
+                .setX(point.x)
+                .setY(point.y)
+                .setZ(point.z)
+                .build();
+        controllerCom.sendInstruction(taskDone);
+    }
+    
     private boolean instructionLoop()
     {
         p("Starting the instruction loop..");

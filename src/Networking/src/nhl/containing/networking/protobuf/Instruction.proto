@@ -13,13 +13,15 @@ message Instruction
 {
 	required string id = 1;
 	required int32 instructionType = 2;
-	
 	optional int64 time = 3;
 	optional int32 a = 4;
 	optional int32 b = 5;
-	optional string message = 6;
-        optional string arrivalCompany = 7;
-        repeated Container containers = 8;
+        optional int32 x = 6;
+        optional int32 y = 7;
+        optional int32 z = 8;
+	optional string message = 9;
+        optional string arrivalCompany = 10;
+        repeated Container containers = 11;
 }
 
 message InstructionResponse

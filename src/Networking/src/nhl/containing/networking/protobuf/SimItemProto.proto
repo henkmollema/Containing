@@ -6,14 +6,18 @@ message SimulationItem {
     required int64 id = 1;
 
     enum SimulationItemType {
-        PLATFORM = 0;
-        PARKINGSPOT = 1;  
+        PLATFORM_STORAGE = 0;
+        PARKINGSPOT_STORAGE = 1;
 	NODES = 2;
-	TRAIN = 3;
-	SEASHIP = 4;
-	INLANDSHIP = 5;
-	LORRY = 6;
-	AGV = 7;		
+	PLATFORM_TRAIN = 3;
+	PLATFORM_SEASHIP = 4;
+	PLATFORM_INLANDSHIP = 5;
+	PLATFORM_LORRY = 6;
+	AGV = 7;
+        PARKINGSPOT_TRAIN = 8;
+        PARKINGSPOT_SEASHIP = 9;
+        PARKINGSPOT_INLANDSHIP = 10;
+        PARKINGSPOT_LORRY = 11;
     }
     required SimulationItemType type = 2;
     optional int32 parentID = 3;

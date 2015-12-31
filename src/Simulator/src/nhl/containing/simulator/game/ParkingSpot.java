@@ -21,12 +21,12 @@ public class ParkingSpot extends Transform {
      * @param offset Offset to Platform
      * @param id id of the parent of this parkingspot
      */
-    public ParkingSpot(Transform parent,Vector3f offset,int id){
+    public ParkingSpot(Transform parent,Vector3f offset,int id,SimulationItemType type){
         super(parent);
         m_agv = null;
         create();
         this.localPosition(offset);
-        this.register(id,SimulationItemType.PARKINGSPOT);
+        this.register(id,type);
     }
     
     /**
@@ -34,12 +34,12 @@ public class ParkingSpot extends Transform {
      * @param parent Platform
      * @param offset Offset to Platform
      */
-    public ParkingSpot(Transform parent, Vector3f offset) {
+    public ParkingSpot(Transform parent, Vector3f offset, SimulationItemType type) {
         super(parent);
         m_agv = null;
         create();
         this.localPosition(offset);
-        this.register(SimulationItemType.PARKINGSPOT);
+        this.register(type);
     }
     
     /**

@@ -176,7 +176,7 @@ public class World extends Behaviour {
     private void createInlandCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < 1; ++i) {
-            m_inlandCells.add(new PlatformInland(offset));
+            m_inlandCells.add(new PlatformInland(offset,i));
             offset.x -= 10.0f;
         }
         
@@ -202,7 +202,7 @@ public class World extends Behaviour {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
             Tuple<PlatformLorry, Vehicle> _temp = new Tuple<>();
-            _temp.a = new PlatformLorry(offset);
+            _temp.a = new PlatformLorry(offset,i);
             
             Vector3f _from = new Vector3f(offset);
             _from = _from.add(new Vector3f(0.0f, 0.0f, 40.0f)); // Base offset
@@ -218,7 +218,7 @@ public class World extends Behaviour {
     private void createSeaCell() {
         Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < 1; ++i) {
-            m_seaCells.add(new PlatformSea(offset));
+            m_seaCells.add(new PlatformSea(offset,i));
             offset.z -= 10.0f;
         }
         
@@ -239,7 +239,7 @@ public class World extends Behaviour {
     private void createStorageCell() {
         Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
-            m_storageCells.add(new PlatformStorage(i,offset));
+            m_storageCells.add(new PlatformStorage(offset,i));
             
             if (i == 35) // Adding space for the middle road
                 offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;
@@ -302,7 +302,7 @@ public class World extends Behaviour {
     private void createTrainCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, -800.0f);
         for (int i = 0; i < TRAIN_CRANE_COUNT; ++i) {
-            m_trainCells.add(new Tuple(new PlatformTrain(offset), new Vector2f(10.0f, 0.0f)));
+            m_trainCells.add(new Tuple(new PlatformTrain(offset,i), new Vector2f(10.0f, 0.0f)));
             offset.x -= 80.0f;
         }
         

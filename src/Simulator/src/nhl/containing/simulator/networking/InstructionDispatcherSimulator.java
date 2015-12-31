@@ -72,7 +72,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (m_safeFrames < SAFE_FRAMES) {
             m_safeFrames++;
             if(m_safeFrames == SAFE_FRAMES) {
-                //handleTrain(true, null, 15);
+                handleTrain(true, null, 15);
             }
                 
             return;
@@ -254,9 +254,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 }
             });
         }
-        
-        
-        
     }
     private void handleLorry(boolean arriving, InstructionProto.Instruction inst) {
         

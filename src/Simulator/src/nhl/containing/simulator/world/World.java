@@ -11,6 +11,8 @@ import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.framework.Point3;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.util.SkyFactory;
@@ -34,7 +36,7 @@ import nhl.containing.simulator.game.Vehicle;
  */
 public class World extends Behaviour {
     public static final boolean USE_DIFFUSE = true;
-    public static final Point2 STORAGE_SIZE = new Point2(/*45*/ 5, 3/*72*/); // x = containers length per storage; y = storage amount
+    public static final Point2 STORAGE_SIZE = new Point2(45, 72); // x = containers length per storage; y = storage amount
     
     public static final float WORLD_HEIGHT =  0.0f;
     public static final float WORLD_DEPTH = -150.0f;
@@ -53,6 +55,8 @@ public class World extends Behaviour {
     public static final int TRAIN_CRANE_COUNT = 4;
     public static final int LORRY_CRANE_COUNT = 20;
     
+    public static final float TRAIN_CRANE_DISTANCE = 10.0f;
+    
     public static Vector3f containerSize() {
         return new Vector3f(2.438f, 2.438f, 12.192f);
     }
@@ -66,13 +70,16 @@ public class World extends Behaviour {
     private List<PlatformInland > m_inlandCells  = new ArrayList<>(0);
     private List<PlatformSea    > m_seaCells     = new ArrayList<>(0);
     private List<PlatformStorage> m_storageCells = new ArrayList<>(0);
-    private List<PlatformTrain  > m_trainCells   = new ArrayList<>(0);
+    private List<Tuple<PlatformTrain, Vector2f>> m_trainCells = new ArrayList<>(0);
     private List<Tuple<PlatformLorry, Vehicle>> m_lorryCells = new ArrayList<>(0);
     
     // Vehicles
     private Train m_train;
     private Vehicle m_seaShip;
     private Vehicle m_inlandShip;
+    
+    private List<Tuple<Integer, Container>> m_containersFromTrain = null;
+    private List<Container> m_containersToTrain = null;
     
     @Override
     public void awake() {
@@ -105,7 +112,6 @@ public class World extends Behaviour {
         for(PlatformInland  s : m_inlandCells  ) s.update();
         for(PlatformSea     s : m_seaCells     ) s.update();
         for(PlatformStorage s : m_storageCells ) s.update();
-        for(PlatformTrain   s : m_trainCells   ) s.update();
         
         for(Tuple<PlatformLorry, Vehicle> s : m_lorryCells) {
             Vehicle.VehicleState st = s.b.state();
@@ -134,7 +140,7 @@ public class World extends Behaviour {
                 }
             }
         }
-        m_train.update();
+        trainUpdate();
         m_inlandShip.update();
         m_seaShip.update();        
     }
@@ -235,7 +241,7 @@ public class World extends Behaviour {
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
             m_storageCells.add(new PlatformStorage(i,offset));
             
-            if (i == 36) // Adding space for the middle road
+            if (i == 35) // Adding space for the middle road
                 offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;
             offset.x += containerSize().x * 6 + 27.5f;
         }
@@ -244,6 +250,46 @@ public class World extends Behaviour {
     public Train getTrain() {
         return m_train;
     }   
+    public void trainArrived() {
+        m_containersFromTrain = new ArrayList<>(0);
+        for (int i = 0; i < m_train.size().z; i++) {
+            m_containersFromTrain.add(new Tuple(i, m_train.getContainer(0, 0, i)));
+        }
+    }
+    public void trainUpdate() {
+        m_train.update();
+        for(Tuple<PlatformTrain, Vector2f> s : m_trainCells   ) {
+            s.a.update();
+            s.b.y = s.a.position().z;
+            
+            if(m_train.state() == Vehicle.VehicleState.Waiting) {
+                if (s.a.crane().getContainer() != null) 
+                    continue;
+                
+                if (false) {
+                    
+                }
+                else {
+                    int p = getTrainContainerTarget();
+                    if (p < 0)
+                        continue;
+                    
+                    Container c = m_train.setContainer(new Point3(0,0,getTrainContainerTarget()), null);
+                    Vector3f pos = c.transform.position();
+                    Quaternion rot = c.transform.rotation();
+                    
+                    s.a.setContainer(Point3.zero(), c);
+                    c.transform.position(pos);
+                    c.transform.rotation(rot);
+                    s.a.take(Point3.zero(), 0);
+                }
+            }
+        }
+    }
+    private int getTrainContainerTarget() {
+        return (m_train.getContainer() == null) ? -1 : 0;
+    }
+    
     
     public Vehicle getSeaShip() {
         return m_seaShip;
@@ -254,10 +300,10 @@ public class World extends Behaviour {
     }
     
     private void createTrainCell() {
-        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, 0.0f);
+        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, -800.0f);
         for (int i = 0; i < TRAIN_CRANE_COUNT; ++i) {
-            m_trainCells.add(new PlatformTrain(offset));
-            offset.x -= 10.0f;
+            m_trainCells.add(new Tuple(new PlatformTrain(offset), new Vector2f(10.0f, 0.0f)));
+            offset.x -= 80.0f;
         }
         
         final float zOff = -STORAGE_WIDTH - EXTENDS - LANE_WIDTH * LANE_COUNT;

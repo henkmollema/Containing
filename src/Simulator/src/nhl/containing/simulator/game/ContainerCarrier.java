@@ -99,6 +99,14 @@ public class ContainerCarrier extends Transform {
         }
     }
     
+    public Point3 size() {
+        for (int x = 0; x < m_containerSpots.length; ++x)
+        for (int y = 0; y < m_containerSpots[x].length; ++y)
+        for (int z = 0; z < m_containerSpots[x][y].length; ++z)
+            return new Point3(m_containerSpots.length, m_containerSpots[x].length, m_containerSpots[x][y].length);
+        return Point3.zero();
+    }
+    
     /**
      * Get container
      * @return 

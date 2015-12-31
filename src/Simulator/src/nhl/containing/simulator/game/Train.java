@@ -26,7 +26,7 @@ public class Train extends Vehicle {
     
     public List<Container> m_containers2take;
     public List<Container> m_containers2bring;
-    
+    private boolean isDone = false;
     
     public Train(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
         super(size, speed, frontModel, frontScale, frontOffset);
@@ -96,5 +96,21 @@ public class Train extends Vehicle {
     @Override
     public void update() {
         super.update();
+    }
+    
+    @Override
+    public void onWaitingStart() {
+        //
+        Main.instance().getWorld().trainArrived();
+        isDone = false;
+    }
+    @Override
+    public void onWaitingUpdate() {
+        //
+    }
+    
+    public void callDone() {
+        onDone();
+        isDone = true;
     }
 }

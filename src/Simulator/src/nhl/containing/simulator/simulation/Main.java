@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.*;
+import nhl.containing.simulator.game.AgvPath;
 
 /**
  * Main class
@@ -61,6 +62,7 @@ public class Main extends SimpleApplication {
     private Input m_input;
     private GUI m_gui;
     private World _world;
+    private AgvPath _agvPath;
     
     //Networking
     private static SimulatorClient _simClient;
@@ -128,6 +130,9 @@ public class Main extends SimpleApplication {
         m_executor = Executors.newSingleThreadExecutor();
         initBehaviours();
         flyCam.setEnabled(false);
+        _agvPath = new AgvPath();
+        _agvPath.init();
+
     }
 
     /**

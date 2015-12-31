@@ -22,7 +22,7 @@ public class PlatformLorry extends Platform {
     }
     
     @Override
-    protected ParkingSpot[] parkingSpots() {
+    protected ParkingSpot[] parkingSpots(int id) {
         return new ParkingSpot[] {
             new ParkingSpot(this, Vector3f.ZERO)
         };

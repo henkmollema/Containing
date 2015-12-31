@@ -14,6 +14,7 @@ public class SimulatorController
 {
     private final Database _db;
     private SimulationContext _context;
+    private SimulatorItems _simitems;
 
     public SimulatorController()
     {
@@ -23,6 +24,15 @@ public class SimulatorController
     public SimulationContext getContext()
     {
         return _context;
+    }
+    
+    public void setItems(SimulatorItems items)
+    {
+        _simitems = items;
+    }
+    
+    public SimulatorItems getItems(){
+        return _simitems;
     }
 
     /**

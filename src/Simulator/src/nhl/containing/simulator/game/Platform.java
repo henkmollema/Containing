@@ -6,8 +6,6 @@ import java.util.List;
 import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Point3;
-import nhl.containing.simulator.framework.Transform;
-
 /**
  * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * also check line 206
@@ -30,13 +28,21 @@ public abstract class Platform extends ContainerCarrier {
      */
     public Platform(Vector3f offset) {
         super();
-        m_parkingSpots = _parkingSpots();
+        m_parkingSpots = _parkingSpots(-1);
         createPlatform();
         this.position(offset);
     }
-    private ParkingSpot[] _parkingSpots() {
-        return parkingSpots();
-    } 
+    
+    public Platform(Vector3f offset, int id){
+        super();
+        m_parkingSpots = _parkingSpots(id);
+        createPlatform();
+        this.position(offset);
+    }
+    
+    private ParkingSpot[] _parkingSpots(int id) {
+        return parkingSpots(id);
+    }
     
     /**
      * Get parking spot
@@ -58,7 +64,7 @@ public abstract class Platform extends ContainerCarrier {
      * Init parkingspots
      * @return 
      */
-    protected abstract ParkingSpot[] parkingSpots();
+    protected abstract ParkingSpot[] parkingSpots(int id);
     protected abstract void createPlatform();
     
     public Crane crane() {
@@ -204,7 +210,7 @@ public abstract class Platform extends ContainerCarrier {
                 
                 // Check where container need to go
                 if (to.storageSpot != null) {
-                    // TODO: get new point here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //TODO: get new point here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     to.storageSpot = Point3.zero(); 
                 }
             } else if (to.storageSpot != null) {

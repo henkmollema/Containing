@@ -7,6 +7,7 @@ package nhl.containing.controller.networking;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulatorItemList;
@@ -96,8 +97,10 @@ public class SimHandler implements Runnable
             try{
                  platform = SimulatorItemList.parseFrom(data);
                  p("Received " + platform.getItemsCount() + " metadata items");
+                 _server.getSimulator().getController().setItems(SimulatorItems.creatSimulationItems(platform));
             }catch(Exception e){
                 e.printStackTrace();
+                platform = null;
             }
             
             if (platform != null) {

@@ -4,11 +4,9 @@
  */
 package nhl.containing.simulator.networking;
 
-import com.google.protobuf.ByteString;
 import com.jme3.math.Vector3f;
 import java.io.*;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
@@ -59,11 +57,12 @@ public class SimulatorClient implements Runnable
         shouldRun = false;
     }
 
-    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position)
+    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position,int parentid)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(id);
         builder.setType(type);
+        builder.setParentID(parentid);
         if (position != null)
         {
             builder.setX(position.x);
@@ -140,7 +139,7 @@ public class SimulatorClient implements Runnable
 
             // Send metadata to controller.
             if(metaList.getItemsCount() == 0)
-                addSimulationItem(0, SimulationItem.SimulationItemType.AGV, Vector3f.ZERO);//Add dummy item..
+                addSimulationItem(0, SimulationItem.SimulationItemType.AGV, Vector3f.ZERO,-1);//Add dummy item..
             
             byte[] message = metaList.build().toByteArray();
             StreamHelper.writeMessage(output, message);

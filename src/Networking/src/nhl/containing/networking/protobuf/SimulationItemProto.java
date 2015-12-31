@@ -31,29 +31,38 @@ public final class SimulationItemProto {
     nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType getType();
 
     /**
-     * <code>optional float x = 3;</code>
+     * <code>optional int32 parentID = 3;</code>
+     */
+    boolean hasParentID();
+    /**
+     * <code>optional int32 parentID = 3;</code>
+     */
+    int getParentID();
+
+    /**
+     * <code>optional float x = 4;</code>
      */
     boolean hasX();
     /**
-     * <code>optional float x = 3;</code>
+     * <code>optional float x = 4;</code>
      */
     float getX();
 
     /**
-     * <code>optional float y = 4;</code>
+     * <code>optional float y = 5;</code>
      */
     boolean hasY();
     /**
-     * <code>optional float y = 4;</code>
+     * <code>optional float y = 5;</code>
      */
     float getY();
 
     /**
-     * <code>optional float z = 5;</code>
+     * <code>optional float z = 6;</code>
      */
     boolean hasZ();
     /**
-     * <code>optional float z = 5;</code>
+     * <code>optional float z = 6;</code>
      */
     float getZ();
   }
@@ -125,18 +134,23 @@ public final class SimulationItemProto {
               }
               break;
             }
-            case 29: {
+            case 24: {
               bitField0_ |= 0x00000004;
-              x_ = input.readFloat();
+              parentID_ = input.readInt32();
               break;
             }
             case 37: {
               bitField0_ |= 0x00000008;
-              y_ = input.readFloat();
+              x_ = input.readFloat();
               break;
             }
             case 45: {
               bitField0_ |= 0x00000010;
+              y_ = input.readFloat();
+              break;
+            }
+            case 53: {
+              bitField0_ |= 0x00000020;
               z_ = input.readFloat();
               break;
             }
@@ -185,13 +199,13 @@ public final class SimulationItemProto {
     public enum SimulationItemType
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>CRANE = 0;</code>
+       * <code>PLATFORM = 0;</code>
        */
-      CRANE(0, 0),
+      PLATFORM(0, 0),
       /**
-       * <code>PLATFORM = 1;</code>
+       * <code>PARKINGSPOT = 1;</code>
        */
-      PLATFORM(1, 1),
+      PARKINGSPOT(1, 1),
       /**
        * <code>NODES = 2;</code>
        */
@@ -219,13 +233,13 @@ public final class SimulationItemProto {
       ;
 
       /**
-       * <code>CRANE = 0;</code>
+       * <code>PLATFORM = 0;</code>
        */
-      public static final int CRANE_VALUE = 0;
+      public static final int PLATFORM_VALUE = 0;
       /**
-       * <code>PLATFORM = 1;</code>
+       * <code>PARKINGSPOT = 1;</code>
        */
-      public static final int PLATFORM_VALUE = 1;
+      public static final int PARKINGSPOT_VALUE = 1;
       /**
        * <code>NODES = 2;</code>
        */
@@ -256,8 +270,8 @@ public final class SimulationItemProto {
 
       public static SimulationItemType valueOf(int value) {
         switch (value) {
-          case 0: return CRANE;
-          case 1: return PLATFORM;
+          case 0: return PLATFORM;
+          case 1: return PARKINGSPOT;
           case 2: return NODES;
           case 3: return TRAIN;
           case 4: return SEASHIP;
@@ -346,46 +360,61 @@ public final class SimulationItemProto {
       return type_;
     }
 
-    public static final int X_FIELD_NUMBER = 3;
-    private float x_;
+    public static final int PARENTID_FIELD_NUMBER = 3;
+    private int parentID_;
     /**
-     * <code>optional float x = 3;</code>
+     * <code>optional int32 parentID = 3;</code>
      */
-    public boolean hasX() {
+    public boolean hasParentID() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>optional float x = 3;</code>
+     * <code>optional int32 parentID = 3;</code>
+     */
+    public int getParentID() {
+      return parentID_;
+    }
+
+    public static final int X_FIELD_NUMBER = 4;
+    private float x_;
+    /**
+     * <code>optional float x = 4;</code>
+     */
+    public boolean hasX() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional float x = 4;</code>
      */
     public float getX() {
       return x_;
     }
 
-    public static final int Y_FIELD_NUMBER = 4;
+    public static final int Y_FIELD_NUMBER = 5;
     private float y_;
     /**
-     * <code>optional float y = 4;</code>
+     * <code>optional float y = 5;</code>
      */
     public boolean hasY() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
-     * <code>optional float y = 4;</code>
+     * <code>optional float y = 5;</code>
      */
     public float getY() {
       return y_;
     }
 
-    public static final int Z_FIELD_NUMBER = 5;
+    public static final int Z_FIELD_NUMBER = 6;
     private float z_;
     /**
-     * <code>optional float z = 5;</code>
+     * <code>optional float z = 6;</code>
      */
     public boolean hasZ() {
-      return ((bitField0_ & 0x00000010) == 0x00000010);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
-     * <code>optional float z = 5;</code>
+     * <code>optional float z = 6;</code>
      */
     public float getZ() {
       return z_;
@@ -393,7 +422,8 @@ public final class SimulationItemProto {
 
     private void initFields() {
       id_ = 0L;
-      type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
+      type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+      parentID_ = 0;
       x_ = 0F;
       y_ = 0F;
       z_ = 0F;
@@ -426,13 +456,16 @@ public final class SimulationItemProto {
         output.writeEnum(2, type_.getNumber());
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeFloat(3, x_);
+        output.writeInt32(3, parentID_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeFloat(4, y_);
+        output.writeFloat(4, x_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
-        output.writeFloat(5, z_);
+        output.writeFloat(5, y_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeFloat(6, z_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -453,15 +486,19 @@ public final class SimulationItemProto {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(3, x_);
+          .computeInt32Size(3, parentID_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(4, y_);
+          .computeFloatSize(4, x_);
       }
       if (((bitField0_ & 0x00000010) == 0x00000010)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeFloatSize(5, z_);
+          .computeFloatSize(5, y_);
+      }
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeFloatSize(6, z_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -582,14 +619,16 @@ public final class SimulationItemProto {
         super.clear();
         id_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
+        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
         bitField0_ = (bitField0_ & ~0x00000002);
-        x_ = 0F;
+        parentID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
-        y_ = 0F;
+        x_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000008);
-        z_ = 0F;
+        y_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000010);
+        z_ = 0F;
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -629,13 +668,17 @@ public final class SimulationItemProto {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.x_ = x_;
+        result.parentID_ = parentID_;
         if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        result.y_ = y_;
+        result.x_ = x_;
         if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
+        }
+        result.y_ = y_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000020;
         }
         result.z_ = z_;
         result.bitField0_ = to_bitField0_;
@@ -659,6 +702,9 @@ public final class SimulationItemProto {
         }
         if (other.hasType()) {
           setType(other.getType());
+        }
+        if (other.hasParentID()) {
+          setParentID(other.getParentID());
         }
         if (other.hasX()) {
           setX(other.getX());
@@ -736,7 +782,7 @@ public final class SimulationItemProto {
         return this;
       }
 
-      private nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
+      private nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
       /**
        * <code>required .nhl.containing.networking.protobuf.SimulationItem.SimulationItemType type = 2;</code>
        */
@@ -766,38 +812,70 @@ public final class SimulationItemProto {
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.CRANE;
+        type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM;
+        onChanged();
+        return this;
+      }
+
+      private int parentID_ ;
+      /**
+       * <code>optional int32 parentID = 3;</code>
+       */
+      public boolean hasParentID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional int32 parentID = 3;</code>
+       */
+      public int getParentID() {
+        return parentID_;
+      }
+      /**
+       * <code>optional int32 parentID = 3;</code>
+       */
+      public Builder setParentID(int value) {
+        bitField0_ |= 0x00000004;
+        parentID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 parentID = 3;</code>
+       */
+      public Builder clearParentID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        parentID_ = 0;
         onChanged();
         return this;
       }
 
       private float x_ ;
       /**
-       * <code>optional float x = 3;</code>
+       * <code>optional float x = 4;</code>
        */
       public boolean hasX() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>optional float x = 3;</code>
+       * <code>optional float x = 4;</code>
        */
       public float getX() {
         return x_;
       }
       /**
-       * <code>optional float x = 3;</code>
+       * <code>optional float x = 4;</code>
        */
       public Builder setX(float value) {
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         x_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional float x = 3;</code>
+       * <code>optional float x = 4;</code>
        */
       public Builder clearX() {
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000008);
         x_ = 0F;
         onChanged();
         return this;
@@ -805,31 +883,31 @@ public final class SimulationItemProto {
 
       private float y_ ;
       /**
-       * <code>optional float y = 4;</code>
+       * <code>optional float y = 5;</code>
        */
       public boolean hasY() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
-       * <code>optional float y = 4;</code>
+       * <code>optional float y = 5;</code>
        */
       public float getY() {
         return y_;
       }
       /**
-       * <code>optional float y = 4;</code>
+       * <code>optional float y = 5;</code>
        */
       public Builder setY(float value) {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         y_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional float y = 4;</code>
+       * <code>optional float y = 5;</code>
        */
       public Builder clearY() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000010);
         y_ = 0F;
         onChanged();
         return this;
@@ -837,31 +915,31 @@ public final class SimulationItemProto {
 
       private float z_ ;
       /**
-       * <code>optional float z = 5;</code>
+       * <code>optional float z = 6;</code>
        */
       public boolean hasZ() {
-        return ((bitField0_ & 0x00000010) == 0x00000010);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
-       * <code>optional float z = 5;</code>
+       * <code>optional float z = 6;</code>
        */
       public float getZ() {
         return z_;
       }
       /**
-       * <code>optional float z = 5;</code>
+       * <code>optional float z = 6;</code>
        */
       public Builder setZ(float value) {
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         z_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional float z = 5;</code>
+       * <code>optional float z = 6;</code>
        */
       public Builder clearZ() {
-        bitField0_ = (bitField0_ & ~0x00000010);
+        bitField0_ = (bitField0_ & ~0x00000020);
         z_ = 0F;
         onChanged();
         return this;
@@ -1586,16 +1664,17 @@ public final class SimulationItemProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022SimItemProto.proto\022\"nhl.containing.net" +
-      "working.protobuf\"\210\002\n\016SimulationItem\022\n\n\002i" +
+      "working.protobuf\"\240\002\n\016SimulationItem\022\n\n\002i" +
       "d\030\001 \002(\003\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
       "etworking.protobuf.SimulationItem.Simula" +
-      "tionItemType\022\t\n\001x\030\003 \001(\002\022\t\n\001y\030\004 \001(\002\022\t\n\001z\030" +
-      "\005 \001(\002\"t\n\022SimulationItemType\022\t\n\005CRANE\020\000\022\014" +
-      "\n\010PLATFORM\020\001\022\t\n\005NODES\020\002\022\t\n\005TRAIN\020\003\022\013\n\007SE" +
-      "ASHIP\020\004\022\016\n\nINLANDSHIP\020\005\022\t\n\005LORRY\020\006\022\007\n\003AG" +
-      "V\020\007\"V\n\021SimulatorItemList\022A\n\005items\030\001 \003(\0132" +
-      "2.nhl.containing.networking.protobuf.Sim",
-      "ulationItemB\025B\023SimulationItemProto"
+      "tionItemType\022\020\n\010parentID\030\003 \001(\005\022\t\n\001x\030\004 \001(" +
+      "\002\022\t\n\001y\030\005 \001(\002\022\t\n\001z\030\006 \001(\002\"z\n\022SimulationIte" +
+      "mType\022\014\n\010PLATFORM\020\000\022\017\n\013PARKINGSPOT\020\001\022\t\n\005" +
+      "NODES\020\002\022\t\n\005TRAIN\020\003\022\013\n\007SEASHIP\020\004\022\016\n\nINLAN" +
+      "DSHIP\020\005\022\t\n\005LORRY\020\006\022\007\n\003AGV\020\007\"V\n\021Simulator" +
+      "ItemList\022A\n\005items\030\001 \003(\01322.nhl.containing",
+      ".networking.protobuf.SimulationItemB\025B\023S" +
+      "imulationItemProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1614,7 +1693,7 @@ public final class SimulationItemProto {
     internal_static_nhl_containing_networking_protobuf_SimulationItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_nhl_containing_networking_protobuf_SimulationItem_descriptor,
-        new java.lang.String[] { "Id", "Type", "X", "Y", "Z", });
+        new java.lang.String[] { "Id", "Type", "ParentID", "X", "Y", "Z", });
     internal_static_nhl_containing_networking_protobuf_SimulatorItemList_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_nhl_containing_networking_protobuf_SimulatorItemList_fieldAccessorTable = new

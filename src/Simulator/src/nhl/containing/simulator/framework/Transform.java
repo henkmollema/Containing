@@ -5,7 +5,6 @@
  */
 package nhl.containing.simulator.framework;
 
-import nhl.containing.simulator.framework.Time;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -47,13 +46,31 @@ public class Transform extends Node {
         m_id = Main.register(this);
         position(Utilities.zero());
     }
-    
-    /**
+        /**
      * Adds the transform to the metalist
      * @param type type of the transform
      */
-    public void register(SimulationItemType type){
-        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()));
+     public void register(SimulationItemType type){
+        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),-1);
+    }
+    
+    /**
+     * Adds the transform to the metalist
+     * @param parentid parentid for storage parkingslots , else -1
+     * @param type type of the transform
+     */
+    public void register(int parentid,SimulationItemType type){
+        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),parentid);
+    }
+    
+    /**
+     * Adds the transform to the metalist
+     * @param parentid parentid for storage parkingslots , else -1
+     * @param id id of the current item
+     * @param type type of the transform
+     */
+    public void register(int parentid,int id,SimulationItemType type){
+        Main.getSimClient().addSimulationItem(id, type, Utilities.Horizontal(position()), parentid);
     }
     
     /**

@@ -17,7 +17,7 @@ public class PlatformInland extends Platform {
         super(offset);
     }
     @Override
-    protected ParkingSpot[] parkingSpots() {
+    protected ParkingSpot[] parkingSpots(int id) {
         return new ParkingSpot[] {
             new ParkingSpot(this, Vector3f.ZERO)
         };

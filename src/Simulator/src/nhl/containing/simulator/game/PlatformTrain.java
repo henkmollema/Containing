@@ -20,7 +20,7 @@ public class PlatformTrain extends Platform {
     }
     
     @Override
-    protected ParkingSpot[] parkingSpots() {
+    protected ParkingSpot[] parkingSpots(int id) {
         return new ParkingSpot[] {
             new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f))
         };

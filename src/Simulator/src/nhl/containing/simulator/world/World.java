@@ -23,9 +23,7 @@ import nhl.containing.simulator.game.PlatformLorry;
 import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
-import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Tuple;
-import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.RFID;
 import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
@@ -235,7 +233,7 @@ public class World extends Behaviour {
     private void createStorageCell() {
         Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
-            m_storageCells.add(new PlatformStorage(offset));
+            m_storageCells.add(new PlatformStorage(i,offset));
             
             if (i == 36) // Adding space for the middle road
                 offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;

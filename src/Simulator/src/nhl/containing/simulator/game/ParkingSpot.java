@@ -15,6 +15,20 @@ public class ParkingSpot extends Transform {
     
     private AGV m_agv;      // Container carrier
     
+     /**
+     * Constructor
+     * @param parent Platform
+     * @param offset Offset to Platform
+     * @param id id of the parent of this parkingspot
+     */
+    public ParkingSpot(Transform parent,Vector3f offset,int id){
+        super(parent);
+        m_agv = null;
+        create();
+        this.localPosition(offset);
+        this.register(id,SimulationItemType.PARKINGSPOT);
+    }
+    
     /**
      * Constructor
      * @param parent Platform
@@ -25,7 +39,7 @@ public class ParkingSpot extends Transform {
         m_agv = null;
         create();
         this.localPosition(offset);
-        this.register(SimulationItemType.PLATFORM);
+        this.register(SimulationItemType.PARKINGSPOT);
     }
     
     /**

@@ -20,4 +20,6 @@ public class InstructionType
     public static final int DEPARTMENT_SEASHIP = 11;
     public static final int DEPARTMENT_INLANDSHIP = 12;
     public static final int DEPARTMENT_TRUCK = 13;
+    public static final int CRANE_READY = 14;
+    public static final int AGV_READY = 15;
 }

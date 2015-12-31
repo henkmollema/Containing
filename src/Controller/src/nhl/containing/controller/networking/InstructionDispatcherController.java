@@ -50,6 +50,12 @@ public class InstructionDispatcherController implements InstructionDispatcher
             case InstructionType.CLIENT_TIME_UPDATE:
                 futures.add(executorService.submit(new Tickhandler(inst)));
                 break;
+            case InstructionType.CRANE_READY:
+                //send Move AGV instruction
+                break;
+            case InstructionType.AGV_READY:
+                //send Container to place in storage or place on department shipping
+                break;
             //More instruction types here..
         }
     }

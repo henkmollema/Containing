@@ -160,6 +160,19 @@ public class AgvPath /*extends Behaviour*/ {
         // TODO: Send nodes
     }
     
+    private Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {
+        Vector3f[] p = new Vector3f[ids.length + 2];
+        p[0] = new Vector3f(from);
+        p[p.length - 1] = new Vector3f(to);
+        
+        // or i = ids.length - 1; i >= 0; i--
+        for (int i = 0; i < ids.length; i++) {
+            p[i + 1] = nodes[i].position();
+        }
+        
+        return p;
+    }
+    
     
     /*
     public void getPath(AGV target, AgvNode to) {

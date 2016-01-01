@@ -4135,13 +4135,13 @@ public final class InstructionProto {
         getIsoBytes();
 
     /**
-     * <code>optional int64 departmentData = 15;</code>
+     * <code>optional int64 departmentDate = 15;</code>
      */
-    boolean hasDepartmentData();
+    boolean hasDepartmentDate();
     /**
-     * <code>optional int64 departmentData = 15;</code>
+     * <code>optional int64 departmentDate = 15;</code>
      */
-    long getDepartmentData();
+    long getDepartmentDate();
 
     /**
      * <code>optional string departmentTransport = 16;</code>
@@ -4170,6 +4170,43 @@ public final class InstructionProto {
      */
     com.google.protobuf.ByteString
         getDepartmentCompanyBytes();
+
+    /**
+     * <code>optional int64 arrivalDate = 18;</code>
+     */
+    boolean hasArrivalDate();
+    /**
+     * <code>optional int64 arrivalDate = 18;</code>
+     */
+    long getArrivalDate();
+
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    boolean hasArrivalTransport();
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    java.lang.String getArrivalTransport();
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    com.google.protobuf.ByteString
+        getArrivalTransportBytes();
+
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    boolean hasArrivalCompany();
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    java.lang.String getArrivalCompany();
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    com.google.protobuf.ByteString
+        getArrivalCompanyBytes();
   }
   /**
    * Protobuf type {@code nhl.containing.networking.protobuf.Container}
@@ -4303,7 +4340,7 @@ public final class InstructionProto {
             }
             case 120: {
               bitField0_ |= 0x00004000;
-              departmentData_ = input.readInt64();
+              departmentDate_ = input.readInt64();
               break;
             }
             case 130: {
@@ -4316,6 +4353,23 @@ public final class InstructionProto {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00010000;
               departmentCompany_ = bs;
+              break;
+            }
+            case 144: {
+              bitField0_ |= 0x00020000;
+              arrivalDate_ = input.readInt64();
+              break;
+            }
+            case 154: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00040000;
+              arrivalTransport_ = bs;
+              break;
+            }
+            case 162: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00080000;
+              arrivalCompany_ = bs;
               break;
             }
           }
@@ -4784,19 +4838,19 @@ public final class InstructionProto {
       }
     }
 
-    public static final int DEPARTMENTDATA_FIELD_NUMBER = 15;
-    private long departmentData_;
+    public static final int DEPARTMENTDATE_FIELD_NUMBER = 15;
+    private long departmentDate_;
     /**
-     * <code>optional int64 departmentData = 15;</code>
+     * <code>optional int64 departmentDate = 15;</code>
      */
-    public boolean hasDepartmentData() {
+    public boolean hasDepartmentDate() {
       return ((bitField0_ & 0x00004000) == 0x00004000);
     }
     /**
-     * <code>optional int64 departmentData = 15;</code>
+     * <code>optional int64 departmentDate = 15;</code>
      */
-    public long getDepartmentData() {
-      return departmentData_;
+    public long getDepartmentDate() {
+      return departmentDate_;
     }
 
     public static final int DEPARTMENTTRANSPORT_FIELD_NUMBER = 16;
@@ -4883,6 +4937,105 @@ public final class InstructionProto {
       }
     }
 
+    public static final int ARRIVALDATE_FIELD_NUMBER = 18;
+    private long arrivalDate_;
+    /**
+     * <code>optional int64 arrivalDate = 18;</code>
+     */
+    public boolean hasArrivalDate() {
+      return ((bitField0_ & 0x00020000) == 0x00020000);
+    }
+    /**
+     * <code>optional int64 arrivalDate = 18;</code>
+     */
+    public long getArrivalDate() {
+      return arrivalDate_;
+    }
+
+    public static final int ARRIVALTRANSPORT_FIELD_NUMBER = 19;
+    private java.lang.Object arrivalTransport_;
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    public boolean hasArrivalTransport() {
+      return ((bitField0_ & 0x00040000) == 0x00040000);
+    }
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    public java.lang.String getArrivalTransport() {
+      java.lang.Object ref = arrivalTransport_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          arrivalTransport_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string arrivalTransport = 19;</code>
+     */
+    public com.google.protobuf.ByteString
+        getArrivalTransportBytes() {
+      java.lang.Object ref = arrivalTransport_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        arrivalTransport_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ARRIVALCOMPANY_FIELD_NUMBER = 20;
+    private java.lang.Object arrivalCompany_;
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    public boolean hasArrivalCompany() {
+      return ((bitField0_ & 0x00080000) == 0x00080000);
+    }
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    public java.lang.String getArrivalCompany() {
+      java.lang.Object ref = arrivalCompany_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          arrivalCompany_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string arrivalCompany = 20;</code>
+     */
+    public com.google.protobuf.ByteString
+        getArrivalCompanyBytes() {
+      java.lang.Object ref = arrivalCompany_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        arrivalCompany_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       ownerName_ = "";
       containerNumber_ = 0;
@@ -4898,9 +5051,12 @@ public final class InstructionProto {
       contentType_ = "";
       conentDanger_ = "";
       iso_ = "";
-      departmentData_ = 0L;
+      departmentDate_ = 0L;
       departmentTransport_ = "";
       departmentCompany_ = "";
+      arrivalDate_ = 0L;
+      arrivalTransport_ = "";
+      arrivalCompany_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -5014,13 +5170,22 @@ public final class InstructionProto {
         output.writeBytes(14, getIsoBytes());
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
-        output.writeInt64(15, departmentData_);
+        output.writeInt64(15, departmentDate_);
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
         output.writeBytes(16, getDepartmentTransportBytes());
       }
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
         output.writeBytes(17, getDepartmentCompanyBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        output.writeInt64(18, arrivalDate_);
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+        output.writeBytes(19, getArrivalTransportBytes());
+      }
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+        output.writeBytes(20, getArrivalCompanyBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -5089,7 +5254,7 @@ public final class InstructionProto {
       }
       if (((bitField0_ & 0x00004000) == 0x00004000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(15, departmentData_);
+          .computeInt64Size(15, departmentDate_);
       }
       if (((bitField0_ & 0x00008000) == 0x00008000)) {
         size += com.google.protobuf.CodedOutputStream
@@ -5098,6 +5263,18 @@ public final class InstructionProto {
       if (((bitField0_ & 0x00010000) == 0x00010000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(17, getDepartmentCompanyBytes());
+      }
+      if (((bitField0_ & 0x00020000) == 0x00020000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(18, arrivalDate_);
+      }
+      if (((bitField0_ & 0x00040000) == 0x00040000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(19, getArrivalTransportBytes());
+      }
+      if (((bitField0_ & 0x00080000) == 0x00080000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(20, getArrivalCompanyBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5244,12 +5421,18 @@ public final class InstructionProto {
         bitField0_ = (bitField0_ & ~0x00001000);
         iso_ = "";
         bitField0_ = (bitField0_ & ~0x00002000);
-        departmentData_ = 0L;
+        departmentDate_ = 0L;
         bitField0_ = (bitField0_ & ~0x00004000);
         departmentTransport_ = "";
         bitField0_ = (bitField0_ & ~0x00008000);
         departmentCompany_ = "";
         bitField0_ = (bitField0_ & ~0x00010000);
+        arrivalDate_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00020000);
+        arrivalTransport_ = "";
+        bitField0_ = (bitField0_ & ~0x00040000);
+        arrivalCompany_ = "";
+        bitField0_ = (bitField0_ & ~0x00080000);
         return this;
       }
 
@@ -5337,7 +5520,7 @@ public final class InstructionProto {
         if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
           to_bitField0_ |= 0x00004000;
         }
-        result.departmentData_ = departmentData_;
+        result.departmentDate_ = departmentDate_;
         if (((from_bitField0_ & 0x00008000) == 0x00008000)) {
           to_bitField0_ |= 0x00008000;
         }
@@ -5346,6 +5529,18 @@ public final class InstructionProto {
           to_bitField0_ |= 0x00010000;
         }
         result.departmentCompany_ = departmentCompany_;
+        if (((from_bitField0_ & 0x00020000) == 0x00020000)) {
+          to_bitField0_ |= 0x00020000;
+        }
+        result.arrivalDate_ = arrivalDate_;
+        if (((from_bitField0_ & 0x00040000) == 0x00040000)) {
+          to_bitField0_ |= 0x00040000;
+        }
+        result.arrivalTransport_ = arrivalTransport_;
+        if (((from_bitField0_ & 0x00080000) == 0x00080000)) {
+          to_bitField0_ |= 0x00080000;
+        }
+        result.arrivalCompany_ = arrivalCompany_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -5420,8 +5615,8 @@ public final class InstructionProto {
           iso_ = other.iso_;
           onChanged();
         }
-        if (other.hasDepartmentData()) {
-          setDepartmentData(other.getDepartmentData());
+        if (other.hasDepartmentDate()) {
+          setDepartmentDate(other.getDepartmentDate());
         }
         if (other.hasDepartmentTransport()) {
           bitField0_ |= 0x00008000;
@@ -5431,6 +5626,19 @@ public final class InstructionProto {
         if (other.hasDepartmentCompany()) {
           bitField0_ |= 0x00010000;
           departmentCompany_ = other.departmentCompany_;
+          onChanged();
+        }
+        if (other.hasArrivalDate()) {
+          setArrivalDate(other.getArrivalDate());
+        }
+        if (other.hasArrivalTransport()) {
+          bitField0_ |= 0x00040000;
+          arrivalTransport_ = other.arrivalTransport_;
+          onChanged();
+        }
+        if (other.hasArrivalCompany()) {
+          bitField0_ |= 0x00080000;
+          arrivalCompany_ = other.arrivalCompany_;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -6316,34 +6524,34 @@ public final class InstructionProto {
         return this;
       }
 
-      private long departmentData_ ;
+      private long departmentDate_ ;
       /**
-       * <code>optional int64 departmentData = 15;</code>
+       * <code>optional int64 departmentDate = 15;</code>
        */
-      public boolean hasDepartmentData() {
+      public boolean hasDepartmentDate() {
         return ((bitField0_ & 0x00004000) == 0x00004000);
       }
       /**
-       * <code>optional int64 departmentData = 15;</code>
+       * <code>optional int64 departmentDate = 15;</code>
        */
-      public long getDepartmentData() {
-        return departmentData_;
+      public long getDepartmentDate() {
+        return departmentDate_;
       }
       /**
-       * <code>optional int64 departmentData = 15;</code>
+       * <code>optional int64 departmentDate = 15;</code>
        */
-      public Builder setDepartmentData(long value) {
+      public Builder setDepartmentDate(long value) {
         bitField0_ |= 0x00004000;
-        departmentData_ = value;
+        departmentDate_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int64 departmentData = 15;</code>
+       * <code>optional int64 departmentDate = 15;</code>
        */
-      public Builder clearDepartmentData() {
+      public Builder clearDepartmentDate() {
         bitField0_ = (bitField0_ & ~0x00004000);
-        departmentData_ = 0L;
+        departmentDate_ = 0L;
         onChanged();
         return this;
       }
@@ -6500,6 +6708,190 @@ public final class InstructionProto {
         return this;
       }
 
+      private long arrivalDate_ ;
+      /**
+       * <code>optional int64 arrivalDate = 18;</code>
+       */
+      public boolean hasArrivalDate() {
+        return ((bitField0_ & 0x00020000) == 0x00020000);
+      }
+      /**
+       * <code>optional int64 arrivalDate = 18;</code>
+       */
+      public long getArrivalDate() {
+        return arrivalDate_;
+      }
+      /**
+       * <code>optional int64 arrivalDate = 18;</code>
+       */
+      public Builder setArrivalDate(long value) {
+        bitField0_ |= 0x00020000;
+        arrivalDate_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 arrivalDate = 18;</code>
+       */
+      public Builder clearArrivalDate() {
+        bitField0_ = (bitField0_ & ~0x00020000);
+        arrivalDate_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object arrivalTransport_ = "";
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public boolean hasArrivalTransport() {
+        return ((bitField0_ & 0x00040000) == 0x00040000);
+      }
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public java.lang.String getArrivalTransport() {
+        java.lang.Object ref = arrivalTransport_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            arrivalTransport_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public com.google.protobuf.ByteString
+          getArrivalTransportBytes() {
+        java.lang.Object ref = arrivalTransport_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          arrivalTransport_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public Builder setArrivalTransport(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00040000;
+        arrivalTransport_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public Builder clearArrivalTransport() {
+        bitField0_ = (bitField0_ & ~0x00040000);
+        arrivalTransport_ = getDefaultInstance().getArrivalTransport();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalTransport = 19;</code>
+       */
+      public Builder setArrivalTransportBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00040000;
+        arrivalTransport_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object arrivalCompany_ = "";
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public boolean hasArrivalCompany() {
+        return ((bitField0_ & 0x00080000) == 0x00080000);
+      }
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public java.lang.String getArrivalCompany() {
+        java.lang.Object ref = arrivalCompany_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            arrivalCompany_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public com.google.protobuf.ByteString
+          getArrivalCompanyBytes() {
+        java.lang.Object ref = arrivalCompany_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          arrivalCompany_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public Builder setArrivalCompany(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00080000;
+        arrivalCompany_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public Builder clearArrivalCompany() {
+        bitField0_ = (bitField0_ & ~0x00080000);
+        arrivalCompany_ = getDefaultInstance().getArrivalCompany();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string arrivalCompany = 20;</code>
+       */
+      public Builder setArrivalCompanyBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00080000;
+        arrivalCompany_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:nhl.containing.networking.protobuf.Container)
     }
 
@@ -6554,16 +6946,18 @@ public final class InstructionProto {
       "Company\030\n \001(\t\022A\n\ncontainers\030\013 \003(\0132-.nhl." +
       "containing.networking.protobuf.Container" +
       "\"I\n\023InstructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\ri" +
-      "nstructionId\030\002 \002(\t\022\017\n\007message\030\003 \001(\t\"\313\002\n\t" +
+      "nstructionId\030\002 \002(\t\022\017\n\007message\030\003 \001(\t\"\222\003\n\t" +
       "Container\022\021\n\townerName\030\001 \002(\t\022\027\n\017containe" +
       "rNumber\030\002 \002(\005\022\016\n\006length\030\003 \002(\t\022\r\n\005width\030\004" +
       " \002(\t\022\016\n\006height\030\005 \002(\t\022\t\n\001x\030\006 \002(\005\022\t\n\001y\030\007 \002" +
       "(\005\022\t\n\001z\030\010 \002(\005\022\023\n\013weightEmpty\030\t \002(\005\022\024\n\014we" +
       "ightLoaded\030\n \002(\005\022\017\n\007content\030\013 \002(\t\022\023\n\013con",
       "tentType\030\014 \002(\t\022\024\n\014conentDanger\030\r \002(\t\022\013\n\003" +
-      "iso\030\016 \002(\t\022\026\n\016departmentData\030\017 \001(\003\022\033\n\023dep" +
+      "iso\030\016 \002(\t\022\026\n\016departmentDate\030\017 \001(\003\022\033\n\023dep" +
       "artmentTransport\030\020 \001(\t\022\031\n\021departmentComp" +
-      "any\030\021 \001(\tB\022B\020InstructionProto"
+      "any\030\021 \001(\t\022\023\n\013arrivalDate\030\022 \001(\003\022\030\n\020arriva" +
+      "lTransport\030\023 \001(\t\022\026\n\016arrivalCompany\030\024 \001(\t" +
+      "B\022B\020InstructionProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6600,7 +6994,7 @@ public final class InstructionProto {
     internal_static_nhl_containing_networking_protobuf_Container_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_nhl_containing_networking_protobuf_Container_descriptor,
-        new java.lang.String[] { "OwnerName", "ContainerNumber", "Length", "Width", "Height", "X", "Y", "Z", "WeightEmpty", "WeightLoaded", "Content", "ContentType", "ConentDanger", "Iso", "DepartmentData", "DepartmentTransport", "DepartmentCompany", });
+        new java.lang.String[] { "OwnerName", "ContainerNumber", "Length", "Width", "Height", "X", "Y", "Z", "WeightEmpty", "WeightLoaded", "Content", "ContentType", "ConentDanger", "Iso", "DepartmentDate", "DepartmentTransport", "DepartmentCompany", "ArrivalDate", "ArrivalTransport", "ArrivalCompany", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

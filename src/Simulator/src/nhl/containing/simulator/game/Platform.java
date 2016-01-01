@@ -294,16 +294,15 @@ public abstract class Platform extends ContainerCarrier {
                     Container c = m_crane.setContainer(null);
                     setContainer(to.storageSpot, c);
                     updateOuter();
+                    SimulatorClient.sendTaskDone(m_platformid, c.getRFID().id, InstructionType.CRANE_TO_STORAGE_READY, to.storageSpot);
                 } else {
                     
                     // Crane to AGV
                     m_parkingSpots[to.parkingSpot].agv().setContainer(m_crane.setContainer(null));
+                    //TODO: Add the right B item
+                    SimulatorClient.sendTaskDone(m_platformid, -1, InstructionType.CRANE_TO_AGV_READY);
                 }
             }
-        }
-        
-        protected void sendTask(){
-            SimulatorClient.sendTaskDone(m_platformid, 0, InstructionType.CRANE_TO_STORAGE_READY, to.storageSpot); //change A & B!!
         }
         
         /**

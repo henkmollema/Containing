@@ -5,22 +5,18 @@
  */
 package nhl.containing.controller.simulation;
 
-import java.util.ArrayList;
-import java.util.List;
 import nhl.containing.controller.Point3;
 
 /**
  *
  * @author Niels
  */
-public class Storage
+public class Storage extends Platform
 {
-    private final int m_id;
-    private List<Parkingspot> m_parkingspots = new ArrayList<>();
     private StorageItem[][][] m_storageplaces = new StorageItem[6][46][6];
     
     public Storage(int id){
-        m_id = id;
+        super(id);
         for(int x = 0; x < m_storageplaces.length; x++){
             for(int y = 0; y < m_storageplaces[0].length; y++){
                 for(int z = 0; z < m_storageplaces[0][0].length; z++){
@@ -30,22 +26,14 @@ public class Storage
         }
     }
     
-    public void addParkingspot(Parkingspot spot){
-        m_parkingspots.add(spot);
-    }
-    
     public void setContainer(ShippingContainer container, Point3 position) throws Exception{
         if(!checkPosition(position))
             throw new Exception("Not valid Position");
         StorageItem.place(this, container, position);
     }
     
-    public int getID(){
-        return m_id;
-    }
-    
-    public List<Parkingspot> getParkingspots(){
-        return m_parkingspots;
+    public void setContainer(ShippingContainer container, int x, int y, int z) throws Exception{
+        this.setContainer(container, new Point3(x, y, z));
     }
     
     public StorageItem[][][] getStoragePlaces(){

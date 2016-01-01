@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.simulation.SimulationContext;
+import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.networking.protobuf.*;
 import nhl.containing.networking.protocol.*;
 
@@ -16,6 +18,8 @@ import nhl.containing.networking.protocol.*;
 public class InstructionDispatcherController implements InstructionDispatcher
 {
     Simulator _sim;
+    SimulatorItems _items;
+    SimulationContext _context;
     CommunicationProtocol _com;
     private ExecutorService executorService;
     private Queue<Future> futures;
@@ -24,6 +28,8 @@ public class InstructionDispatcherController implements InstructionDispatcher
     {
         _sim = sim;
         _com = com;
+        _items = _sim.getController().getItems();
+        _context = _sim.getController().getContext();
         executorService = Executors.newSingleThreadExecutor();
         futures = new LinkedList<>();
     }
@@ -58,6 +64,9 @@ public class InstructionDispatcherController implements InstructionDispatcher
                 break;
             case InstructionType.CRANE_TO_STORAGE_READY:
                 //save data to simitems
+                try{
+                    _items.getStorages()[inst.getA()].setContainer(_context.getContainerById(inst.getB()), inst.getX(),inst.getY(),inst.getZ());
+                }catch(Exception e){e.printStackTrace();}
                 break;
             //More instruction types here..
         }

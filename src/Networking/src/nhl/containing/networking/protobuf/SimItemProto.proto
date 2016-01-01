@@ -24,6 +24,7 @@ message SimulationItem {
     optional float x = 4;
     optional float y = 5;
     optional float z = 6;
+    repeated int32 connections = 7;
 }
 
 message SimulatorItemList{

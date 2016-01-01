@@ -17,13 +17,14 @@ public class PlatformTrain extends Platform {
 
     public PlatformTrain(Vector3f offset,int id) {
         super(offset,id);
+        this.register(-1,m_platformid,SimulationItemType.PLATFORM_TRAIN);
         initSpots(new Point3(1, 1, 1));
     }
     
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f),SimulationItemType.PARKINGSPOT_STORAGE)
+            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f),m_platformid,SimulationItemType.PARKINGSPOT_TRAIN)
         };
     }
 

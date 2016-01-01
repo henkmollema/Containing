@@ -16,6 +16,7 @@ import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Time;
+import nhl.containing.simulator.game.AgvPath;
 
 /**
  * Providers interaction with the client.
@@ -58,6 +59,13 @@ public class SimulatorClient implements Runnable
         shouldRun = false;
     }
 
+    /**
+     * Adds a Simulation item to the metalist
+     * @param id id of the item
+     * @param type type of the item
+     * @param position position of the item
+     * @param parentid parent of the item or -1
+     */
     public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position,int parentid)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
@@ -72,7 +80,26 @@ public class SimulatorClient implements Runnable
         }
         metaList.addItems(builder.build());
     }
+    
+    /**
+     * Adds a node to the metalist
+     * @param node node
+     */
+    public void addNode(AgvPath.AgvNode node){
+        SimulationItem.Builder builder = SimulationItem.newBuilder();
+        builder.setId(node.id());
+        builder.setType(SimulationItem.SimulationItemType.NODES);
+        builder.setX(node.position().x);
+        builder.setY(node.position().y);
+        for(int connection : node.connections()){
+            builder.addConnections(connection);
+        }
+        metaList.addItems(builder.build());
+    }
 
+    /**
+     * starts the connection when world is build
+     */
     public void Start()
     {
         this.start = true;
@@ -113,6 +140,10 @@ public class SimulatorClient implements Runnable
         return false;
     }
 
+    /**
+     * Sends the metadata to the controller
+     * @return true when succesfull, otherwise false
+     */
     private boolean sendSimulatorMetadata()
     {
         p("sendSimulatorMetadata()");
@@ -169,6 +200,9 @@ public class SimulatorClient implements Runnable
         return false;
     }
 
+    /**
+     * Sends an timeupdate to the controller
+     */
     public static void sendTimeUpdate()
     {
         Instruction timeUpdate = Instruction.newBuilder()
@@ -180,6 +214,12 @@ public class SimulatorClient implements Runnable
         controllerCom.sendInstruction(timeUpdate);
     }
 
+    /**
+     * Sends an instruction when task is done
+     * @param a id of first simulation item
+     * @param b id of the second simulation item
+     * @param type type of the task
+     */
     public static void sendTaskDone(int a, int b, int type){
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
@@ -190,6 +230,13 @@ public class SimulatorClient implements Runnable
         controllerCom.sendInstruction(taskDone);
     }
     
+    /**
+     * Sends an instruction when task is done
+     * @param a id of the first simulation item
+     * @param b id of the second simulation item
+     * @param type type of the task
+     * @param point a point (for placing containers)
+     */
     public static void sendTaskDone(int a, int b, int type, Point3 point){
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())

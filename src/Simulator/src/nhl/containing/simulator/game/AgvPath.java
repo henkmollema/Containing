@@ -8,11 +8,6 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Line;
-import java.util.ArrayList;
-import java.util.List;
-import nhl.containing.simulator.framework.Behaviour;
-import nhl.containing.simulator.framework.Tuple;
-import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.world.World;
@@ -43,6 +38,9 @@ public class AgvPath /*extends Behaviour*/ {
         
         public void setConnections(int... nodes) {
             m_connections = nodes;
+        }
+        public int id(){
+            return m_id;
         }
         
         public Vector3f position() {
@@ -157,7 +155,9 @@ public class AgvPath /*extends Behaviour*/ {
     }
     
     private void sendNodes() {
-        // TODO: Send nodes
+        for(AgvNode node : nodes){
+            Main.getSimClient().addNode(node);
+        }
     }
     
     private Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {

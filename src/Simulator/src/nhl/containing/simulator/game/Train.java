@@ -8,10 +8,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import java.util.ArrayList;
 import java.util.List;
+import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.world.World;
 
@@ -38,6 +38,15 @@ public class Train extends Vehicle {
     private final float wagonScale = 4.0f;
     private final float wagonSize = -60.0f;
     private final float containersPerWagon = 2.44f;
+    
+    public void init(List<InstructionProto.Container> containers){
+        Container[] c = new Container[containers.size()];
+        for(InstructionProto.Container container : containers){
+            c[container.getX()] = new Container(new RFID(container));
+            c[container.getX()].show();
+        }
+        init(c);
+    }
     
     public void init(int size)
     {

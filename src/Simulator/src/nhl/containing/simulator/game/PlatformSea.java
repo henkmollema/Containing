@@ -17,12 +17,13 @@ public class PlatformSea extends Platform {
 
     public PlatformSea(Vector3f offset,int id) {
         super(offset,id);
+        this.register(-1,m_platformid,SimulationItemType.PLATFORM_SEASHIP);
     }
     
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, Vector3f.ZERO,SimulationItemType.PARKINGSPOT_SEASHIP)
+            new ParkingSpot(this, Vector3f.ZERO,m_platformid,SimulationItemType.PARKINGSPOT_SEASHIP)
         };
     }
 

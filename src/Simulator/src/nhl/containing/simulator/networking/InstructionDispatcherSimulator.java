@@ -127,11 +127,14 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (arriving) {
             
             int size = inst == null ? testsize : inst.getContainersCount(); 
-            
+           
             p("Train arrived with " + size + " containers.");
             GUI().setContainerText("Aankomst:\nTrein\n" + size + " container(s)");
-
-            World().getTrain().init(size);
+            //TODO: remove testing compatibility
+            if(inst == null)
+                World().getTrain().init(size);
+            else
+                World().getTrain().init(inst.getContainersList());
             World().getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
                 @Override public void done(Vehicle v) {
                     p("Train " + v.id() + " arrived at loading platform.");

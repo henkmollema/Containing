@@ -109,9 +109,12 @@ public class Tickhandler implements Runnable
             containerBuilder.setContentType(container.contentType);
             containerBuilder.setConentDanger(container.contentDanger);
             containerBuilder.setIso(container.iso);
-            containerBuilder.setDepartmentData(container.departureShipment.date.getTime());
+            containerBuilder.setDepartmentDate(container.departureShipment.date.getTime());
             containerBuilder.setDepartmentTransport(getCategory(container.departureShipment.carrier));
             containerBuilder.setDepartmentCompany(container.departureShipment.carrier.company);
+            containerBuilder.setArrivalDate(shipment.date.getTime());
+            containerBuilder.setArrivalCompany(shipment.carrier.company);
+            containerBuilder.setArrivalTransport(getCategory(shipment.carrier));
             builder.addContainers(containerBuilder.build());
         }
         Simulator.instance().server().simCom().sendInstruction(builder.build());

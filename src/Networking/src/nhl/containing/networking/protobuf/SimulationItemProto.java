@@ -65,6 +65,19 @@ public final class SimulationItemProto {
      * <code>optional float z = 6;</code>
      */
     float getZ();
+
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    java.util.List<java.lang.Integer> getConnectionsList();
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    int getConnectionsCount();
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    int getConnections(int index);
   }
   /**
    * Protobuf type {@code nhl.containing.networking.protobuf.SimulationItem}
@@ -154,6 +167,27 @@ public final class SimulationItemProto {
               z_ = input.readFloat();
               break;
             }
+            case 56: {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+                connections_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              connections_.add(input.readInt32());
+              break;
+            }
+            case 58: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040) && input.getBytesUntilLimit() > 0) {
+                connections_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                connections_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -162,6 +196,9 @@ public final class SimulationItemProto {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+          connections_ = java.util.Collections.unmodifiableList(connections_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -456,6 +493,28 @@ public final class SimulationItemProto {
       return z_;
     }
 
+    public static final int CONNECTIONS_FIELD_NUMBER = 7;
+    private java.util.List<java.lang.Integer> connections_;
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getConnectionsList() {
+      return connections_;
+    }
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    public int getConnectionsCount() {
+      return connections_.size();
+    }
+    /**
+     * <code>repeated int32 connections = 7;</code>
+     */
+    public int getConnections(int index) {
+      return connections_.get(index);
+    }
+
     private void initFields() {
       id_ = 0L;
       type_ = nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.SimulationItemType.PLATFORM_STORAGE;
@@ -463,6 +522,7 @@ public final class SimulationItemProto {
       x_ = 0F;
       y_ = 0F;
       z_ = 0F;
+      connections_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -503,6 +563,9 @@ public final class SimulationItemProto {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeFloat(6, z_);
       }
+      for (int i = 0; i < connections_.size(); i++) {
+        output.writeInt32(7, connections_.get(i));
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -535,6 +598,15 @@ public final class SimulationItemProto {
       if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeFloatSize(6, z_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < connections_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(connections_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getConnectionsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -665,6 +737,8 @@ public final class SimulationItemProto {
         bitField0_ = (bitField0_ & ~0x00000010);
         z_ = 0F;
         bitField0_ = (bitField0_ & ~0x00000020);
+        connections_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -717,6 +791,11 @@ public final class SimulationItemProto {
           to_bitField0_ |= 0x00000020;
         }
         result.z_ = z_;
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          connections_ = java.util.Collections.unmodifiableList(connections_);
+          bitField0_ = (bitField0_ & ~0x00000040);
+        }
+        result.connections_ = connections_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -750,6 +829,16 @@ public final class SimulationItemProto {
         }
         if (other.hasZ()) {
           setZ(other.getZ());
+        }
+        if (!other.connections_.isEmpty()) {
+          if (connections_.isEmpty()) {
+            connections_ = other.connections_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+          } else {
+            ensureConnectionsIsMutable();
+            connections_.addAll(other.connections_);
+          }
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -977,6 +1066,72 @@ public final class SimulationItemProto {
       public Builder clearZ() {
         bitField0_ = (bitField0_ & ~0x00000020);
         z_ = 0F;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> connections_ = java.util.Collections.emptyList();
+      private void ensureConnectionsIsMutable() {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+          connections_ = new java.util.ArrayList<java.lang.Integer>(connections_);
+          bitField0_ |= 0x00000040;
+         }
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getConnectionsList() {
+        return java.util.Collections.unmodifiableList(connections_);
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public int getConnectionsCount() {
+        return connections_.size();
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public int getConnections(int index) {
+        return connections_.get(index);
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public Builder setConnections(
+          int index, int value) {
+        ensureConnectionsIsMutable();
+        connections_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public Builder addConnections(int value) {
+        ensureConnectionsIsMutable();
+        connections_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public Builder addAllConnections(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureConnectionsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, connections_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 connections = 7;</code>
+       */
+      public Builder clearConnections() {
+        connections_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
         onChanged();
         return this;
       }
@@ -1700,21 +1855,21 @@ public final class SimulationItemProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\022SimItemProto.proto\022\"nhl.containing.net" +
-      "working.protobuf\"\270\003\n\016SimulationItem\022\n\n\002i" +
+      "working.protobuf\"\315\003\n\016SimulationItem\022\n\n\002i" +
       "d\030\001 \002(\003\022S\n\004type\030\002 \002(\0162E.nhl.containing.n" +
       "etworking.protobuf.SimulationItem.Simula" +
       "tionItemType\022\020\n\010parentID\030\003 \001(\005\022\t\n\001x\030\004 \001(" +
-      "\002\022\t\n\001y\030\005 \001(\002\022\t\n\001z\030\006 \001(\002\"\221\002\n\022SimulationIt" +
-      "emType\022\024\n\020PLATFORM_STORAGE\020\000\022\027\n\023PARKINGS" +
-      "POT_STORAGE\020\001\022\t\n\005NODES\020\002\022\022\n\016PLATFORM_TRA" +
-      "IN\020\003\022\024\n\020PLATFORM_SEASHIP\020\004\022\027\n\023PLATFORM_I" +
-      "NLANDSHIP\020\005\022\022\n\016PLATFORM_LORRY\020\006\022\007\n\003AGV\020\007",
-      "\022\025\n\021PARKINGSPOT_TRAIN\020\010\022\027\n\023PARKINGSPOT_S" +
-      "EASHIP\020\t\022\032\n\026PARKINGSPOT_INLANDSHIP\020\n\022\025\n\021" +
-      "PARKINGSPOT_LORRY\020\013\"V\n\021SimulatorItemList" +
-      "\022A\n\005items\030\001 \003(\01322.nhl.containing.network" +
-      "ing.protobuf.SimulationItemB\025B\023Simulatio" +
-      "nItemProto"
+      "\002\022\t\n\001y\030\005 \001(\002\022\t\n\001z\030\006 \001(\002\022\023\n\013connections\030\007" +
+      " \003(\005\"\221\002\n\022SimulationItemType\022\024\n\020PLATFORM_" +
+      "STORAGE\020\000\022\027\n\023PARKINGSPOT_STORAGE\020\001\022\t\n\005NO" +
+      "DES\020\002\022\022\n\016PLATFORM_TRAIN\020\003\022\024\n\020PLATFORM_SE" +
+      "ASHIP\020\004\022\027\n\023PLATFORM_INLANDSHIP\020\005\022\022\n\016PLAT",
+      "FORM_LORRY\020\006\022\007\n\003AGV\020\007\022\025\n\021PARKINGSPOT_TRA" +
+      "IN\020\010\022\027\n\023PARKINGSPOT_SEASHIP\020\t\022\032\n\026PARKING" +
+      "SPOT_INLANDSHIP\020\n\022\025\n\021PARKINGSPOT_LORRY\020\013" +
+      "\"V\n\021SimulatorItemList\022A\n\005items\030\001 \003(\01322.n" +
+      "hl.containing.networking.protobuf.Simula" +
+      "tionItemB\025B\023SimulationItemProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1733,7 +1888,7 @@ public final class SimulationItemProto {
     internal_static_nhl_containing_networking_protobuf_SimulationItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_nhl_containing_networking_protobuf_SimulationItem_descriptor,
-        new java.lang.String[] { "Id", "Type", "ParentID", "X", "Y", "Z", });
+        new java.lang.String[] { "Id", "Type", "ParentID", "X", "Y", "Z", "Connections", });
     internal_static_nhl_containing_networking_protobuf_SimulatorItemList_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_nhl_containing_networking_protobuf_SimulatorItemList_fieldAccessorTable = new

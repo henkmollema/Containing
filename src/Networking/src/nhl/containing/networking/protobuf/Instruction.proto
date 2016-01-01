@@ -47,7 +47,10 @@ message Container
     required string contentType = 12;
     required string conentDanger = 13;
     required string iso = 14;
-    optional int64 departmentData = 15;
+    optional int64 departmentDate = 15;
     optional string departmentTransport = 16;
     optional string departmentCompany = 17;
+    optional int64 arrivalDate = 18;
+    optional string arrivalTransport = 19;
+    optional string arrivalCompany = 20;
 }

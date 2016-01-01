@@ -4,7 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>src/PathFinder.h</itemPath>
+      <itemPath>src/nhl_containing_controller_PathFinder.h</itemPath>
       <itemPath>src/node.h</itemPath>
       <itemPath>src/road_map.h</itemPath>
       <itemPath>src/vector2.h</itemPath>
@@ -47,6 +47,7 @@
       <compileType>
         <cTool>
           <architecture>2</architecture>
+          <standard>3</standard>
           <incDir>
             <pElem>"C:/Program Files/Java/jdk1.8.0_65/include"</pElem>
             <pElem>C:/Program Files/Java/jdk1.8.0_65/include/win32</pElem>
@@ -64,7 +65,6 @@
             <pElem>C:/Program Files/Java/jdk1.8.0_66/include/win32</pElem>
             <pElem>C:/Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
           </incDir>
-          <commandLine>-shared</commandLine>
         </ccTool>
         <asmTool>
           <architecture>2</architecture>
@@ -78,7 +78,10 @@
       </compileType>
       <item path="src/PathFinder.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/PathFinder.h" ex="false" tool="3" flavor2="0">
+      <item path="src/nhl_containing_controller_PathFinder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -114,7 +117,10 @@
       </compileType>
       <item path="src/PathFinder.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/PathFinder.h" ex="false" tool="3" flavor2="0">
+      <item path="src/nhl_containing_controller_PathFinder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/node.cpp" ex="false" tool="1" flavor2="0">
       </item>

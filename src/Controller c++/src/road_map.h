@@ -36,6 +36,8 @@ public:
         int size();
 	vector<int> get_path(node* from, node* to, float speed);
 	vector<int> get_path(int from, int to, float speed);
+        void set_occupied(int, bool);
+        void set_occupied(int, int, bool);
         bool get_occupied(int);
         bool get_occupied(int, int);
 };

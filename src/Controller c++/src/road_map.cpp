@@ -20,13 +20,9 @@ vector<node> road_map::get_copy()
     }
     for (unsigned int i{ 0 }; i < m_nodes.size(); ++i)
     {
-        int tester = 0;
-        // falls flat on its face at the fifth call to this
-        int test = m_nodes[i]->get_connections().size();
-        for (unsigned int j{ 0 }; j < test; ++j)
+        for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
         {
-            tester = m_nodes[i]->get_connections(i, j)[j]->id();
-            temp_nodes[i].add_connection(&temp_nodes[tester]);
+            temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
         }
     }
     return temp_nodes;
@@ -150,6 +146,16 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 vector<int> road_map::get_path(int from, int to, float speed)
 {
     return get_path(m_nodes[from], m_nodes[to], speed);
+}
+
+void road_map::set_occupied(int id, bool occ)
+{
+    m_nodes[id]->set_occupied_at(0, occ);
+}
+
+void road_map::set_occupied(int x, int y, bool occ)
+{
+    m_nodes[x * sqrt(m_nodes.size()) + y]->set_occupied_at(0, occ);
 }
 
 bool road_map::get_occupied(int id)

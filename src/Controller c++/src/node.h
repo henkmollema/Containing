@@ -14,7 +14,7 @@ private:
 
 public:
 	node();
-	node(int id, vector2 position);
+	node(int, vector2);
 	~node();
 
 	node* parent;
@@ -22,9 +22,9 @@ public:
 
 	int id();
 	vector2 get_position();
-	void add_connection(node* n);
+	void add_connection(node*);
         vector<node*> get_connections();
-	vector<node*> get_connections(int, int);
-	bool is_occupied_at(float t);
+        void set_occupied_at(float, bool);
+	bool is_occupied_at(float);
 };
 

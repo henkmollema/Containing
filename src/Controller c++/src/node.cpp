@@ -44,12 +44,12 @@ void node::add_connection(node* n)
 
 vector<node*> node::get_connections()
 {
-    return this->m_connections; // falls on its face here;
+    return this->m_connections;
 }
 
-vector<node*> node::get_connections(int i, int j)
+void node::set_occupied_at(float t, bool occ)
 {
-    return this->m_connections; // falls on its face here;
+    
 }
 
 bool node::is_occupied_at(float t)

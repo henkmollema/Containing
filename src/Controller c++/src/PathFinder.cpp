@@ -1,8 +1,8 @@
 #include <iostream>
-#include"vector2.h"
-#include"road_map.h"
-#include"node.h"
-#include "PathFinder.h"
+#include "vector2.h"
+#include "road_map.h"
+#include "node.h"
+#include "nhl_containing_controller_PathFinder.h"
 
 using namespace std;
 
@@ -87,6 +87,11 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
     return res;
 }
 
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (Ljava/awt/Point;Z)V
+ */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied(JNIEnv *env, jclass, jobject point, jboolean occ)
 {
     if (point == NULL)
@@ -102,12 +107,14 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied(JNI
     if (env->ExceptionCheck()) return;
     int pointX = env->GetIntField(point, pointXField);
     int pointY = env->GetIntField(point, pointYField);
-    string className = "java/lang/NotImplementedException";
-    string message = "Not supported yet.";
-    throw_java_exception(env, &className[0], &message[0]);
-    return;
+    roadmap->set_occupied(pointX, pointY, occ);
 }
 
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    getOccupied
+ * Signature: (Ljava/awt/Point;)Z
+ */
 JNIEXPORT jboolean JNICALL Java_nhl_containing_controller_PathFinder_getOccupied(JNIEnv *env, jclass, jobject point)
 {
     jclass pointCls = env->GetObjectClass(point);
@@ -117,10 +124,7 @@ JNIEXPORT jboolean JNICALL Java_nhl_containing_controller_PathFinder_getOccupied
     if (env->ExceptionCheck()) return false;
     int pointX = env->GetIntField(point, pointXField);
     int pointY = env->GetIntField(point, pointYField);
-    string className = "java/lang/NotImplementedException";
-    string message = "Not supported yet.";
-    throw_java_exception(env, &className[0], &message[0]);
-    return false;
+    return roadmap->get_occupied(pointX, pointY);
 }
 /*
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_helloFromC(JNIEnv *, jclass )

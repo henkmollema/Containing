@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.*;
+import nhl.containing.simulator.game.AGV;
 import nhl.containing.simulator.game.AgvPath;
 
 /**
@@ -71,6 +72,7 @@ public class Main extends SimpleApplication {
     // Transforms
     private static long m_transformID = 0;
     private static List<Transform> m_transforms = new ArrayList<>();
+    private static Map<Long, AGV> m_agvs = new HashMap<>();
     private static Map<Long, Container> m_containers = new HashMap<>();
     
     // Lines
@@ -147,10 +149,10 @@ public class Main extends SimpleApplication {
         updateBehaviours();
         
         // Update lines
-        for (Line3D l : m_lines) {
+        for (Line3D l : m_lines)
             l.UpdateMesh();
-        }
-        
+        for (AGV agv : m_agvs.values())
+            agv.update();
         updateTimescale();
     }
     /**
@@ -192,6 +194,18 @@ public class Main extends SimpleApplication {
         return -1;
     }
     /**
+     * Register Container
+     * @param container
+     * @return 
+     */
+    public static long register(AGV agv) {
+        if (!m_agvs.containsValue(agv)) {
+            m_agvs.put(Long.valueOf(m_transformID), agv);
+            return m_transformID;
+        }
+        return -1;
+    }
+    /**
      * Register line
      * @param line 
      */
@@ -217,6 +231,14 @@ public class Main extends SimpleApplication {
      */
     public static boolean unregister(Transform transform) {
         return m_transforms.remove(transform);
+    }
+    /**
+     * Unregister Container
+     * @param container
+     * @return 
+     */
+    public static boolean unregister(AGV agv) {
+        return m_agvs.values().remove(agv);
     }
     /**
      * Unregister Container

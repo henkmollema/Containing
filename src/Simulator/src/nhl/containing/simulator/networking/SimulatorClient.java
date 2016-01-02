@@ -169,10 +169,7 @@ public class SimulatorClient implements Runnable
                 throw new IOException("Server did not respond with Client OK.");
             }
 
-            // Send metadata to controller.
-            if(metaList.getItemsCount() == 0)
-                addSimulationItem(0, SimulationItem.SimulationItemType.AGV, Vector3f.ZERO,-1);//Add dummy item..
-            
+            // Send metadata to controller.            
             byte[] message = metaList.build().toByteArray();
             StreamHelper.writeMessage(output, message);
             String result = StreamHelper.readString(input);

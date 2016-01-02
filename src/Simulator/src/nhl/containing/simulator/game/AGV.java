@@ -1,5 +1,7 @@
 package nhl.containing.simulator.game;
 
+import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
+
 /**
  *
  * @author sietse
@@ -7,5 +9,7 @@ package nhl.containing.simulator.game;
 public class AGV extends MovingItem {
     private boolean m_waiting = false;
     
-    
+    public AGV(){
+        this.register(SimulationItemType.AGV);
+    }
 }

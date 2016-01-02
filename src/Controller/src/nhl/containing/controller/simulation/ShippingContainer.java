@@ -1,5 +1,6 @@
 package nhl.containing.controller.simulation;
 
+import nhl.containing.controller.Point3;
 import nhl.containing.controller.Vector3f;
 
 /**
@@ -34,7 +35,7 @@ public class ShippingContainer
      */
     public String height;
     
-    public Vector3f position;
+    public Point3 position;
     
     /**
      * Weight of the container when it's empty.

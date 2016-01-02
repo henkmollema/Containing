@@ -20,6 +20,12 @@ public class Shipment
     
     public boolean incoming;
     
+    public boolean arrived = false;
+    
+    public boolean containersMoved = false;
+    
+    public int count;
+    
     public Carrier carrier;
     
     /**

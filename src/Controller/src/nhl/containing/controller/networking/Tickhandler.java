@@ -7,12 +7,17 @@ package nhl.containing.controller.networking;
 
 import java.util.Date;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
+import nhl.containing.controller.simulation.LorryPlatform;
+import nhl.containing.controller.simulation.Parkingspot;
+import nhl.containing.controller.simulation.Platform;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
+import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -20,20 +25,28 @@ import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 
 /**
- *  Handles a timer tick
+ * Handles a timer tick
+ *
  * @author Niels
  */
 public class Tickhandler implements Runnable
 {
+
     private Instruction _instruction;
-    
+    private SimulatorItems _simulatorItems;
+    private InstructionDispatcherController _dispatcherController;
+
     /**
      * Constructor
-     * @param instruction 
+     *
+     * @param instruction
      */
     public Tickhandler(Instruction instruction)
     {
         _instruction = instruction;
+        _simulatorItems = Simulator.instance().getController().getItems();
+        if(Simulator.instance().server().simCom().dispatcher() instanceof InstructionDispatcherController)
+            _dispatcherController = (InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher();
     }
 
     /**
@@ -63,46 +76,64 @@ public class Tickhandler implements Runnable
             createProto(s);
         }
     }
-    
+
     /**
      * Creates the profofiles for a shipment and puts them on the queue
+     *
      * @param shipment shipment
      */
-    private void createProto(Shipment shipment){
+    private void createProto(Shipment shipment)
+    {
+        shipment.count = shipment.carrier.containers.size();
+        //TODO: give key of shipment
         Instruction.Builder builder = Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
+        builder.setMessage(shipment.key);
         int type = 0;
-        if(shipment.incoming){
-            if(shipment.carrier instanceof Train)
+        if (shipment.incoming)
+        {
+            if (shipment.carrier instanceof Train)
+            {
                 type = 6;
-            else if(shipment.carrier instanceof SeaShip)
+            } else if (shipment.carrier instanceof SeaShip)
+            {
                 type = 7;
-            else if(shipment.carrier instanceof InlandShip)
+            } else if (shipment.carrier instanceof InlandShip)
+            {
                 type = 8;
-            else if(shipment.carrier instanceof Truck)
+            } else if (shipment.carrier instanceof Truck)
+            {
                 type = 9;
-        }else{
-            if(shipment.carrier instanceof Train)
+            }
+        } else
+        {
+            if (shipment.carrier instanceof Train)
+            {
                 type = 10;
-            else if(shipment.carrier instanceof SeaShip)
+            } else if (shipment.carrier instanceof SeaShip)
+            {
                 type = 11;
-            else if(shipment.carrier instanceof InlandShip)
+            } else if (shipment.carrier instanceof InlandShip)
+            {
                 type = 12;
-            else if(shipment.carrier instanceof Truck)
+            } else if (shipment.carrier instanceof Truck)
+            {
                 type = 13;
+            }
         }
         builder.setInstructionType(type);
         builder.setArrivalCompany(shipment.carrier.company);
         Container.Builder containerBuilder = Container.newBuilder();
-        for(ShippingContainer container : shipment.carrier.containers){
+        for (ShippingContainer container : shipment.carrier.containers)
+        {
             containerBuilder.setOwnerName(container.ownerName);
             containerBuilder.setContainerNumber(container.containerNumber);
             containerBuilder.setLength(container.length);
             containerBuilder.setWidth(container.width);
             containerBuilder.setHeight(container.height);
-            containerBuilder.setX((int)container.position.x);
-            containerBuilder.setY((int)container.position.y);
-            containerBuilder.setZ((int)container.position.z);
+            containerBuilder.setX((int) container.position.x);
+            containerBuilder.setY((int) container.position.y);
+            containerBuilder.setZ((int) container.position.z);
             containerBuilder.setWeightEmpty(container.weightEmpty);
             containerBuilder.setWeightLoaded(container.weightLoaded);
             containerBuilder.setContent(container.content);
@@ -119,26 +150,62 @@ public class Tickhandler implements Runnable
         }
         Simulator.instance().server().simCom().sendInstruction(builder.build());
     }
-    
+
+    /**
+     * Send AGVs
+     * @param carrier carrier
+     */
+    private void sendAGVs(Carrier carrier)
+    {
+        for (Platform platform : _simulatorItems.getPlatformsByCarrier(carrier))
+        {
+            if (platform.isBusy())
+            {
+                continue;
+            }
+            for (Parkingspot p : platform.getParkingspots())
+            {
+                if (p.hasAGV())
+                {
+                    continue;
+                }
+                AGV agv = _simulatorItems.getFreeAGV();
+                if (agv == null)
+                {
+                    //TODO: Make some kind of queue
+                    return;
+                }
+                _dispatcherController.moveAGV(agv, platform,p);
+            }
+        }
+    }
+
     /**
      * Gets the category by a carrier
+     *
      * @param carrier carrier
      * @return string
      */
     private String getCategory(Carrier carrier)
     {
-        if(carrier instanceof InlandShip)
+        if (carrier instanceof InlandShip)
+        {
             return "Barge";
-        else if(carrier instanceof SeaShip)
+        } else if (carrier instanceof SeaShip)
+        {
             return "Seaship";
-        else if(carrier instanceof Train)
+        } else if (carrier instanceof Train)
+        {
             return "Train";
-        else if(carrier instanceof Truck)
+        } else if (carrier instanceof Truck)
+        {
             return "Truck";
-        else
+        } else
+        {
             return "Remainder";
+        }
     }
-    
+
     private static void p(String s)
     {
         System.out.println("[" + System.currentTimeMillis() + "] Controller: " + s);

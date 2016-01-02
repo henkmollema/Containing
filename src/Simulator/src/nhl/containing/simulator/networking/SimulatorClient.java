@@ -229,6 +229,23 @@ public class SimulatorClient implements Runnable
                 .build();
         controllerCom.sendInstruction(taskDone);
     }
+        /**
+     * Sends an instruction when task is done
+     * @param a id of first simulation item
+     * @param b id of the second simulation item
+     * @param type type of the task
+     * @param message message
+     */
+    public static void sendTaskDone(int a, int b, int type, String message){
+                Instruction taskDone = Instruction.newBuilder()
+                .setId(CommunicationProtocol.newUUID())
+                .setA(a)
+                .setB(a)
+                .setMessage(message)
+                .setInstructionType(type)
+                .build();
+        controllerCom.sendInstruction(taskDone);
+    }
     
     /**
      * Sends an instruction when task is done

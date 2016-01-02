@@ -97,7 +97,7 @@ public class SimHandler implements Runnable
             try{
                  platform = SimulatorItemList.parseFrom(data);
                  p("Received " + platform.getItemsCount() + " metadata items");
-                 _server.getSimulator().getController().setItems(SimulatorItems.creatSimulationItems(platform));
+                 _server.getSimulator().getController().setItems(new SimulatorItems(platform));
             }catch(Exception e){
                 e.printStackTrace();
                 platform = null;

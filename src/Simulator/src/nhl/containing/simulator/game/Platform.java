@@ -8,7 +8,6 @@ import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.networking.SimulatorClient;
-import nhl.containing.simulator.simulation.Main;
 /**
  * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * also check line 206
@@ -39,6 +38,7 @@ public abstract class Platform extends ContainerCarrier {
     
     public Platform(Vector3f offset, int id){
         super();
+        m_platformid = id;
         m_parkingSpots = _parkingSpots();
         createPlatform();
         this.position(offset);
@@ -295,12 +295,12 @@ public abstract class Platform extends ContainerCarrier {
                     setContainer(to.storageSpot, c);
                     updateOuter();
                     SimulatorClient.sendTaskDone(m_platformid, c.getRFID().id, InstructionType.CRANE_TO_STORAGE_READY, to.storageSpot);
-                } else {
-                    
+                } else { 
                     // Crane to AGV
-                    m_parkingSpots[to.parkingSpot].agv().setContainer(m_crane.setContainer(null));
+                    Container c = m_crane.setContainer(null);
+                    m_parkingSpots[to.parkingSpot].agv().setContainer(c);
                     //TODO: Add the right B item
-                    SimulatorClient.sendTaskDone(m_platformid, -1, InstructionType.CRANE_TO_AGV_READY);
+                    SimulatorClient.sendTaskDone((int)m_parkingSpots[to.parkingSpot].agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
                 }
             }
         }

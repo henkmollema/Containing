@@ -84,6 +84,19 @@ public class SimulationContext
 
         return firstShipment;
     }
+    /**
+     * Gets a shipment by key
+     * @param key key
+     * @return A {@code Shipment} or null when not found
+     */
+    public Shipment getShipmentByKey(String key)
+    {
+        for(Shipment s : getShipments()){
+            if(s.key.equals(key))
+                return s;
+        }
+        return null;
+    }
 
     /**
      * Gets a collection of shipments by date.
@@ -163,7 +176,7 @@ public class SimulationContext
             {
                 // Add container data.
                 c = new ShippingContainer();
-                c.position = arrival.position;
+                c.position = new Point3(arrival.position);
                 c.containerNumber = r.containerNumber;
                 c.content = r.content;
                 c.contentDanger = r.contentDanger;

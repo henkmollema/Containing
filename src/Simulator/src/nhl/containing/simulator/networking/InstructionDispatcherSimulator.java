@@ -18,7 +18,6 @@ import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.game.*;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.world.World;
-import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
@@ -123,7 +122,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     }
     
     // remove int, this is for testing
-    private void handleTrain(boolean arriving, InstructionProto.Instruction inst, int testsize) {
+    private void handleTrain(boolean arriving,final InstructionProto.Instruction inst, int testsize) {
         if (arriving) {
             
             int size = inst == null ? testsize : inst.getContainersCount(); 
@@ -140,7 +139,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                     p("Train " + v.id() + " arrived at loading platform.");
                             // todo: load the containers from the train
                     // Train departs.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
+                    //v.state(Vehicle.VehicleState.ToOut);
                 }
             });
         } else {

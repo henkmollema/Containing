@@ -1544,25 +1544,38 @@ public final class InstructionProto {
         getArrivalCompanyBytes();
 
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated int32 route = 11;</code>
+     */
+    java.util.List<java.lang.Integer> getRouteList();
+    /**
+     * <code>repeated int32 route = 11;</code>
+     */
+    int getRouteCount();
+    /**
+     * <code>repeated int32 route = 11;</code>
+     */
+    int getRoute(int index);
+
+    /**
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> 
         getContainersList();
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index);
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     int getContainersCount();
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
         getContainersOrBuilderList();
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
         int index);
@@ -1672,10 +1685,31 @@ public final class InstructionProto {
               arrivalCompany_ = bs;
               break;
             }
-            case 90: {
+            case 88: {
               if (!((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
-                containers_ = new java.util.ArrayList<nhl.containing.networking.protobuf.InstructionProto.Container>();
+                route_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000400;
+              }
+              route_.add(input.readInt32());
+              break;
+            }
+            case 90: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000400) == 0x00000400) && input.getBytesUntilLimit() > 0) {
+                route_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000400;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                route_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 98: {
+              if (!((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
+                containers_ = new java.util.ArrayList<nhl.containing.networking.protobuf.InstructionProto.Container>();
+                mutable_bitField0_ |= 0x00000800;
               }
               containers_.add(input.readMessage(nhl.containing.networking.protobuf.InstructionProto.Container.PARSER, extensionRegistry));
               break;
@@ -1689,6 +1723,9 @@ public final class InstructionProto {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
+          route_ = java.util.Collections.unmodifiableList(route_);
+        }
+        if (((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
           containers_ = java.util.Collections.unmodifiableList(containers_);
         }
         this.unknownFields = unknownFields.build();
@@ -1954,35 +1991,57 @@ public final class InstructionProto {
       }
     }
 
-    public static final int CONTAINERS_FIELD_NUMBER = 11;
+    public static final int ROUTE_FIELD_NUMBER = 11;
+    private java.util.List<java.lang.Integer> route_;
+    /**
+     * <code>repeated int32 route = 11;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getRouteList() {
+      return route_;
+    }
+    /**
+     * <code>repeated int32 route = 11;</code>
+     */
+    public int getRouteCount() {
+      return route_.size();
+    }
+    /**
+     * <code>repeated int32 route = 11;</code>
+     */
+    public int getRoute(int index) {
+      return route_.get(index);
+    }
+
+    public static final int CONTAINERS_FIELD_NUMBER = 12;
     private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> containers_;
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> getContainersList() {
       return containers_;
     }
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
         getContainersOrBuilderList() {
       return containers_;
     }
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     public int getContainersCount() {
       return containers_.size();
     }
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index) {
       return containers_.get(index);
     }
     /**
-     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+     * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
      */
     public nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
         int index) {
@@ -2000,6 +2059,7 @@ public final class InstructionProto {
       z_ = 0;
       message_ = "";
       arrivalCompany_ = "";
+      route_ = java.util.Collections.emptyList();
       containers_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -2059,8 +2119,11 @@ public final class InstructionProto {
       if (((bitField0_ & 0x00000200) == 0x00000200)) {
         output.writeBytes(10, getArrivalCompanyBytes());
       }
+      for (int i = 0; i < route_.size(); i++) {
+        output.writeInt32(11, route_.get(i));
+      }
       for (int i = 0; i < containers_.size(); i++) {
-        output.writeMessage(11, containers_.get(i));
+        output.writeMessage(12, containers_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -2111,9 +2174,18 @@ public final class InstructionProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(10, getArrivalCompanyBytes());
       }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < route_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(route_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getRouteList().size();
+      }
       for (int i = 0; i < containers_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(11, containers_.get(i));
+          .computeMessageSize(12, containers_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -2253,9 +2325,11 @@ public final class InstructionProto {
         bitField0_ = (bitField0_ & ~0x00000100);
         arrivalCompany_ = "";
         bitField0_ = (bitField0_ & ~0x00000200);
+        route_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000400);
         if (containersBuilder_ == null) {
           containers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000400);
+          bitField0_ = (bitField0_ & ~0x00000800);
         } else {
           containersBuilder_.clear();
         }
@@ -2327,10 +2401,15 @@ public final class InstructionProto {
           to_bitField0_ |= 0x00000200;
         }
         result.arrivalCompany_ = arrivalCompany_;
+        if (((bitField0_ & 0x00000400) == 0x00000400)) {
+          route_ = java.util.Collections.unmodifiableList(route_);
+          bitField0_ = (bitField0_ & ~0x00000400);
+        }
+        result.route_ = route_;
         if (containersBuilder_ == null) {
-          if (((bitField0_ & 0x00000400) == 0x00000400)) {
+          if (((bitField0_ & 0x00000800) == 0x00000800)) {
             containers_ = java.util.Collections.unmodifiableList(containers_);
-            bitField0_ = (bitField0_ & ~0x00000400);
+            bitField0_ = (bitField0_ & ~0x00000800);
           }
           result.containers_ = containers_;
         } else {
@@ -2388,11 +2467,21 @@ public final class InstructionProto {
           arrivalCompany_ = other.arrivalCompany_;
           onChanged();
         }
+        if (!other.route_.isEmpty()) {
+          if (route_.isEmpty()) {
+            route_ = other.route_;
+            bitField0_ = (bitField0_ & ~0x00000400);
+          } else {
+            ensureRouteIsMutable();
+            route_.addAll(other.route_);
+          }
+          onChanged();
+        }
         if (containersBuilder_ == null) {
           if (!other.containers_.isEmpty()) {
             if (containers_.isEmpty()) {
               containers_ = other.containers_;
-              bitField0_ = (bitField0_ & ~0x00000400);
+              bitField0_ = (bitField0_ & ~0x00000800);
             } else {
               ensureContainersIsMutable();
               containers_.addAll(other.containers_);
@@ -2405,7 +2494,7 @@ public final class InstructionProto {
               containersBuilder_.dispose();
               containersBuilder_ = null;
               containers_ = other.containers_;
-              bitField0_ = (bitField0_ & ~0x00000400);
+              bitField0_ = (bitField0_ & ~0x00000800);
               containersBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getContainersFieldBuilder() : null;
@@ -2907,12 +2996,78 @@ public final class InstructionProto {
         return this;
       }
 
+      private java.util.List<java.lang.Integer> route_ = java.util.Collections.emptyList();
+      private void ensureRouteIsMutable() {
+        if (!((bitField0_ & 0x00000400) == 0x00000400)) {
+          route_ = new java.util.ArrayList<java.lang.Integer>(route_);
+          bitField0_ |= 0x00000400;
+         }
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getRouteList() {
+        return java.util.Collections.unmodifiableList(route_);
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public int getRouteCount() {
+        return route_.size();
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public int getRoute(int index) {
+        return route_.get(index);
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public Builder setRoute(
+          int index, int value) {
+        ensureRouteIsMutable();
+        route_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public Builder addRoute(int value) {
+        ensureRouteIsMutable();
+        route_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public Builder addAllRoute(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureRouteIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, route_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 route = 11;</code>
+       */
+      public Builder clearRoute() {
+        route_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000400);
+        onChanged();
+        return this;
+      }
+
       private java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> containers_ =
         java.util.Collections.emptyList();
       private void ensureContainersIsMutable() {
-        if (!((bitField0_ & 0x00000400) == 0x00000400)) {
+        if (!((bitField0_ & 0x00000800) == 0x00000800)) {
           containers_ = new java.util.ArrayList<nhl.containing.networking.protobuf.InstructionProto.Container>(containers_);
-          bitField0_ |= 0x00000400;
+          bitField0_ |= 0x00000800;
          }
       }
 
@@ -2920,7 +3075,7 @@ public final class InstructionProto {
           nhl.containing.networking.protobuf.InstructionProto.Container, nhl.containing.networking.protobuf.InstructionProto.Container.Builder, nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> containersBuilder_;
 
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container> getContainersList() {
         if (containersBuilder_ == null) {
@@ -2930,7 +3085,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public int getContainersCount() {
         if (containersBuilder_ == null) {
@@ -2940,7 +3095,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Container getContainers(int index) {
         if (containersBuilder_ == null) {
@@ -2950,7 +3105,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder setContainers(
           int index, nhl.containing.networking.protobuf.InstructionProto.Container value) {
@@ -2967,7 +3122,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder setContainers(
           int index, nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
@@ -2981,7 +3136,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder addContainers(nhl.containing.networking.protobuf.InstructionProto.Container value) {
         if (containersBuilder_ == null) {
@@ -2997,7 +3152,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder addContainers(
           int index, nhl.containing.networking.protobuf.InstructionProto.Container value) {
@@ -3014,7 +3169,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder addContainers(
           nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
@@ -3028,7 +3183,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder addContainers(
           int index, nhl.containing.networking.protobuf.InstructionProto.Container.Builder builderForValue) {
@@ -3042,7 +3197,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder addAllContainers(
           java.lang.Iterable<? extends nhl.containing.networking.protobuf.InstructionProto.Container> values) {
@@ -3057,12 +3212,12 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder clearContainers() {
         if (containersBuilder_ == null) {
           containers_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000400);
+          bitField0_ = (bitField0_ & ~0x00000800);
           onChanged();
         } else {
           containersBuilder_.clear();
@@ -3070,7 +3225,7 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public Builder removeContainers(int index) {
         if (containersBuilder_ == null) {
@@ -3083,14 +3238,14 @@ public final class InstructionProto {
         return this;
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Container.Builder getContainersBuilder(
           int index) {
         return getContainersFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder getContainersOrBuilder(
           int index) {
@@ -3100,7 +3255,7 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public java.util.List<? extends nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder> 
            getContainersOrBuilderList() {
@@ -3111,14 +3266,14 @@ public final class InstructionProto {
         }
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Container.Builder addContainersBuilder() {
         return getContainersFieldBuilder().addBuilder(
             nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance());
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public nhl.containing.networking.protobuf.InstructionProto.Container.Builder addContainersBuilder(
           int index) {
@@ -3126,7 +3281,7 @@ public final class InstructionProto {
             index, nhl.containing.networking.protobuf.InstructionProto.Container.getDefaultInstance());
       }
       /**
-       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 11;</code>
+       * <code>repeated .nhl.containing.networking.protobuf.Container containers = 12;</code>
        */
       public java.util.List<nhl.containing.networking.protobuf.InstructionProto.Container.Builder> 
            getContainersBuilderList() {
@@ -3139,7 +3294,7 @@ public final class InstructionProto {
           containersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               nhl.containing.networking.protobuf.InstructionProto.Container, nhl.containing.networking.protobuf.InstructionProto.Container.Builder, nhl.containing.networking.protobuf.InstructionProto.ContainerOrBuilder>(
                   containers_,
-                  ((bitField0_ & 0x00000400) == 0x00000400),
+                  ((bitField0_ & 0x00000800) == 0x00000800),
                   getParentForChildren(),
                   isClean());
           containers_ = null;
@@ -6939,25 +7094,25 @@ public final class InstructionProto {
       "es\030\002 \003(\01327.nhl.containing.networking.pro" +
       "tobuf.InstructionResponse\022 \n\030recievedIns" +
       "tructionUUIDs\030\003 \003(\t\022\035\n\025recievedResponseU" +
-      "UIDs\030\004 \003(\t\"\343\001\n\013Instruction\022\n\n\002id\030\001 \002(\t\022\027" +
+      "UIDs\030\004 \003(\t\"\362\001\n\013Instruction\022\n\n\002id\030\001 \002(\t\022\027" +
       "\n\017instructionType\030\002 \002(\005\022\014\n\004time\030\003 \001(\003\022\t\n" +
       "\001a\030\004 \001(\005\022\t\n\001b\030\005 \001(\005\022\t\n\001x\030\006 \001(\005\022\t\n\001y\030\007 \001(",
       "\005\022\t\n\001z\030\010 \001(\005\022\017\n\007message\030\t \001(\t\022\026\n\016arrival" +
-      "Company\030\n \001(\t\022A\n\ncontainers\030\013 \003(\0132-.nhl." +
-      "containing.networking.protobuf.Container" +
-      "\"I\n\023InstructionResponse\022\n\n\002id\030\001 \002(\t\022\025\n\ri" +
-      "nstructionId\030\002 \002(\t\022\017\n\007message\030\003 \001(\t\"\222\003\n\t" +
-      "Container\022\021\n\townerName\030\001 \002(\t\022\027\n\017containe" +
-      "rNumber\030\002 \002(\005\022\016\n\006length\030\003 \002(\t\022\r\n\005width\030\004" +
-      " \002(\t\022\016\n\006height\030\005 \002(\t\022\t\n\001x\030\006 \002(\005\022\t\n\001y\030\007 \002" +
-      "(\005\022\t\n\001z\030\010 \002(\005\022\023\n\013weightEmpty\030\t \002(\005\022\024\n\014we" +
-      "ightLoaded\030\n \002(\005\022\017\n\007content\030\013 \002(\t\022\023\n\013con",
-      "tentType\030\014 \002(\t\022\024\n\014conentDanger\030\r \002(\t\022\013\n\003" +
-      "iso\030\016 \002(\t\022\026\n\016departmentDate\030\017 \001(\003\022\033\n\023dep" +
-      "artmentTransport\030\020 \001(\t\022\031\n\021departmentComp" +
-      "any\030\021 \001(\t\022\023\n\013arrivalDate\030\022 \001(\003\022\030\n\020arriva" +
-      "lTransport\030\023 \001(\t\022\026\n\016arrivalCompany\030\024 \001(\t" +
-      "B\022B\020InstructionProto"
+      "Company\030\n \001(\t\022\r\n\005route\030\013 \003(\005\022A\n\ncontaine" +
+      "rs\030\014 \003(\0132-.nhl.containing.networking.pro" +
+      "tobuf.Container\"I\n\023InstructionResponse\022\n" +
+      "\n\002id\030\001 \002(\t\022\025\n\rinstructionId\030\002 \002(\t\022\017\n\007mes" +
+      "sage\030\003 \001(\t\"\222\003\n\tContainer\022\021\n\townerName\030\001 " +
+      "\002(\t\022\027\n\017containerNumber\030\002 \002(\005\022\016\n\006length\030\003" +
+      " \002(\t\022\r\n\005width\030\004 \002(\t\022\016\n\006height\030\005 \002(\t\022\t\n\001x" +
+      "\030\006 \002(\005\022\t\n\001y\030\007 \002(\005\022\t\n\001z\030\010 \002(\005\022\023\n\013weightEm" +
+      "pty\030\t \002(\005\022\024\n\014weightLoaded\030\n \002(\005\022\017\n\007conte",
+      "nt\030\013 \002(\t\022\023\n\013contentType\030\014 \002(\t\022\024\n\014conentD" +
+      "anger\030\r \002(\t\022\013\n\003iso\030\016 \002(\t\022\026\n\016departmentDa" +
+      "te\030\017 \001(\003\022\033\n\023departmentTransport\030\020 \001(\t\022\031\n" +
+      "\021departmentCompany\030\021 \001(\t\022\023\n\013arrivalDate\030" +
+      "\022 \001(\003\022\030\n\020arrivalTransport\030\023 \001(\t\022\026\n\016arriv" +
+      "alCompany\030\024 \001(\tB\022B\020InstructionProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -6982,7 +7137,7 @@ public final class InstructionProto {
     internal_static_nhl_containing_networking_protobuf_Instruction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_nhl_containing_networking_protobuf_Instruction_descriptor,
-        new java.lang.String[] { "Id", "InstructionType", "Time", "A", "B", "X", "Y", "Z", "Message", "ArrivalCompany", "Containers", });
+        new java.lang.String[] { "Id", "InstructionType", "Time", "A", "B", "X", "Y", "Z", "Message", "ArrivalCompany", "Route", "Containers", });
     internal_static_nhl_containing_networking_protobuf_InstructionResponse_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_nhl_containing_networking_protobuf_InstructionResponse_fieldAccessorTable = new

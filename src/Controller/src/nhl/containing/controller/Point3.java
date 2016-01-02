@@ -98,6 +98,15 @@ public class Point3 {
         y = copy.y;
         z = copy.z;
     }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        Point3 thisPoint3 = (Point3)this;
+        Point3 otherPoint3 = (Point3)obj;
+        return thisPoint3.x == otherPoint3.x && thisPoint3.y == otherPoint3.y && thisPoint3.z == otherPoint3.z;
+    }
+    
     /**
      * Constructor
      * @param v 

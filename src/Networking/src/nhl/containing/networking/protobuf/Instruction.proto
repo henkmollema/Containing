@@ -21,7 +21,8 @@ message Instruction
         optional int32 z = 8;
 	optional string message = 9;
         optional string arrivalCompany = 10;
-        repeated Container containers = 11;
+        repeated int32 route = 11;
+        repeated Container containers = 12;
 }
 
 message InstructionResponse

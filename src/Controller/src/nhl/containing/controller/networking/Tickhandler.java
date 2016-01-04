@@ -45,14 +45,21 @@ public class Tickhandler implements Runnable
     
     private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
     private HashMap<ShippingContainer, Integer> container_StorageID;
-    private HashMap<ShippingContainer, Vector3f> containe_StoragePosition;
+    private HashMap<ShippingContainer, Vector3f> container_StoragePosition;
     
-    //private HashMap<Integer, Shipping
+    public int getStorageIDByContainer(ShippingContainer container)
+    {
+        return container_StorageID.get(container);
+    }
     
+    public Vector3f getStoragePositionByContainer(ShippingContainer container)
+    {
+        return container_StoragePosition.get(container);
+    }
     
     /**
      * determineContainerPlatforms
-     * Determines the storageplatform where the given containers will be placed.
+     * Determines the storageplatforms where the given containers will be placed by filling the container_StorageID hashmap
      *
      * @param containers
      */
@@ -60,9 +67,10 @@ public class Tickhandler implements Runnable
     {   
         for(int i = 0; i < containers.size(); i++)
         {
+            ShippingContainer container = containers.get(i);
+            
             for(int j = SimulatorItems.STORAGE_BEGIN; j < SimulatorItems.STORAGE_BEGIN + SimulatorItems.STORAGE_CRANE_COUNT; j++)
             {
-               ShippingContainer container = containers.get(i);
                if(canBePlacedInPlatform(container, j))
                     container_StorageID.put(container, j);
             }

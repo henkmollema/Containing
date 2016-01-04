@@ -29,6 +29,7 @@ public class SimulatorController
     public void setItems(SimulatorItems items)
     {
         _simitems = items;
+        _context.setSimulatorItems(items);
     }
     
     public SimulatorItems getItems(){
@@ -54,7 +55,7 @@ public class SimulatorController
         writeAnalyzeResults();
 
         // Warm-up the simulation context.
-        _context.setSimulatorItems(_simitems);
+        
         _context.getShipments();
         _context.getFirstShipment();
 

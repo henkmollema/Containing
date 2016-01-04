@@ -33,3 +33,7 @@ build/
 *.sdf
 src/App/.idea/dictionaries/Niels.xml
 *.bash
+src/Controller c++/.dep.inc
+src/Controller c++/fix/jni_md.h
+src/Controller c++/nbproject/configurations.xml
+src/Controller c++/fix/jni.h

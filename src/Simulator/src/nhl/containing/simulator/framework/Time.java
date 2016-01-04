@@ -35,7 +35,6 @@ public final class Time {
             m_deltaSum += _addedTime;
             
             if(m_deltaSum >= TIME_SEND_INTERVAL) {
-                // 
                 SimulatorClient.sendTimeUpdate();
                 m_deltaSum = 0;
             } 

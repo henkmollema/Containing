@@ -54,7 +54,7 @@ public class SimulationContext
         {
             ShippingContainer container = containers.get(i);
             
-            for(int j = SimulatorItems.STORAGE_BEGIN; j < SimulatorItems.STORAGE_BEGIN + SimulatorItems.STORAGE_CRANE_COUNT; j++)
+            for(int j = 0; j < SimulatorItems.STORAGE_CRANE_COUNT; j++)
             {
                Storage storagePlatform = _simulatorItems.getStorages()[j];
                
@@ -98,6 +98,8 @@ public class SimulationContext
         Storage platform = this.getStoragePlatformByContainer(c);
         StorageItem[][][] storagePlaces = platform.getStoragePlaces();
         
+        
+        //TODO: FIX xyz order.. storagePlaces array size = [5][45][5] 
         for(int z = 0; z < storagePlaces[0][0].length; z++)
         {
             for(int x = 0; x < storagePlaces.length; x++)

@@ -322,6 +322,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {     
         Logger.getLogger("").setLevel(Level.SEVERE);
         Main app = new Main();
+        app.setPauseOnLostFocus(false);
         app.showSettings = false;
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1920, 1080);

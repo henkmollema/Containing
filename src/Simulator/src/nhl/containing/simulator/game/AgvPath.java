@@ -59,80 +59,157 @@ public class AgvPath /*extends Behaviour*/ {
         if (m_initialized)
             return;
         
-        /*   lorry       inland
-         * a_________b c_________d
-         * 0_________235_________6
-         * |          |          7 e
-         * |          |          | | sea
-         * | storage  |  storage | |
-         * |          |          8 f
-         * 1__________4__________9
-         *  g___________________h
-         *         train
-         * 
-         * + -> node
-         * 
-         */
-        
         final float left = 1650.0f;
         final float up = 625.0f;
-        final float extents = 100.0f;
+        final float ext = 100.0f;
+        final float iof = 100.0f;
+        final float road = 20.0f;
         final float zero = 0.0f;
         
         
+       /*
+         * 
+         *           Lorry               Inland
+         *       00____>______01       02___>___03
+         *        |            |        |        |
+         * 08____09___<_______10_11_12_13___<___14_________15
+         * |      ˄            ˅  ˅  ˄  ˄        ˅          |
+         * |  16_17_____>_____18_19_20_21___>___22 __23     |
+         * |  |                   |  |                |     |
+         * |  |                   |  |                24_>_25__04
+         * |  |                   |  |                |     |   |
+         * |  |                   |  |                |     |   |   Sea
+         * |  |    Storage        ˅  ˄   Storage      |     |   |
+         * |  |                   |  |                |     |   |
+         * |  |                   |  |                26_<_27__05
+         * |  |                   |  |                |     |
+         * |  28_29______<_______30_31___<______32___33     |
+         * |      ˅               ˅  ˄           ˄          |
+         * 34____35______>_______36_37_____>____38_________39
+         *        |                              |
+         *       06_____________________________07
+         *                 Train
+         */
         nodes = new AgvNode[] {
             
-            // Path
-            new AgvNode(new Vector2f(left, up)), // 0
-            new AgvNode(new Vector2f(left, -up)), // 1
-            new AgvNode(new Vector2f(extents, up)), // 2
-            new AgvNode(new Vector2f(zero, up)), // 3
-            new AgvNode(new Vector2f(zero, -up)), // 4
-            new AgvNode(new Vector2f(-extents, up)), // 5
-            new AgvNode(new Vector2f(-left, up)), // 6
-            new AgvNode(new Vector2f(-left, up - extents)), // 7
-            new AgvNode(new Vector2f(-left, -up + extents)), // 8
-            new AgvNode(new Vector2f(-left, -up)), // 9
-            
             // Lorry
-            new AgvNode(new Vector2f(left, up + extents)), // 10 (a)
-            new AgvNode(new Vector2f(extents, up + extents)), // 11 (b)
+            new AgvNode(new Vector2f(left - ext, up + ext)), // 0
+            new AgvNode(new Vector2f(ext, up + ext)), // 1
             
             // Inland
-            new AgvNode(new Vector2f(-extents, up + extents)), // 12 (c)
-            new AgvNode(new Vector2f(-left,up + extents)), // 13 (d)
+            new AgvNode(new Vector2f(-ext, up + ext)), // 2
+            new AgvNode(new Vector2f(-left + ext, up + ext)), // 3
             
             // Sea
-            new AgvNode(new Vector2f(-left - extents, up - extents)), // 14 (e)
-            new AgvNode(new Vector2f(-left - extents, -up + extents)), // 15 (f)
+            new AgvNode(new Vector2f(-left - ext, up - ext)), // 4
+            new AgvNode(new Vector2f(-left - ext, -up + ext)), // 5
             
             // Train
-            new AgvNode(new Vector2f(left, -up - extents)), // 16 (g)
-            new AgvNode(new Vector2f(-left, -up - extents)), // 17 (h)
+            new AgvNode(new Vector2f(left - ext, -up - ext)), // 6
+            new AgvNode(new Vector2f(-left + ext, -up - ext)), // 7
+            
+            // 
+            new AgvNode(new Vector2f(left + road, up + road)), // 8
+            new AgvNode(new Vector2f(left - iof, up + road)), // 9
+            new AgvNode(new Vector2f(iof, up + road)), // 10
+            new AgvNode(new Vector2f(road / 2.0f, up + road)), // 3
+            new AgvNode(new Vector2f(-road / 2.0f, up + road)), // 3
+            new AgvNode(new Vector2f(-iof, up + road)), // 10
+            new AgvNode(new Vector2f(-left + iof, up + road)), // 8
+            new AgvNode(new Vector2f(-left - road, up + road)), // 8
+            
+            // 
+            new AgvNode(new Vector2f(left, up)), // 8
+            new AgvNode(new Vector2f(left - iof, up)), // 9 + (road / 2.0f)
+            new AgvNode(new Vector2f(iof, up)), // 10
+            new AgvNode(new Vector2f(road / 2.0f, up)), // 3
+            new AgvNode(new Vector2f(-road / 2.0f, up)), // 3
+            new AgvNode(new Vector2f(-iof, up)), // 10
+            new AgvNode(new Vector2f(-left + iof, up)), // 8
+            new AgvNode(new Vector2f(-left, up)), // 8
+            
+            //
+            new AgvNode(new Vector2f(-left, up - iof)), // 8
+            new AgvNode(new Vector2f(-left - road, up - iof)), // 8
+            
+            //
+            new AgvNode(new Vector2f(-left, -up + iof)), // 8
+            new AgvNode(new Vector2f(-left - road, -up + iof)), // 8
+            
+            // 
+            new AgvNode(new Vector2f(left, -up)), // 8
+            new AgvNode(new Vector2f(left - iof, -up)), // 9
+            new AgvNode(new Vector2f(road / 2.0f, -up)), // 3
+            new AgvNode(new Vector2f(-road / 2.0f, -up)), // 3
+            new AgvNode(new Vector2f(-left + iof, -up)), // 8
+            new AgvNode(new Vector2f(-left, -up)), // 8
+            
+            // 
+            new AgvNode(new Vector2f(left, -up - road)), // 8
+            new AgvNode(new Vector2f(left - iof, -up - road)), // 9
+            new AgvNode(new Vector2f(road / 2.0f, -up - road)), // 3
+            new AgvNode(new Vector2f(-road / 2.0f, -up - road)), // 3
+            new AgvNode(new Vector2f(-left + iof, -up - road)), // 8
+            new AgvNode(new Vector2f(-left - road, -up - road)), // 8
         };
         
-        nodes[0].setConnections(1, 2, 10);
-        nodes[1].setConnections(0, 4);
-        nodes[2].setConnections(0, 3);
-        nodes[3].setConnections(2, 4, 5);
-        nodes[4].setConnections(1, 3, 9);
-        nodes[5].setConnections(3,6,12);
-        nodes[6].setConnections(5,7);
-        nodes[7].setConnections(6,8,14);
-        nodes[8].setConnections(7,9);
-        nodes[9].setConnections(4,8,17);
+        // 
+        nodes[ 0].setConnections(1);
+        nodes[ 1].setConnections(10);
         
-        nodes[10].setConnections(11);
-        nodes[11].setConnections(2);
+        // 
+        nodes[ 2].setConnections(3);
+        nodes[ 3].setConnections(14);
         
-        nodes[12].setConnections(13);
-        nodes[13].setConnections(6);
+        // 
+        nodes[ 4].setConnections(5);
+        nodes[ 5].setConnections(27);
         
-        nodes[14].setConnections(15);
-        nodes[15].setConnections(8);
+        // 
+        nodes[ 6].setConnections(7);
+        nodes[ 7].setConnections(38);
         
-        nodes[16].setConnections(1);
-        nodes[17].setConnections(16);
+        // 
+        nodes[ 8].setConnections(34);
+        nodes[ 9].setConnections(8, 0);
+        nodes[10].setConnections(9, 18);
+        nodes[11].setConnections(10, 19);
+        nodes[12].setConnections(11);
+        nodes[13].setConnections(12, 2);
+        nodes[14].setConnections(13, 22);
+        nodes[15].setConnections(14);
+        
+        // 
+        nodes[16].setConnections(17);
+        nodes[17].setConnections(18, 9);
+        nodes[18].setConnections(19);
+        nodes[19].setConnections(20, 30);
+        nodes[20].setConnections(21, 12);
+        nodes[21].setConnections(22, 13);
+        nodes[22].setConnections(23);
+        nodes[23].setConnections(24);
+        
+        // 
+        nodes[24].setConnections(25, 26);
+        nodes[25].setConnections(15, 4);
+        nodes[26].setConnections(33);
+        nodes[27].setConnections(26, 25);
+        
+        // 
+        nodes[28].setConnections(16);
+        nodes[29].setConnections(28, 35);
+        nodes[30].setConnections(29, 36);
+        nodes[31].setConnections(30, 20);
+        nodes[32].setConnections(31);
+        nodes[33].setConnections(32);
+        
+        // 
+        nodes[34].setConnections(35);
+        nodes[35].setConnections(36, 6);
+        nodes[36].setConnections(37);
+        nodes[37].setConnections(38, 31);
+        nodes[38].setConnections(39, 32);
+        nodes[39].setConnections(27);
         
         sendNodes();
         

@@ -24,7 +24,7 @@ public class PlatformTrain extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f),m_platformid,SimulationItemType.PARKINGSPOT_TRAIN)
+            new ParkingSpot(this, new Vector3f(-5.0f, 0.0f, 0.0f),m_platformid,SimulationItemType.PARKINGSPOT_TRAIN, 6, 7)
         };
     }
 

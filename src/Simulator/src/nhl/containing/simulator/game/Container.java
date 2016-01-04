@@ -2,8 +2,10 @@ package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Transform;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
@@ -73,10 +75,14 @@ public class Container {
         transform.position(pos);
     }
     public final void show() {
-        if (transform != null)
-            return;
-        ContainerPool.get(this);
-        transform.setMaterial(this.m_material);
+        if (transform == null) {
+            ContainerPool.get(this);
+            transform.setMaterial(this.m_material);
+        }
+        
+        //transform.position(Utilities.zero());
+        //transform.getChild(0).setLocalTranslation(Utilities.zero());
+        //transform.getChild(0).setLocalRotation(Quaternion.IDENTITY);
     }
     public final void hide() {
         if (transform == null)

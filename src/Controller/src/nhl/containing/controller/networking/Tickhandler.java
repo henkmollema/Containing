@@ -116,6 +116,7 @@ public class Tickhandler implements Runnable
                 for(int y = 0; y < storagePlaces[0][0].length; y++)
                 {
                     if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
+                    
                     //If there's no container on this spot 
                     if(storagePlaces[x][y][z].isEmpty())
                     {
@@ -123,7 +124,7 @@ public class Tickhandler implements Runnable
                             //check the container beneath it.
                             if(storagePlaces[x][y - 1][z].getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
                             {
-                                continue; //Container can not be placed here, because the container beneath departs earlier
+                                break; //Container can not be placed here, because the container beneath departs earlier
                             }
                         }
                         

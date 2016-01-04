@@ -10,7 +10,6 @@ import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
-import nhl.containing.controller.simulation.LorryPlatform;
 import nhl.containing.controller.simulation.Parkingspot;
 import nhl.containing.controller.simulation.Platform;
 import nhl.containing.controller.simulation.SeaShip;
@@ -23,6 +22,7 @@ import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
 import nhl.containing.networking.protocol.CommunicationProtocol;
+import nhl.containing.networking.protocol.InstructionType;
 
 /**
  * Handles a timer tick
@@ -94,31 +94,31 @@ public class Tickhandler implements Runnable
         {
             if (shipment.carrier instanceof Train)
             {
-                type = 6;
+                type = InstructionType.ARRIVAL_TRAIN;
             } else if (shipment.carrier instanceof SeaShip)
             {
-                type = 7;
+                type = InstructionType.ARRIVAL_SEASHIP;
             } else if (shipment.carrier instanceof InlandShip)
             {
-                type = 8;
+                type = InstructionType.ARRIVAL_INLANDSHIP;
             } else if (shipment.carrier instanceof Truck)
             {
-                type = 9;
+                type = InstructionType.ARRIVAL_TRAIN;
             }
         } else
         {
             if (shipment.carrier instanceof Train)
             {
-                type = 10;
+                type = InstructionType.DEPARTMENT_TRAIN;
             } else if (shipment.carrier instanceof SeaShip)
             {
-                type = 11;
+                type = InstructionType.DEPARTMENT_SEASHIP;
             } else if (shipment.carrier instanceof InlandShip)
             {
-                type = 12;
+                type = InstructionType.DEPARTMENT_INLANDSHIP;
             } else if (shipment.carrier instanceof Truck)
             {
-                type = 13;
+                type = InstructionType.DEPARTMENT_TRUCK;
             }
         }
         builder.setInstructionType(type);

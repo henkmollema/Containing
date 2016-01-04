@@ -5,7 +5,7 @@
  */
 package nhl.containing.controller.simulation;
 
-import com.sun.javafx.application.PlatformImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -34,7 +34,7 @@ public class CommunicationTests {
 
         instructionsRecieved = 0;
         repsonsesRecieved = 0;
-        int instructionsToSend = 10; //These will be sent twice, in batches of this number
+        int instructionsToSend = 10000; //These will be sent twice, in batches of this number
         //When instructionsToSend is around 10 000 the TCP write and read buffer will fill up and hang the program TODO: Find a fix, or make sure the batches are less than 10 000 in size
 
         System.out.println("===== instructionResponseBatchTest =====");
@@ -47,9 +47,7 @@ public class CommunicationTests {
         InstructionDispatcher testDispatcher = new InstructionDispatcher() {
             @Override
             public void forwardInstruction(InstructionProto.Instruction inst) {
-
                 instructionsRecieved++;
-
 
                 InstructionResponse response = InstructionResponse.newBuilder()
                         .setId(CommunicationProtocol.newUUID())
@@ -58,13 +56,14 @@ public class CommunicationTests {
                         .build();
 
                 simulator.controllerCom().sendResponse(response);
-                System.out.println("instruction recieved: " + inst.getId());
+                controller.simCom().sendResponse(response);
+                //System.out.println("instruction recieved: " + inst.getId());
             }
 
             @Override
             public void forwardResponse(InstructionProto.InstructionResponse resp) {
                 repsonsesRecieved++;
-                System.out.println("Response recieved for : " + resp.getInstructionId());
+                //System.out.println("Response recieved for : " + resp.getInstructionId());
             }
         };
 
@@ -89,7 +88,7 @@ public class CommunicationTests {
             //controller.simCom().sendInstruction(instruction);
             simulator.controllerCom().sendInstruction(instruction);
         }
-        System.out.println("Test: Added "+instructionsToSend+" to the instruction queue");
+        System.out.println("Test: Added "+instructionsToSend+" to instruction queue");
          try {
                 Thread.sleep(100); //Wait so the queued instructions can be sent.
             } catch (InterruptedException ex) {
@@ -104,17 +103,15 @@ public class CommunicationTests {
                     .setMessage("Got response!")
                     .build();
 
-            //controller.simCom().sendInstruction(instruction);
-             simulator.controllerCom().sendInstruction(instruction);
+            controller.simCom().sendInstruction(instruction);
+             //simulator.controllerCom().sendInstruction(instruction);
             
         }
         instructionsToSend *= 2;
-        
-       
-
-        while (instructionsRecieved != instructionsToSend || repsonsesRecieved != instructionsToSend) {
+        while(repsonsesRecieved < instructionsToSend *2 && instructionsRecieved < instructionsToSend)
+        {
             try {
-                Thread.sleep(10); //It takes a while for the connection to be stopped
+                Thread.sleep(250); //It takes a while for the connection to be stopped
             } catch (InterruptedException ex) {
                 Logger.getLogger(CommunicationTests.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -123,7 +120,7 @@ public class CommunicationTests {
 
 
         assertEquals(instructionsToSend, instructionsRecieved);
-        assertEquals(instructionsToSend, repsonsesRecieved);
+        assertEquals(instructionsToSend * 2, repsonsesRecieved);
 
         System.out.println("Controller Recieved " + instructionsRecieved + " instructions");
         System.out.println("Simulator Recieved " + repsonsesRecieved + " responses");

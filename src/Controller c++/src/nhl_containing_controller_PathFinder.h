@@ -12,8 +12,16 @@ extern "C" {
  * Method:    initPath
  * Signature: (Ljava/awt/Dimension;)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava_awt_Dimension_2
   (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    initPath
+ * Signature: ([Lnhl/containing/controller/simulation/Node;)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnhl_containing_controller_simulation_Node_2
+  (JNIEnv *, jclass, jobjectArray);
 
 /*
  * Class:     nhl_containing_controller_PathFinder
@@ -26,10 +34,26 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath
 /*
  * Class:     nhl_containing_controller_PathFinder
  * Method:    setOccupied
+ * Signature: (IZ)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IZ
+  (JNIEnv *, jclass, jint, jboolean);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
  * Signature: (Ljava/awt/Point;Z)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__Ljava_awt_Point_2Z
   (JNIEnv *, jclass, jobject, jboolean);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (IIZ)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IIZ
+  (JNIEnv *, jclass, jint, jint, jboolean);
 
 /*
  * Class:     nhl_containing_controller_PathFinder

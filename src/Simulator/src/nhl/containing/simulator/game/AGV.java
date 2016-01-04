@@ -12,6 +12,7 @@ import nhl.containing.simulator.framework.Interpolate;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
 import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
@@ -21,6 +22,8 @@ import nhl.containing.simulator.world.MaterialCreator;
  * @author sietse
  */
 public final class AGV extends MovingItem {
+    
+    
     
     // Constants
     private static final Vector3f startPosition = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -35,7 +38,7 @@ public final class AGV extends MovingItem {
     
     // Fields
     private static float m_distance = 20.0f;
-    private static float m_rotationSpeed = 0.4f / 1000.0f;
+    private static float m_rotationSpeed = 0.1f / 1000.0f;
     
     // Members
     private boolean m_waiting = false;
@@ -74,7 +77,7 @@ public final class AGV extends MovingItem {
             if (length > 0.001f) {
                 Vector3f n = change.divide(length);
                 float dist = m_previousDirection.subtract(n).length();
-                n = Interpolate.ease(EaseType.Linear, m_previousDirection, n, m_rotationSpeed * path().m_speed / dist);
+                n = Interpolate.ease(EaseType.Linear, m_previousDirection, n, m_rotationSpeed * path().m_speed / (dist * Time.deltaTime()));
                 m_previousDirection = n;
                 
                 lookDirection(n);

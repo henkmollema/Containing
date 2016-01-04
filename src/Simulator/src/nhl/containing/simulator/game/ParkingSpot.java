@@ -14,6 +14,8 @@ import nhl.containing.simulator.world.WorldCreator;
 public class ParkingSpot extends Transform {
     
     private AGV m_agv;      // Container carrier
+    private int m_arrivalPathID;
+    private int m_departPathID;
     
      /**
      * Constructor
@@ -21,12 +23,14 @@ public class ParkingSpot extends Transform {
      * @param offset Offset to Platform
      * @param id id of the parent of this parkingspot
      */
-    public ParkingSpot(Transform parent,Vector3f offset,int id,SimulationItemType type){
+    public ParkingSpot(Transform parent,Vector3f offset,int id,SimulationItemType type, int arrival, int depart){
         super(parent);
         m_agv = null;
         create();
         this.localPosition(offset);
         this.register(id,type);
+        m_arrivalPathID = arrival;
+        m_departPathID = depart;
     }
     
     /**
@@ -34,12 +38,34 @@ public class ParkingSpot extends Transform {
      * @param parent Platform
      * @param offset Offset to Platform
      */
-    public ParkingSpot(Transform parent, Vector3f offset, SimulationItemType type) {
+    public ParkingSpot(Transform parent, Vector3f offset, SimulationItemType type, int arrival, int depart) {
         super(parent);
         m_agv = null;
         create();
         this.localPosition(offset);
         this.register(type);
+        m_arrivalPathID = arrival;
+        m_departPathID = depart;
+    }
+    
+    public int arrivalID() {
+        if (m_arrivalPathID < 0) {
+            determineArrivalID();
+        }
+        return m_arrivalPathID;
+    }
+    public int departID() {
+        if (m_departPathID < 0) {
+            determineDepartID();
+        }
+        return m_departPathID;
+    }
+    
+    private void determineArrivalID() {
+        
+    }
+    private void determineDepartID() {
+        
     }
     
     /**

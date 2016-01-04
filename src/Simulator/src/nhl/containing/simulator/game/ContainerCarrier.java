@@ -214,7 +214,9 @@ public class ContainerCarrier extends Transform {
             
             if (isOuter(x, y, z)) {
                 onSetContainer(m_containerSpots[x][y][z].container);
-                m_containerSpots[x][y][z].container.show(m_containerSpots[x][y][z].worldPosition());
+                m_containerSpots[x][y][z].container.show();
+                this.attachChild(m_containerSpots[x][y][z].container.transform);
+                m_containerSpots[x][y][z].container.transform.position(m_containerSpots[x][y][z].worldPosition());
             }
             else
                 m_containerSpots[x][y][z].container.hide();

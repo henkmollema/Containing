@@ -171,7 +171,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
      * @param node to node
      */
     public void moveAGV(AGV agv, Platform to, Node node){
-        int[] route = PathFinder.getPath(agv.getNode().m_id, node.m_connections[0], 5);
+        int[] route = PathFinder.getPath(agv.getNode().m_id, node.m_connections[0]);
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
@@ -198,7 +198,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
         //TODO:Calculate & add route
-        int[] route = PathFinder.getPath(agv.getNode().m_id, spot.getNode().m_id, 5);
+        int[] route = PathFinder.getPath(agv.getNode().m_id, spot.getNode().m_id);
         for(int r : route){
             builder.addRoute(r);
         }

@@ -81,7 +81,7 @@ public class Server implements Runnable
             return;
         }
 
-        while (shouldRun)//TODO: Also check for app connection, and start appropriate thread
+        while (shouldRun)
         {
             Socket tmpSocket;
             p("Waiting for connection");

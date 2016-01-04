@@ -6,14 +6,16 @@ import nhl.containing.controller.*;
 /**
  * Encapsulates information about shipments of a simulation instance.
  *
- * <p> The {@code formRecordSet} method groups the raw record data from the XML
+ * <p> 
+ * The {@code formRecordSet} method groups the raw record data from the XML
  * file into {@code Shipment}s. A {@code Shipment} represents an incoming or
  * outgoing shipment by a carrier which carries a certain amount of containers
- * and is is identified by a key based on the arrival or departure data. The
+ * and is identified by a key based on the arrival or departure data. The
  * shipment data can be accessed by the {@code getShipments} method. Shipments
  * by a specific carrier type can be access with {@code getX} where {@code X} is
  * either {@code SeaShips}, {@code InlandShips}, {@code Trucks} or
  * {@code Trains}.
+ * </p>
  *
  * @author henkmollema
  */
@@ -85,16 +87,17 @@ public class SimulationContext
         return firstShipment;
     }
     /**
-     * Gets a shipment by key
-     * @param key key
-     * @return A {@code Shipment} or null when not found
+     * Gets a shipment by its key.
+     * @param key The key identifying the shipment.
+     * @return A {@code Shipment} or null when not found.
      */
     public Shipment getShipmentByKey(String key)
     {
-        for(Shipment s : getShipments()){
-            if(s.key.equals(key))
-                return s;
+        if (shipments.containsKey(key))
+        {
+            return shipments.get(key);
         }
+
         return null;
     }
 

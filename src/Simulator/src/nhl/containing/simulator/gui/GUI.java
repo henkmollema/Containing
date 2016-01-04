@@ -4,6 +4,9 @@ import com.jme3.font.*;
 import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.simulation.Main;
 import com.jme3.font.BitmapText;
+import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
@@ -55,6 +58,17 @@ public class GUI extends Behaviour{
     public void start() {
                 /** Write text on the screen (HUD) */
         //Main.guiRoot().detachAllChildren();
+        Picture pic = new Picture("background");
+        Material mat = new Material(Main.assets(), "Common/MatDefs/Misc/Unshaded.j3md");
+        ColorRGBA colour = ColorRGBA.Black;
+        mat.setColor("Color", colour.set(colour.r, colour.g, colour.b, 0.5f));
+        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+        mat.setTransparent(true);
+        pic.setMaterial(mat);
+        pic.setWidth(300);
+        pic.setHeight(150);
+        pic.setPosition(screenWidth() - 300, screenHeight() - 150);
+        Main.guiRoot().attachChild(pic);
         Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         m_containerInfo = new BitmapText(Main.guiFont(), false);

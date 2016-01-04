@@ -80,7 +80,7 @@ public class Tickhandler implements Runnable
             context.determineContainerPlatforms(s.carrier.containers);
             
             s.processed = true;
-            p("Process shipment: " + s.key);
+            p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString());
             createProto(s);
             
             
@@ -113,7 +113,7 @@ public class Tickhandler implements Runnable
                 type = InstructionType.ARRIVAL_INLANDSHIP;
             } else if (shipment.carrier instanceof Truck)
             {
-                type = InstructionType.ARRIVAL_TRAIN;
+                type = InstructionType.ARRIVAL_TRUCK;
             }
         } else
         {

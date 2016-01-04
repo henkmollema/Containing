@@ -23,7 +23,7 @@ public class PathfindingTests
     public void NothingWrong()
     {
         PathFinder.initPath(new Dimension(25, 25));
-        int[] path = PathFinder.getPath(0, 25*25-1, 5.0f);
+        int[] path = PathFinder.getPath(0, 25*25-1);
         assertEquals(0, path[path.length - 1]);
         assertEquals(25*25-1, path[0]);
         assertNotNull(path);
@@ -36,7 +36,7 @@ public class PathfindingTests
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("origin is not in the roadmap");
         PathFinder.initPath(new Dimension(25, 25));
-        int[] path = PathFinder.getPath(25*25, 130, 5.0f);
+        int[] path = PathFinder.getPath(25*25, 130);
         assertNull(path);
         PathFinder.cleanup();
     }
@@ -47,7 +47,7 @@ public class PathfindingTests
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("destination is not in the roadmap");
         PathFinder.initPath(new Dimension(25, 25));
-        int[] path = PathFinder.getPath(0, 25*25, 5.0f);
+        int[] path = PathFinder.getPath(0, 25*25);
         assertNull(path);
         PathFinder.cleanup();
     }

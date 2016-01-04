@@ -5,7 +5,6 @@
  */
 package nhl.containing.controller.simulation;
 
-import com.sun.javafx.application.PlatformImpl;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ public class Platform
 {
     protected final int m_id;
     protected List<Parkingspot> m_parkingspots = new ArrayList<>();
+    protected List<ShippingContainer> m_containers = new ArrayList<>();
     protected boolean m_busy = false;
     
     /**
@@ -85,6 +85,10 @@ public class Platform
      */
     public List<Parkingspot> getParkingspots(){
         return m_parkingspots;
+    }
+    
+    public List<ShippingContainer> getShippingContainers(){
+        return m_containers;
     }
     
     /**

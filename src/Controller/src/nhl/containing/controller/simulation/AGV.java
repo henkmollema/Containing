@@ -14,6 +14,7 @@ public class AGV
     private final int m_id;
     private ShippingContainer m_container = null;
     private boolean m_isWaiting = true;
+    private Node m_node = null;
     
     /**
      * Constructor
@@ -21,6 +22,22 @@ public class AGV
      */
     public AGV(int id){
         m_id = id;
+    }
+    
+    /**
+     * sets the current node
+     * @param node node
+     */
+    public void setNode(Node node){
+        m_node = node;
+    }
+    
+    /**
+     * Gets the current node
+     * @return 
+     */
+    public Node getNode(){
+        return m_node;
     }
     
     /**

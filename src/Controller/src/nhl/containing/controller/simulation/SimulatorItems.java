@@ -27,17 +27,17 @@ public class SimulatorItems
     public static final int LORRY_BEGIN = INLAND_SHIP_CRANE_COUNT;
     public static final int TRAIN_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT + STORAGE_CRANE_COUNT;
     
-    private Storage[] m_storages = new Storage[72];
-    private Platform[] m_trainPlatforms = new Platform[4];
+    private Storage[] m_storages = new Storage[STORAGE_CRANE_COUNT];
+    private Platform[] m_trainPlatforms = new Platform[TRAIN_CRANE_COUNT];
     private Shipment m_trainShipment = null;
     
-    private Platform[] m_seaPlatforms = new Platform[8];
+    private Platform[] m_seaPlatforms = new Platform[SEA_SHIP_CRANE_COUNT];
     private Shipment m_seashipShipment = null;
     
-    private Platform[] m_inlandPlatforms = new Platform[1];
+    private Platform[] m_inlandPlatforms = new Platform[INLAND_SHIP_CRANE_COUNT];
     private Shipment m_inlandShipment = null;
     
-    private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[20];
+    private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[LORRY_CRANE_COUNT];
     
     private List<Parkingspot> m_parkingspots = new ArrayList<>();
     private List<Node> m_Nodes = new ArrayList<>();
@@ -173,6 +173,19 @@ public class SimulatorItems
      */
     public List<Node> getNodes(){
         return m_Nodes;
+    }
+    
+    /**
+     * Get node by a id
+     * @param id id
+     * @return node
+     */
+    public Node getNode(int id){
+        for(Node n : m_Nodes){
+            if(n.m_id == id)
+                return n;
+        }
+        return null;
     }
     
     /**

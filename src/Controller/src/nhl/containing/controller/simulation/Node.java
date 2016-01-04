@@ -14,9 +14,9 @@ import nhl.containing.controller.Vector2f;
  */
 public class Node
 {
-    private final int m_id;
-    private final Vector2f m_position;
-    private final int [] m_connections;
+    public final int m_id;
+    public final Vector2f m_position;
+    public final int [] m_connections;
     
     /**
      * Constructor
@@ -53,4 +53,5 @@ public class Node
         }
         return array;
     }
+    
 }

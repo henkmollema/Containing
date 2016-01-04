@@ -152,35 +152,6 @@ public class Tickhandler implements Runnable
     }
 
     /**
-     * Send AGVs
-     * @param carrier carrier
-     */
-    private void sendAGVs(Carrier carrier)
-    {
-        for (Platform platform : _simulatorItems.getPlatformsByCarrier(carrier))
-        {
-            if (platform.isBusy())
-            {
-                continue;
-            }
-            for (Parkingspot p : platform.getParkingspots())
-            {
-                if (p.hasAGV())
-                {
-                    continue;
-                }
-                AGV agv = _simulatorItems.getFreeAGV();
-                if (agv == null)
-                {
-                    //TODO: Make some kind of queue
-                    return;
-                }
-                _dispatcherController.moveAGV(agv, platform,p);
-            }
-        }
-    }
-
-    /**
      * Gets the category by a carrier
      *
      * @param carrier carrier

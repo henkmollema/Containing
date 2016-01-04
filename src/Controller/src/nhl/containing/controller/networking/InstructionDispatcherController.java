@@ -1,10 +1,13 @@
 package nhl.containing.controller.networking;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import nhl.containing.controller.PathFinder;
 import nhl.containing.controller.Point3;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.Vector3f;
@@ -94,6 +97,51 @@ public class InstructionDispatcherController implements InstructionDispatcher
             }
         }
     }
+    
+    /**
+     * Places a crane for the sea/inland and train platform
+     * @param platform platform
+     */
+    private void placeCrane(Platform platform){
+        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+        builder.setId(CommunicationProtocol.newUUID());
+        builder.setA(platform.getID());
+        //TODO : choose right container
+        ShippingContainer container = platform.getShippingContainers().get(0);
+        builder.setX(container.position.x);
+        builder.setY(container.position.y);
+        builder.setZ(container.position.z);
+        builder.setInstructionType(InstructionType.PLACE_CRANE);
+        _com.sendInstruction(builder.build());
+        platform.setBusy();
+    }
+    
+    /**
+     * Handles place crane ready instruction
+     * @param instruction 
+     */
+    private void placeCraneReady(InstructionProto.Instruction instruction){
+        if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
+            //dit is een inlandship platform
+            
+        }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
+            //dit is een lorry platform
+            
+        }else if(instruction.getA() < SimulatorItems.STORAGE_BEGIN){
+            //dit is een seaship platform
+            
+        }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
+            //dit is een storage platform
+
+        }else{
+            //dit is een train platform
+            Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
+            InstructionProto.Node node = instruction.getNodes(0);
+            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
+            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
+        }
+    }
+    
     /**
      * Handles crane to AGV instruction type
      * @param platform platform
@@ -104,8 +152,9 @@ public class InstructionDispatcherController implements InstructionDispatcher
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(platform.getID());
-        builder.setB(parkingspot.getAGV().getID());
+        builder.setB((int)parkingspot.getId());
         builder.setInstructionType(InstructionType.CRANE_TO_AGV);
+        //TODO: getposition
         Point3 point = shipment.carrier.containers.get(shipment.carrier.containers.size() - shipment.count).position;
         shipment.count--;
         builder.setX(point.x);
@@ -116,21 +165,49 @@ public class InstructionDispatcherController implements InstructionDispatcher
     }
     
     /**
+     * Sends Move AGV command to sea/inland/train platform
+     * @param agv agv
+     * @param to to platform
+     * @param node to node
+     */
+    public void moveAGV(AGV agv, Platform to, Node node){
+        int[] route = PathFinder.getPath(agv.getNode().m_id, node.m_connections[0], 5);
+        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+        builder.setId(CommunicationProtocol.newUUID());
+        builder.setA(agv.getID());
+        for(int r : route){
+            builder.addRoute(r);
+        }
+        builder.setInstructionType(InstructionType.MOVE_AGV);
+        _com.sendInstruction(builder.build());
+        try{
+            agv.setBusy();
+            to.getParkingspots().get(0).setAGV(agv);
+            agv.setNode(_items.getNode(node.m_connections[0]));
+        }catch(Exception e){e.printStackTrace();} 
+    }
+    
+    /**
      * Sends Move AGV command
      * @param agv the AGV
      * @param to the destination platform
-     * @param spot the spot of the agv
+     * @param spot the spot where the agv needs to go
      */
     public void moveAGV(AGV agv,Platform to,Parkingspot spot){
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
         //TODO:Calculate & add route
+        int[] route = PathFinder.getPath(agv.getNode().m_id, spot.getNode().m_id, 5);
+        for(int r : route){
+            builder.addRoute(r);
+        }
         builder.setInstructionType(InstructionType.MOVE_AGV);
         _com.sendInstruction(builder.build());
         try{
             agv.setBusy();
             spot.setAGV(agv);
+            agv.setNode(spot.getNode());
         }catch(Exception e){e.printStackTrace();} 
     }
     
@@ -205,7 +282,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
             //dit is een train platform
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
-            //TODO: find destination
+            //TODO: find destination <-- jens, hier juiste platform ophalen
             if(!Platform.checkIfBusy(_items.getTrainPlatforms())){
                 shipmentMoved(_items.getTrainShipment());
                 _items.unsetTrainShipment();
@@ -257,14 +334,9 @@ public class InstructionDispatcherController implements InstructionDispatcher
                 if(_items.hasTrainShipment() && _items.getInlandShipment().arrived){
                     //TODO: sends crane to department instruction
 
-                }   
+                }
             }
-        }
-        else{
-            //place container on AGV
-            //TODO: Get right container
-            craneToAGV(platform, null, p);
-        }        
+        } 
     }
 
     @Override

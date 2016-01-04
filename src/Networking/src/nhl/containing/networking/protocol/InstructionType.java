@@ -29,4 +29,5 @@ public class InstructionType
     public static final int AGV_READY = 20;
     public static final int SHIPMENT_ARRIVED = 21;
     public static final int SHIPMENT_MOVED = 22;
+    public static final int PLACE_CRANE = 23;
 }

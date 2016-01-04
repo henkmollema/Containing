@@ -23,6 +23,15 @@ message Instruction
         optional string arrivalCompany = 10;
         repeated int32 route = 11;
         repeated Container containers = 12;
+        optional float xf = 13;
+        optional float yf = 14;
+        optional float zf = 15;
+        repeated Node nodes = 16;
+}
+
+message Node{
+    required int32 id = 1;
+    repeated int32 connections = 2;
 }
 
 message InstructionResponse

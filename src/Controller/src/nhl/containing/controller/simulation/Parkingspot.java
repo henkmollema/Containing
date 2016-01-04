@@ -15,14 +15,14 @@ public final class Parkingspot
 {
     private final long m_id;
     private Platform m_parent;
-    private final Vector3f m_position;
+    private Vector3f m_position;
+    private Node m_Node = null;
     private AGV m_agv = null;
     
     /**
      * Constructor
      * @param id id of parkingspot
      * @param position position of parkingspot
-     * @param parent the parent of the parkingspot
      */
     public Parkingspot(long id,Vector3f position){
         m_id = id;
@@ -59,6 +59,22 @@ public final class Parkingspot
      */
     public Vector3f getPosition(){
         return m_position;
+    }
+    
+    /**
+     * Sets the node clostest to the parkingspot
+     * @param node node
+     */
+    public void setNode(Node node){
+        m_Node = node;
+    }
+    
+    /**
+     * Gets the node clostest to the parkingspot
+     * @return 
+     */
+    public Node getNode(){
+        return m_Node;
     }
     
     /**

@@ -59,7 +59,7 @@ public class Camera extends Behaviour {
     
     // Fly
     private final float FLY_CAMERA_SPEED_DEFAULT = 30.0f;       // Default movement speed of the fly camera
-    private final float FLY_CAMERA_SPEED_FAST = 90.0f;          // Fast (shift) movement speed of the fly camera
+    private final float FLY_CAMERA_SPEED_FAST = 180.0f;          // Fast (shift) movement speed of the fly camera
     private final float FLY_CAMERA_SPEED_SLOW = 8.0f;           // Slow (ctrl) movemet speed of the fly camera
     private final float FLY_CAMERA_DAMPING = 20.0f;             // Amount of movement damping
     private Vector3f m_flyVelocity = Utilities.zero();          // Current fly camera velocity

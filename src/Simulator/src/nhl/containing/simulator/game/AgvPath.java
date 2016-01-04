@@ -148,7 +148,7 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(-left, -up)), // 8
             
             // 
-            new AgvNode(new Vector2f(left, -up - road)), // 8
+            new AgvNode(new Vector2f(left + road, -up - road)), // 8
             new AgvNode(new Vector2f(left - iof, -up - road)), // 9
             new AgvNode(new Vector2f(road / 2.0f, -up - road)), // 3
             new AgvNode(new Vector2f(-road / 2.0f, -up - road)), // 3

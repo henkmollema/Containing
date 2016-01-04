@@ -49,24 +49,18 @@ public class ParkingSpot extends Transform {
     }
     
     public int arrivalID() {
-        if (m_arrivalPathID < 0) {
-            determineArrivalID();
-        }
         return m_arrivalPathID;
     }
     public int departID() {
-        if (m_departPathID < 0) {
-            determineDepartID();
-        }
         return m_departPathID;
     }
+    public void arrivalID(int i) {
+        m_arrivalPathID = i;
+    }
+    public void departID(int i) {
+        m_departPathID = i;
+    }
     
-    private void determineArrivalID() {
-        
-    }
-    private void determineDepartID() {
-        
-    }
     
     /**
      * Get AGV

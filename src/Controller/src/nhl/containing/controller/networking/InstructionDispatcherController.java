@@ -1,8 +1,6 @@
 package nhl.containing.controller.networking;
 
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,7 +8,6 @@ import java.util.concurrent.Future;
 import nhl.containing.controller.PathFinder;
 import nhl.containing.controller.Point3;
 import nhl.containing.controller.Simulator;
-import nhl.containing.controller.Vector3f;
 import nhl.containing.controller.simulation.*;
 import nhl.containing.networking.protobuf.*;
 import nhl.containing.networking.protocol.*;
@@ -85,16 +82,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         for(Platform platform : _items.getPlatformsByCarrier(shipment.carrier)){
             if(platform.isBusy())
                 continue;
-            for(Parkingspot parkingspot : platform.getParkingspots()){
-                if(parkingspot.hasAGV()){
-                    craneToAGV(platform, shipment, parkingspot);
-                    if(shipment.count == 0){
-                        //shipmentMoved(shipment); hier of pas wanneer kraan klaar is?
-                        return;
-                    }
-                    break;
-                }
-            }
+            placeCrane(platform);
         }
     }
     
@@ -108,6 +96,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         builder.setA(platform.getID());
         //TODO : choose right container
         ShippingContainer container = platform.getShippingContainers().get(0);
+        platform.getShippingContainers().remove(0);
         builder.setX(container.position.x);
         builder.setY(container.position.y);
         builder.setZ(container.position.z);
@@ -123,16 +112,22 @@ public class InstructionDispatcherController implements InstructionDispatcher
     private void placeCraneReady(InstructionProto.Instruction instruction){
         if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
             //dit is een inlandship platform
-            
+            Platform platform = _items.getInlandPlatforms()[instruction.getA()];
+            InstructionProto.Node node = instruction.getNodes(0);
+            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
+            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
         }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
             //dit is een lorry platform
-            
+            //do nothing
         }else if(instruction.getA() < SimulatorItems.STORAGE_BEGIN){
             //dit is een seaship platform
-            
+            Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
+            InstructionProto.Node node = instruction.getNodes(0);
+            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
+            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
-
+            //do nothing
         }else{
             //dit is een train platform
             Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
@@ -250,7 +245,8 @@ public class InstructionDispatcherController implements InstructionDispatcher
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
             //TODO: find destination
-            if(!Platform.checkIfBusy(_items.getInlandPlatforms())){
+            //TODO: remove container from platform shipping list
+            if(!Platform.checkIfBusy(_items.getInlandPlatforms()) && Platform.checkIfShipmentDone(_items.getInlandPlatforms())){
                 shipmentMoved(_items.getInlandShipment());
                 _items.unsetInlandShipment();
             }
@@ -267,7 +263,8 @@ public class InstructionDispatcherController implements InstructionDispatcher
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
             //TODO: find destination
-            if(!Platform.checkIfBusy(_items.getSeaShipPlatforms())){
+            //TODO: remove container from platform shipping list
+            if(!Platform.checkIfBusy(_items.getSeaShipPlatforms()) && Platform.checkIfShipmentDone(_items.getSeaShipPlatforms())){
                 shipmentMoved(_items.getSeaShipment());
                 _items.unsetSeaShipment();
             }
@@ -283,7 +280,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
             //TODO: find destination <-- jens, hier juiste platform ophalen
-            if(!Platform.checkIfBusy(_items.getTrainPlatforms())){
+            if(!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())){
                 shipmentMoved(_items.getTrainShipment());
                 _items.unsetTrainShipment();
             }

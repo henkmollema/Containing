@@ -4,7 +4,6 @@
  */
 package nhl.containing.simulator.networking;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +14,7 @@ import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.simulator.framework.Behaviour;
+import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.game.*;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.world.World;
@@ -89,7 +89,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         switch (inst.getInstructionType())
         {
             case InstructionType.MOVE_AGV:
-                p("Got MOVE AGV instruction");
+                handleMoveAGV(inst);
                 break;
             case InstructionType.ARRIVAL_INLANDSHIP:
                 handleInland(true, inst);
@@ -103,7 +103,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             case InstructionType.ARRIVAL_TRUCK:
                 handleLorry(true, inst);
                 break;
-
             case InstructionType.DEPARTMENT_INLANDSHIP:
                 handleInland(false, inst);
                 break;
@@ -116,12 +115,58 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             case InstructionType.DEPARTMENT_TRUCK:
                 handleLorry(false, inst);
                 break;
+            case InstructionType.PLACE_CRANE:
+                handlePlaceCrane(inst);
+                break;
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
     }
     
-    // remove int, this is for testing
+    /**
+     * Handles move agv instruction
+     * @param instruction instruction
+     */
+    private void handleMoveAGV(InstructionProto.Instruction instruction){
+        int[] route = new int[instruction.getRouteCount()];
+        for(int i = 0; i < instruction.getRouteCount(); i++){
+            route[i] = instruction.getRoute(i);
+        }
+        AGV agv = Main.getAgv(instruction.getA());
+        agv.path().setPath(AgvPath.getPath(route));
+        //TODO: send agv ready on path finished
+    }
+    
+    
+    /**
+     * Handles place crane instruction
+     * @param instruction instruction
+     */
+    private void handlePlaceCrane(InstructionProto.Instruction instruction){
+        Point3 point = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
+        if(instruction.getA() < World.LORRY_BEGIN){
+            //dit is een inlandship platform
+            PlatformInland inlandPlatform = World().getInlandPlatforms().get(instruction.getA());
+            inlandPlatform.take(point, 0);
+        }else if(instruction.getA() < World.SEASHIP_BEGIN){
+            //dit is een lorry platform
+            PlatformLorry lorryPlatform = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN).a;
+            lorryPlatform.take(point, 0);
+        }else if(instruction.getA() < World.STORAGE_BEGIN){
+            //dit is een seaship platform
+            PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);
+            seaPlatform.take(point, 0);
+        }else if(instruction.getA() < World.TRAIN_BEGIN){
+            //dit is een storage platform
+            //TODO: stuur naar platform een crane move direction (Don't send place crane ready)
+        }else{
+            //dit is een train platform
+            PlatformTrain trainPlatform = World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN).a;
+            trainPlatform.take(point, 0);
+        }
+    }
+    
+    //TODO: remove int, this is for testing
     private void handleTrain(boolean arriving,final InstructionProto.Instruction inst, int testsize) {
         if (arriving) {
             
@@ -138,7 +183,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 @Override public void done(Vehicle v) {
                     p("Train " + v.id() + " arrived at loading platform.");
                             // todo: load the containers from the train
-                    // Train departs.
                     SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
                     //v.state(Vehicle.VehicleState.ToOut);
                 }

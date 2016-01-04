@@ -19,7 +19,7 @@ void throw_java_exception(JNIEnv *env, char *className, char *message)
  * Method:    initPath
  * Signature: (Ljava/awt/Dimension;)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv *env, jclass, jobject dimension)
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava_awt_Dimension_2(JNIEnv *env, jclass, jobject dimension)
 {
     vector<road_map::node_base> temp = { };
     if (dimension == NULL)
@@ -35,12 +35,13 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
     if (env->ExceptionCheck()) return;
     int dimensionX = env->GetIntField(dimension, dimensionXField);
     int dimensionY = env->GetIntField(dimension, dimensionYField);
+    int size = dimensionX/5;
     for (int i = 0; i < dimensionX; i++)
     {
         for (int j = 0; j < dimensionY; j++)
         {
             vector<int> conn = vector<int>(0);
-            if ((i < dimensionX/2-5 || i > dimensionX/2+5) || (j < dimensionY/2-5 || j > dimensionY/2+5))
+            if ((i < dimensionX/2-size || i > dimensionX/2+size) || (j < dimensionY/2-size || j > dimensionY/2+size))
             {
                 if (i > 0) conn.push_back(((i - 1) * dimensionY) + j);
                 if (j > 0) conn.push_back(i * dimensionY + (j - 1));
@@ -52,6 +53,55 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
         }
     }
     roadmap = new road_map(temp);
+}
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    initPath
+ * Signature: ([Lnhl/containing/controller/simulation/Node;)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnhl_containing_controller_simulation_Node_2(JNIEnv *env, jclass, jobjectArray nodesArr)
+{
+    vector<road_map::node_base> temp = { };
+    jclass nodeClass = NULL;
+    jclass vectorClass = env->FindClass("nhl/containing/controller/Vector2f");
+    if (env->ExceptionCheck()) return;
+    jfieldID idField;
+    jfieldID positionField;
+    jfieldID connectionField;
+    jfieldID positionxField = NULL;
+    jfieldID positionyField = NULL;
+    jsize length = env->GetArrayLength(nodesArr);
+    for (int i = 0; i < length; i++)
+    {
+        jobject node = env->GetObjectArrayElement(nodesArr, i);
+        if (nodeClass == NULL)
+        {
+            nodeClass = env->GetObjectClass(node);
+            idField = env->GetFieldID(nodeClass, "m_id", "I");
+            positionField = env->GetFieldID(nodeClass, "m_position", "Lnhl/containing/controller/Vector2f;");
+            connectionField = env->GetFieldID(nodeClass, "m_connections", "[I");
+            if (env->ExceptionCheck()) return;
+        }
+        vector<int> conn = vector<int>(0);
+        jobject position = env->GetObjectField(node, positionField);
+        if (positionxField == NULL)
+        {
+            positionxField = env->GetFieldID(vectorClass, "x", "F");
+            positionyField = env->GetFieldID(vectorClass, "y", "F");
+            if (env->ExceptionCheck()) return;
+        }
+        jobject connection = env->GetObjectField(node, connectionField);
+        jintArray* arr = reinterpret_cast<jintArray*>(&connection);
+        jsize length = env->GetArrayLength(*arr);
+        jint* inConn = env->GetIntArrayElements(*arr, NULL);
+        for (char i = 0; i < length; i++)
+        {
+            conn.push_back(inConn[i]);
+        }
+        temp.push_back(road_map::node_base(vector2(env->GetFloatField(position, positionxField), env->GetFloatField(position, positionyField)), conn));
+        env->ReleaseIntArrayElements(*arr, inConn, 0);
+    }
 }
 
 vector<int> getPath(int from, int to, float speed)
@@ -89,6 +139,51 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
     }
     env->SetIntArrayRegion(res, 0, tempVec.size(), temp);
     return res;
+}
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__II(JNIEnv *, jclass, jint orgId, jint destId)
+{
+    
+}
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (Ljava/awt/Point;Ljava/awt/Point;)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__Ljava_awt_Point_2Ljava_awt_Point_2(JNIEnv *env, jclass, jobject org, jobject dest)
+{
+    if (org == NULL || dest == NULL)
+    {
+        string className = "java/lang/IllegalArgumentException";
+        string message = "dimension can't be null";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
+    jclass pointCls = env->GetObjectClass(org);
+    jfieldID pointXField = env->GetFieldID(pointCls, "width", "I");
+    jfieldID pointYField = env->GetFieldID(pointCls, "height", "I");
+    if (env->ExceptionCheck()) return;
+    int orgId = env->GetIntField(org, pointXField) * sqrt(roadmap->size()) + env->GetIntField(org, pointYField);
+    int destId = env->GetIntField(dest, pointXField) * sqrt(roadmap->size()) + env->GetIntField(dest, pointYField);
+    
+}
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (IIII)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__IIII(JNIEnv *, jclass, jint orgx, jint orgy, jint destx, jint desty)
+{
+    int orgId  = orgx*sqrt(roadmap->size())+orgy;
+    int destId = destx*sqrt(roadmap->size())+desty;
+    
 }
 
 /*

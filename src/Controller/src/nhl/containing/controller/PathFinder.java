@@ -6,6 +6,8 @@ package nhl.containing.controller;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.List;
+import nhl.containing.controller.simulation.Node;
 
 /**
  *
@@ -22,7 +24,20 @@ public class PathFinder
     
     public static native void initPath(Dimension dimension);
     
+    public static native void initPath(Node[] nodes);
+    
+    public static void initPath(List<Node> nodes)
+    {
+        initPath(nodes.toArray(new Node[nodes.size()]));
+    }
+    
     public static native int[] getPath(int from, int to, float speed);
+    
+    public static native void makeConnection(int originId, int destId);
+    
+    public static native void makeConnection(Point origin, Point dest);
+    
+    public static native void makeConnection(int orgx, int orgy, int destx, int desty);
     
     public static native void setOccupied(Point loc, boolean occupied);
     

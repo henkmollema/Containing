@@ -12,8 +12,16 @@ extern "C" {
  * Method:    initPath
  * Signature: (Ljava/awt/Dimension;)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava_awt_Dimension_2
   (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    initPath
+ * Signature: ([Lnhl/containing/controller/simulation/Node;)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnhl_containing_controller_simulation_Node_2
+  (JNIEnv *, jclass, jobjectArray);
 
 /*
  * Class:     nhl_containing_controller_PathFinder
@@ -22,6 +30,30 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath
  */
 JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath
   (JNIEnv *, jclass, jint, jint, jfloat);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (II)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__II
+  (JNIEnv *, jclass, jint, jint);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (Ljava/awt/Point;Ljava/awt/Point;)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__Ljava_awt_Point_2Ljava_awt_Point_2
+  (JNIEnv *, jclass, jobject, jobject);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    makeConnection
+ * Signature: (IIII)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__IIII
+  (JNIEnv *, jclass, jint, jint, jint, jint);
 
 /*
  * Class:     nhl_containing_controller_PathFinder

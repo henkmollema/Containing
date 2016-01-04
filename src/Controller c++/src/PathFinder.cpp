@@ -149,14 +149,9 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
  */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IZ(JNIEnv *, jclass, jint id, jboolean occ)
 {
-    
+    roadmap->set_occupied(id, occ);
 }
 
-/*
- * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (Ljava/awt/Point;Ljava/awt/Point;)V
- */
 /*
  * Class:     nhl_containing_controller_PathFinder
  * Method:    setOccupied
@@ -175,15 +170,9 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__Lj
     jfieldID pointXField = env->GetFieldID(pointCls, "x", "I");
     jfieldID pointYField = env->GetFieldID(pointCls, "y", "I");
     if (env->ExceptionCheck()) return;
-    int pointId = env->GetIntField(point, pointXField) * sqrt(roadmap->size()) + env->GetIntField(point, pointYField);
-    
+    roadmap->set_occupied(env->GetIntField(point, pointXField), env->GetIntField(point, pointYField));
 }
 
-/*
- * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (IIII)V
- */
 /*
  * Class:     nhl_containing_controller_PathFinder
  * Method:    setOccupied
@@ -191,8 +180,7 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__Lj
  */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IIZ(JNIEnv *, jclass, jint x, jint y, jboolean occ)
 {
-    int id  = x*sqrt(roadmap->size())+y;
-    
+    roadmap->set_occupied(x, y, occ);
 }
 
 /*

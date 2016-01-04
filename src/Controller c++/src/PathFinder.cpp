@@ -40,10 +40,14 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath(JNIEnv
         for (int j = 0; j < dimensionY; j++)
         {
             vector<int> conn = vector<int>(0);
-            if (i > 0 && (i < dimensionY/2 - 5 || i > dimensionY/2 + 5)) conn.push_back(((i - 1) * dimensionY) + j);
-            if (j > 0 && (j < dimensionX/2 - 5 || j > dimensionX/2 + 5)) conn.push_back(i * dimensionY + (j - 1));
-            if (i < dimensionX - 1 && (false||i < dimensionY/2 - 0 || i > dimensionY/2 + 0)) conn.push_back(((i + 1) * dimensionY) + j);
-            if (j < dimensionY - 1 && (false||j < dimensionX/2 - 0 || j > dimensionX/2 + 0)) conn.push_back(i * dimensionY + (j + 1));
+            if ((i < dimensionX/2-5 || i > dimensionX/2+5) || (j < dimensionY/2-5 || j > dimensionY/2+5))
+            {
+                if (i > 0) conn.push_back(((i - 1) * dimensionY) + j);
+                if (j > 0) conn.push_back(i * dimensionY + (j - 1));
+                if (i < dimensionX - 1) conn.push_back(((i + 1) * dimensionY) + j);
+                if (j < dimensionY - 1) conn.push_back(i * dimensionY + (j + 1));
+                //cout << "connecties van node " << i*dimensionY+j << " aangemaakt" << endl;
+            }
             temp.push_back(road_map::node_base(vector2((float)i - dimensionX/2, (float)j- dimensionY/2), conn));
         }
     }

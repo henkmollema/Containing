@@ -40,7 +40,6 @@ public class Main
 
         run();
         
-        // TODO find out why pathfinding doesn't return a path when there are obstructions.
         /*
         int size = 25;
         long start = System.currentTimeMillis();

@@ -56,6 +56,11 @@ public class World extends Behaviour {
     public static final int LORRY_CRANE_COUNT = 20;
     public static final int INLAND_SHIP_CRANE_COUNT = 1;
     
+    public static final int STORAGE_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
+    public static final int SEASHIP_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
+    public static final int LORRY_BEGIN = INLAND_SHIP_CRANE_COUNT;
+    public static final int TRAIN_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT + STORAGE_SIZE.y;
+    
     public static final float TRAIN_CRANE_DISTANCE = 10.0f;
     
     public static Vector3f containerSize() {
@@ -252,7 +257,38 @@ public class World extends Behaviour {
     
     public Train getTrain() {
         return m_train;
-    }   
+    }
+    /**
+     * Get train platforms
+     * @return list with train platforms
+     */
+    public List<Tuple<PlatformTrain,Vector2f>> getTrainPlatforms(){
+        return m_trainCells;
+    }
+    /**
+     * Get inland platforms
+     * @return list with inland platforms
+     */
+    public List<PlatformInland> getInlandPlatforms(){
+        return m_inlandCells;
+    }
+    
+    /**
+     * get lorry platforms
+     * @return list with lorry platforms
+     */
+    public List<Tuple<PlatformLorry,Vehicle>> getLorryPlatforms(){
+        return m_lorryCells;
+    }
+    
+    public List<PlatformSea> getSeaPlatforms(){
+        return m_seaCells;
+    }
+    
+    public List<PlatformStorage> getStoragePlatforms(){
+        return m_storageCells;
+    }
+    
     public void trainArrived() {
         m_containersFromTrain = new ArrayList<>(0);
         for (int i = 0; i < m_train.size().z; i++) {

@@ -103,4 +103,17 @@ public class Platform
         }
         return false;
     }
+    
+    /**
+     * Checks if there is a loading to be done in a array of platforms
+     * @param platforms platforms
+     * @return true when done, otherwise false
+     */
+    public static boolean checkIfShipmentDone(Platform[] platforms){
+        for(Platform p : platforms){
+            if(!p.m_containers.isEmpty())
+                return false;
+        }
+        return true;
+    }
 }

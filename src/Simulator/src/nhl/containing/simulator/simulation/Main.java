@@ -277,6 +277,10 @@ public class Main extends SimpleApplication {
     public static Container getContainer(long id) {
         return m_containers.get(id);
     }
+    
+    public static AGV getAgv(long id){
+        return m_agvs.get(id);
+    }
 
     /**
      * Updates all behaviours

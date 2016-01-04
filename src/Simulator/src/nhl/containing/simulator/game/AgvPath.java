@@ -8,6 +8,8 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Line;
+import java.util.HashMap;
+import java.util.Map;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.world.World;
@@ -52,9 +54,10 @@ public class AgvPath /*extends Behaviour*/ {
     }
     
     //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
-    
-    public AgvNode[] nodes;
-    
+    //TODO: make private?
+    public static AgvNode[] nodes;
+    //TEMP SOLUTION, hoe wil je dit hebben?
+    private static Map<Integer,AgvNode> nodesHash = new HashMap<>();
     public void init() {
         if (m_initialized)
             return;
@@ -212,7 +215,9 @@ public class AgvPath /*extends Behaviour*/ {
         nodes[39].setConnections(27);
         
         sendNodes();
-        
+        for(AgvNode node : nodes){
+            nodesHash.put(node.m_id, node);
+        }
         m_initialized = true;
         
         debugPath();
@@ -250,6 +255,22 @@ public class AgvPath /*extends Behaviour*/ {
         return p;
     }
     
+    public static Vector3f[] getPath(int[] ids,Vector3f to){
+        Vector3f[] p = new Vector3f[ids.length + 1];
+        p[p.length - 1] = new Vector3f(to);
+        for(int i = 0; i < ids.length; i++){
+            p[i] = nodesHash.get(ids[i]).position();
+        }
+        return p;
+    }
+    
+    public static Vector3f[] getPath(int[] ids){
+        Vector3f[] p = new Vector3f[ids.length];
+        for(int i = 0; i < ids.length; i++){
+            p[i] = nodesHash.get(ids[i]).position();
+        }
+        return p;
+    }
     
     /*
     public void getPath(AGV target, AgvNode to) {

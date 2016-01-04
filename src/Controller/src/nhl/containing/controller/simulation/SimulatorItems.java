@@ -7,6 +7,7 @@ package nhl.containing.controller.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import nhl.containing.controller.PathFinder;
 import nhl.containing.controller.Vector3f;
 import nhl.containing.networking.protobuf.SimulationItemProto.*;
 
@@ -101,6 +102,7 @@ public class SimulatorItems
                     break;
             }
         }
+        PathFinder.initPath(m_Nodes);
     }
     
     /**

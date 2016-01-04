@@ -41,7 +41,8 @@ public class Main
             }
         });
 
-        //run();
+        run();
+        /*
         Node[] nodes =
         {
             new Node(5, 1.0f, 1.0f, Arrays.asList(new Integer[]{1,2})),
@@ -50,7 +51,7 @@ public class Main
             new Node(8, 4.0f, 4.0f, Arrays.asList(new Integer[]{2,1}))
         };
         PathFinder.initPath(nodes);
-        int[] path = PathFinder.getPath(0, 3, 5.0f);
+        int[] path = PathFinder.getPath(0, 3);
         for (int i : path)
         {
             System.out.println("node " + i);

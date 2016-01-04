@@ -45,10 +45,10 @@ public class Main
         /*
         Node[] nodes =
         {
-            new Node(5, 1.0f, 1.0f, Arrays.asList(new Integer[]{1,2})),
-            new Node(6, 2.0f, 2.0f, Arrays.asList(new Integer[]{0,3})),
-            new Node(7, 3.0f, 3.0f, Arrays.asList(new Integer[]{0,3})),
-            new Node(8, 4.0f, 4.0f, Arrays.asList(new Integer[]{2,1}))
+            new Node(0, 1.0f, 1.0f, Arrays.asList(new Integer[]{1,2})),
+            new Node(1, 2.0f, 2.0f, Arrays.asList(new Integer[]{0,3})),
+            new Node(2, 3.0f, 3.0f, Arrays.asList(new Integer[]{0,3})),
+            new Node(3, 4.0f, 4.0f, Arrays.asList(new Integer[]{2,1}))
         };
         PathFinder.initPath(nodes);
         int[] path = PathFinder.getPath(0, 3);

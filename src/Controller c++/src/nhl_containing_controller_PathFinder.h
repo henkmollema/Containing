@@ -33,35 +33,27 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath
 
 /*
  * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (II)V
+ * Method:    setOccupied
+ * Signature: (IZ)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__II
-  (JNIEnv *, jclass, jint, jint);
-
-/*
- * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (Ljava/awt/Point;Ljava/awt/Point;)V
- */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__Ljava_awt_Point_2Ljava_awt_Point_2
-  (JNIEnv *, jclass, jobject, jobject);
-
-/*
- * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (IIII)V
- */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__IIII
-  (JNIEnv *, jclass, jint, jint, jint, jint);
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IZ
+  (JNIEnv *, jclass, jint, jboolean);
 
 /*
  * Class:     nhl_containing_controller_PathFinder
  * Method:    setOccupied
  * Signature: (Ljava/awt/Point;Z)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__Ljava_awt_Point_2Z
   (JNIEnv *, jclass, jobject, jboolean);
+
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (IIZ)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IIZ
+  (JNIEnv *, jclass, jint, jint, jboolean);
 
 /*
  * Class:     nhl_containing_controller_PathFinder

@@ -50,13 +50,11 @@ public class PathFinder
         return arr;
     }
     
-    public static native void makeConnection(int originId, int destId);
-    
-    public static native void makeConnection(Point origin, Point dest);
-    
-    public static native void makeConnection(int orgx, int orgy, int destx, int desty);
-    
+    public static native void setOccupied(int originId, boolean occupied);
+        
     public static native void setOccupied(Point loc, boolean occupied);
+    
+    public static native void setOccupied(int orgx, int orgy, boolean occupied);
     
     public static native boolean getOccupied(Point loc);
     /*

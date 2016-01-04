@@ -144,10 +144,10 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
 
 /*
  * Class:     nhl_containing_controller_PathFinder
- * Method:    makeConnection
- * Signature: (II)V
+ * Method:    setOccupied
+ * Signature: (IZ)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__II(JNIEnv *, jclass, jint orgId, jint destId)
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IZ(JNIEnv *, jclass, jint id, jboolean occ)
 {
     
 }
@@ -157,21 +157,25 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection_
  * Method:    makeConnection
  * Signature: (Ljava/awt/Point;Ljava/awt/Point;)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__Ljava_awt_Point_2Ljava_awt_Point_2(JNIEnv *env, jclass, jobject org, jobject dest)
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (Ljava/awt/Point;Z)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__Ljava_awt_Point_2Z(JNIEnv *env, jclass, jobject point, jboolean occ)
 {
-    if (org == NULL || dest == NULL)
+    if (point == NULL)
     {
         string className = "java/lang/IllegalArgumentException";
         string message = "dimension can't be null";
         throw_java_exception(env, &className[0], &message[0]);
         return;
     }
-    jclass pointCls = env->GetObjectClass(org);
-    jfieldID pointXField = env->GetFieldID(pointCls, "width", "I");
-    jfieldID pointYField = env->GetFieldID(pointCls, "height", "I");
+    jclass pointCls = env->GetObjectClass(point);
+    jfieldID pointXField = env->GetFieldID(pointCls, "x", "I");
+    jfieldID pointYField = env->GetFieldID(pointCls, "y", "I");
     if (env->ExceptionCheck()) return;
-    int orgId = env->GetIntField(org, pointXField) * sqrt(roadmap->size()) + env->GetIntField(org, pointYField);
-    int destId = env->GetIntField(dest, pointXField) * sqrt(roadmap->size()) + env->GetIntField(dest, pointYField);
+    int pointId = env->GetIntField(point, pointXField) * sqrt(roadmap->size()) + env->GetIntField(point, pointYField);
     
 }
 
@@ -180,10 +184,14 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection_
  * Method:    makeConnection
  * Signature: (IIII)V
  */
-JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_makeConnection__IIII(JNIEnv *, jclass, jint orgx, jint orgy, jint destx, jint desty)
+/*
+ * Class:     nhl_containing_controller_PathFinder
+ * Method:    setOccupied
+ * Signature: (IIZ)V
+ */
+JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_setOccupied__IIZ(JNIEnv *, jclass, jint x, jint y, jboolean occ)
 {
-    int orgId  = orgx*sqrt(roadmap->size())+orgy;
-    int destId = destx*sqrt(roadmap->size())+desty;
+    int id  = x*sqrt(roadmap->size())+y;
     
 }
 

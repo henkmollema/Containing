@@ -5,8 +5,6 @@
  */
 package nhl.containing.controller.networking;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +22,7 @@ import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
 import nhl.containing.controller.simulation.SimulatorItems;
+import nhl.containing.controller.simulation.StorageItem;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -44,17 +43,17 @@ public class Tickhandler implements Runnable
     private InstructionDispatcherController _dispatcherController;
     
     private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
-    private HashMap<ShippingContainer, Integer> container_StorageID;
-    private HashMap<ShippingContainer, Vector3f> container_StoragePosition;
+    private HashMap<ShippingContainer, Integer> container_PlatformID;
+    private HashMap<ShippingContainer, Vector3f> container_PlatformPosition;
     
-    public int getStorageIDByContainer(ShippingContainer container)
+    public int getPlatformIDByContainer(ShippingContainer container)
     {
-        return container_StorageID.get(container);
+        return container_PlatformID.get(container);
     }
     
-    public Vector3f getStoragePositionByContainer(ShippingContainer container)
+    public Vector3f getPlatformPositionByContainer(ShippingContainer container)
     {
-        return container_StoragePosition.get(container);
+        return container_PlatformPosition.get(container);
     }
     
     /**
@@ -72,7 +71,7 @@ public class Tickhandler implements Runnable
             for(int j = SimulatorItems.STORAGE_BEGIN; j < SimulatorItems.STORAGE_BEGIN + SimulatorItems.STORAGE_CRANE_COUNT; j++)
             {
                if(canBePlacedInPlatform(container, j))
-                    container_StorageID.put(container, j);
+                    container_PlatformID.put(container, j);
             }
             
         }
@@ -87,7 +86,7 @@ public class Tickhandler implements Runnable
      */
     public boolean canBePlacedInPlatform(ShippingContainer c, int platformID)
     {
-        Iterator it = container_StorageID.entrySet().iterator();
+        Iterator it = container_PlatformID.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             int currentPlatform = (int) pair.getValue();
@@ -104,6 +103,35 @@ public class Tickhandler implements Runnable
             it.remove(); // avoids a ConcurrentModificationException
         }
         return true;
+    }
+    
+    public void determineContainerPosition(ShippingContainer c)
+    {
+        int PlatformID = this.getPlatformIDByContainer(c);
+        StorageItem[][][] storagePlaces = _simulatorItems.getStorages()[PlatformID].getStoragePlaces();
+        for(int z = 0; z < storagePlaces[0].length; z++)
+        {
+            for(int x = 0; x < storagePlaces.length; x++)
+            {
+                for(int y = 0; y < storagePlaces[0][0].length; y++)
+                {
+                    if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
+                    //If there's no container on this spot 
+                    if(storagePlaces[x][y][z].isEmpty())
+                    {
+                        if(y > 0){
+                            //check the container beneath it.
+                            if(storagePlaces[x][y - 1][z].getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
+                            {
+                                continue; //Container can not be placed here, because the container beneath departs earlier
+                            }
+                        }
+                        
+                        container_PlatformPosition.put(c, new Vector3f(x,y,z));
+                    }
+                }
+            }
+        }
     }
 
     /**

@@ -5,8 +5,15 @@
  */
 package nhl.containing.controller.networking;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.Vector3f;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
@@ -35,6 +42,61 @@ public class Tickhandler implements Runnable
     private Instruction _instruction;
     private SimulatorItems _simulatorItems;
     private InstructionDispatcherController _dispatcherController;
+    
+    private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
+    private HashMap<ShippingContainer, Integer> container_StorageID;
+    private HashMap<ShippingContainer, Vector3f> containe_StoragePosition;
+    
+    //private HashMap<Integer, Shipping
+    
+    
+    /**
+     * determineContainerPlatforms
+     * Determines the storageplatform where the given containers will be placed.
+     *
+     * @param containers
+     */
+    public void determineContainerPlatforms(List<ShippingContainer> containers)
+    {   
+        for(int i = 0; i < containers.size(); i++)
+        {
+            for(int j = SimulatorItems.STORAGE_BEGIN; j < SimulatorItems.STORAGE_BEGIN + SimulatorItems.STORAGE_CRANE_COUNT; j++)
+            {
+               ShippingContainer container = containers.get(i);
+               if(canBePlacedInPlatform(container, j))
+                    container_StorageID.put(container, j);
+            }
+            
+        }
+    }
+    
+    /**
+     * canBePlacedInPlatform
+     * Checks if a container can be placed in a given platformID
+     * 
+     * @param c
+     * @param platformID
+     */
+    public boolean canBePlacedInPlatform(ShippingContainer c, int platformID)
+    {
+        Iterator it = container_StorageID.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            int currentPlatform = (int) pair.getValue();
+            if(currentPlatform == platformID)
+            {
+                ShippingContainer currentContainer = (ShippingContainer)pair.getKey();
+                
+                //If departure times differ less than minInterval they can't be in the same platform
+                if(Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
+                {
+                    return false;
+                }
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return true;
+    }
 
     /**
      * Constructor
@@ -71,9 +133,13 @@ public class Tickhandler implements Runnable
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
+            determineContainerPlatforms(s.carrier.containers);
+            
             s.processed = true;
             p("Process shipment: " + s.key);
             createProto(s);
+            
+            
         }
     }
 

@@ -50,7 +50,11 @@ public class Main
             new Node(8, 4.0f, 4.0f, Arrays.asList(new Integer[]{2,1}))
         };
         PathFinder.initPath(nodes);
-        PathFinder.getPath(0, 3, 5.0f);
+        int[] path = PathFinder.getPath(0, 3, 5.0f);
+        for (int i : path)
+        {
+            System.out.println("node " + i);
+        }
         /*
         int size = 100;
         long start = System.currentTimeMillis();

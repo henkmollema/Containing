@@ -102,6 +102,7 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnh
         temp.push_back(road_map::node_base(vector2(env->GetFloatField(position, positionxField), env->GetFloatField(position, positionyField)), conn));
         env->ReleaseIntArrayElements(*arr, inConn, 0);
     }
+    roadmap = new road_map(temp);
 }
 
 vector<int> getPath(int from, int to, float speed)

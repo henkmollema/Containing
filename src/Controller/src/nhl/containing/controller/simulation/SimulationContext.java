@@ -25,6 +25,107 @@ public class SimulationContext
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
     private List<Shipment> allShipments;
     private Shipment firstShipment;
+    
+    private SimulatorItems _simulatorItems;
+    
+    private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
+    private Map<ShippingContainer, Storage> container_StoragePlatform = new HashMap<>();;
+    //private Map<ShippingContainer, Vector3f> container_PlatformPosition = new HashMap<>();;
+    
+    public void setSimulatorItems(SimulatorItems simItems)
+    {
+        _simulatorItems = simItems;
+    }
+    
+    public Storage getStoragePlatformByContainer(ShippingContainer container)
+    {
+        return container_StoragePlatform.get(container);
+    }
+    
+    /**
+     * determineContainerPlatforms
+     * Determines the storageplatforms where the given containers will be placed by filling the container_StorageID hashmap
+     *
+     * @param containers
+     */
+    public void determineContainerPlatforms(List<ShippingContainer> containers)
+    {   
+        for(int i = 0; i < containers.size(); i++)
+        {
+            ShippingContainer container = containers.get(i);
+            
+            for(int j = SimulatorItems.STORAGE_BEGIN; j < SimulatorItems.STORAGE_BEGIN + SimulatorItems.STORAGE_CRANE_COUNT; j++)
+            {
+               Storage storagePlatform = _simulatorItems.getStorages()[j];
+               
+               if(canBePlacedInStoragePlatform(container, storagePlatform))
+                    container_StoragePlatform.put(container, storagePlatform);
+            }
+            
+        }
+    }
+    
+    /**
+     * canBePlacedInPlatform
+     * Checks if a container can be placed in a given platformID
+     * 
+     * @param c
+     * @param platformID
+     */
+    public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
+    {
+        Iterator it = container_StoragePlatform.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            Storage currentPlatform = (Storage) pair.getValue();
+            if(currentPlatform.getID() == storage.getID())
+            {
+                ShippingContainer currentContainer = (ShippingContainer)pair.getKey();
+                
+                //If departure times differ less than minInterval they can't be in the same platform
+                if(Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
+                {
+                    return false;
+                }
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+        return true;
+    }
+    
+    public Point3 determineContainerPosition(ShippingContainer c)
+    {
+        Storage platform = this.getStoragePlatformByContainer(c);
+        StorageItem[][][] storagePlaces = platform.getStoragePlaces();
+        
+        for(int z = 0; z < storagePlaces[0][0].length; z++)
+        {
+            for(int x = 0; x < storagePlaces.length; x++)
+            {
+                for(int y = 0; y < storagePlaces[0].length; y++)
+                {
+                    if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
+                    
+                    //If there's no container on this spot 
+                    if(storagePlaces[x][y][z].isEmpty())
+                    {
+                        if(y > 0){
+                            //check the container beneath it.
+                            if(storagePlaces[x][y - 1][z].getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
+                            {
+                                break; //Container can not be placed here, because the container beneath departs earlier
+                            }
+                        }
+                        
+                        return new Point3(x,y,z);
+                    }
+                }
+            }
+        }
+        
+        //Can't find space for this container
+        return null;
+    }
 
     /**
      * Gets a (immutable) collection of all the {@code Shipment}'s

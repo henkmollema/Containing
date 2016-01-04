@@ -54,10 +54,12 @@ public class SimulatorController
         writeAnalyzeResults();
 
         // Warm-up the simulation context.
+        _context.setSimulatorItems(_simitems);
         _context.getShipments();
         _context.getFirstShipment();
 
         Simulator sim = new Simulator(this);
+        
         sim.start();
     }
 

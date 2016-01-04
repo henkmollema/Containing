@@ -283,6 +283,9 @@ public class InstructionDispatcherController implements InstructionDispatcher
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
             //TODO: find destination <-- jens, hier juiste platform ophalen
+            //Heb hier de storage waar de container in moet, wist niet precies hoe je het wilde gaan gebruiken.
+            Storage storage = _context.getStoragePlatformByContainer(container);
+            
             if(!Platform.checkIfBusy(_items.getTrainPlatforms())){
                 shipmentMoved(_items.getTrainShipment());
                 _items.unsetTrainShipment();
@@ -323,8 +326,12 @@ public class InstructionDispatcherController implements InstructionDispatcher
             }else if(platform.getID() < SimulatorItems.TRAIN_BEGIN){
                 //dit is een storage platform
                 Storage storage = (Storage)platform;
+                ShippingContainer container = p.getAGV().getContainer();
                 try{
-                    storage.setContainer(p.getAGV().getContainer(),0,0,0);//TODO: Calculate spot for container
+                    //storage.setContainer(p.getAGV().getContainer(),0,0,0);
+                    Point3 storagePlace = _context.determineContainerPosition(p.getAGV().getContainer());
+                    storage.setContainer(container, storagePlace);
+                    //TODO: We probably want to send an instruction to the simulator here. 
                     p.getAGV().unsetContainer();
                 }catch(Exception e){e.printStackTrace();}
                 
@@ -333,7 +340,6 @@ public class InstructionDispatcherController implements InstructionDispatcher
                 //dit is een train platform
                 if(_items.hasTrainShipment() && _items.getInlandShipment().arrived){
                     //TODO: sends crane to department instruction
-
                 }
             }
         } 

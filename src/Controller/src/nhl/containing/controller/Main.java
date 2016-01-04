@@ -15,8 +15,8 @@ public class Main
     {
         try
         {
-            File file = new File(Main.class.getResource("/lib/").getPath(), "Controller.dll");
-            System.load(file.getAbsolutePath());
+            //File file = new File(Main.class.getResource("/lib/").getPath(), "Controller.dll");
+            //System.load(file.getAbsolutePath());
         }
         catch (Exception ex)
         {

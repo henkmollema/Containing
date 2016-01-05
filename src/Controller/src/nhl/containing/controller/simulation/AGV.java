@@ -14,7 +14,7 @@ public class AGV
     private final int m_id;
     private ShippingContainer m_container = null;
     private boolean m_isWaiting = true;
-    private int m_node;
+    private int m_node = 20;
     
     /**
      * Constructor

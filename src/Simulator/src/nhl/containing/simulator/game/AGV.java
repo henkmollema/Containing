@@ -26,7 +26,7 @@ public final class AGV extends MovingItem {
     
     
     // Constants
-    private static final Vector3f startPosition = new Vector3f(0.0f, 0.0f, 0.0f);
+    private static final Vector3f startPosition = new Vector3f(-10f, 0f, 625);
     private static final Vector3f transformOffset = new Vector3f(0.0f, 2.0f, 0.0f);
     private static final Vector3f spatialOffset = new Vector3f(0.0f, 0.0f, 0.0f);
     private static final float spatialScale = 2.2f;
@@ -55,13 +55,13 @@ public final class AGV extends MovingItem {
         this.register(SimulationItemType.AGV);
         initSpots(Point3.one());
         Main.register(this);
-        path().setPath(
-                new Vector3f(40.0f, 0.0f, 0.0f),
-                new Vector3f(40.0f, 0.0f, 40.0f),
-                new Vector3f(80.0f, 0.0f, 40.0f),
-                new Vector3f(80.0f, 0.0f, 0.0f),
-                new Vector3f(40.0f, 0.0f, 0.0f)
-        );
+//        path().setPath(
+//                new Vector3f(40.0f, 0.0f, 0.0f),
+//                new Vector3f(40.0f, 0.0f, 40.0f),
+//                new Vector3f(80.0f, 0.0f, 40.0f),
+//                new Vector3f(80.0f, 0.0f, 0.0f),
+//                new Vector3f(40.0f, 0.0f, 0.0f)
+//        );
         
     }
     

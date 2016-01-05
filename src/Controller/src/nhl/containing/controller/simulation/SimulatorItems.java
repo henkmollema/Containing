@@ -6,7 +6,9 @@
 package nhl.containing.controller.simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import nhl.containing.controller.PathFinder;
 import nhl.containing.controller.Vector3f;
 import nhl.containing.networking.protobuf.SimulationItemProto.*;
@@ -40,6 +42,7 @@ public class SimulatorItems
     
     private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[LORRY_CRANE_COUNT];
     
+    private Map<Long,Parkingspot> m_parkingspotsMap = new HashMap<>();
     private List<Parkingspot> m_parkingspots = new ArrayList<>();
     private List<Node> m_Nodes = new ArrayList<>();
     private List<AGV> m_AGVs = new ArrayList<>();
@@ -79,6 +82,7 @@ public class SimulatorItems
                         continue; //TODO error?
                     }
                     Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()),item.getConnections(0),item.getConnections(1));
+                    m_parkingspotsMap.put(item.getId(), spot);
                     if(item.getParentID() != -1){
                         switch(item.getType()){
                             case PARKINGSPOT_STORAGE:
@@ -122,6 +126,15 @@ public class SimulatorItems
             return m_seaPlatforms;
         else
             return m_inlandPlatforms;
+    }
+    
+    /**
+     * Gets an parkingspot by an ID
+     * @param id id of parkingspot
+     * @return parkingspot
+     */
+    public Parkingspot getParkingspotByID(long id){
+        return m_parkingspotsMap.get(id);
     }
     
     /**

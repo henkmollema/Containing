@@ -163,9 +163,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             //TODO: stuur naar platform een crane move direction (Don't send place crane ready)
         }else{
             //dit is een train platform
-            PlatformTrain trainPlatform = World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN).a;
-            //trainPlatform.take(point, 0);
-            World().sendTrainTake(World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN), point.x);
+            Tuple<PlatformTrain,Vector2f> trainPlatform = World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN);
+            World().sendTrainTake(trainPlatform, point.x); //TODO whole pos?
+            int test = (int)trainPlatform.a.getParkingSpot().id();
+            SimulatorClient.sendTaskDone(trainPlatform.a.getPlatformID(),test, InstructionType.PLACE_CRANE_READY);
+            
         }
     }
     

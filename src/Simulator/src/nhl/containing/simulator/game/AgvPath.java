@@ -56,8 +56,6 @@ public class AgvPath /*extends Behaviour*/ {
     //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
     //TODO: make private?
     public static AgvNode[] nodes;
-    //TEMP SOLUTION, hoe wil je dit hebben?
-    private static Map<Integer,AgvNode> nodesHash = new HashMap<>();
     public void init() {
         if (m_initialized)
             return;
@@ -216,9 +214,6 @@ public class AgvPath /*extends Behaviour*/ {
         
         // Send
         sendNodes();
-        for(AgvNode node : nodes){
-            nodesHash.put(node.m_id, node);
-        }
         m_initialized = true;
         
         // Show lines in play
@@ -261,7 +256,7 @@ public class AgvPath /*extends Behaviour*/ {
         Vector3f[] p = new Vector3f[ids.length + 1];
         p[p.length - 1] = new Vector3f(to);
         for(int i = 0; i < ids.length; i++){
-            p[i] = nodesHash.get(ids[i]).position();
+            p[i] = nodes[i].position();
         }
         return p;
     }
@@ -269,7 +264,7 @@ public class AgvPath /*extends Behaviour*/ {
     public static Vector3f[] getPath(int[] ids){
         Vector3f[] p = new Vector3f[ids.length];
         for(int i = 0; i < ids.length; i++){
-            p[i] = nodesHash.get(ids[i]).position();
+            p[i] = nodes[i].position();
         }
         return p;
     }

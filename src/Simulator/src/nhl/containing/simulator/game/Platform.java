@@ -83,6 +83,14 @@ public abstract class Platform extends ContainerCarrier {
     protected abstract ParkingSpot[] parkingSpots();
     protected abstract void createPlatform();
     
+    /**
+     * Returns the platform id
+     * @return id
+     */
+    public int getPlatformID(){
+        return m_platformid;
+    }
+    
     public Crane crane() {
         return m_crane;
     }

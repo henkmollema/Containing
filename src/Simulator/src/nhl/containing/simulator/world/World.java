@@ -154,8 +154,8 @@ public class World extends Behaviour {
     private void createAGV() {
         
         AGV agv = new AGV();
-        agv.setContainer(new Container(null));
-        agv.position(new Vector3f(0.0f, 0.0f, -36.0f));
+        agv.setContainer(null);
+        agv.position(new Vector3f(-10f, -645f, -36.0f));
         //m_storageCells.get(0).getParkingSpot(0).agv(agv);
     }
     private void test()
@@ -170,7 +170,7 @@ public class World extends Behaviour {
             Container c = new Container(new RFID());
             ContainerPool.get(c);
             m_lorryCells.get(i).b.setContainer(c);
-            m_lorryCells.get(i).a.getParkingSpot(0).agv(new AGV());
+            m_lorryCells.get(i).a.getParkingSpot(0).agv(null);
         }
         
         //m_train.state(Vehicle.VehicleState.ToLoad);
@@ -320,25 +320,6 @@ public class World extends Behaviour {
         for(Tuple<PlatformTrain, Vector2f> s : m_trainCells   ) {
             s.a.update();
             s.b.y = s.a.position().z;
-            
-            if(m_train.state() == Vehicle.VehicleState.Waiting) {
-//                if (s.a.crane().getContainer() != null) 
-//                    continue;
-//                else {
-//                    int p = getTrainContainerTarget();
-//                    if (p < 0)
-//                        continue;
-//                    
-//                    Container c = m_train.setContainer(new Point3(0,0,getTrainContainerTarget()), null);
-//                    Vector3f pos = c.transform.position();
-//                    Quaternion rot = c.transform.rotation();
-//                    
-//                    s.a.setContainer(Point3.zero(), c);
-//                    c.transform.position(pos);
-//                    c.transform.rotation(rot);
-//                    s.a.take(Point3.zero(), 0);
-//                }
-            }
         }
     }
     private int getTrainContainerTarget() {

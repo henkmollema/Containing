@@ -245,12 +245,13 @@ public class SimulatorClient implements Runnable
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
-                .setB(a)
+                .setB(b)
                 .setInstructionType(type)
                 .build();
         controllerCom.sendInstruction(taskDone);
     }
-        /**
+    
+     /**
      * Sends an instruction when task is done
      * @param a id of first simulation item
      * @param b id of the second simulation item

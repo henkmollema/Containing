@@ -154,6 +154,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     private void placeCraneReady(InstructionProto.Instruction instruction) {
         AGV agv = _items.getFreeAGV();
         Platform platform = null;
+        Parkingspot ps = _items.getParkingspotByID(instruction.getB());
         if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
             //dit is een inlandship platform
             platform = _items.getInlandPlatforms()[instruction.getA()];
@@ -171,7 +172,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
 
         }
-        moveAGV(agv, platform, instruction.getNodes(0).getConnections(0));
+        moveAGV(agv, platform, ps);
     }
 
     /**
@@ -232,8 +233,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
-        //TODO:Calculate & add route
-        int[] route = PathFinder.getPath(agv.getNodeID(), spot.getDepartNodeID());
+        builder.setB((int)spot.getId());
+        int[] route = PathFinder.getPath(agv.getNodeID(), spot.getArrivalNodeID());
         for(int r : route){
             builder.addRoute(r);
         }
@@ -326,7 +327,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             p = platform.getParkingspotForAGV(instruction.getA());
             //TODO: find destination <-- jens, hier juiste platform ophalen
             //Heb hier de storage waar de container in moet, wist niet precies hoe je het wilde gaan gebruiken.
-            Storage storage = _context.getStoragePlatformByContainer(container);
+            to = _context.getStoragePlatformByContainer(container);
 
             if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
 

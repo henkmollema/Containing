@@ -98,21 +98,33 @@ public class Camera extends Behaviour {
     private final float m_bloomIntensity = 0.3f;                // Bloom intensity
     
     // Components
-    private Transform m_transform;                              // Camera transform
     private Transform m_target;                                 // Look At Target
     private Vector3f m_previousTargetPosition= Utilities.zero();// Previous Target Position
     private CameraMode m_cameraMode = CameraMode.RTS;           // Camera mode
     private FilterPostProcessor m_postProcessor;                // Image FX
     
+    // JMonkey bug fixing
     private int m_safeFrameInit = 0;
-    
-    /**
-     * Get Camera Transform
-     * @return Camera Transform
-     */
-    public Transform tranform() {
-        return m_transform;
+    private Vector3f m_tempPos;
+    private Quaternion m_tempRot;
+    public void startChange() {
+        if (m_tempPos == null || m_tempRot == null)
+            return;
+        Main.cam().setLocation(m_tempPos.clone());
+        Main.cam().setRotation(m_tempRot.clone());
     }
+    public void stopChange() {
+        m_tempPos = Main.cam().getLocation().clone();
+        m_tempRot = Main.cam().getRotation().clone();
+        Main.cam().setLocation(Utilities.zero());
+        
+        Quaternion n = Quaternion.IDENTITY.clone();
+        n.lookAt(Utilities.forward(), Utilities.up());
+        
+        Main.cam().setRotation(n.clone());
+    }
+    
+    
     /**
      * Get Camera Mode (RTS or FLY)
      * @return camera mode
@@ -152,17 +164,17 @@ public class Camera extends Behaviour {
      */
     @Override
     public void awake() {
-        
-        // Init transform
-        m_transform = new Transform();
-        
         // Create image fx
         createSSAO(); 
         createFog();
         createBloom();
+        
+        startChange();
+        my_start();
+        stopChange();
     }
     
-    public void my_start() {
+    private void my_start() {
         
         // Set image fx
         Main.view().addProcessor(postProcessor());
@@ -187,16 +199,12 @@ public class Camera extends Behaviour {
          * before the world positioning goes wrong.
          * There are no indication of wrong code!
          */
-        if (++m_safeFrameInit == 2) {
-            my_start();
-            return;
-        } else if (m_safeFrameInit < 2) {
-            return;
-        }
         
         // Update camera modes
+        startChange();
         onUpdateFly();
         onUpdateRTS();
+        stopChange();
     }
     
     /**
@@ -257,10 +265,12 @@ public class Camera extends Behaviour {
      * @param t Target
      */
     public void setTarget(Transform t) {
-        
+        startChange();
         if (t == null) { // Disable look at
-            if (m_target == null)
+            if (m_target == null) {
+                stopChange();
                 return;
+            }
             
             // Reset angles
             m_rtsCameraRotation = Main.cam().getRotation().toAngles(null)[1] * Mathf.Rad2Deg;
@@ -272,6 +282,7 @@ public class Camera extends Behaviour {
         
         // Set target
         m_target = t;
+        stopChange();
     }
     /**
      * Zoom in for RTS camera
@@ -284,7 +295,7 @@ public class Camera extends Behaviour {
     /**
      * Init RTS camera
      */
-    public void onStartRTS() {
+    private void onStartRTS() {
         if (m_cameraMode != CameraMode.RTS)
             return;
         
@@ -294,7 +305,7 @@ public class Camera extends Behaviour {
     /**
      * Update RTS camera mode
      */
-    public void onUpdateRTS() {
+    private void onUpdateRTS() {
         // Smooth out camera
         m_rtsCameraCurrentDistance = Mathf.smoothdamp(
                 m_rtsCameraCurrentDistance, 
@@ -379,7 +390,7 @@ public class Camera extends Behaviour {
     /**
      * First frame fly camera is enabled
      */
-    public void onStartFly() {
+    private void onStartFly() {
         if (m_cameraMode != CameraMode.Fly)
             return;
         
@@ -389,7 +400,7 @@ public class Camera extends Behaviour {
     /**
      * Every frame on update
      */
-    public void onUpdateFly() {
+    private void onUpdateFly() {
         
         /**
          * Return when not in fly mode
@@ -433,7 +444,7 @@ public class Camera extends Behaviour {
         __rot[1] -= Main.input().mouseMove().x;
         
         // Angles to quaternion
-        Quaternion __q = Quaternion.IDENTITY;
+        Quaternion __q = Quaternion.IDENTITY.clone();
         __q = __q.fromAngles(__rot);
         
         Main.cam().setAxes(__q);

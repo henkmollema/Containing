@@ -145,6 +145,9 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
 
+        if (m_camera != null)
+            m_camera.stopChange();
+            
         Time._updateTime(tpf);
         updateBehaviours();
         
@@ -154,6 +157,9 @@ public class Main extends SimpleApplication {
         for (AGV agv : m_agvs.values())
             agv.update();
         updateTimescale();
+        
+        if (m_camera != null)
+            m_camera.startChange();
     }
     /**
      * Register behaviour

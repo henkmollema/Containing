@@ -29,7 +29,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private GUI m_gui;
     private World m_world;
     
-    private final int SAFE_FRAMES = 2;
+    private final int SAFE_FRAMES = 100;
     private int m_safeFrames = 0;
     
     

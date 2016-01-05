@@ -117,6 +117,13 @@ vector<int> getPath(int from, int to, float speed)
  */
 JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JNIEnv *env, jclass, jint from, jint to, jfloat speed)
 {
+    if (roadmap == NULL)
+    {
+        string className = "java/lang/NullPointerException";
+        string message = "initPath() was not previously called";
+        throw_java_exception(env, &className[0], &message[0]);
+        return NULL;
+    }
     if (from < 0 || from >= roadmap->size())
     {
         string className = "java/lang/IllegalArgumentException";
@@ -136,7 +143,7 @@ JNIEXPORT jintArray JNICALL Java_nhl_containing_controller_PathFinder_getPath(JN
     jintArray res = env->NewIntArray(tempVec.size());
     for (int i = 0; i < tempVec.size(); i++)
     {
-        temp[i] = tempVec[i];
+        temp[i] = tempVec[(tempVec.size()-1) - i];
     }
     env->SetIntArrayRegion(res, 0, tempVec.size(), temp);
     return res;

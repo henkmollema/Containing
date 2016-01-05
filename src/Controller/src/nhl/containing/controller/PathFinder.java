@@ -33,22 +33,10 @@ public class PathFinder
     
     public static int[] getPath(int from, int to)
     {
-        return reverse(getPath(from, to, 5.0f));
+        return getPath(from, to, 5.0f);
     }
     
     private static native int[] getPath(int from, int to, float speed);
-    
-    private static int[] reverse(int[] arr)
-    {
-        int len = arr.length;
-        for (int i = 0; i < len/2; i++)
-        {
-        arr[i] = arr[i] ^ arr[len - i  - 1];
-        arr[len - i  - 1] = arr[i] ^ arr[len - i  - 1];
-        arr[i] = arr[i] ^ arr[len - i  - 1];
-        }
-        return arr;
-    }
     
     public static native void setOccupied(int originId, boolean occupied);
         

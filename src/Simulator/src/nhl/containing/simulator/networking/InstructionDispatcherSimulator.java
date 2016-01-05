@@ -182,9 +182,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             World().getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
                 @Override public void done(Vehicle v) {
                     p("Train " + v.id() + " arrived at loading platform.");
-                            // todo: load the containers from the train
                     SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
-                    //v.state(Vehicle.VehicleState.ToOut);
                 }
             });
         } else {

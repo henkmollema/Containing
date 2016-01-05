@@ -113,31 +113,24 @@ public class InstructionDispatcherController implements InstructionDispatcher
      */
     private void placeCraneReady(InstructionProto.Instruction instruction){
         AGV agv = _items.getFreeAGV();
+        Platform platform = null;
         if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
             //dit is een inlandship platform
-            Platform platform = _items.getInlandPlatforms()[instruction.getA()];
-            InstructionProto.Node node = instruction.getNodes(0);
-            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(agv, platform, nodeNew);
+            platform = _items.getInlandPlatforms()[instruction.getA()];
         }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
             //dit is een lorry platform
             //do nothing
         }else if(instruction.getA() < SimulatorItems.STORAGE_BEGIN){
             //dit is een seaship platform
-            Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
-            InstructionProto.Node node = instruction.getNodes(0);
-            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(agv, platform, nodeNew);
+            platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
             //do nothing
         }else{
             //dit is een train platform
-            Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
-            InstructionProto.Node node = instruction.getNodes(0);
-            Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(agv, platform, nodeNew);
+            platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
         }
+        moveAGV(agv, platform, instruction.getNodes(0).getConnections(0));
     }
     
     /**
@@ -166,10 +159,10 @@ public class InstructionDispatcherController implements InstructionDispatcher
      * Sends Move AGV command to sea/inland/train platform
      * @param agv agv
      * @param to to platform
-     * @param node to node
+     * @param nodeid id van to node
      */
-    public void moveAGV(AGV agv, Platform to, Node node){
-        int[] route = PathFinder.getPath(agv.getNode().m_id, node.m_connections[0]);
+    public void moveAGV(AGV agv, Platform to, int nodeid){
+        int[] route = PathFinder.getPath(agv.getNodeID(), nodeid);
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
@@ -181,7 +174,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         try{
             agv.setBusy();
             to.getParkingspots().get(0).setAGV(agv);
-            agv.setNode(_items.getNode(node.m_connections[0]));
+            agv.setNodeID(nodeid);
         }catch(Exception e){e.printStackTrace();} 
     }
     
@@ -196,7 +189,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(agv.getID());
         //TODO:Calculate & add route
-        int[] route = PathFinder.getPath(agv.getNode().m_id, spot.getNode().m_id);
+        int[] route = PathFinder.getPath(agv.getNodeID(), spot.getDepartNodeID());
         for(int r : route){
             builder.addRoute(r);
         }
@@ -205,7 +198,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
         try{
             agv.setBusy();
             spot.setAGV(agv);
-            agv.setNode(spot.getNode());
+            agv.setNodeID(spot.getDepartNodeID());
         }catch(Exception e){e.printStackTrace();} 
     }
     

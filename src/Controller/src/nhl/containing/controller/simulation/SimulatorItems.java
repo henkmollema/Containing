@@ -75,7 +75,10 @@ public class SimulatorItems
                 case PARKINGSPOT_LORRY:
                 case PARKINGSPOT_SEASHIP:
                 case PARKINGSPOT_INLANDSHIP:
-                    Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()));
+                    if(item.getConnectionsCount() < 2){
+                        continue; //TODO error?
+                    }
+                    Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()),item.getConnections(0),item.getConnections(1));
                     if(item.getParentID() != -1){
                         switch(item.getType()){
                             case PARKINGSPOT_STORAGE:

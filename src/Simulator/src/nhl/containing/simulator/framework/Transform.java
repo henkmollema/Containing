@@ -53,6 +53,16 @@ public class Transform extends Node {
      public void register(SimulationItemType type){
         Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),-1);
     }
+     
+     /**
+     * Adds the transform to the metalist
+     * @param type type of the transform
+     * @param arrival id for arrivalnode parkingspot
+     * @param depart id for departnode parkingspot
+     */
+     public void register(SimulationItemType type,int arrival,int depart){
+        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),-1,arrival,depart);
+    }
     
     /**
      * Adds the transform to the metalist
@@ -62,6 +72,17 @@ public class Transform extends Node {
     public void register(int parentid,SimulationItemType type){
         Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),parentid);
     }
+        /**
+     * Adds the transform to the metalist
+     * @param parentid parentid for storage parkingslots , else -1
+     * @param type type of the transform
+     * @param arrival id for arrivalnode parkingspot
+     * @param depart id for departnode parkingspot
+     */
+    public void register(int parentid,SimulationItemType type,int arrival, int depart){
+        Main.getSimClient().addSimulationItem(id(), type, Utilities.Horizontal(position()),parentid,arrival,depart);
+    }
+    
     
     /**
      * Adds the transform to the metalist

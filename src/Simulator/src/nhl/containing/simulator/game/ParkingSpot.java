@@ -28,7 +28,7 @@ public class ParkingSpot extends Transform {
         m_agv = null;
         create();
         this.localPosition(offset);
-        this.register(id,type);
+        this.register(id,type,arrival,depart);
         m_arrivalPathID = arrival;
         m_departPathID = depart;
     }
@@ -43,7 +43,7 @@ public class ParkingSpot extends Transform {
         m_agv = null;
         create();
         this.localPosition(offset);
-        this.register(type);
+        this.register(type,arrival,depart);
         m_arrivalPathID = arrival;
         m_departPathID = depart;
     }

@@ -302,26 +302,22 @@ public class World extends Behaviour {
             s.b.y = s.a.position().z;
             
             if(m_train.state() == Vehicle.VehicleState.Waiting) {
-                if (s.a.crane().getContainer() != null) 
-                    continue;
-                
-                if (false) {
-                    
-                }
-                else {
-                    int p = getTrainContainerTarget();
-                    if (p < 0)
-                        continue;
-                    
-                    Container c = m_train.setContainer(new Point3(0,0,getTrainContainerTarget()), null);
-                    Vector3f pos = c.transform.position();
-                    Quaternion rot = c.transform.rotation();
-                    
-                    s.a.setContainer(Point3.zero(), c);
-                    c.transform.position(pos);
-                    c.transform.rotation(rot);
-                    s.a.take(Point3.zero(), 0);
-                }
+//                if (s.a.crane().getContainer() != null) 
+//                    continue;
+//                else {
+//                    int p = getTrainContainerTarget();
+//                    if (p < 0)
+//                        continue;
+//                    
+//                    Container c = m_train.setContainer(new Point3(0,0,getTrainContainerTarget()), null);
+//                    Vector3f pos = c.transform.position();
+//                    Quaternion rot = c.transform.rotation();
+//                    
+//                    s.a.setContainer(Point3.zero(), c);
+//                    c.transform.position(pos);
+//                    c.transform.rotation(rot);
+//                    s.a.take(Point3.zero(), 0);
+//                }
             }
         }
     }

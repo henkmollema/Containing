@@ -81,6 +81,30 @@ public class SimulatorClient implements Runnable
         metaList.addItems(builder.build());
     }
     
+     /**
+     * Adds a Simulation item to the metalist
+     * @param id id of the item
+     * @param type type of the item
+     * @param position position of the item
+     * @param parentid parent of the item or -1
+     */
+    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position,int parentid,int arrival, int depart)
+    {
+        SimulationItem.Builder builder = SimulationItem.newBuilder();
+        builder.setId(id);
+        builder.setType(type);
+        builder.setParentID(parentid);
+        if (position != null)
+        {
+            builder.setX(position.x);
+            builder.setY(position.y);
+            builder.setZ(position.z);
+        }
+        builder.addConnections(arrival);
+        builder.addConnections(depart);
+        metaList.addItems(builder.build());
+    }
+    
     /**
      * Adds a node to the metalist
      * @param node node

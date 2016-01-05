@@ -16,17 +16,38 @@ public final class Parkingspot
     private final long m_id;
     private Platform m_parent;
     private Vector3f m_position;
-    private Node m_Node = null;
+    private final int m_arrivalNodeID;
+    private final int m_departNodeID;
     private AGV m_agv = null;
     
     /**
      * Constructor
      * @param id id of parkingspot
      * @param position position of parkingspot
+     * @param arrival id of arrival node
+     * @param depart id of depart node
      */
-    public Parkingspot(long id,Vector3f position){
+    public Parkingspot(long id,Vector3f position,int arrival,int depart){
         m_id = id;
         m_position = position;
+        m_arrivalNodeID = arrival;
+        m_departNodeID = depart;
+    }
+    
+    /**
+     * Gets the arrival node ID
+     * @return 
+     */
+    public int getArrivalNodeID(){
+        return m_arrivalNodeID;
+    }
+    
+    /**
+     * Gets the depart node ID
+     * @return 
+     */
+    public int getDepartNodeID(){
+        return m_departNodeID;
     }
     
     /**
@@ -59,22 +80,6 @@ public final class Parkingspot
      */
     public Vector3f getPosition(){
         return m_position;
-    }
-    
-    /**
-     * Sets the node clostest to the parkingspot
-     * @param node node
-     */
-    public void setNode(Node node){
-        m_Node = node;
-    }
-    
-    /**
-     * Gets the node clostest to the parkingspot
-     * @return 
-     */
-    public Node getNode(){
-        return m_Node;
     }
     
     /**

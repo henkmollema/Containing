@@ -158,7 +158,7 @@ public class Transform extends Node {
      */
     public final void eulerAngles(Vector3f a) {
         Vector3f b = a == null ? Utilities.zero() : a.clone();
-        Quaternion q = Quaternion.IDENTITY;
+        Quaternion q = Quaternion.IDENTITY.clone();
         q.fromAngles(b.x, b.y, b.z);
         rotation(q);
     }
@@ -178,7 +178,7 @@ public class Transform extends Node {
      */
     public final void localEulerAngles(Vector3f a) {
         Vector3f b = a == null ? Utilities.zero() : a.clone();
-        Quaternion q = Quaternion.IDENTITY;
+        Quaternion q = Quaternion.IDENTITY.clone();
         q.fromAngles(b.x, b.y, b.z);
         localRotation(q);
     }

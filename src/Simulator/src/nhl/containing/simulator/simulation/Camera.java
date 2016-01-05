@@ -444,7 +444,7 @@ public class Camera extends Behaviour {
         __rot[1] -= Main.input().mouseMove().x;
         
         // Angles to quaternion
-        Quaternion __q = Quaternion.IDENTITY;
+        Quaternion __q = Quaternion.IDENTITY.clone();
         __q = __q.fromAngles(__rot);
         
         Main.cam().setAxes(__q);

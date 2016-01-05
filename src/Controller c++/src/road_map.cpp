@@ -24,6 +24,7 @@ vector<node> road_map::get_copy()
         {
             cout << "connection from " << temp_nodes[i].id() << " to " << temp_nodes[m_nodes[i]->get_connections()[j]->id()].id() << " added" << endl;
             temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
+            cout << "success" << endl;
         }
     }
     return temp_nodes;

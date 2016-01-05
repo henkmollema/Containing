@@ -6,6 +6,7 @@ package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
+import nhl.containing.simulator.framework.Utilities;
 
 /**
  *
@@ -20,7 +21,7 @@ public class PlatformInland extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, Vector3f.ZERO,m_platformid,SimulationItemType.PARKINGSPOT_INLANDSHIP, 2, 3)
+            new ParkingSpot(this, Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_INLANDSHIP, 2, 3)
         };
     }
 

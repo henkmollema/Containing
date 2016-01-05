@@ -7,6 +7,7 @@ package nhl.containing.simulator.game;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**
@@ -23,7 +24,7 @@ public class PlatformSea extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, Vector3f.ZERO,m_platformid,SimulationItemType.PARKINGSPOT_SEASHIP, 4, 5)
+            new ParkingSpot(this,Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_SEASHIP, 4, 5)
         };
     }
 

@@ -96,83 +96,83 @@ public class AgvPath /*extends Behaviour*/ {
         nodes = new AgvNode[] {
             
             // Lorry
-            new AgvNode(new Vector2f(left - ext, up + ext)), // 0
-            new AgvNode(new Vector2f(ext, up + ext)), // 1
+            new AgvNode(new Vector2f(left - ext, up + ext)),        //  0
+            new AgvNode(new Vector2f(ext, up + ext)),               //  1
             
             // Inland
-            new AgvNode(new Vector2f(-ext, up + ext)), // 2
-            new AgvNode(new Vector2f(-left + ext, up + ext)), // 3
+            new AgvNode(new Vector2f(-ext, up + ext)),              //  2
+            new AgvNode(new Vector2f(-left + ext, up + ext)),       //  3
             
             // Sea
-            new AgvNode(new Vector2f(-left - ext, up - ext)), // 4
-            new AgvNode(new Vector2f(-left - ext, -up + ext)), // 5
+            new AgvNode(new Vector2f(-left - ext, up - ext)),       //  4
+            new AgvNode(new Vector2f(-left - ext, -up + ext)),      //  5
             
             // Train
-            new AgvNode(new Vector2f(left - ext, -up - ext)), // 6
-            new AgvNode(new Vector2f(-left + ext, -up - ext)), // 7
+            new AgvNode(new Vector2f(left - ext, -up - ext)),       //  6
+            new AgvNode(new Vector2f(-left + ext, -up - ext)),      //  7
             
             // 
-            new AgvNode(new Vector2f(left + road, up + road)), // 8
-            new AgvNode(new Vector2f(left - iof, up + road)), // 9
-            new AgvNode(new Vector2f(iof, up + road)), // 10
-            new AgvNode(new Vector2f(road / 2.0f, up + road)), // 3
-            new AgvNode(new Vector2f(-road / 2.0f, up + road)), // 3
-            new AgvNode(new Vector2f(-iof, up + road)), // 10
-            new AgvNode(new Vector2f(-left + iof, up + road)), // 8
-            new AgvNode(new Vector2f(-left - road, up + road)), // 8
+            new AgvNode(new Vector2f(left + road, up + road)),      //  8
+            new AgvNode(new Vector2f(left - iof, up + road)),       //  9
+            new AgvNode(new Vector2f(iof, up + road)),              // 10
+            new AgvNode(new Vector2f(road / 2.0f, up + road)),      // 11
+            new AgvNode(new Vector2f(-road / 2.0f, up + road)),     // 12
+            new AgvNode(new Vector2f(-iof, up + road)),             // 13
+            new AgvNode(new Vector2f(-left + iof, up + road)),      // 14
+            new AgvNode(new Vector2f(-left - road, up + road)),     // 15
             
             // 
-            new AgvNode(new Vector2f(left, up)), // 8
-            new AgvNode(new Vector2f(left - iof, up)), // 9 + (road / 2.0f)
-            new AgvNode(new Vector2f(iof, up)), // 10
-            new AgvNode(new Vector2f(road / 2.0f, up)), // 3
-            new AgvNode(new Vector2f(-road / 2.0f, up)), // 3
-            new AgvNode(new Vector2f(-iof, up)), // 10
-            new AgvNode(new Vector2f(-left + iof, up)), // 8
-            new AgvNode(new Vector2f(-left, up)), // 8
+            new AgvNode(new Vector2f(left, up)),                    // 16
+            new AgvNode(new Vector2f(left - iof, up)),              // 17
+            new AgvNode(new Vector2f(iof, up)),                     // 18
+            new AgvNode(new Vector2f(road / 2.0f, up)),             // 19
+            new AgvNode(new Vector2f(-road / 2.0f, up)),            // 20
+            new AgvNode(new Vector2f(-iof, up)),                    // 21
+            new AgvNode(new Vector2f(-left + iof, up)),             // 22
+            new AgvNode(new Vector2f(-left, up)),                   // 23
             
             //
-            new AgvNode(new Vector2f(-left, up - iof)), // 8
-            new AgvNode(new Vector2f(-left - road, up - iof)), // 8
+            new AgvNode(new Vector2f(-left, up - iof)),             // 24
+            new AgvNode(new Vector2f(-left - road, up - iof)),      // 25
             
             //
-            new AgvNode(new Vector2f(-left, -up + iof)), // 8
-            new AgvNode(new Vector2f(-left - road, -up + iof)), // 8
+            new AgvNode(new Vector2f(-left, -up + iof)),            // 26
+            new AgvNode(new Vector2f(-left - road, -up + iof)),     // 27
             
             // 
-            new AgvNode(new Vector2f(left, -up)), // 8
-            new AgvNode(new Vector2f(left - iof, -up)), // 9
-            new AgvNode(new Vector2f(road / 2.0f, -up)), // 3
-            new AgvNode(new Vector2f(-road / 2.0f, -up)), // 3
-            new AgvNode(new Vector2f(-left + iof, -up)), // 8
-            new AgvNode(new Vector2f(-left, -up)), // 8
+            new AgvNode(new Vector2f(left, -up)),                   // 28
+            new AgvNode(new Vector2f(left - iof, -up)),             // 29
+            new AgvNode(new Vector2f(road / 2.0f, -up)),            // 30
+            new AgvNode(new Vector2f(-road / 2.0f, -up)),           // 31
+            new AgvNode(new Vector2f(-left + iof, -up)),            // 32
+            new AgvNode(new Vector2f(-left, -up)),                  // 33
             
             // 
-            new AgvNode(new Vector2f(left + road, -up - road)), // 8
-            new AgvNode(new Vector2f(left - iof, -up - road)), // 9
-            new AgvNode(new Vector2f(road / 2.0f, -up - road)), // 3
-            new AgvNode(new Vector2f(-road / 2.0f, -up - road)), // 3
-            new AgvNode(new Vector2f(-left + iof, -up - road)), // 8
-            new AgvNode(new Vector2f(-left - road, -up - road)), // 8
+            new AgvNode(new Vector2f(left + road, -up - road)),     // 34
+            new AgvNode(new Vector2f(left - iof, -up - road)),      // 35
+            new AgvNode(new Vector2f(road / 2.0f, -up - road)),     // 36
+            new AgvNode(new Vector2f(-road / 2.0f, -up - road)),    // 37
+            new AgvNode(new Vector2f(-left + iof, -up - road)),     // 38
+            new AgvNode(new Vector2f(-left - road, -up - road)),    // 39
         };
         
-        // 
+        // Lorry
         nodes[ 0].setConnections(1);
         nodes[ 1].setConnections(10);
         
-        // 
+        // Inland
         nodes[ 2].setConnections(3);
         nodes[ 3].setConnections(14);
         
-        // 
+        // Sea
         nodes[ 4].setConnections(5);
         nodes[ 5].setConnections(27);
         
-        // 
+        // Train
         nodes[ 6].setConnections(7);
         nodes[ 7].setConnections(38);
         
-        // 
+        // Upper outer
         nodes[ 8].setConnections(34);
         nodes[ 9].setConnections(8, 0);
         nodes[10].setConnections(9, 18);
@@ -182,7 +182,7 @@ public class AgvPath /*extends Behaviour*/ {
         nodes[14].setConnections(13, 22);
         nodes[15].setConnections(14);
         
-        // 
+        // Upper inner
         nodes[16].setConnections(17);
         nodes[17].setConnections(18, 9);
         nodes[18].setConnections(19);
@@ -192,13 +192,13 @@ public class AgvPath /*extends Behaviour*/ {
         nodes[22].setConnections(23);
         nodes[23].setConnections(24);
         
-        // 
+        // Left
         nodes[24].setConnections(25, 26);
         nodes[25].setConnections(15, 4);
         nodes[26].setConnections(33);
         nodes[27].setConnections(26, 25);
         
-        // 
+        // Lower inner
         nodes[28].setConnections(16);
         nodes[29].setConnections(28, 35);
         nodes[30].setConnections(29, 36);
@@ -206,7 +206,7 @@ public class AgvPath /*extends Behaviour*/ {
         nodes[32].setConnections(31);
         nodes[33].setConnections(32);
         
-        // 
+        // Lower outer
         nodes[34].setConnections(35);
         nodes[35].setConnections(36, 6);
         nodes[36].setConnections(37);
@@ -214,12 +214,14 @@ public class AgvPath /*extends Behaviour*/ {
         nodes[38].setConnections(39, 32);
         nodes[39].setConnections(27);
         
+        // Send
         sendNodes();
         for(AgvNode node : nodes){
             nodesHash.put(node.m_id, node);
         }
         m_initialized = true;
         
+        // Show lines in play
         debugPath();
     }
     private void debugPath() {

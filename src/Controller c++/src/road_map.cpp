@@ -22,6 +22,7 @@ vector<node> road_map::get_copy()
     {
         for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
         {
+            cout << "connection from " << temp_nodes[i].id() << " to " << temp_nodes[m_nodes[i]->get_connections()[j]->id()].id() << " added" << endl;
             temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
         }
     }

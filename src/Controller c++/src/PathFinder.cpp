@@ -21,6 +21,13 @@ void throw_java_exception(JNIEnv *env, char *className, char *message)
  */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava_awt_Dimension_2(JNIEnv *env, jclass, jobject dimension)
 {
+    if (roadmap != NULL)
+    {
+        string className = "java/lang/IllegalStateException";
+        string message = "initPath() was previously called";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
     vector<road_map::node_base> temp = { };
     if (dimension == NULL)
     {
@@ -62,6 +69,13 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava
  */
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnhl_containing_controller_simulation_Node_2(JNIEnv *env, jclass, jobjectArray nodesArr)
 {
+    if (roadmap != NULL)
+    {
+        string className = "java/lang/IllegalStateException";
+        string message = "initPath() was previously called";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
     vector<road_map::node_base> temp = { };
     jclass nodeClass = NULL;
     jclass vectorClass = env->FindClass("nhl/containing/controller/Vector2f");
@@ -72,6 +86,13 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnh
     jfieldID positionxField = NULL;
     jfieldID positionyField = NULL;
     jsize length = env->GetArrayLength(nodesArr);
+    if (length == 0)
+    {
+        string className = "java/lang/IllegalArgumentException";
+        string message = "nodes must not be empty";
+        throw_java_exception(env, &className[0], &message[0]);
+        return;
+    }
     for (int i = 0; i < length; i++)
     {
         jobject node = env->GetObjectArrayElement(nodesArr, i);

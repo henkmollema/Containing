@@ -75,6 +75,8 @@ public class InstructionDispatcherController implements InstructionDispatcher
      * @param instruction instruction
      */
     private void shipmentArrived(InstructionProto.Instruction instruction){
+        if(_items == null) //TODO: find beter place..
+            _items = _sim.getController().getItems();
         Shipment shipment = _context.getShipmentByKey(instruction.getMessage());
         if(shipment == null) //TODO: handle error
             return;
@@ -110,12 +112,13 @@ public class InstructionDispatcherController implements InstructionDispatcher
      * @param instruction 
      */
     private void placeCraneReady(InstructionProto.Instruction instruction){
+        AGV agv = _items.getFreeAGV();
         if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
             //dit is een inlandship platform
             Platform platform = _items.getInlandPlatforms()[instruction.getA()];
             InstructionProto.Node node = instruction.getNodes(0);
             Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
+            moveAGV(agv, platform, nodeNew);
         }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
             //dit is een lorry platform
             //do nothing
@@ -124,7 +127,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
             Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
             InstructionProto.Node node = instruction.getNodes(0);
             Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
+            moveAGV(agv, platform, nodeNew);
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
             //do nothing
@@ -133,7 +136,7 @@ public class InstructionDispatcherController implements InstructionDispatcher
             Platform platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
             InstructionProto.Node node = instruction.getNodes(0);
             Node nodeNew = new Node(node.getId(),null,node.getConnectionsList());
-            moveAGV(platform.getParkingspots().get(0).getAGV(), platform, nodeNew);
+            moveAGV(agv, platform, nodeNew);
         }
     }
     

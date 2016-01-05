@@ -30,6 +30,7 @@ public class SimulatorController
     {
         _simitems = items;
         _context.setSimulatorItems(items);
+        
     }
     
     public SimulatorItems getItems(){

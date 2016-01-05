@@ -70,7 +70,8 @@ public class SimulationContext
      * Checks if a container can be placed in a given platformID
      * 
      * @param c
-     * @param platformID
+     * @param storage
+     * @return 
      */
     public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
     {

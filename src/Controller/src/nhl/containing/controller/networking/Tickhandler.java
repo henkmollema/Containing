@@ -6,23 +6,13 @@
 package nhl.containing.controller.networking;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import nhl.containing.controller.Simulator;
-import nhl.containing.controller.Vector3f;
-import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
-import nhl.containing.controller.simulation.Parkingspot;
-import nhl.containing.controller.simulation.Platform;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
-import nhl.containing.controller.simulation.SimulatorItems;
-import nhl.containing.controller.simulation.StorageItem;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;

@@ -112,6 +112,7 @@ public class Train extends Vehicle {
         //
         Main.instance().getWorld().trainArrived();
         isDone = false;
+        onDone();
     }
     @Override
     public void onWaitingUpdate() {

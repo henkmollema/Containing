@@ -63,6 +63,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             case InstructionType.AGV_READY:
                 agvReady(inst);
                 break;
+            case InstructionType.PLACE_CRANE_READY:
+                placeCraneReady(inst);
+                break;
             case InstructionType.CRANE_TO_STORAGE_READY:
 
                 break;
@@ -133,8 +136,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(platform.getID());
-
-        //TODO : choose right container
         ShippingContainer container = platform.containers.get(0);
         platform.containers.remove(0);
         builder.setX(container.position.x);

@@ -4,6 +4,7 @@
  */
 package nhl.containing.simulator.networking;
 
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.simulator.framework.Behaviour;
 import nhl.containing.simulator.framework.Point3;
+import nhl.containing.simulator.framework.Tuple;
 import nhl.containing.simulator.game.*;
 import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.world.World;
@@ -71,9 +73,9 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     public void rawUpdate() {
         if (m_safeFrames < SAFE_FRAMES) {
             m_safeFrames++;
-            if(m_safeFrames == SAFE_FRAMES) {
-                handleTrain(true, null, 15);
-            }
+            //if(m_safeFrames == SAFE_FRAMES) {
+                //handleTrain(true, null, 15);
+            //}
             return;
         }
         
@@ -162,7 +164,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }else{
             //dit is een train platform
             PlatformTrain trainPlatform = World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN).a;
-            trainPlatform.take(point, 0);
+            //trainPlatform.take(point, 0);
+            World().sendTrainTake(World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN), point.x);
         }
     }
     
@@ -177,14 +180,15 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             //TODO: remove testing compatibility
             if(inst == null)
                 World().getTrain().init(size);
-            else
+            if(inst != null){
                 World().getTrain().init(inst.getContainersList());
-            World().getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
-                @Override public void done(Vehicle v) {
-                    p("Train " + v.id() + " arrived at loading platform.");
-                    SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
-                }
-            });
+                World().getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
+                    @Override public void done(Vehicle v) {
+                        p("Train " + v.id() + " arrived at loading platform.");
+                        SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());             
+                    }
+                });
+            } 
         } else {
             p("Train departed with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Vertrek:\nTrein\n" + inst.getContainersCount() + " container(s)");

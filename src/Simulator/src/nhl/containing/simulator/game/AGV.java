@@ -30,7 +30,7 @@ public final class AGV extends MovingItem {
     private static final Vector3f transformOffset = new Vector3f(0.0f, 2.0f, 0.0f);
     private static final Vector3f spatialOffset = new Vector3f(0.0f, 0.0f, 0.0f);
     private static final float spatialScale = 2.2f;
-    private static final Vector3f containerOffset = new Vector3f(-1.2f, 0.4f, -16.0f);
+    private static final Vector3f containerOffset = new Vector3f(-1.2f, 0.4f, -6.0f);
     private static final String model = "models/henk/AGV.obj";
     private static final Material material = MaterialCreator.diffuse(new ColorRGBA(0.7f, 0.9f, 0.56f, 1.0f));
     private static final float loadedSpeed = 20.0f;

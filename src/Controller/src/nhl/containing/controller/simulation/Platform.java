@@ -15,9 +15,9 @@ import java.util.List;
 public class Platform
 {
     protected final int m_id;
-    protected List<Parkingspot> m_parkingspots = new ArrayList<>();
-    protected List<ShippingContainer> m_containers = new ArrayList<>();
-    protected boolean m_busy = false;
+    protected List<Parkingspot> parkingspots = new ArrayList<>();
+    public List<ShippingContainer> containers = new ArrayList<>();
+    protected boolean busy = false;
     
     /**
      * Constructor
@@ -31,7 +31,7 @@ public class Platform
      * Set crane to busy
      */
     public void setBusy(){
-        m_busy = true;
+        busy = true;
     }
     
     /**
@@ -39,14 +39,14 @@ public class Platform
      * @return 
      */
     public boolean isBusy(){
-        return m_busy;
+        return busy;
     }
     
     /**
      * Set crane to unbusy
      */
     public void unsetBusy(){
-        m_busy = false;
+        busy = false;
     }
     
     /**
@@ -54,7 +54,7 @@ public class Platform
      * @param spot parkingspot
      */
     public void addParkingspot(Parkingspot spot){
-        m_parkingspots.add(spot);
+        parkingspots.add(spot);
         spot.setParent(this);
     }
     
@@ -72,7 +72,7 @@ public class Platform
      * @return parkingspot or null when not found
      */
     public Parkingspot getParkingspotForAGV(int id){
-        for(Parkingspot p : m_parkingspots){
+        for(Parkingspot p : parkingspots){
             if(p.hasAGV() && p.getAGV().getID() == id)
                 return p;
         }
@@ -84,11 +84,11 @@ public class Platform
      * @return parkingspots
      */
     public List<Parkingspot> getParkingspots(){
-        return m_parkingspots;
+        return parkingspots;
     }
     
     public List<ShippingContainer> getShippingContainers(){
-        return m_containers;
+        return containers;
     }
     
     /**
@@ -111,7 +111,7 @@ public class Platform
      */
     public static boolean checkIfShipmentDone(Platform[] platforms){
         for(Platform p : platforms){
-            if(!p.m_containers.isEmpty())
+            if(!p.containers.isEmpty())
                 return false;
         }
         return true;

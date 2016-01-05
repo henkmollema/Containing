@@ -20,7 +20,7 @@ public class Path {
     
     // Main
     public Vector3f[] m_nodes = new Vector3f[0];       // Path node positions
-    public Vector3f m_previousPosition = Vector3f.ZERO;// Previous position, used for switching between nodes
+    public Vector3f m_previousPosition = Utilities.zero();// Previous position, used for switching between nodes
     public int m_targetNode = 0;                      // Target node
     
     // Settings

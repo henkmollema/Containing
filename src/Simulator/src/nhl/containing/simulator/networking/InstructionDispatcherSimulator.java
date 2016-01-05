@@ -4,6 +4,7 @@
  */
 package nhl.containing.simulator.networking;
 
+import com.jme3.math.Vector3f;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private GUI m_gui;
     private World m_world;
     
-    private final int SAFE_FRAMES = 100;
+    private final int SAFE_FRAMES = 10;
     private int m_safeFrames = 0;
     
     
@@ -71,9 +72,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (m_safeFrames < SAFE_FRAMES) {
             m_safeFrames++;
             if(m_safeFrames == SAFE_FRAMES) {
-                //handleTrain(true, null, 15);
+                handleTrain(true, null, 15);
             }
-                
             return;
         }
         

@@ -20,6 +20,7 @@ import com.jme3.util.BufferUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import nhl.containing.simulator.framework.Utilities;
 
 /**
  *
@@ -159,7 +160,7 @@ public final class Line3D extends Transform {
      */
     public void UpdateMesh(Camera aCamera)
     {
-       Vector3f localViewPos = Vector3f.ZERO;
+       Vector3f localViewPos =  Utilities.zero();
        super.worldToLocal(aCamera.getLocation(), localViewPos);
        
        Vector3f[] vertices   = this.vertexArray;

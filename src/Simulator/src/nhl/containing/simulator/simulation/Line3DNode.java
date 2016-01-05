@@ -4,13 +4,14 @@
  */
 package nhl.containing.simulator.simulation;
 import com.jme3.math.Vector3f;
+import nhl.containing.simulator.framework.Utilities;
 
 /**
  * 
  * @author Jens
  */
 public class Line3DNode {
-    public Vector3f position    = Vector3f.ZERO;
+    public Vector3f position    = Utilities.zero();
     public float width          = 1f;
     
     /**

@@ -6,6 +6,7 @@
 package nhl.containing.simulator.framework;
 
 import nhl.containing.simulator.networking.SimulatorClient;
+import nhl.containing.simulator.simulation.Main;
 
 /**
  *
@@ -35,7 +36,7 @@ public final class Time {
             m_deltaSum += _addedTime;
             
             if(m_deltaSum >= TIME_SEND_INTERVAL) {
-                SimulatorClient.sendTimeUpdate();
+                Main.instance().simClient().sendTimeUpdate();
                 m_deltaSum = 0;
             } 
         }

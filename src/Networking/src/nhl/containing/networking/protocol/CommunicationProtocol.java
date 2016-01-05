@@ -87,13 +87,13 @@ public class CommunicationProtocol {
      */
     public byte[] processInput(byte[] in) {
         datablockSimulator dbRecieved = null;
-        if (in != null && in.length > 3) //If we're not getting an empty message.
+        if (in != null && in.length > 2) //If we're not getting an empty message.
         {
             try {
                 //Try to parse the incomming data into a datablock
                 dbRecieved = datablockSimulator.parseFrom(in);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                System.out.println("Failed to read datablock");
             }
 
             if (dbRecieved != null && this._dispatcher != null) {
@@ -101,13 +101,27 @@ public class CommunicationProtocol {
 
                 for (Instruction i : dbRecieved.getInstructionsList()) {
                     if(safeMode) recievedInstructionUUIDs.add(i.getId());
-                    this._dispatcher.forwardInstruction(i);
+                    try{
+                        this._dispatcher.forwardInstruction(i);
+                    }
+                    catch(Exception e)
+                    {
+                       System.out.println("Exception in handling instruction");
+                       e.printStackTrace();
+                    }
                     
                 }
 
                 for (InstructionResponse r : dbRecieved.getResponsesList()) {
                     if(safeMode) recievedInstructionUUIDs.add(r.getId());
-                    this._dispatcher.forwardResponse(r);
+                    try{
+                        this._dispatcher.forwardResponse(r);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Exception in handling response");
+                       e.printStackTrace();
+                    }
                     
                 }
                 if(safeMode)

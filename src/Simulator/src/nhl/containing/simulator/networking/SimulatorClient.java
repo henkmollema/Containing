@@ -224,15 +224,18 @@ public class SimulatorClient implements Runnable
     /**
      * Sends an timeupdate to the controller
      */
-    public static void sendTimeUpdate()
+    public void sendTimeUpdate()
     {
-        Instruction timeUpdate = Instruction.newBuilder()
-                .setId(CommunicationProtocol.newUUID())
-                .setInstructionType(InstructionType.CLIENT_TIME_UPDATE)
-                .setTime((long) (Time.time() * 1000)) // convert float to long ms
-                .build();
+        if(isConnected)
+        {
+            Instruction timeUpdate = Instruction.newBuilder()
+                    .setId(CommunicationProtocol.newUUID())
+                    .setInstructionType(InstructionType.CLIENT_TIME_UPDATE)
+                    .setTime((long) (Time.time() * 1000)) // convert float to long ms
+                    .build();
 
-        controllerCom.sendInstruction(timeUpdate);
+            controllerCom.sendInstruction(timeUpdate);
+        }
     }
 
     /**
@@ -298,10 +301,10 @@ public class SimulatorClient implements Runnable
             OutputStream output = _socket.getOutputStream();
 
             // Send empty message to start conversation..
-            StreamHelper.writeMessage(output, new byte[]
-            {
-                0
-            });
+            //StreamHelper.writeMessage(output, new byte[]
+            //{
+            //    0
+            //});
 
             while (shouldRun)
             {

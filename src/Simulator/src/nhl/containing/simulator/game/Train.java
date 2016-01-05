@@ -30,6 +30,7 @@ public class Train extends Vehicle {
     
     public Train(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
         super(size, speed, frontModel, frontScale, frontOffset);
+        
     }
     
     private static Vector3f wagonOffset() {

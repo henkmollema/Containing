@@ -13,7 +13,7 @@ import nhl.containing.controller.Point3;
  */
 public class Storage extends Platform
 {
-    private StorageItem[][][] m_storageplaces = new StorageItem[6][46][6];
+    private StorageItem[][][] m_storageplaces = new StorageItem[6][6][45];
     
     /**
      * Constructor

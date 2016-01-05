@@ -256,7 +256,7 @@ public final class WorldCreator {
         v.path().setPosition(from);
         
         v.invZ = true;
-        v.containerOffset(new Vector3f(0.0f, 0.0f, -36.0f));
+        v.containerOffset(new Vector3f(0.0f, 0.0f, -27.0f));
         
         return v;
     }

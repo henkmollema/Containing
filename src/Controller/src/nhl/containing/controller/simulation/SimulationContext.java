@@ -99,20 +99,20 @@ public class SimulationContext
         Storage platform = this.getStoragePlatformByContainer(c);
         StorageItem[][][] storagePlaces = platform.getStoragePlaces();
         
-        
-        //TODO: FIX xyz order.. storagePlaces array size = [5][45][5] 
-        for(int z = 0; z < storagePlaces[0][0].length; z++)
+        // storagePlaces array size = [5][5][45] where y is stack
+        for(int z = 0; z < storagePlaces[0].length; z++)
         {
             for(int x = 0; x < storagePlaces.length; x++)
             {
-                for(int y = 0; y < storagePlaces[0].length; y++)
+                for(int y = 0; y < storagePlaces[0][0].length; y++)
                 {
                     if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
                     
                     //If there's no container on this spot 
                     if(storagePlaces[x][y][z].isEmpty())
                     {
-                        if(y > 0){
+                        if(y > 0)
+                        {
                             //check the container beneath it.
                             if(storagePlaces[x][y - 1][z].getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
                             {

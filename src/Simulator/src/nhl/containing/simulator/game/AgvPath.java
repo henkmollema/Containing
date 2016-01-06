@@ -54,8 +54,7 @@ public class AgvPath /*extends Behaviour*/ {
     }
     
     //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
-    //TODO: make private?
-    public static AgvNode[] nodes;
+    private static AgvNode[] nodes;
     
     public static AgvNode[] getNodes() {
         if (nodes == null)

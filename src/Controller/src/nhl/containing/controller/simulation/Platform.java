@@ -80,6 +80,19 @@ public class Platform
     }
     
     /**
+     * Gets the parkingspot index for a parkingspot
+     * @param spot parkingspot
+     * @return index
+     */
+    public int getParkingspotIndex(Parkingspot spot){
+        for(int i = 0; i < parkingspots.size(); i++){
+            if(parkingspots.get(i).getId() == spot.getId())
+                return i;
+        }
+        return -1;
+    }
+    
+    /**
      * Gets the parkingspots
      * @return parkingspots
      */

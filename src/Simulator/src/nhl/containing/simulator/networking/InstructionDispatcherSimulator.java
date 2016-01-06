@@ -128,9 +128,18 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             case InstructionType.PLACE_CRANE:
                 handlePlaceCrane(inst);
                 break;
+            case InstructionType.CRANE_TO_STORAGE:
+                handleCraneToStorage(inst);
+                break;
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
+    }
+    
+    
+    private void handleCraneToStorage(InstructionProto.Instruction instruction){
+        PlatformStorage storage = World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
+        World().sendStoragePlace(storage, instruction.getB(), new Point3(instruction.getX(), instruction.getY(), instruction.getZ()));
     }
     
     /**

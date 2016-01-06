@@ -79,8 +79,6 @@ public class AGV
      * @throws Exception when already moving
      */
     public void setBusy() throws Exception{
-        if(isBusy())
-            throw new Exception("AGV is already busy");
         m_isWaiting = false;
     }
     

@@ -6,6 +6,7 @@
 package nhl.containing.controller.simulation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,9 @@ public class SimulatorItems
                     m_Nodes.add(new Node((int)item.getId(), item.getX(), item.getY(), item.getConnectionsList()));
                     break;
             }
+        }
+        for(Storage s : m_storages){
+            Collections.reverse(s.parkingspots);
         }
         PathFinder.initPath(m_Nodes);
     }

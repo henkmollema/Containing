@@ -383,10 +383,19 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 ShippingContainer container = p.getAGV().getContainer();
                 try {
                     //storage.setContainer(p.getAGV().getContainer(),0,0,0);
-                    Point3 storagePlace = _context.determineContainerPosition(p.getAGV().getContainer());
+                    Point3 storagePlace = _context.determineContainerPosition(container);
                     storage.setContainer(container, storagePlace);
-                    //TODO: We probably want to send an instruction to the simulator here. 
                     p.getAGV().unsetContainer();
+                    //TODO: We probably want to send an instruction to the simulator here. 
+                    InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+                    builder.setId(CommunicationProtocol.newUUID());
+                    builder.setA(storage.getID());
+                    builder.setB(storage.getParkingspotIndex(p));
+                    builder.setInstructionType(InstructionType.CRANE_TO_STORAGE);
+                    builder.setX(storagePlace.x);
+                    builder.setY(storagePlace.y);
+                    builder.setZ(storagePlace.z);
+                    _com.sendInstruction(builder.build());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

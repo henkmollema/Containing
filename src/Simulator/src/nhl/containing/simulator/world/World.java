@@ -296,6 +296,11 @@ public class World extends Behaviour {
         }
     }
     
+    /**
+     * Sends a train take command
+     * @param s train platform
+     * @param x point
+     */
     public void sendTrainTake(Tuple<PlatformTrain, Vector2f> s, int x){
         s.a.update();
             s.b.y = s.a.position().z;    
@@ -308,13 +313,17 @@ public class World extends Behaviour {
                 Quaternion rot = c.transform.rotation();
                   
                 s.a.setContainer(Point3.zero(), c);
-                c.transform.position(pos);
-                c.transform.rotation(rot);
                 s.a.take(Point3.zero(), 0);
                 
             }
     }
     
+    public void sendStoragePlace(PlatformStorage storage,int index, Point3 point){
+        if(storage.crane().getContainer() != null)
+            return;
+        Container c = storage.getParkingSpot(index).agv().getContainer();
+        storage.place(index, point);
+    }
     
     
     public void trainUpdate() {

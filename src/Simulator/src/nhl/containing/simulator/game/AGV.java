@@ -40,7 +40,7 @@ public final class AGV extends MovingItem {
     
     // Fields
     private static float m_distance = 20.0f;
-    private static float m_rotationSpeed = 0.1f / 1000.0f;
+    private static float m_rotationSpeed = 4.0f;
     
     // Members
     private boolean m_waiting = false;
@@ -60,6 +60,8 @@ public final class AGV extends MovingItem {
         initSpots(Point3.one());
         Main.register(this);
         
+        path().setPath(new Vector3f(100.0f, 2.0f, 200.0f), new Vector3f(100.0f, 2.0f, 100.0f), new Vector3f(200.0f, 2.0f, 100.0f), new Vector3f(200.0f, 2.0f, 000.0f));
+        
     }
     
     public void setParkingspotID(int id){
@@ -76,22 +78,26 @@ public final class AGV extends MovingItem {
             p.agv(this);
         }
         position(path().getPosition().add(transformOffset));
-        lookDirection(spatialOffset);
+        //lookDirection(spatialOffset);
         
         if (m_previousPosition != null) {
-            Vector3f change = position().subtract(m_previousPosition);
+            Vector3f change = position().subtract(m_previousPosition).divide(Time.deltaTime());
             float length = change.length();
             
-            if (length > 0.001f) {
+            if (length > 0.01f) {
+                
                 Vector3f n = change.divide(length);
-                float dist = m_previousDirection.subtract(n).length();
-                n = Interpolate.ease(EaseType.Linear, m_previousDirection, n, m_rotationSpeed * path().m_speed / (dist * Time.deltaTime()));
+                n = Interpolate.ease(
+                        EaseType.Linear, 
+                        m_previousDirection, 
+                        n, 
+                        Time.deltaTime() * m_rotationSpeed * path().m_speed / length);
                 m_previousDirection = n;
                 
                 lookDirection(n);
+                m_previousPosition = position();
             }
-        }
-        m_previousPosition = position();
+        } else m_previousPosition = position();
     }
     
     private void init() {

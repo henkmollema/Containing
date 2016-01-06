@@ -54,9 +54,14 @@ road_map::road_map(vector<node_base> n)
     }
     for (unsigned int i{ 0 }; i < n.size(); ++i)
     {
+        cout << "consize: " << n[i].connections.size() << endl;
         for (unsigned int j{ 0 }; j < n[i].connections.size(); ++j)
         { // set connections
-            m_nodes[i]->add_connection(m_nodes[n[i].connections[j]]);
+            node* cnode = m_nodes[n[i].connections[j]];
+            cout << "i: " << i << " j: " << j << " conid: " << cnode << endl;
+            
+            if(cnode != 0)
+                m_nodes[i]->add_connection(m_nodes[n[i].connections[j]]);
         }
     }
 }

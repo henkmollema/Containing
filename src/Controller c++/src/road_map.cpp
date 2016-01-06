@@ -76,11 +76,8 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
     cout << "init" << endl;
     // clone target and from
     node* current{ &nodes[from->id()] };
-    long dinges = 0;
     while (1)
     {
-        if (dinges % 10 == 0) cout << "pathloop: " << dinges << endl;
-        dinges++;
         // move to visited
         open_list.erase(std::remove(open_list.begin(), open_list.end(), current), open_list.end());
         cout << "removed " << current->id() << " from open_list" << endl;
@@ -88,6 +85,7 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 
         if (current->id() == to->id())
         { // Path completed
+            cout << "path completed" << endl;
             vector<int> path{ vector<int>(0) };
             while (current != NULL)
             { // set path

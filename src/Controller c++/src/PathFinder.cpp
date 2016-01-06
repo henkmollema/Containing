@@ -56,7 +56,7 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath__Ljava
                 if (j < dimensionY - 1) conn.push_back(i * dimensionY + (j + 1));
                 //cout << "connecties van node " << i*dimensionY+j << " aangemaakt" << endl;
             }
-            temp.push_back(road_map::node_base(vector2((float)i - dimensionX/2, (float)j- dimensionY/2), conn));
+            temp.push_back(road_map::node_base(i*dimensionY+j, vector2((float)i - dimensionX/2, (float)j- dimensionY/2), conn));
         }
     }
     roadmap = new road_map(temp);
@@ -93,9 +93,10 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnh
         throw_java_exception(env, &className[0], &message[0]);
         return;
     }
+    temp.push_back(road_map::node_base(0,vector2(0, 0), vector<int>(0)));
     for (int i = 0; i < length; i++)
     {
-        jobject node = env->GetObjectArrayElement(nodesArr, i);
+        jobject node = env->GetObjectArrayElement(nodesArr, (length-1)-i);
         if (nodeClass == NULL)
         {
             nodeClass = env->GetObjectClass(node);
@@ -114,14 +115,14 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnh
         }
         jobject connection = env->GetObjectField(node, connectionField);
         jintArray* arr = reinterpret_cast<jintArray*>(&connection);
-        jsize length = env->GetArrayLength(*arr);
+        jsize innerLength = env->GetArrayLength(*arr);
         jint* inConn = env->GetIntArrayElements(*arr, NULL);
-        for (char i = 0; i < length; i++)
+        for (char i = 0; i < innerLength; i++)
         {
             conn.push_back(inConn[i]);
         }
         //Added id to node_base
-        temp.push_back(road_map::node_base(env->GetIntField(node,idField),vector2(env->GetFloatField(position, positionxField), env->GetFloatField(position, positionyField)), conn));
+        temp.push_back(road_map::node_base(env->GetIntField(node, idField),vector2(env->GetFloatField(position, positionxField), env->GetFloatField(position, positionyField)), conn));
         env->ReleaseIntArrayElements(*arr, inConn, 0);
     }
     roadmap = new road_map(temp);

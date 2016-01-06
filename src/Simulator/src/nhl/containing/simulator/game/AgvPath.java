@@ -56,6 +56,7 @@ public class AgvPath /*extends Behaviour*/ {
     //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
     //TODO: make private?
     public static AgvNode[] nodes;
+    private static Map<Integer,AgvNode> m_hashNodes = new HashMap<>();
     public void init() {
         if (m_initialized)
             return;
@@ -215,7 +216,9 @@ public class AgvPath /*extends Behaviour*/ {
         // Send
         sendNodes();
         m_initialized = true;
-        
+        for(AgvNode n : nodes){
+            m_hashNodes.put(n.m_id, n);
+        }
         // Show lines in play
         debugPath();
     }
@@ -246,7 +249,7 @@ public class AgvPath /*extends Behaviour*/ {
         
         // or i = ids.length - 1; i >= 0; i--
         for (int i = 0; i < ids.length; i++) {
-            p[i + 1] = nodes[i].position();
+            p[i + 1] = m_hashNodes.get(ids[i]).position();
         }
         
         return p;
@@ -256,7 +259,7 @@ public class AgvPath /*extends Behaviour*/ {
         Vector3f[] p = new Vector3f[ids.length + 1];
         p[p.length - 1] = new Vector3f(to);
         for(int i = 0; i < ids.length; i++){
-            p[i] = nodes[i].position();
+            p[i] = m_hashNodes.get(ids[i]).position();
         }
         return p;
     }
@@ -264,7 +267,7 @@ public class AgvPath /*extends Behaviour*/ {
     public static Vector3f[] getPath(int[] ids){
         Vector3f[] p = new Vector3f[ids.length];
         for(int i = 0; i < ids.length; i++){
-            p[i] = nodes[i].position();
+            p[i] = m_hashNodes.get(ids[i]).position();
         }
         return p;
     }

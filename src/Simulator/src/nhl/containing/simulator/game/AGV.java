@@ -7,6 +7,7 @@ import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.framework.EaseType;
 import nhl.containing.simulator.framework.Interpolate;
 import nhl.containing.simulator.framework.LoopMode;
@@ -14,6 +15,7 @@ import nhl.containing.simulator.framework.Path;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.networking.SimulatorClient;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
 
@@ -42,6 +44,8 @@ public final class AGV extends MovingItem {
     
     // Members
     private boolean m_waiting = false;
+    private boolean m_instructionSend = true;
+    private int m_parkingspot;
     private Vector3f m_previousPosition = null;
     private Vector3f m_previousDirection = Utilities.zero();
     
@@ -55,18 +59,22 @@ public final class AGV extends MovingItem {
         this.register(SimulationItemType.AGV);
         initSpots(Point3.one());
         Main.register(this);
-//        path().setPath(
-//                new Vector3f(40.0f, 0.0f, 0.0f),
-//                new Vector3f(40.0f, 0.0f, 40.0f),
-//                new Vector3f(80.0f, 0.0f, 40.0f),
-//                new Vector3f(80.0f, 0.0f, 0.0f),
-//                new Vector3f(40.0f, 0.0f, 0.0f)
-//        );
         
+    }
+    
+    public void setParkingspotID(int id){
+        m_instructionSend = false;
+        m_parkingspot = id;
     }
     
     public void update() {
         path().update();
+        if(path().atLast() && !m_instructionSend){
+            m_instructionSend = true;
+            SimulatorClient.sendTaskDone((int)m_id, 0, InstructionType.AGV_READY);
+            ParkingSpot p = (ParkingSpot)Main.getTransform(m_parkingspot);
+            p.agv(this);
+        }
         position(path().getPosition().add(transformOffset));
         lookDirection(spatialOffset);
         

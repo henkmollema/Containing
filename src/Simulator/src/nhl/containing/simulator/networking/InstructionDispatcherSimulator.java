@@ -61,7 +61,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
      * the instruction to the appropriate component in the simulator
      *
      * @param inst The Instruction to be dispatched to the system
-     * @return the byte array to return to the sender
      */
     @Override
     public void forwardInstruction(InstructionProto.Instruction inst)
@@ -80,7 +79,16 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
         
         while (m_queue.size() > 0) {
-            handleInstruction(m_queue.get(0));
+            try
+            {
+                handleInstruction(m_queue.get(0));
+            }
+            catch(Exception e)
+            {
+                p("Error handling Instruction");
+                e.printStackTrace();
+            }
+            
             m_queue.remove(0);
         }
     }

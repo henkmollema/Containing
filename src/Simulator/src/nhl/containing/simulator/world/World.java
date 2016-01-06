@@ -105,7 +105,7 @@ public class World extends Behaviour {
         createSeaCell();
         createStorageCell();
         createTrainCell();
-        //createAGV();
+        createAGV();
         Main.getSimClient().Start();
         
         //test();

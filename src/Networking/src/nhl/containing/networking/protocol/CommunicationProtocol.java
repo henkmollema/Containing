@@ -22,8 +22,10 @@ public class CommunicationProtocol {
     private InstructionDispatcher _dispatcher;
     private final LinkedList<Instruction> instructionQueue;
     private final LinkedList<InstructionResponse> responseQueue;
+    
+    private List<Instruction> resendBuffer;
 
-    volatile boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
+    volatile boolean safeMode = true; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     
     final List<String> pendingAcknowelegeInst;
     final List<String> pendingAcknowelegeResp;
@@ -41,6 +43,7 @@ public class CommunicationProtocol {
         recievedInstructionUUIDs = new ArrayList<>();
         recievedResponseUUIDs = new ArrayList<>();
                 
+        resendBuffer = new ArrayList<>();
     }
     
     public int getNumPendingInst()
@@ -66,6 +69,7 @@ public class CommunicationProtocol {
         if (i != null && instructionQueue != null) {
             synchronized (instructionQueue) {
                 instructionQueue.add(i);
+                resendBuffer.add(i);
             }
         }
 
@@ -135,6 +139,32 @@ public class CommunicationProtocol {
                     {
                         pendingAcknowelegeResp.remove(uuid);
                     }
+                    
+                    final List<Instruction> resendBufferCopy = new ArrayList(resendBuffer);
+                    resendBuffer.clear(); //Clear the original
+                    while(pendingAcknowelegeInst.size() > 0)
+                    {
+                        int resendIndex = 0;
+                        boolean found = false;
+                        for(Instruction i : resendBufferCopy) //Look the unrecieved id up in the resendbuffer
+                        {
+                            if(pendingAcknowelegeInst.get(0) == i.getId())
+                            {
+                                System.out.println("Had to resend instruction: " + i.getId());
+                                this.sendInstruction(i);
+                                found = true;
+                                break;
+                            }
+                            
+                            resendIndex++;
+                        }
+                        
+                        if(found) resendBufferCopy.remove(resendIndex); 
+                    }
+                    
+                    
+                    
+                    
                 }
                 
             }

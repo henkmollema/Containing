@@ -22,9 +22,7 @@ vector<node> road_map::get_copy()
     {
         for (unsigned int j{ 0 }; j < m_nodes[i]->get_connections().size(); ++j)
         {
-            cout << "connection from " << temp_nodes[i].id() << " to " << temp_nodes[m_nodes[i]->get_connections()[j]->id()].id() << " added" << endl;
             temp_nodes[i].add_connection(&temp_nodes[m_nodes[i]->get_connections()[j]->id()]);
-            cout << "success" << endl;
         }
     }
     return temp_nodes;
@@ -75,14 +73,17 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
     vector<node > nodes       { get_copy()       };
     vector<node*> open_list   { vector<node*>(0) };
     vector<node*> closed_list { vector<node*>(0) };
-    
+    cout << "init" << endl;
     // clone target and from
     node* current{ &nodes[from->id()] };
-
+    long dinges = 0;
     while (1)
     {
+        if (dinges % 10 == 0) cout << "pathloop: " << dinges << endl;
+        dinges++;
         // move to visited
         open_list.erase(std::remove(open_list.begin(), open_list.end(), current), open_list.end());
+        cout << "removed " << current->id() << " from open_list" << endl;
         closed_list.push_back(current);
 
         if (current->id() == to->id())
@@ -116,6 +117,7 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 
                 if (find(open_list.begin(), open_list.end(), selected) == open_list.end())
                 { // neighbour not yet in open list so add it to the list
+                    cout << "added " << selected->id() << " to open_list" << endl;
                     open_list.push_back(selected);
                 }
             }

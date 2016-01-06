@@ -129,6 +129,7 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_initPath___3Lnh
 vector<int> getPath(int from, int to, float speed)
 {
     return roadmap->get_path(from, to, speed);
+    cout << "gepathed"<< endl;
 }
 
 /*

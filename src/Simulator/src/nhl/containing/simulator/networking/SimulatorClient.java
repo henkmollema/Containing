@@ -265,7 +265,7 @@ public class SimulatorClient implements Runnable
                 Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
-                .setB(a)
+                .setB(b)
                 .setMessage(message)
                 .setInstructionType(type)
                 .build();
@@ -283,7 +283,7 @@ public class SimulatorClient implements Runnable
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
-                .setB(a)
+                .setB(b)
                 .setInstructionType(type)
                 .setX(point.x)
                 .setY(point.y)

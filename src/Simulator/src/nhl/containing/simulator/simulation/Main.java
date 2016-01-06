@@ -200,8 +200,8 @@ public class Main extends SimpleApplication {
         return -1;
     }
     /**
-     * Register Container
-     * @param container
+     * Register AGV
+     * @param agv
      * @return 
      */
     public static long register(AGV agv) {
@@ -239,8 +239,8 @@ public class Main extends SimpleApplication {
         return m_transforms.remove(transform);
     }
     /**
-     * Unregister Container
-     * @param container
+     * Unregister AGV
+     * @param agv
      * @return 
      */
     public static boolean unregister(AGV agv) {

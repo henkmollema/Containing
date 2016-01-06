@@ -58,10 +58,11 @@ public class SimulationContext
             {
                Storage storagePlatform = _simulatorItems.getStorages()[j];
                
-               if(canBePlacedInStoragePlatform(container, storagePlatform))
-                    container_StoragePlatform.put(container, storagePlatform);
+               if(canBePlacedInStoragePlatform(container, storagePlatform)){
+                   container_StoragePlatform.put(container, storagePlatform);
+                   break;
+               }     
             }
-            
         }
     }
     
@@ -89,7 +90,7 @@ public class SimulationContext
                     return false;
                 }
             }
-            it.remove(); // avoids a ConcurrentModificationException
+            //it.remove(); // avoids a ConcurrentModificationException
         }
         return true;
     }

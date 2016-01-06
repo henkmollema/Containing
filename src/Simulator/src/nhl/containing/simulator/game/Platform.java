@@ -324,6 +324,7 @@ public abstract class Platform extends ContainerCarrier {
                     m_parkingSpots[to.parkingSpot].agv().setContainer(c);
                     //TODO: Add the right B item
                     SimulatorClient.sendTaskDone((int)m_parkingSpots[to.parkingSpot].agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
+                    m_parkingSpots[to.parkingSpot].agv(null);
                 }
             }
         }

@@ -232,19 +232,23 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     public void moveAGV(AGV agv, Platform to, Parkingspot spot) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
-        builder.setA(agv.getID());
         builder.setB((int)spot.getId());
-        int[] route = PathFinder.getPath(agv.getNodeID(), spot.getArrivalNodeID());
-        for(int r : route){
-            builder.addRoute(r);
-        }
         builder.setInstructionType(InstructionType.MOVE_AGV);
-        _com.sendInstruction(builder.build());
-        try {
-            agv.setBusy();
-            spot.setAGV(agv);
-            agv.setNodeID(spot.getDepartNodeID());
-        }catch(Exception e){e.printStackTrace();} 
+        if(agv != null){
+            builder.setA(agv.getID());
+            int[] route = PathFinder.getPath(agv.getNodeID(), spot.getArrivalNodeID());
+            for(int r : route){
+                builder.addRoute(r);
+            }
+            _com.sendInstruction(builder.build());
+            try {
+                agv.setBusy();
+                spot.setAGV(agv);
+                agv.setNodeID(spot.getDepartNodeID());
+            }catch(Exception e){e.printStackTrace();} 
+        }else{
+            //TODO: make a queue
+        }
     }
 
     /**
@@ -325,10 +329,13 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een train platform
             container = _context.getContainerById(instruction.getB());
             p = platform.getParkingspotForAGV(instruction.getA());
-            //TODO: find destination <-- jens, hier juiste platform ophalen
-            //Heb hier de storage waar de container in moet, wist niet precies hoe je het wilde gaan gebruiken.
             to = _context.getStoragePlatformByContainer(container);
-
+            for(Parkingspot ps : to.getParkingspots()){
+                if(!ps.hasAGV()){
+                    toSpot = ps;
+                    break;
+                }    
+            }
             if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
 
                 shipmentMoved(_items.getTrainShipment());
@@ -342,6 +349,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(toSpot == null)
+            return; //TODO: error?
         moveAGV(agv, to, toSpot);
     }
 

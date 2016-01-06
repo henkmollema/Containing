@@ -44,7 +44,7 @@ public class World extends Behaviour {
     public static final float WATER_LEVEL = - 5.0f;
     public static final float LAND_HEIGHT_EXTEND = 100.0f;
     
-    public static final int AGV_COUNT = 100;
+    public static final int AGV_COUNT = 4;//100;
     public static final float LANE_WIDTH = 10.0f;
     public static final int LANE_COUNT = 4;
     
@@ -154,9 +154,11 @@ public class World extends Behaviour {
     
     private void createAGV() {
         
-        AGV agv = new AGV();
-        agv.setContainer(null);
-        agv.position(new Vector3f(-10f, -645f, -36.0f));
+        for(int i = 0; i < AGV_COUNT; i++){
+            AGV agv = new AGV();
+            agv.setContainer(null);
+            agv.position(new Vector3f(-10f, -645f, -36.0f));
+        }
         //m_storageCells.get(0).getParkingSpot(0).agv(agv);
     }
     private void test()

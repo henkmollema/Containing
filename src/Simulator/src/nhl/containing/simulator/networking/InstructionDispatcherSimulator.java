@@ -132,7 +132,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 handleCraneToStorage(inst);
                 break;
             case InstructionType.SHIPMENT_MOVED:
-                
+                handleShipmentMoved(inst);
+                break;
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());

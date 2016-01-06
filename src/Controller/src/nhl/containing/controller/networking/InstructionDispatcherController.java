@@ -375,9 +375,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             }
             if(!platform.containers.isEmpty()){
                 placeCrane(platform);
-            }else if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
-                shipmentMoved(_items.getTrainShipment());
-                _items.unsetTrainShipment();
+            }else if (!Platform.checkIfBusy(_items.getTrainPlatforms())) {
+                if(Platform.checkIfShipmentDone(_items.getTrainPlatforms())){
+                    shipmentMoved(_items.getTrainShipment());
+                    _items.unsetTrainShipment();
+                }
             }
         }
         AGV agv = p.getAGV();

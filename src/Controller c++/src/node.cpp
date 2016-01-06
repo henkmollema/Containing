@@ -39,9 +39,12 @@ vector2 node::get_position()
 
 void node::add_connection(node* n)
 {
-    cout << "in add_connection with id: " << m_id << " to id: " << n->id() << endl;
-    m_connections.push_back(n);
-    cout << "still here..." << endl;
+    if(n != 0)
+    {
+        cout << "in add_connection with id: " << m_id << " to id: " << n->id() << endl;
+        m_connections.push_back(n);
+        cout << "still here..." << endl;
+    }
 }
 
 vector<node*> node::get_connections()

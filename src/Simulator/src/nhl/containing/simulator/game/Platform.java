@@ -48,6 +48,9 @@ public abstract class Platform extends ContainerCarrier {
         return parkingSpots();
     }
     
+    public int parkingSpotLength() {
+        return m_parkingSpots == null ? -1 : m_parkingSpots.length;
+    }
     public ParkingSpot getParkingSpot() {
         int i;
         for (i = 0; i < m_parkingSpots.length; i++) {

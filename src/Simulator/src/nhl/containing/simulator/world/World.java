@@ -26,6 +26,7 @@ import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Tuple;
+import nhl.containing.simulator.game.AgvPath;
 import nhl.containing.simulator.game.RFID;
 import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
@@ -104,7 +105,7 @@ public class World extends Behaviour {
         createSeaCell();
         createStorageCell();
         createTrainCell();
-        createAGV();
+        //createAGV();
         Main.getSimClient().Start();
         
         //test();
@@ -246,8 +247,73 @@ public class World extends Behaviour {
     private void createStorageCell() {
         Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);
         int begin = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
+        
+        
+        final float _17 = AgvPath.getNodes()[17].position().x;
+        final float _18 = AgvPath.getNodes()[18].position().x;
+        final float _19 = AgvPath.getNodes()[19].position().x;
+        
+        final float _21 = AgvPath.getNodes()[21].position().x;
+        final float _22 = AgvPath.getNodes()[22].position().x;
+        final float _23 = AgvPath.getNodes()[23].position().x;
+        
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
             m_storageCells.add(new PlatformStorage(offset,i + begin));
+            
+            int upArriveID = -1;
+            int upDepartID = -1;
+            int downArriveID = -1;
+            int downDepartID = -1;
+            if (offset.x >= _17) {
+                upArriveID = 16;
+                upDepartID = 17;
+                downArriveID = 29;
+                downDepartID = 28;
+            } else if (offset.x >= _18) {
+                upArriveID = 17;
+                upDepartID = 18;
+                downArriveID = 30;
+                downDepartID = 29;
+            } else if (offset.x >= _19) {
+                upArriveID = 18;
+                upDepartID = 19;
+                downArriveID = 30;
+                downDepartID = 29;
+            } else if (offset.x >= _21) {
+                upArriveID = 20;
+                upDepartID = 21;
+                downArriveID = 32;
+                downDepartID = 31;
+            } else if (offset.x >= _22) {
+                upArriveID = 21;
+                upDepartID = 22;
+                downArriveID = 32;
+                downDepartID = 31;
+            } else if (offset.x >= _23) {
+                upArriveID = 22;
+                upDepartID = 23;
+                downArriveID = 33;
+                downDepartID = 32;
+            } else {
+                // ERROR
+                System.out.println("ERROR: ");
+            }
+            
+            final int l = m_storageCells.get(i).parkingSpotLength();
+            final int hl = l / 2; // Not half life
+            for (int j = 0; j < l; j++) {
+                
+                if (j >= hl) { // Up
+                    m_storageCells.get(i).getParkingSpot(j).arrivalID(upArriveID);
+                    m_storageCells.get(i).getParkingSpot(j).departID(upDepartID);
+                    continue;
+                }
+                
+                // Down
+                m_storageCells.get(i).getParkingSpot(j).arrivalID(downArriveID);
+                m_storageCells.get(i).getParkingSpot(j).departID(downDepartID);
+            }
+            
             
             if (i == 35) // Adding space for the middle road
                 offset.x += LANE_WIDTH * LANE_COUNT * 2 + 7.5f;

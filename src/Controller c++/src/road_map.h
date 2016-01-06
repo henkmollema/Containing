@@ -19,11 +19,13 @@ public:
 	struct node_base
 	{
 	public:
+            int id; //<-- added id to node_base
 		vector2 position;
 		vector<int> connections;
 
-		node_base(vector2 position, vector<int> connections)
+		node_base(int id,vector2 position, vector<int> connections) //<-- added id to node_base
 		{
+                    this->id = id;
 			this->position = position;
 			this->connections = connections;
 		}

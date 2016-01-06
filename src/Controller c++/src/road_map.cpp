@@ -48,7 +48,7 @@ road_map::road_map(vector<node_base> n)
     m_nodes = vector<node*>(0);
     for (unsigned int i{ 0 }; i < n.size(); ++i)
     { // set nodes
-        m_nodes.push_back(new node(i, n[i].position));
+        m_nodes.push_back(new node(n[i].id, n[i].position)); //<-- added id from node_base instead of index
     }
     for (unsigned int i{ 0 }; i < n.size(); ++i)
     {

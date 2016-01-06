@@ -59,9 +59,6 @@ public final class AGV extends MovingItem {
         this.register(SimulationItemType.AGV);
         initSpots(Point3.one());
         Main.register(this);
-        
-        path().setPath(new Vector3f(100.0f, 2.0f, 200.0f), new Vector3f(100.0f, 2.0f, 100.0f), new Vector3f(200.0f, 2.0f, 100.0f), new Vector3f(200.0f, 2.0f, 000.0f));
-        
     }
     
     public void setParkingspotID(int id){

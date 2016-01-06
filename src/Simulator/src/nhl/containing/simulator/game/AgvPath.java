@@ -20,11 +20,11 @@ import nhl.containing.simulator.world.World;
  */
 public class AgvPath /*extends Behaviour*/ {
     
-    private boolean m_initialized = false;
-    private boolean m_nodesSend = false;
+    private static boolean m_initialized = false;
+    private static boolean m_nodesSend = false;
     private static int currentID = 0;
     
-    public class AgvNode {
+    public static class AgvNode {
         private final int m_id;
         private final Vector2f m_position;
         private int[] m_connections;
@@ -54,19 +54,25 @@ public class AgvPath /*extends Behaviour*/ {
     }
     
     //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
-    //TODO: make private?
-    public static AgvNode[] nodes;
+    private static AgvNode[] nodes;
+    
+    public static AgvNode[] getNodes() {
+        if (nodes == null)
+            init();
+        return nodes;
+    }
+    
     private static Map<Integer,AgvNode> m_hashNodes = new HashMap<>();
-    public void init() {
+    public static void init() {
         if (m_initialized)
             return;
         
-        final float left = 1650.0f;
+        final float left = 1620.0f;
         final float up = 625.0f;
         final float ext = 100.0f;
         final float iof = 100.0f;
-        final float road = 20.0f;
-        final float zero = 0.0f;
+        final float road = 30.0f;
+        //final float zero = 0.0f;
         
         
        /*
@@ -222,7 +228,7 @@ public class AgvPath /*extends Behaviour*/ {
         // Show lines in play
         debugPath();
     }
-    private void debugPath() {
+    private static void debugPath() {
         for (int i = 0; i < nodes.length; i++) {
             for (int j : nodes[i].connections()) {
                 Vector3f offset = new Vector3f(0.0f, 20.0f, 0.0f);
@@ -236,13 +242,13 @@ public class AgvPath /*extends Behaviour*/ {
         }
     }
     
-    private void sendNodes() {
+    private static void sendNodes() {
         for(AgvNode node : nodes){
-            Main.getSimClient().addNode(node);
+            Main.instance().getSimClient().addNode(node);
         }
     }
     
-    private Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {
+    private static Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {
         Vector3f[] p = new Vector3f[ids.length + 2];
         p[0] = new Vector3f(from);
         p[p.length - 1] = new Vector3f(to);

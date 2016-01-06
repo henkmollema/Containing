@@ -93,6 +93,18 @@ public class Platform
     }
     
     /**
+     * Gets the first free parkingspot
+     * @return parkingspot
+     */
+    public Parkingspot getFreeParkingspot(){
+        for(Parkingspot p : parkingspots){
+            if(!p.hasAGV())
+                return p;
+        }
+        return null;
+    }
+    
+    /**
      * Gets the parkingspots
      * @return parkingspots
      */

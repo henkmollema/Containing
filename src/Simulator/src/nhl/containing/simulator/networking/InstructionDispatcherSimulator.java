@@ -131,12 +131,39 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             case InstructionType.CRANE_TO_STORAGE:
                 handleCraneToStorage(inst);
                 break;
+            case InstructionType.SHIPMENT_MOVED:
+                
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
     }
     
+    /**
+     * Handles the shipment moved instruction
+     * @param instruction  instruction
+     */
+    private void handleShipmentMoved(InstructionProto.Instruction instruction){
+        if(instruction.getA() < World.LORRY_BEGIN){
+            //dit is een inlandship platform
+            World().getInlandShip().state(Vehicle.VehicleState.ToOut);
+        }else if(instruction.getA() < World.SEASHIP_BEGIN){
+            //dit is een lorry platform
+            Tuple<PlatformLorry,Vehicle> lp = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN);
+        }else if(instruction.getA() < World.STORAGE_BEGIN){
+            //dit is een seaship platform
+            World().getSeaShip().state(Vehicle.VehicleState.ToOut);
+        }else if(instruction.getA() < World.TRAIN_BEGIN){
+            //dit is een storage platform
+            //nothing to do
+        }else{
+            World().getTrain().state(Vehicle.VehicleState.ToOut);
+        }
+    }
     
+    /**
+     * Handles crane to storage instruction
+     * @param instruction instruction
+     */
     private void handleCraneToStorage(InstructionProto.Instruction instruction){
         PlatformStorage storage = World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
         World().sendStoragePlace(storage, instruction.getB(), new Point3(instruction.getX(), instruction.getY(), instruction.getZ()));

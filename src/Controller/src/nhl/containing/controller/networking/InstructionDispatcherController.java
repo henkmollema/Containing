@@ -26,6 +26,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     CommunicationProtocol _com;
     private ExecutorService executorService;
     private Queue<Future> futures;
+    private Queue<SavedInstruction> m_agvInstructions = new LinkedList<>();
 
     public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
         _sim = sim;
@@ -67,11 +68,27 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 placeCraneReady(inst);
                 break;
             case InstructionType.CRANE_TO_STORAGE_READY:
-
+                craneToStorageReady(inst);
                 break;
             //More instruction types here..
         }
     }
+    
+    private void craneToStorageReady(InstructionProto.Instruction instruction){
+        Storage storage = _items.getStorages()[instruction.getA() - SimulatorItems.STORAGE_BEGIN];
+        storage.unsetBusy();
+        Parkingspot spot = storage.getParkingspots().get(instruction.getB());
+        AGV agv = spot.getAGV();
+        spot.removeAGV();
+        if(m_agvInstructions.isEmpty()){
+            //TODO: send back to staging aarea
+            agv.stop();
+        }else{
+            SavedInstruction inst = m_agvInstructions.poll();
+            moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
+        }
+    }
+    
 
     /**
      * Handles shipment arrived
@@ -89,7 +106,16 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
 
         shipment.arrived = true;
-
+        //TODO: if truck shipment, check platform id
+        try{
+            if(shipment.carrier instanceof Train){
+                _items.setTrainShipment(shipment);
+            }else if(shipment.carrier instanceof SeaShip){
+                _items.setSeaShipment(shipment);
+            }else if(shipment.carrier instanceof InlandShip){
+                _items.setInlandShipment(shipment);
+            }
+        }catch(Exception e){e.printStackTrace();}
         // Get the platforms and containers.
         final Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
         final List<ShippingContainer> allContainers = shipment.carrier.containers;
@@ -230,11 +256,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      * @param spot the spot where the agv needs to go
      */
     public void moveAGV(AGV agv, Platform to, Parkingspot spot) {
-        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
-        builder.setId(CommunicationProtocol.newUUID());
-        builder.setB((int)spot.getId());
-        builder.setInstructionType(InstructionType.MOVE_AGV);
         if(agv != null){
+            InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+            builder.setId(CommunicationProtocol.newUUID());
+            builder.setB((int)spot.getId());
+            builder.setInstructionType(InstructionType.MOVE_AGV);
             builder.setA(agv.getID());
             int[] route = PathFinder.getPath(agv.getNodeID(), spot.getArrivalNodeID());
             for(int r : route){
@@ -247,7 +273,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 agv.setNodeID(spot.getDepartNodeID());
             }catch(Exception e){e.printStackTrace();} 
         }else{
-            //TODO: make a queue
+            m_agvInstructions.add(new SavedInstruction(to, spot));
         }
     }
 
@@ -260,9 +286,20 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         if (shipment == null) {
             return; //TODO: handle error
         }
+        Platform p = null;
+        if(shipment.carrier instanceof SeaShip){
+            p = _items.getSeaShipPlatforms()[0];
+        }else if(shipment.carrier instanceof InlandShip){
+            p = _items.getInlandPlatforms()[0];
+        }else if(shipment.carrier instanceof Train){
+            p = _items.getTrainPlatforms()[0];
+        }else{
+            //TODO: Find truck shipment
+        }
         shipment.containersMoved = true;
         InstructionProto.Instruction.Builder instruction = InstructionProto.Instruction.newBuilder();
         instruction.setId(CommunicationProtocol.newUUID());
+        instruction.setA(p.getID());
         instruction.setMessage(shipment.key);
         instruction.setInstructionType(InstructionType.SHIPMENT_MOVED);
         _com.sendInstruction(instruction.build());
@@ -336,8 +373,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                     break;
                 }    
             }
-            if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
-
+            if(!platform.containers.isEmpty()){
+                placeCrane(platform);
+            }else if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
                 shipmentMoved(_items.getTrainShipment());
                 _items.unsetTrainShipment();
             }
@@ -372,6 +410,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 //dit is een lorry platform
                 LorryPlatform lp = (LorryPlatform) platform;
                 if (lp.hasShipment() && lp.getShipment().arrived) {
+                    
                 }
             } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
                 //dit is een seaship platform
@@ -382,7 +421,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 Storage storage = (Storage) platform;
                 ShippingContainer container = p.getAGV().getContainer();
                 try {
-                    //storage.setContainer(p.getAGV().getContainer(),0,0,0);
                     Point3 storagePlace = _context.determineContainerPosition(container);
                     storage.setContainer(container, storagePlace);
                     p.getAGV().unsetContainer();

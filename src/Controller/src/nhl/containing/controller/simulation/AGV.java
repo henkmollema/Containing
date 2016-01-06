@@ -76,9 +76,8 @@ public class AGV
     
     /**
      * Sets the AGV to busy
-     * @throws Exception when already moving
      */
-    public void setBusy() throws Exception{
+    public void setBusy(){
         m_isWaiting = false;
     }
     

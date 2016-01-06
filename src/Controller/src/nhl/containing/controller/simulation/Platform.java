@@ -141,4 +141,17 @@ public class Platform
         }
         return true;
     }
+    
+    /**
+     * Finds first free parkingspot
+     * @param p platform
+     * @return parkingspot
+     */
+    public static Parkingspot findFreeParkingspot(Platform p){
+        for(Parkingspot ps : p.getParkingspots()){
+            if(!ps.hasAGV())
+                return ps;
+        }
+        return null;
+    }
 }

@@ -248,20 +248,13 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 public void done(Vehicle v)
                 {
                     p("Train " + v.id() + " arrived at loading platform.");
-
-                    //
-                    // todo: load the containers onto the train
-                    //
-                    
-                    // Depart the train.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
                 }
             });
         }
-        
-        
     }
-    private void handleInland(boolean arriving, InstructionProto.Instruction inst) {
+    
+    private void handleInland(boolean arriving,final InstructionProto.Instruction inst) {
         
         if (arriving) {
             p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
@@ -274,13 +267,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 public void done(Vehicle v)
                 {
                     p("Inland ship " + v.id() + " arrived at loading platform.");
-
-                    //
-                    // todo: get the containers from the ship
-                    //
-
-                    // Depart the ship.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
                 }
             });
         } else {
@@ -294,22 +281,13 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 public void done(Vehicle v)
                 {
                     p("Inland ship " + v.id() + " arrived at loading platform.");
-
-                    //
-                    // todo: get the containers from the ship
-                    //
-
-                    // Depart the ship.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
                 }
             });
-        }
-        
-        
-        
-        
+        }        
     }
-    private void handleSea(boolean arriving, InstructionProto.Instruction inst) {
+    
+    private void handleSea(boolean arriving,final InstructionProto.Instruction inst) {
         
         if (arriving) {
             p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
@@ -322,13 +300,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 public void done(Vehicle v)
                 {
                     p("Sea ship " + v.id() + " arrived at loading platform.");
-
-                    //
-                    // todo: get the containers from the ship
-                    //
-
-                    // Depart the ship.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
                 }
             });
         } else {
@@ -342,13 +314,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
                 public void done(Vehicle v)
                 {
                     p("Sea ship " + v.id() + " arrived at loading platform.");
-
-                    //
-                    // todo: load the ship with outgoing containers
-                    //
-
-                    // Depart the ship.
-                    v.state(Vehicle.VehicleState.ToOut);
+                    SimulatorClient.sendTaskDone(0, 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
                 }
             });
         }
@@ -358,13 +324,13 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (arriving) {
             p("Truck arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
+            SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
          
         } else {
             p("Truck departed with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Vertrek:\n vrachtwagen\n" + inst.getContainersCount() + " container(s).");
-        }
-        
-               
+            SimulatorClient.sendTaskDone(0, 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
+        }      
     }
     
     private static void p(String s)

@@ -31,4 +31,5 @@ public class InstructionType
     public static final int SHIPMENT_MOVED = 22;
     public static final int PLACE_CRANE = 23;
     public static final int PLACE_CRANE_READY = 24;
+    public static final int DEPARTMENT_ARRIVED = 25;
 }

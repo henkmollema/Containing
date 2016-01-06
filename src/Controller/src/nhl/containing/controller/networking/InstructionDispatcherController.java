@@ -88,7 +88,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
         }
     }
-    
 
     /**
      * Handles shipment arrived
@@ -224,7 +223,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         platform.setBusy();
     }
 
-    /**
+    /**[NOT USED?]
      * Sends Move AGV command to sea/inland/train platform
      *
      * @param agv agv
@@ -323,17 +322,16 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     private void craneToAGVReady(InstructionProto.Instruction instruction) {
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         platform.unsetBusy();
-        Platform to = null;
-        ShippingContainer container;
-        Parkingspot p;
-        Parkingspot toSpot = null;
+        ShippingContainer container = _context.getContainerById(instruction.getB());
+        Platform to = to = _context.getStoragePlatformByContainer(container);
+        Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
+        Parkingspot toSpot = toSpot = Platform.findFreeParkingspot(to);
+        
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform
-            container = _context.getContainerById(instruction.getB());
-            p = platform.getParkingspotForAGV(instruction.getA());
-            //TODO: find destination
-            //TODO: remove container from platform shipping list
-            if (!Platform.checkIfBusy(_items.getInlandPlatforms()) && Platform.checkIfShipmentDone(_items.getInlandPlatforms())) {
+            if(!platform.containers.isEmpty()){
+                placeCrane(platform);
+            }else if (!Platform.checkIfBusy(_items.getInlandPlatforms()) && Platform.checkIfShipmentDone(_items.getInlandPlatforms())) {
                 shipmentMoved(_items.getInlandShipment());
                 _items.unsetInlandShipment();
             }
@@ -341,45 +339,29 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een lorry platform
             LorryPlatform lp = (LorryPlatform) platform;
             container = lp.getShipment().carrier.containers.get(0);
-            p = lp.getParkingspotForAGV(instruction.getB());
-            //TODO: find destination
             shipmentMoved(lp.getShipment());
             lp.unsetShipment();
         } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
             //dit is een seaship platform
-            container = _context.getContainerById(instruction.getB());
-            p = platform.getParkingspotForAGV(instruction.getA());
-            //TODO: find destination
-            //TODO: remove container from platform shipping list
-            if (!Platform.checkIfBusy(_items.getSeaShipPlatforms()) && Platform.checkIfShipmentDone(_items.getSeaShipPlatforms())) {
+            if(!platform.containers.isEmpty()){
+                placeCrane(platform);
+            }else if (!Platform.checkIfBusy(_items.getSeaShipPlatforms()) && Platform.checkIfShipmentDone(_items.getSeaShipPlatforms())) {
                 shipmentMoved(_items.getSeaShipment());
                 _items.unsetSeaShipment();
             }
         } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
             //dit is een storage platform
             Storage storage = (Storage) platform;
-            container = storage.getContainer(instruction.getX(), instruction.getY(), instruction.getZ());
             storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
-            p = storage.getParkingspotForAGV(instruction.getA());
+            
             //TODO: find destination
         } else {
             //dit is een train platform
-            container = _context.getContainerById(instruction.getB());
-            p = platform.getParkingspotForAGV(instruction.getA());
-            to = _context.getStoragePlatformByContainer(container);
-            for(Parkingspot ps : to.getParkingspots()){
-                if(!ps.hasAGV()){
-                    toSpot = ps;
-                    break;
-                }    
-            }
             if(!platform.containers.isEmpty()){
                 placeCrane(platform);
-            }else if (!Platform.checkIfBusy(_items.getTrainPlatforms())) {
-                if(Platform.checkIfShipmentDone(_items.getTrainPlatforms())){
-                    shipmentMoved(_items.getTrainShipment());
-                    _items.unsetTrainShipment();
-                }
+            }else if (!Platform.checkIfBusy(_items.getTrainPlatforms()) && Platform.checkIfShipmentDone(_items.getTrainPlatforms())) {
+                shipmentMoved(_items.getTrainShipment());
+                _items.unsetTrainShipment();
             }
         }
         AGV agv = p.getAGV();
@@ -394,8 +376,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         moveAGV(agv, to, toSpot);
     }
 
+    /**
+     * Handles agv ready instruction
+     * @param instruction instruction
+     */
     private void agvReady(InstructionProto.Instruction instruction) {
-        //TODO: send Container to place in storage/place on department shipping or place container on AGV
+        //TODO: send Container to place in department shipping
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
         Point3 position;
@@ -406,48 +392,81 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         if (p.getAGV().hasContainer()) {
             if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
                 if (_items.hasInlandShipment() && _items.getInlandShipment().arrived) {
-                    //TODO: Make instruction to get container from AGV to position on ship
+                    sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
                 //dit is een lorry platform
                 LorryPlatform lp = (LorryPlatform) platform;
                 if (lp.hasShipment() && lp.getShipment().arrived) {
-                    
+                    sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
                 //dit is een seaship platform
                 if (_items.hasSeaShipment() && _items.getSeaShipment().arrived) {
+                    sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
                 //dit is een storage platform
                 Storage storage = (Storage) platform;
                 ShippingContainer container = p.getAGV().getContainer();
+                position = _context.determineContainerPosition(container);
                 try {
-                    Point3 storagePlace = _context.determineContainerPosition(container);
-                    storage.setContainer(container, storagePlace);
+                    storage.setContainer(container, position);
                     p.getAGV().unsetContainer();
-                    //TODO: We probably want to send an instruction to the simulator here. 
-                    InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
-                    builder.setId(CommunicationProtocol.newUUID());
-                    builder.setA(storage.getID());
-                    builder.setB(storage.getParkingspotIndex(p));
-                    builder.setInstructionType(InstructionType.CRANE_TO_STORAGE);
-                    builder.setX(storagePlace.x);
-                    builder.setY(storagePlace.y);
-                    builder.setZ(storagePlace.z);
-                    _com.sendInstruction(builder.build());
+                    sendCraneToStorage(storage, p, position);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                //TODO: send crane to storage
             } else {
                 //dit is een train platform
                 if (_items.hasTrainShipment() && _items.getInlandShipment().arrived) {
-                    //TODO: sends crane to department instruction
+                    sendCraneToDepartment(platform, p);
+                    
                 }
             }
         }
+    }
+    
+    /**
+     * Sends an crane to department instruction
+     * @param platform platform
+     * @param parkingspot parkingspot
+     */
+    private void sendCraneToDepartment(Platform platform, Parkingspot parkingspot){
+        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+        builder.setId(CommunicationProtocol.newUUID());
+        builder.setInstructionType(InstructionType.CRANE_TO_DEPARTMENT);
+        builder.setA(platform.getID());
+        if(platform instanceof LorryPlatform){
+            //lorry
+            builder.setB(0);
+            builder.setX(0);
+            builder.setY(0);
+            builder.setZ(0);
+        }
+        else{
+            builder.setB((int)parkingspot.getId());
+            //TODO: find department position
+        }
+        _com.sendInstruction(builder.build());
+    }
+    
+    /**
+     * Sends instruction to place a container in the storage
+     * @param storage storage
+     * @param p parkingspot
+     * @param position position
+     */
+    private void sendCraneToStorage(Storage storage, Parkingspot p, Point3 position){
+        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
+        builder.setId(CommunicationProtocol.newUUID());
+        builder.setA(storage.getID());
+        builder.setB(storage.getParkingspotIndex(p));
+        builder.setInstructionType(InstructionType.CRANE_TO_STORAGE);
+        builder.setX(position.x);
+        builder.setY(position.y);
+        builder.setZ(position.z);
+        _com.sendInstruction(builder.build());
     }
 
     @Override

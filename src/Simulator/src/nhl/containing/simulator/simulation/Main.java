@@ -134,6 +134,7 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         //_agvPath = new AgvPath();
        // _agvPath.init();
+        AgvPath.getNodes();
 
     }
 

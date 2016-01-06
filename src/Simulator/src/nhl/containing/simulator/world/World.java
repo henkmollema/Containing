@@ -44,7 +44,7 @@ public class World extends Behaviour {
     public static final float WATER_LEVEL = - 5.0f;
     public static final float LAND_HEIGHT_EXTEND = 100.0f;
     
-    public static final int AGV_COUNT = 4;//100;
+    public static final int AGV_COUNT = 8;//100;
     public static final float LANE_WIDTH = 10.0f;
     public static final int LANE_COUNT = 4;
     
@@ -387,8 +387,10 @@ public class World extends Behaviour {
     }
     
     public void sendStoragePlace(PlatformStorage storage,int index, Point3 point){
-        if(storage.crane().getContainer() != null)
-            return;
+//        if(storage.crane().getContainer() != null){
+//            p("oopss...");
+//            return;
+//        }
         Container c = storage.getParkingSpot(index).agv().getContainer();
         storage.place(index, point);
     }
@@ -591,5 +593,10 @@ public class World extends Behaviour {
                 true, false                                                     // Other
         );
         bBlock.setLocalTranslation(STORAGE_LENGTH / 2 + LANE_WIDTH * LANE_COUNT * 2, LAND_HEIGHT_EXTEND + WORLD_HEIGHT - 0.5f, STORAGE_WIDTH + 2 * LANE_WIDTH * LANE_COUNT + EXTENDS * 2.0f);
+    }
+    
+    private static void p(String s)
+    {
+        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 }

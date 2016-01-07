@@ -302,6 +302,8 @@ public abstract class Platform extends ContainerCarrier {
                     m_crane.setContainer(container);
                     replaceContainer(container, null);
                     updateOuter();
+                    
+                    //SimulatorClient.sendTaskDone(m_platformid,b , InstructionType.PLACE_CRANE_READY);
                 } else {
                     
                     // AGV to crane

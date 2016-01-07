@@ -7,10 +7,12 @@ package nhl.containing.controller.networking;
 
 import java.util.Date;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
 import nhl.containing.controller.simulation.LorryPlatform;
 import nhl.containing.controller.simulation.Parkingspot;
+import nhl.containing.controller.simulation.SavedInstruction;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
@@ -34,6 +36,7 @@ public class Tickhandler implements Runnable
 
     private final Instruction _instruction;
     private SimulatorItems _items;
+    private InstructionDispatcherController _dispatcher;
     /**
      * Constructor
      *
@@ -43,6 +46,7 @@ public class Tickhandler implements Runnable
     {
         _instruction = instruction;
         _items = Simulator.instance().getController().getItems();
+        _dispatcher = ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher());
     }
 
     /**
@@ -61,7 +65,7 @@ public class Tickhandler implements Runnable
 
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
-        p("Ingame time: " + date.toString());
+        //p("Ingame time: " + date.toString());
         int platformid = -1;
         // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
@@ -78,15 +82,7 @@ public class Tickhandler implements Runnable
                     //TODO: problems or queue?
                 }
             }
-            
-            if(!s.incoming)
-            {
-                //TODO: move this to shipment arrived in instructiondispatcher when all shipment types are implemented
-                context.setContainerShouldDepart(s.carrier.containers);
-                System.out.println("Set container batch to should depart..");
-            }
-       
-            
+ 
             s.processed = true;
             p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
             createProto(s, platformid);
@@ -99,17 +95,25 @@ public class Tickhandler implements Runnable
             Parkingspot ps = platform.getFreeParkingspot();
             if(ps != null)
             {
-                System.out.println("setMoveAGV for departing container..");
+                p("setMoveAGV for departing container..");
                 //Assign departing container to the parkingspot where an agv will arive when available
                 context.parkingspot_Containertopickup.put(ps, cont);
-                ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher()).moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
+                _dispatcher.moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
                 context.setContainerDeparting(cont);
             }
             else
             {
-                System.out.println("Cant find parking spot!!");
+                p("Cant find parking spot!!");
             }
         }
+        AGV freeagv = context.getSimulatorItems().getFreeAGV();
+        while(freeagv != null)
+        {
+            SavedInstruction inst = _dispatcher.m_agvInstructions.poll();
+            _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
+            freeagv = context.getSimulatorItems().getFreeAGV();
+        }
+            //            
     }
 
     /**

@@ -338,6 +338,15 @@ public class SimulatorItems
         return null;
     }
     
+    public AGV getAGV(int agvID)
+    {
+        for(AGV agv : m_AGVs){
+            if(agv.getID() == agvID)
+                return agv;
+        }
+        return null;
+    }
+    
     /**
      * Adds a storagePlatform
      * @param id id of storage

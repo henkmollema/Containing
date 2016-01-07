@@ -76,6 +76,10 @@ public class SimulationContext
         departingContainers.removeAll(containers);
     }
     
+    public SimulatorItems getSimulatorItems()
+    {
+        return _simulatorItems;
+    }
     
     public void setSimulatorItems(SimulatorItems simItems)
     {

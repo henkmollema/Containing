@@ -43,6 +43,7 @@ public class StorageItem
         if(!isEmpty()){
             throw new Exception("Already in use");
         }
+        container.position = m_position;
         m_container = container;
     }
     

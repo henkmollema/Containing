@@ -26,7 +26,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     CommunicationProtocol _com;
     private ExecutorService executorService;
     private Queue<Future> futures;
-    private Queue<SavedInstruction> m_agvInstructions = new LinkedList<>();
+    public Queue<SavedInstruction> m_agvInstructions = new LinkedList<>();
 
     public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
         _sim = sim;
@@ -89,13 +89,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         agv.getContainer().currentCategory = AppDataProto.ContainerCategory.STORAGE;
         agv.unsetContainer();
         spot.removeAGV();
-        if(m_agvInstructions.isEmpty()){
-            //TODO: send back to staging aarea
-            agv.stop();
-        }else{
-            SavedInstruction inst = m_agvInstructions.poll();
-            moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
-        }
+        
+        agv.stop(); //set the agv to not busy so it can take a new job in the tickhandler
     }
 
     /**
@@ -174,8 +169,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      *
      * @param platform platform
      */
-    private void placeCrane(Platform platform) { placeCrane(platform, null);}
-    private void placeCrane(Platform platform, Point3 containerPos) {
+    private void placeCrane(Platform platform) { placeCrane(platform, null, 0);}
+    private void placeCrane(Platform platform, Point3 containerPos, long parkingSpot) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(platform.getID());
@@ -187,6 +182,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         
         platform.removeContainerAtPosition(containerPos);
+        builder.setB((int)parkingSpot);
         
         builder.setX(containerPos.x);
         builder.setY(containerPos.y);
@@ -218,8 +214,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een storage platform
             //Stuur hier de agv naar het department platform..
             //platform = _context.parkingspot_Containertopickup.get(ps).departureShipment
-            platform = null; //<- het is hier voor nu even de bedoeling dat hij een exception throwed.
-            System.out.println("Should send the AGV to departure");
+            //platform = null; //<- het is hier voor nu even de bedoeling dat hij een exception throwed.
+            //System.out.println("Should send the AGV to departure");
         } else {
             //dit is een train platform
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
@@ -399,14 +395,17 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 _items.unsetSeaShipment();
             }
         } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
-//            //dit is een storage platform
-//            Storage storage = (Storage) platform;
-//            Point3 pos = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
-//            //placeCrane(platform,  pos);
-//            //storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
-//            //to = container.departureShipment
-//            System.out.println("Should send the AGV to departure platform..");
-//            //TODO: set 'to' naar departure platform..
+            //dit is een storage platform
+            Storage storage = (Storage) platform;
+            Point3 pos = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
+            //placeCrane(platform,  pos);
+            //storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
+            //to = container.departureShipment
+            
+            //TODO: set 'to' naar departure platform..
+            
+            System.out.println("Should send the AGV to departure platform.. Make sure to remove the return below this line");
+            return;//return here, else the agv will drive to the platform it came from because 'to' isn't set to departure shipment.
         } else {
             //dit is een train platform
             if(!platform.containers.isEmpty()){
@@ -435,6 +434,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     private void agvReady(InstructionProto.Instruction instruction) {
         //TODO: send Container to place in department shipping
+        System.out.println("agv ready..");
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
         Point3 position;
@@ -485,7 +485,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 //wanneer een agv zonder container bij een storage platform aan komt
                 //Shipment dummy = new Shipment("IK WIL EEN SHIPMENT MET INCOMMING FALSE", false);
                ShippingContainer pickup = _context.parkingspot_Containertopickup.get(p);
-               placeCrane(platform, pickup.position);
+               placeCrane(platform, pickup.position, platform.getParkingspotIndex(p));
                System.out.println("calling placeCrane..");
                 //placecrane//System.out.println("calling craneToAGV..");
                 

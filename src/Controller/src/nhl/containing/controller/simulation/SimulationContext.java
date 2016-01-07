@@ -32,6 +32,7 @@ public class SimulationContext
     private Map<ShippingContainer, Storage> container_StoragePlatform = new HashMap<>();
     private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
     private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
+    public Map<Parkingspot, ShippingContainer> parkingspot_Containertopickup = new HashMap<>();
     
     public List<ShippingContainer> getShouldDepartContainers()
     {

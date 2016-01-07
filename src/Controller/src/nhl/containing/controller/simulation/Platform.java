@@ -7,6 +7,7 @@ package nhl.containing.controller.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import nhl.containing.controller.Point3;
 
 /**
  * Platform class
@@ -18,6 +19,20 @@ public class Platform
     protected List<Parkingspot> parkingspots = new ArrayList<>();
     public List<ShippingContainer> containers = new ArrayList<>();
     protected boolean busy = false;
+    
+    public void removeContainerAtPosition(Point3 pos)
+    {
+        for(int i = 0; i < containers.size(); i++)
+        {
+            if(containers.get(i).position.x == pos.x 
+                && containers.get(i).position.y == pos.y
+                && containers.get(i).position.z == pos.z)
+            {
+                containers.remove(i);
+                return;
+            }
+        }
+    }
     
     /**
      * Constructor

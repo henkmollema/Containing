@@ -16,6 +16,7 @@ import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
 import nhl.containing.controller.simulation.SimulatorItems;
+import nhl.containing.controller.simulation.Storage;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -91,13 +92,16 @@ public class Tickhandler implements Runnable
             createProto(s, platformid);
         }
         
-         //Check if new departure containers can be picked up..
+        //Check if new departure containers can be picked up (if open parkingspots at platforms)..
         for(ShippingContainer cont : context.getShouldDepartContainers())
         {
-            Parkingspot ps = context.getStoragePlatformByContainer(cont).getFreeParkingspot();
+            Storage platform = context.getStoragePlatformByContainer(cont);
+            Parkingspot ps = platform.getFreeParkingspot();
             if(ps != null)
             {
                 System.out.println("setMoveAGV for departing container..");
+                //Assign departing container to the parkingspot where an agv will arive when available
+                context.parkingspot_Containertopickup.put(ps, cont);
                 ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher()).moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
                 context.setContainerDeparting(cont);
             }

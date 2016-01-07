@@ -166,22 +166,31 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 i++;
             }
         }
+        
     }
 
     /**
-     * Places a crane for the sea/inland and train platform
+     * Places a crane for the sea/inland storage and train platform
      *
      * @param platform platform
      */
-    private void placeCrane(Platform platform) {
+    private void placeCrane(Platform platform) { placeCrane(platform, null);}
+    private void placeCrane(Platform platform, Point3 containerPos) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
         builder.setA(platform.getID());
-        ShippingContainer container = platform.containers.get(0);
-        platform.containers.remove(0);
-        builder.setX(container.position.x);
-        builder.setY(container.position.y);
-        builder.setZ(container.position.z);
+        ShippingContainer container = null;
+        if(containerPos == null)
+        {
+            container = platform.containers.get(0);
+            containerPos = container.position;
+        }
+        
+        platform.removeContainerAtPosition(containerPos);
+        
+        builder.setX(containerPos.x);
+        builder.setY(containerPos.y);
+        builder.setZ(containerPos.z);
         builder.setInstructionType(InstructionType.PLACE_CRANE);
         _com.sendInstruction(builder.build());
         platform.setBusy();
@@ -208,7 +217,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
             //Stuur hier de agv naar het department platform..
-            
+            //platform = _context.parkingspot_Containertopickup.get(ps).departureShipment
+            platform = null; //<- het is hier voor nu even de bedoeling dat hij een exception throwed.
+            System.out.println("Should send the AGV to departure");
         } else {
             //dit is een train platform
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
@@ -241,21 +252,21 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         else
         {
-            //Loop door  depart containers, en pak departure container die in dit platform ligt en pak zijn position
-            for(ShippingContainer cont : _context.getDepartingContainers())
-            {
-                if(_context.getStoragePlatformByContainer(cont).getID() == platform.getID())
-                {
-                    Point3 point = cont.position;
-                    builder.setX(point.x);
-                    builder.setY(point.y);
-                    builder.setZ(point.z);
-                    System.out.println("Found container to pick up! (craneToAGV)");
-                    _context.setContainerDeparted(cont);  
-                   break;
-                }
-                
-            }
+//            //Loop door  depart containers, en pak departure container die in dit platform ligt en pak zijn position
+//            for(ShippingContainer cont : _context.getDepartingContainers())
+//            {
+//                if(_context.getStoragePlatformByContainer(cont).getID() == platform.getID())
+//                {
+//                    Point3 point = cont.position;
+//                    builder.setX(point.x);
+//                    builder.setY(point.y);
+//                    builder.setZ(point.z);
+//                    //System.out.println("Found container to pick up! (craneToAGV)");
+//                    _context.setContainerDeparted(cont);  
+//                   break;
+//                }
+//                
+//            }
         }
         _com.sendInstruction(builder.build());
         platform.setBusy();
@@ -388,12 +399,14 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 _items.unsetSeaShipment();
             }
         } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
-            //dit is een storage platform
-            Storage storage = (Storage) platform;
-            storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
-            //to = container.departureShipment
-            System.out.println("Should send the AGV to departure platform..");
-            //TODO: set 'to' naar departure platform..
+//            //dit is een storage platform
+//            Storage storage = (Storage) platform;
+//            Point3 pos = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
+//            //placeCrane(platform,  pos);
+//            //storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
+//            //to = container.departureShipment
+//            System.out.println("Should send the AGV to departure platform..");
+//            //TODO: set 'to' naar departure platform..
         } else {
             //dit is een train platform
             if(!platform.containers.isEmpty()){
@@ -470,9 +483,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             if(platform.getID() >= SimulatorItems.STORAGE_BEGIN && platform.getID() < SimulatorItems.TRAIN_BEGIN)
             {
                 //wanneer een agv zonder container bij een storage platform aan komt
-                Shipment dummy = new Shipment("IK WIL EEN SHIPMENT MET INCOMMING FALSE", false);
-                System.out.println("calling craneToAGV..");
-                craneToAGV(platform, dummy, p);
+                //Shipment dummy = new Shipment("IK WIL EEN SHIPMENT MET INCOMMING FALSE", false);
+               ShippingContainer pickup = _context.parkingspot_Containertopickup.get(p);
+               placeCrane(platform, pickup.position);
+               System.out.println("calling placeCrane..");
+                //placecrane//System.out.println("calling craneToAGV..");
+                
             }
         }
     }

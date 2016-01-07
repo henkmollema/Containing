@@ -238,6 +238,7 @@ public final class Crane extends MovingItem {
     public void setPath() {
         setPath(m_basePosition);
     }
+    
     /**
      * Set path to custom destination
      * @param pos position

@@ -325,6 +325,7 @@ public abstract class Platform extends ContainerCarrier {
                     //TODO: Add the right B item
                     SimulatorClient.sendTaskDone((int)m_parkingSpots[to.parkingSpot].agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
                     m_parkingSpots[to.parkingSpot].agv(null);
+
                 }
             }
         }
@@ -368,5 +369,10 @@ public abstract class Platform extends ContainerCarrier {
             storageSpot = null;
             parkingSpot = spot + 0;
         }
+    }
+    
+    private static void p(String s)
+    {
+        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 }

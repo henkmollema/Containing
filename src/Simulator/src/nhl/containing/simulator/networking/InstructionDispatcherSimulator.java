@@ -95,44 +95,55 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     
     private void handleInstruction(InstructionProto.Instruction inst) {
         InstructionProto.InstructionResponse.Builder responseBuilder = InstructionProto.InstructionResponse.newBuilder();
-
         switch (inst.getInstructionType())
         {
             case InstructionType.MOVE_AGV:
                 handleMoveAGV(inst);
+                //p("MOVE_AGV | AGV:" + inst.getA() + " Platform: " + inst.getB());
                 break;
             case InstructionType.ARRIVAL_INLANDSHIP:
                 handleInland(true, inst);
+                p("ARRIVAL_INLANDSHIP");
                 break;
             case InstructionType.ARRIVAL_SEASHIP:
                 handleSea(true, inst);
+                p("ARRIVAL_SEASHIP");
                 break;
             case InstructionType.ARRIVAL_TRAIN:
                 handleTrain(true, inst, 0);
+                p("ARRIVAL_TRAIN");
                 break;
             case InstructionType.ARRIVAL_TRUCK:
                 handleLorry(true, inst);
+                p("ARRIVAL_TRUCK");
                 break;
             case InstructionType.DEPARTMENT_INLANDSHIP:
                 handleInland(false, inst);
+                p("DEPARTMENT_INLANDSHIP");
                 break;
             case InstructionType.DEPARTMENT_SEASHIP:
                 handleSea(false, inst);
+                p("DEPARTMENT_SEASHIP");
                 break;
             case InstructionType.DEPARTMENT_TRAIN:
                 handleTrain(false, inst, 0);
+                p("DEPARTMENT_TRAIN");
                 break;
             case InstructionType.DEPARTMENT_TRUCK:
                 handleLorry(false, inst);
+                p("DEPARTMENT_TRUCK");
                 break;
             case InstructionType.PLACE_CRANE:
                 handlePlaceCrane(inst);
+                //p("PLACE_CRANE Platform: " + inst.getA());
                 break;
             case InstructionType.CRANE_TO_STORAGE:
                 handleCraneToStorage(inst);
+                //p("CRANE_TO_STORAGE Platform: " + inst.getA() + " parkingspot: " + inst.getB());
                 break;
             case InstructionType.SHIPMENT_MOVED:
                 handleShipmentMoved(inst);
+                //p("SHIPMENT_MOVED");
                 break;
         }
 
@@ -144,6 +155,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
      * @param instruction  instruction
      */
     private void handleShipmentMoved(InstructionProto.Instruction instruction){
+        GUI().setContainerText("");
         if(instruction.getA() < World.LORRY_BEGIN){
             //dit is een inlandship platform
             World().getInlandShip().state(Vehicle.VehicleState.ToOut);
@@ -166,6 +178,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
      * @param instruction instruction
      */
     private void handleCraneToStorage(InstructionProto.Instruction instruction){
+        p("take crane instruction");
         PlatformStorage storage = World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
         World().sendStoragePlace(storage, instruction.getB(), new Point3(instruction.getX(), instruction.getY(), instruction.getZ()));
     }

@@ -25,7 +25,7 @@ public class AppHandler implements Runnable
     private Server server;
     private ContainerCategory[] categories = new ContainerCategory[]
     {
-        ContainerCategory.TRAIN, ContainerCategory.TRUCK, ContainerCategory.INLINESHIP, ContainerCategory.SEASHIP, ContainerCategory.STORAGE, ContainerCategory.AGV, ContainerCategory.REMAINDER
+        ContainerCategory.TRAIN, ContainerCategory.TRUCK, ContainerCategory.INLANDSHIP, ContainerCategory.SEASHIP, ContainerCategory.STORAGE, ContainerCategory.AGV, ContainerCategory.REMAINDER
     };
 
     /**
@@ -151,7 +151,44 @@ public class AppHandler implements Runnable
         switch (instruction.getA())
         {
             case 0:
-
+                numbers = new int[7];
+                for(Shipment shipment : context.getShipments()){
+                    if(shipment.processed){
+                        for(ShippingContainer container : shipment.carrier.containers){
+                            if(!container.departureShipment.containersMoved){
+                                switch(container.currentCategory){
+                                    case TRAIN:
+                                        numbers[0]++;
+                                        break;
+                                    case TRUCK:
+                                        numbers[1]++;
+                                        break;
+                                    case SEASHIP:
+                                        numbers[2]++;
+                                        break;
+                                    case INLANDSHIP:
+                                        numbers[3]++;
+                                        break;
+                                    case STORAGE:
+                                        numbers[4]++;
+                                        break;
+                                    case AGV:
+                                        numbers[5]++;
+                                        break;
+                                    case REMAINDER:
+                                        numbers[6]++;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < 7; i++)
+                {
+                    b.setCategory(categories[i]);
+                    b.setAantal(numbers[i]);
+                    builder.addGraphs(b.build());
+                }
                 break;
             case 1:
             case 2:
@@ -199,22 +236,6 @@ public class AppHandler implements Runnable
                 {
                     if(container.arrivalShipment.processed && !container.departureShipment.processed)
                     {
-                         ContainerCategory category = categories[6];
-                        if (container.arrivalShipment.carrier instanceof Train)
-                        {
-                            category = categories[0];
-                        } else if (container.arrivalShipment.carrier instanceof Truck)
-                        {
-                            category = categories[1];
-                        } else if (container.arrivalShipment.carrier instanceof InlandShip)
-                        {
-                            category = categories[2];
-                        } else if (container.arrivalShipment.carrier instanceof SeaShip)
-                        {
-                            category = categories[3];
-                        }
-                        itemBuilder.setCategory(category);
-                        itemBuilder.setEigenaar(container.ownerName);
                         itemBuilder.setID(container.containerNumber);
                         builder.addItems(itemBuilder.build());
                     }
@@ -256,11 +277,11 @@ public class AppHandler implements Runnable
      * @param carrier The carrier
      * @return the container category
      */
-    private ContainerCategory getCategory(Carrier carrier)
+    public static ContainerCategory getCategory(Carrier carrier)
     {
         if (carrier instanceof InlandShip)
         {
-            return ContainerCategory.INLINESHIP;
+            return ContainerCategory.INLANDSHIP;
         } else if (carrier instanceof SeaShip)
         {
             return ContainerCategory.SEASHIP;

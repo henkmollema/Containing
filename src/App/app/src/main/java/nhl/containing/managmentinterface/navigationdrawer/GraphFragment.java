@@ -17,10 +17,10 @@ import java.util.List;
 import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
+
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
-import nhl.containing.networking.protocol.CommunicationProtocol;
-import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.networking.protocol.*;
 
 /**
  * Fragment for showing the Graph

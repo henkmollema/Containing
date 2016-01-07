@@ -77,11 +77,17 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
     }
     
+    /**
+     * Handles crane to storage ready instruction
+     * @param instruction instruction
+     */
     private void craneToStorageReady(InstructionProto.Instruction instruction){
         Storage storage = _items.getStorages()[instruction.getA() - SimulatorItems.STORAGE_BEGIN];
         storage.unsetBusy();
         Parkingspot spot = storage.getParkingspots().get(instruction.getB());
         AGV agv = spot.getAGV();
+        agv.getContainer().currentCategory = AppDataProto.ContainerCategory.STORAGE;
+        agv.unsetContainer();
         spot.removeAGV();
         if(m_agvInstructions.isEmpty()){
             //TODO: send back to staging aarea
@@ -109,6 +115,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
 
         shipment.arrived = true;
         //TODO: if truck shipment, check platform id
+        
         try{
             if(shipment.carrier instanceof Train){
                 _items.setTrainShipment(shipment);
@@ -139,7 +146,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             // We create a copy of the list so the containers don't get removed from the source list.
             List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
 
-            // This is the last crane, add the remaning containers as well.
+            // This is the last crane, add the remaining containers as well.
             if (i == platformsByCarrier.length - 1) {
                 containers.addAll(allContainers.subList(take, allContainers.size()));
             }
@@ -339,7 +346,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         Platform to = to = _context.getStoragePlatformByContainer(container);
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
         Parkingspot toSpot = toSpot = Platform.findFreeParkingspot(to);
-        
+        container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform
             if(!platform.containers.isEmpty()){
@@ -425,7 +432,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 position = _context.determineContainerPosition(container);
                 try {
                     storage.setContainer(container, position);
-                    p.getAGV().unsetContainer();
                     sendCraneToStorage(storage, p, position);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -440,7 +446,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         else
         {
-            //TODO: craneToAGV  met departure shipment..
+            //TODO: get container from storage for department!
             
         }
     }

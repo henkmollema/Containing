@@ -33,15 +33,13 @@ message ContainerInfo{
 
 message ContainerDataListItem{
 	required int32 ID = 1;
-	required string eigenaar = 2;
-	required ContainerCategory category = 3;
 }
 
 enum ContainerCategory{
 	TRAIN = 0;
 	TRUCK = 1;
 	SEASHIP = 2;
-	INLINESHIP = 3;
+	INLANDSHIP = 3;
 	STORAGE = 4;
 	AGV = 5;
 	REMAINDER = 6;

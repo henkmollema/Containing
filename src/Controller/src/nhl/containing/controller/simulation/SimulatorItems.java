@@ -45,6 +45,7 @@ public class SimulatorItems
     
     private Map<Long,Parkingspot> m_parkingspotsMap = new HashMap<>();
     private List<Parkingspot> m_parkingspots = new ArrayList<>();
+    
     private List<Node> m_Nodes = new ArrayList<>();
     private List<AGV> m_AGVs = new ArrayList<>();
     

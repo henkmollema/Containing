@@ -1,6 +1,5 @@
 package nhl.containing.managmentinterface.data;
 
-import nhl.containing.networking.protobuf.AppDataProto;
 
 /**
  * Container item class for te listview and containerArrayAdapter
@@ -9,20 +8,14 @@ import nhl.containing.networking.protobuf.AppDataProto;
 public class ContainerListItem implements Comparable
 {
     public int ID;
-    public String eigenaar;
-    public AppDataProto.ContainerCategory category;
 
     /**
      * Constructor
      * @param ID id of container
-     * @param eigenaar owner of the container
-     * @param category category of the container
      */
-    public ContainerListItem(int ID,String eigenaar, AppDataProto.ContainerCategory category)
+    public ContainerListItem(int ID)
     {
         this.ID = ID;
-        this.eigenaar = eigenaar;
-        this.category = category;
     }
 
     /**

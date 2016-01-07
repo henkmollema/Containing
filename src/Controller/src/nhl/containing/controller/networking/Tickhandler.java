@@ -9,11 +9,12 @@ import java.util.Date;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
-import nhl.containing.controller.simulation.Platform;
+import nhl.containing.controller.simulation.LorryPlatform;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
+import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -29,9 +30,8 @@ import nhl.containing.networking.protocol.InstructionType;
 public class Tickhandler implements Runnable
 {
 
-    private Instruction _instruction;
-    private InstructionDispatcherController _dispatcherController;
-    
+    private final Instruction _instruction;
+    private SimulatorItems _items;
     /**
      * Constructor
      *
@@ -40,9 +40,7 @@ public class Tickhandler implements Runnable
     public Tickhandler(Instruction instruction)
     {
         _instruction = instruction;
-        
-        if(Simulator.instance().server().simCom().dispatcher() instanceof InstructionDispatcherController)
-            _dispatcherController = (InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher();
+        _items = Simulator.instance().getController().getItems();
     }
 
     /**
@@ -62,7 +60,7 @@ public class Tickhandler implements Runnable
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
         p("Ingame time: " + date.toString());
-
+        int platformid = -1;
         // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
@@ -75,7 +73,13 @@ public class Tickhandler implements Runnable
                 if(s.carrier instanceof Truck)
                 {
                     //Assign a loading platform to the truck
-                    
+                    LorryPlatform lp = LorryPlatform.GetPlatformIDForFreeLorryPlatform(_items.getLorryPlatforms());
+                    if(lp != null){
+                        platformid = lp.getID();
+                        lp.setShipment(s);
+                    }else{
+                        //TODO: problems or queue?
+                    }
                 }
             }
             else
@@ -85,9 +89,7 @@ public class Tickhandler implements Runnable
             
             s.processed = true;
             p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString());
-            createProto(s);
-            
-            
+            createProto(s, platformid);
         }
     }
 
@@ -96,11 +98,12 @@ public class Tickhandler implements Runnable
      *
      * @param shipment shipment
      */
-    private void createProto(Shipment shipment)
+    private void createProto(Shipment shipment, int platformid)
     {
         shipment.count = shipment.carrier.containers.size();
-        //TODO: give key of shipment
         Instruction.Builder builder = Instruction.newBuilder();
+        if(platformid != -1)
+            builder.setA(platformid);
         builder.setId(CommunicationProtocol.newUUID());
         builder.setMessage(shipment.key);
         int type = 0;
@@ -140,6 +143,9 @@ public class Tickhandler implements Runnable
         Container.Builder containerBuilder = Container.newBuilder();
         for (ShippingContainer container : shipment.carrier.containers)
         {
+            if(shipment.incoming){
+                container.currentCategory = AppHandler.getCategory(shipment.carrier);
+            }
             containerBuilder.setOwnerName(container.ownerName);
             containerBuilder.setContainerNumber(container.containerNumber);
             containerBuilder.setLength(container.length);

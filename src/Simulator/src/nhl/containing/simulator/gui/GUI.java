@@ -56,7 +56,7 @@ public class GUI extends Behaviour{
     }
     @Override
     public void start() {
-                /** Write text on the screen (HUD) */
+        /** Write text on the screen (HUD) */
         //Main.guiRoot().detachAllChildren();
         Picture pic = new Picture("background");
         Material mat = new Material(Main.assets(), "Common/MatDefs/Misc/Unshaded.j3md");

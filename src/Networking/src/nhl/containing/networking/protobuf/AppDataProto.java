@@ -26,9 +26,9 @@ public final class AppDataProto {
      */
     SEASHIP(2, 2),
     /**
-     * <code>INLINESHIP = 3;</code>
+     * <code>INLANDSHIP = 3;</code>
      */
-    INLINESHIP(3, 3),
+    INLANDSHIP(3, 3),
     /**
      * <code>STORAGE = 4;</code>
      */
@@ -56,9 +56,9 @@ public final class AppDataProto {
      */
     public static final int SEASHIP_VALUE = 2;
     /**
-     * <code>INLINESHIP = 3;</code>
+     * <code>INLANDSHIP = 3;</code>
      */
-    public static final int INLINESHIP_VALUE = 3;
+    public static final int INLANDSHIP_VALUE = 3;
     /**
      * <code>STORAGE = 4;</code>
      */
@@ -80,7 +80,7 @@ public final class AppDataProto {
         case 0: return TRAIN;
         case 1: return TRUCK;
         case 2: return SEASHIP;
-        case 3: return INLINESHIP;
+        case 3: return INLANDSHIP;
         case 4: return STORAGE;
         case 5: return AGV;
         case 6: return REMAINDER;
@@ -3840,29 +3840,6 @@ public final class AppDataProto {
      * <code>required int32 ID = 1;</code>
      */
     int getID();
-
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    boolean hasEigenaar();
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    java.lang.String getEigenaar();
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getEigenaarBytes();
-
-    /**
-     * <code>required .app.ContainerCategory category = 3;</code>
-     */
-    boolean hasCategory();
-    /**
-     * <code>required .app.ContainerCategory category = 3;</code>
-     */
-    nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory();
   }
   /**
    * Protobuf type {@code app.ContainerDataListItem}
@@ -3921,23 +3898,6 @@ public final class AppDataProto {
               iD_ = input.readInt32();
               break;
             }
-            case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000002;
-              eigenaar_ = bs;
-              break;
-            }
-            case 24: {
-              int rawValue = input.readEnum();
-              nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                bitField0_ |= 0x00000004;
-                category_ = value;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -3993,67 +3953,8 @@ public final class AppDataProto {
       return iD_;
     }
 
-    public static final int EIGENAAR_FIELD_NUMBER = 2;
-    private java.lang.Object eigenaar_;
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    public boolean hasEigenaar() {
-      return ((bitField0_ & 0x00000002) == 0x00000002);
-    }
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    public java.lang.String getEigenaar() {
-      java.lang.Object ref = eigenaar_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          eigenaar_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string eigenaar = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getEigenaarBytes() {
-      java.lang.Object ref = eigenaar_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        eigenaar_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CATEGORY_FIELD_NUMBER = 3;
-    private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_;
-    /**
-     * <code>required .app.ContainerCategory category = 3;</code>
-     */
-    public boolean hasCategory() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>required .app.ContainerCategory category = 3;</code>
-     */
-    public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
-      return category_;
-    }
-
     private void initFields() {
       iD_ = 0;
-      eigenaar_ = "";
-      category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -4062,14 +3963,6 @@ public final class AppDataProto {
       if (isInitialized == 0) return false;
 
       if (!hasID()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasEigenaar()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasCategory()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -4083,12 +3976,6 @@ public final class AppDataProto {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, iD_);
       }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeBytes(2, getEigenaarBytes());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeEnum(3, category_.getNumber());
-      }
       getUnknownFields().writeTo(output);
     }
 
@@ -4101,14 +3988,6 @@ public final class AppDataProto {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, iD_);
-      }
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(2, getEigenaarBytes());
-      }
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, category_.getNumber());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -4229,10 +4108,6 @@ public final class AppDataProto {
         super.clear();
         iD_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        eigenaar_ = "";
-        bitField0_ = (bitField0_ & ~0x00000002);
-        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
-        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -4265,14 +4140,6 @@ public final class AppDataProto {
           to_bitField0_ |= 0x00000001;
         }
         result.iD_ = iD_;
-        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
-          to_bitField0_ |= 0x00000002;
-        }
-        result.eigenaar_ = eigenaar_;
-        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
-          to_bitField0_ |= 0x00000004;
-        }
-        result.category_ = category_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -4292,28 +4159,12 @@ public final class AppDataProto {
         if (other.hasID()) {
           setID(other.getID());
         }
-        if (other.hasEigenaar()) {
-          bitField0_ |= 0x00000002;
-          eigenaar_ = other.eigenaar_;
-          onChanged();
-        }
-        if (other.hasCategory()) {
-          setCategory(other.getCategory());
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasID()) {
-          
-          return false;
-        }
-        if (!hasEigenaar()) {
-          
-          return false;
-        }
-        if (!hasCategory()) {
           
           return false;
         }
@@ -4367,117 +4218,6 @@ public final class AppDataProto {
       public Builder clearID() {
         bitField0_ = (bitField0_ & ~0x00000001);
         iD_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object eigenaar_ = "";
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public boolean hasEigenaar() {
-        return ((bitField0_ & 0x00000002) == 0x00000002);
-      }
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public java.lang.String getEigenaar() {
-        java.lang.Object ref = eigenaar_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            eigenaar_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getEigenaarBytes() {
-        java.lang.Object ref = eigenaar_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          eigenaar_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public Builder setEigenaar(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        eigenaar_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public Builder clearEigenaar() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        eigenaar_ = getDefaultInstance().getEigenaar();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required string eigenaar = 2;</code>
-       */
-      public Builder setEigenaarBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000002;
-        eigenaar_ = value;
-        onChanged();
-        return this;
-      }
-
-      private nhl.containing.networking.protobuf.AppDataProto.ContainerCategory category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
-      /**
-       * <code>required .app.ContainerCategory category = 3;</code>
-       */
-      public boolean hasCategory() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>required .app.ContainerCategory category = 3;</code>
-       */
-      public nhl.containing.networking.protobuf.AppDataProto.ContainerCategory getCategory() {
-        return category_;
-      }
-      /**
-       * <code>required .app.ContainerCategory category = 3;</code>
-       */
-      public Builder setCategory(nhl.containing.networking.protobuf.AppDataProto.ContainerCategory value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        category_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required .app.ContainerCategory category = 3;</code>
-       */
-      public Builder clearCategory() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        category_ = nhl.containing.networking.protobuf.AppDataProto.ContainerCategory.TRAIN;
         onChanged();
         return this;
       }
@@ -4536,14 +4276,12 @@ public final class AppDataProto {
       "\030\007 \002(\0162\026.app.ContainerCategory\022\032\n\022afvoer" +
       "Maatschappij\030\010 \002(\t\022\023\n\013gewichtLeeg\030\t \002(\005\022" +
       "\022\n\ngewichtVol\030\n \002(\005\022\016\n\006inhoud\030\013 \002(\t\022\022\n\ni" +
-      "nhoudType\030\014 \002(\t\022\024\n\014inhoudGevaar\030\r \002(\t\"_\n" +
-      "\025ContainerDataListItem\022\n\n\002ID\030\001 \002(\005\022\020\n\010ei" +
-      "genaar\030\002 \002(\t\022(\n\010category\030\003 \002(\0162\026.app.Con" +
-      "tainerCategory*k\n\021ContainerCategory\022\t\n\005T" +
-      "RAIN\020\000\022\t\n\005TRUCK\020\001\022\013\n\007SEASHIP\020\002\022\016\n\nINLINE" +
-      "SHIP\020\003\022\013\n\007STORAGE\020\004\022\007\n\003AGV\020\005\022\r\n\tREMAINDE",
-      "R\020\006B2\n\"nhl.containing.networking.protobu" +
-      "fB\014AppDataProto"
+      "nhoudType\030\014 \002(\t\022\024\n\014inhoudGevaar\030\r \002(\t\"#\n" +
+      "\025ContainerDataListItem\022\n\n\002ID\030\001 \002(\005*k\n\021Co" +
+      "ntainerCategory\022\t\n\005TRAIN\020\000\022\t\n\005TRUCK\020\001\022\013\n" +
+      "\007SEASHIP\020\002\022\016\n\nINLANDSHIP\020\003\022\013\n\007STORAGE\020\004\022" +
+      "\007\n\003AGV\020\005\022\r\n\tREMAINDER\020\006B2\n\"nhl.containin" +
+      "g.networking.protobufB\014AppDataProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4580,7 +4318,7 @@ public final class AppDataProto {
     internal_static_app_ContainerDataListItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_app_ContainerDataListItem_descriptor,
-        new java.lang.String[] { "ID", "Eigenaar", "Category", });
+        new java.lang.String[] { "ID", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

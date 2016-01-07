@@ -24,11 +24,8 @@ public class LorryPlatform extends Platform
     /**
      * Sets a shipment to the lorry platform
      * @param shipment shipment
-     * @throws Exception when already occupied
      */
-    public void setShipment(Shipment shipment) throws Exception{
-        if(hasShipment())
-            throw new Exception("Shipment occupied");
+    public void setShipment(Shipment shipment){
         m_lorryShipment = shipment;
     }
     
@@ -53,5 +50,13 @@ public class LorryPlatform extends Platform
      */
     public Shipment getShipment(){
         return m_lorryShipment;
+    }
+    
+    public static LorryPlatform GetPlatformIDForFreeLorryPlatform(LorryPlatform[] platforms){
+        for(LorryPlatform p : platforms){
+            if(!p.hasShipment())
+                return p;
+        }
+        return null;
     }
 }

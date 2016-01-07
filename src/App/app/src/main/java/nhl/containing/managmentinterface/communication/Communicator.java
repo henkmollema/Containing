@@ -4,22 +4,20 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
 import nhl.containing.managmentinterface.*;
-import nhl.containing.managmentinterface.activity.ContainerActivity;
-import nhl.containing.managmentinterface.activity.MainActivity;
+import nhl.containing.managmentinterface.activity.*;
 import nhl.containing.managmentinterface.navigationdrawer.*;
+
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protobuf.ClientIdProto.*;
-import nhl.containing.networking.protocol.CommunicationProtocol;
-import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.networking.protocol.*;
 
 /**
  * Runnable for the communication between the App and the Controller

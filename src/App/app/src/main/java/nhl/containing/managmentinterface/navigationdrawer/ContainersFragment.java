@@ -17,12 +17,11 @@ import java.util.List;
 import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
 import nhl.containing.managmentinterface.communication.Communicator;
-import nhl.containing.managmentinterface.data.ContainerArrayAdapter;
-import nhl.containing.managmentinterface.data.ContainerListItem;
+import nhl.containing.managmentinterface.data.*;
+
 import nhl.containing.networking.protobuf.AppDataProto.*;
 import nhl.containing.networking.protobuf.InstructionProto;
-import nhl.containing.networking.protocol.CommunicationProtocol;
-import nhl.containing.networking.protocol.InstructionType;
+import nhl.containing.networking.protocol.*;
 
 /**
  * Fragment for the containerlist
@@ -222,7 +221,7 @@ public class ContainersFragment extends ListFragment {
     {
         final List<ContainerListItem> itemsList = new ArrayList<>();
         for(ContainerDataListItem item : listItems){
-            itemsList.add(new ContainerListItem(item.getID(),item.getEigenaar(),item.getCategory()));
+            itemsList.add(new ContainerListItem(item.getID()));
         }
         getActivity().runOnUiThread(new Runnable() {
             @Override

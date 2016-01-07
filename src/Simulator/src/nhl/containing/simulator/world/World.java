@@ -161,6 +161,7 @@ public class World extends Behaviour {
         }
         //m_storageCells.get(0).getParkingSpot(0).agv(agv);
     }
+    
     private void test()
     {
         for (int i = 0; i < 3; i++) {
@@ -182,6 +183,7 @@ public class World extends Behaviour {
         
         //m_seaShip.state(Vehicle.VehicleState.ToLoad);
     }
+    
     private void createInlandCell() {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
@@ -386,11 +388,13 @@ public class World extends Behaviour {
             }
     }
     
+    /**
+     * Sends a storage place command
+     * @param storage
+     * @param index
+     * @param point 
+     */
     public void sendStoragePlace(PlatformStorage storage,int index, Point3 point){
-//        if(storage.crane().getContainer() != null){
-//            p("oopss...");
-//            return;
-//        }
         Container c = storage.getParkingSpot(index).agv().getContainer();
         storage.place(index, point);
     }

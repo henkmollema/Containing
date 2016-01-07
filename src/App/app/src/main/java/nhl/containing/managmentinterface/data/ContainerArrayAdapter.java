@@ -14,7 +14,6 @@ import java.util.List;
 
 import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
-//import nhl.containing.networking.protobuf.AppDataProto.*;
 
 /**
  * Array adapter for the containerlist

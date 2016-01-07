@@ -99,51 +99,39 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         {
             case InstructionType.MOVE_AGV:
                 handleMoveAGV(inst);
-                //p("MOVE_AGV | AGV:" + inst.getA() + " Platform: " + inst.getB());
                 break;
             case InstructionType.ARRIVAL_INLANDSHIP:
                 handleInland(true, inst);
-                p("ARRIVAL_INLANDSHIP");
                 break;
             case InstructionType.ARRIVAL_SEASHIP:
                 handleSea(true, inst);
-                p("ARRIVAL_SEASHIP");
                 break;
             case InstructionType.ARRIVAL_TRAIN:
                 handleTrain(true, inst, 0);
-                p("ARRIVAL_TRAIN");
                 break;
             case InstructionType.ARRIVAL_TRUCK:
                 handleLorry(true, inst);
-                p("ARRIVAL_TRUCK");
                 break;
             case InstructionType.DEPARTMENT_INLANDSHIP:
                 handleInland(false, inst);
-                p("DEPARTMENT_INLANDSHIP");
                 break;
             case InstructionType.DEPARTMENT_SEASHIP:
                 handleSea(false, inst);
-                p("DEPARTMENT_SEASHIP");
                 break;
             case InstructionType.DEPARTMENT_TRAIN:
                 handleTrain(false, inst, 0);
-                p("DEPARTMENT_TRAIN");
                 break;
             case InstructionType.DEPARTMENT_TRUCK:
                 handleLorry(false, inst);
-                p("DEPARTMENT_TRUCK");
                 break;
             case InstructionType.PLACE_CRANE:
                 handlePlaceCrane(inst);
-                //p("PLACE_CRANE Platform: " + inst.getA());
                 break;
             case InstructionType.CRANE_TO_STORAGE:
                 handleCraneToStorage(inst);
-                //p("CRANE_TO_STORAGE Platform: " + inst.getA() + " parkingspot: " + inst.getB());
                 break;
             case InstructionType.SHIPMENT_MOVED:
                 handleShipmentMoved(inst);
-                //p("SHIPMENT_MOVED");
                 break;
         }
 
@@ -332,9 +320,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             });
         }
     }
+    
     private void handleLorry(boolean arriving, InstructionProto.Instruction inst) {
-        
+        Tuple<PlatformLorry,Vehicle> lorryTuple = World().getLorryPlatforms().get(inst.getA() - World.LORRY_BEGIN);
         if (arriving) {
+            //lorryTuple.b
             p("Truck arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
             SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());

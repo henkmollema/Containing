@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     public  ArrayList<NavItem> mNavItems = new ArrayList<>();
-    private String[] fragmentList = new String[]{"Graph_one","Graph_two","Graph_three","Graph_four","Container_list"};
+    private String[] fragmentList = new String[]{"Graph_one","Graph_two","Graph_three","Container_list"};
     //end navigation drawer
 
     public Menu menu;
@@ -130,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     private void setupNavDrawer(Toolbar toolbar)
     {
         int[][] navitems = new int[][]{
-                new int[]{R.string.nav_home_titel,R.string.nav_graph1_titel,R.string.nav_graph2_titel,R.string.nav_graph3_titel,R.string.nav_containerlist_titel},
-                new int[]{R.string.nav_home_subtitel,R.string.nav_graph1_subtitel,R.string.nav_graph2_subtitel,R.string.nav_graph3_subtitel,R.string.nav_containerlist_subtitel},
-                new int[]{R.drawable.ic_home_black,R.drawable.ic_poll_black,R.drawable.ic_poll_black,R.drawable.ic_poll_black,R.drawable.ic_list_black}
+                new int[]{R.string.nav_home_titel,R.string.nav_graph1_titel,R.string.nav_graph2_titel,R.string.nav_containerlist_titel},
+                new int[]{R.string.nav_home_subtitel,R.string.nav_graph1_subtitel,R.string.nav_graph2_subtitel,R.string.nav_containerlist_subtitel},
+                new int[]{R.drawable.ic_home_black,R.drawable.ic_poll_black,R.drawable.ic_poll_black,R.drawable.ic_list_black}
         };
         for(int i = 0; i < navitems[0].length; i++)
             mNavItems.add(new NavItem(getResources().getString(navitems[0][i]),getResources().getString(navitems[1][i]),navitems[2][i]));
@@ -337,9 +337,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId())
         {
             case R.id.action_settings:
@@ -452,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
             if(f == null || !f.isVisible())
             {
                 autoRefresh(false);
-                if(position == 4)
+                if(position == 3)
                 {
                     ContainersFragment cf = new ContainersFragment();
                     fragment = cf;

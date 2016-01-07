@@ -52,9 +52,9 @@
     <!-- Strings related to Graph Fragment-->
     <string-array name="graph_items">
         <item>Train</item>
-        <item>Truck</item>
+        <item>Lorry</item>
         <item>Seaship</item>
-        <item>Barge</item>
+        <item>Inland</item>
         <item>Storage</item>
         <item>AGV</item>
         <item>Remainer</item>

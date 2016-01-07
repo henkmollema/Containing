@@ -23,7 +23,7 @@ public class ContainerActivity extends AppCompatActivity {
 
     public int ID;
     private ProgressDialog dialog;
-    private String[] types = getResources().getStringArray(R.array.graph_items);
+    private String[] types;
 
     /**
      * Creates the containeractivity
@@ -33,6 +33,7 @@ public class ContainerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_container);
+        types = getResources().getStringArray(R.array.graph_items);
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -120,7 +121,7 @@ public class ContainerActivity extends AppCompatActivity {
                 return types[1];
             case SEASHIP:
                 return types[2];
-            case INLINESHIP:
+            case INLANDSHIP:
                 return types[3];
             case TRAIN:
                 return types[0];

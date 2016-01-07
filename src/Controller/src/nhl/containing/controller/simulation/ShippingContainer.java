@@ -1,7 +1,7 @@
 package nhl.containing.controller.simulation;
 
 import nhl.containing.controller.Point3;
-import nhl.containing.controller.Vector3f;
+import nhl.containing.networking.protobuf.AppDataProto;
 
 /**
  *
@@ -76,4 +76,9 @@ public class ShippingContainer
      * The departure shipment of the container.
      */
     public Shipment departureShipment;
+    
+    /**
+     * The current categorie the container is on
+     */
+    public volatile AppDataProto.ContainerCategory currentCategory = AppDataProto.ContainerCategory.REMAINDER;
 }

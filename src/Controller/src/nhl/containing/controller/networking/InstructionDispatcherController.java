@@ -113,52 +113,58 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             return;
         }
 
-        shipment.arrived = true;
-        //TODO: if truck shipment, check platform id
-        
-        try{
-            if(shipment.carrier instanceof Train){
-                _items.setTrainShipment(shipment);
-            }else if(shipment.carrier instanceof SeaShip){
-                _items.setSeaShipment(shipment);
-            }else if(shipment.carrier instanceof InlandShip){
-                _items.setInlandShipment(shipment);
+        if(shipment.incoming)
+        {
+            //Assign a storage platform to this batch of incomming containers.
+            _context.determineContainerPlatforms(shipment.carrier.containers);
+            
+            shipment.arrived = true;
+            //TODO: if truck shipment, check platform id
+
+            try{
+                if(shipment.carrier instanceof Train){
+                    _items.setTrainShipment(shipment);
+                }else if(shipment.carrier instanceof SeaShip){
+                    _items.setSeaShipment(shipment);
+                }else if(shipment.carrier instanceof InlandShip){
+                    _items.setInlandShipment(shipment);
+                }
+            }catch(Exception e){e.printStackTrace();}
+            // Get the platforms and containers.
+            final Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
+            final List<ShippingContainer> allContainers = shipment.carrier.containers;
+
+            // Determine how many containers per crane.
+            int split = allContainers.size() / platformsByCarrier.length;
+            int take = split;
+
+            // Loop variables/
+            int i = 0;
+            int skip = 0;
+
+            for (Platform platform : platformsByCarrier) {
+                if (platform.isBusy()) {
+                    continue;
+                }
+
+                // Get a subset of the containers which get handled by this crane.
+                // We create a copy of the list so the containers don't get removed from the source list.
+                List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
+
+                // This is the last crane, add the remaining containers as well.
+                if (i == platformsByCarrier.length - 1) {
+                    containers.addAll(allContainers.subList(take, allContainers.size()));
+                }
+
+                // Assign the containers to the platform.
+                platform.containers = containers;
+                placeCrane(platform);
+
+                // Increase loop variables.
+                skip += split;
+                take += split;
+                i++;
             }
-        }catch(Exception e){e.printStackTrace();}
-        // Get the platforms and containers.
-        final Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
-        final List<ShippingContainer> allContainers = shipment.carrier.containers;
-
-        // Determine how many containers per crane.
-        int split = allContainers.size() / platformsByCarrier.length;
-        int take = split;
-
-        // Loop variables/
-        int i = 0;
-        int skip = 0;
-
-        for (Platform platform : platformsByCarrier) {
-            if (platform.isBusy()) {
-                continue;
-            }
-
-            // Get a subset of the containers which get handled by this crane.
-            // We create a copy of the list so the containers don't get removed from the source list.
-            List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
-
-            // This is the last crane, add the remaining containers as well.
-            if (i == platformsByCarrier.length - 1) {
-                containers.addAll(allContainers.subList(take, allContainers.size()));
-            }
-
-            // Assign the containers to the platform.
-            platform.containers = containers;
-            placeCrane(platform);
-
-            // Increase loop variables.
-            skip += split;
-            take += split;
-            i++;
         }
     }
 
@@ -235,9 +241,21 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         else
         {
-            //TODO:
-            //Loop door should depart containers, en pak departure container die in dit platform ligt en pak zijn position
-            //_context.setContainerDeparting(container);
+            //Loop door  depart containers, en pak departure container die in dit platform ligt en pak zijn position
+            for(ShippingContainer cont : _context.getDepartingContainers())
+            {
+                if(_context.getStoragePlatformByContainer(cont).getID() == platform.getID())
+                {
+                    Point3 point = cont.position;
+                    builder.setX(point.x);
+                    builder.setY(point.y);
+                    builder.setZ(point.z);
+                    System.out.println("Found container to pick up! (craneToAGV)");
+                    _context.setContainerDeparted(cont);  
+                   break;
+                }
+                
+            }
         }
         _com.sendInstruction(builder.build());
         platform.setBusy();
@@ -373,6 +391,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een storage platform
             Storage storage = (Storage) platform;
             storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
+            //to = container.departureShipment
+            System.out.println("Should send the AGV to departure platform..");
             //TODO: set 'to' naar departure platform..
         } else {
             //dit is een train platform
@@ -447,7 +467,13 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         else
         {
             //TODO: get container from storage for department!
-            
+            if(platform.getID() >= SimulatorItems.STORAGE_BEGIN && platform.getID() < SimulatorItems.TRAIN_BEGIN)
+            {
+                //wanneer een agv zonder container bij een storage platform aan komt
+                Shipment dummy = new Shipment("IK WIL EEN SHIPMENT MET INCOMMING FALSE", false);
+                System.out.println("calling craneToAGV..");
+                craneToAGV(platform, dummy, p);
+            }
         }
     }
     

@@ -33,7 +33,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>src</Elem>
+    <Elem>C:\Users\Jens\Desktop\Containing\Containing\src\Controller c++\src</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -58,12 +58,14 @@
         <ccTool>
           <architecture>2</architecture>
           <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
           <incDir>
             <pElem>/usr/lib/jvm/default/include</pElem>
             <pElem>/usr/lib/jvm/default/include/linux</pElem>
             <pElem>C:/Program Files/Java/jdk1.8.0_66/include</pElem>
             <pElem>C:/Program Files/Java/jdk1.8.0_66/include/win32</pElem>
             <pElem>C:/Program Files/mingw-w64/x86_64-5.2.0-posix-seh-rt_v4-rev0/mingw64/include</pElem>
+            <pElem>fix</pElem>
           </incDir>
         </ccTool>
         <asmTool>

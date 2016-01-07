@@ -10,6 +10,7 @@ import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
 import nhl.containing.controller.simulation.LorryPlatform;
+import nhl.containing.controller.simulation.Parkingspot;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
@@ -65,31 +66,45 @@ public class Tickhandler implements Runnable
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
-            if(s.incoming)
+            if(s.carrier instanceof Truck)
             {
-                //Assign a storage platform to this batch of incomming containers.
-                context.determineContainerPlatforms(s.carrier.containers);
-                
-                if(s.carrier instanceof Truck)
-                {
-                    //Assign a loading platform to the truck
-                    LorryPlatform lp = LorryPlatform.GetPlatformIDForFreeLorryPlatform(_items.getLorryPlatforms());
-                    if(lp != null){
-                        platformid = lp.getID();
-                        lp.setShipment(s);
-                    }else{
-                        //TODO: problems or queue?
-                    }
+                //Assign a loading platform to the truck
+                LorryPlatform lp = LorryPlatform.GetPlatformIDForFreeLorryPlatform(_items.getLorryPlatforms());
+                if(lp != null){
+                    platformid = lp.getID();
+                    lp.setShipment(s);
+                }else{
+                    //TODO: problems or queue?
                 }
+            }
+            
+            if(!s.incoming)
+            {
+                //TODO: move this to shipment arrived in instructiondispatcher when all shipment types are implemented
+                context.setContainerShouldDepart(s.carrier.containers);
+                System.out.println("Set container batch to should depart..");
+            }
+       
+            
+            s.processed = true;
+            p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
+            createProto(s, platformid);
+        }
+        
+         //Check if new departure containers can be picked up..
+        for(ShippingContainer cont : context.getShouldDepartContainers())
+        {
+            Parkingspot ps = context.getStoragePlatformByContainer(cont).getFreeParkingspot();
+            if(ps != null)
+            {
+                System.out.println("setMoveAGV for departing container..");
+                ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher()).moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
+                context.setContainerDeparting(cont);
             }
             else
             {
-                context.setContainerShouldDepart(s.carrier.containers);
+                System.out.println("Cant find parking spot!!");
             }
-            
-            s.processed = true;
-            p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString());
-            createProto(s, platformid);
         }
     }
 

@@ -70,6 +70,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             case InstructionType.CRANE_TO_STORAGE_READY:
                 craneToStorageReady(inst);
                 break;
+            case InstructionType.DEPARTMENT_ARRIVED:
+                departmentArrived(inst);
+                break;
             //More instruction types here..
         }
     }
@@ -191,7 +194,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
-            //do nothing
+            //Stuur hier de agv naar het department platform..
+            
         } else {
             //dit is een train platform
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
@@ -213,12 +217,21 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         builder.setA(platform.getID());
         builder.setB((int) parkingspot.getId());
         builder.setInstructionType(InstructionType.CRANE_TO_AGV);
-        //TODO: getposition
-        Point3 point = shipment.carrier.containers.get(shipment.carrier.containers.size() - shipment.count).position;
-        shipment.count--;
-        builder.setX(point.x);
-        builder.setY(point.y);
-        builder.setZ(point.z);
+        if(shipment.incoming)
+        {
+            //TODO: get better position
+            Point3 point = shipment.carrier.containers.get(shipment.carrier.containers.size() - shipment.count).position;
+            shipment.count--;
+            builder.setX(point.x);
+            builder.setY(point.y);
+            builder.setZ(point.z);
+        }
+        else
+        {
+            //TODO:
+            //Loop door should depart containers, en pak departure container die in dit platform ligt en pak zijn position
+            //_context.setContainerDeparting(container);
+        }
         _com.sendInstruction(builder.build());
         platform.setBusy();
     }
@@ -353,8 +366,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een storage platform
             Storage storage = (Storage) platform;
             storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
-            
-            //TODO: find destination
+            //TODO: set 'to' naar departure platform..
         } else {
             //dit is een train platform
             if(!platform.containers.isEmpty()){
@@ -364,6 +376,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 _items.unsetTrainShipment();
             }
         }
+        
         AGV agv = p.getAGV();
         p.removeAGV();
         try {
@@ -425,6 +438,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 }
             }
         }
+        else
+        {
+            //TODO: craneToAGV  met departure shipment..
+            
+        }
     }
     
     /**
@@ -467,6 +485,10 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         builder.setY(position.y);
         builder.setZ(position.z);
         _com.sendInstruction(builder.build());
+    }
+    
+    private void departmentArrived(InstructionProto.Instruction inst) {
+        //inst
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.Date;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
+import nhl.containing.controller.simulation.Platform;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
@@ -66,8 +67,21 @@ public class Tickhandler implements Runnable
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
-            //Assign a platform to this batch of containers.
-            context.determineContainerPlatforms(s.carrier.containers);
+            if(s.incoming)
+            {
+                //Assign a storage platform to this batch of incomming containers.
+                context.determineContainerPlatforms(s.carrier.containers);
+                
+                if(s.carrier instanceof Truck)
+                {
+                    //Assign a loading platform to the truck
+                    
+                }
+            }
+            else
+            {
+                context.setContainerShouldDepart(s.carrier.containers);
+            }
             
             s.processed = true;
             p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString());

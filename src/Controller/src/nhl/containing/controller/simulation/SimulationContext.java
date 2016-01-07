@@ -29,8 +29,47 @@ public class SimulationContext
     private SimulatorItems _simulatorItems;
     
     private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
-    private Map<ShippingContainer, Storage> container_StoragePlatform = new HashMap<>();;
-    //private Map<ShippingContainer, Vector3f> container_PlatformPosition = new HashMap<>();;
+    private Map<ShippingContainer, Storage> container_StoragePlatform = new HashMap<>();
+    private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
+    private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
+    
+    public List<ShippingContainer> getShouldDepartContainers()
+    {
+        return shouldDepartContainers;
+    }
+    
+    public void setContainerShouldDepart(List<ShippingContainer> containers)
+    {
+        shouldDepartContainers.addAll(containers);
+    }
+    
+    public void setContainerShouldDepart(ShippingContainer container)
+    {
+        shouldDepartContainers.add(container);
+    }
+    
+    public void setContainerDeparting(ShippingContainer container)
+    {
+        shouldDepartContainers.remove(container);
+        departingContainers.add(container);
+    }
+    
+    public void setContainerDeparting(List<ShippingContainer> containers)
+    {
+        shouldDepartContainers.removeAll(containers);
+        departingContainers.addAll(containers);
+    }
+    
+     public void setContainerDeparted(ShippingContainer container)
+    {
+        departingContainers.remove(container);
+    }
+    
+    public void setContainerDeparted(List<ShippingContainer> containers)
+    {
+        departingContainers.removeAll(containers);
+    }
+    
     
     public void setSimulatorItems(SimulatorItems simItems)
     {

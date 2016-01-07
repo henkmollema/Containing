@@ -382,10 +382,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             }
         } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
             //dit is een lorry platform
-            LorryPlatform lp = (LorryPlatform) platform;
-            container = lp.getShipment().carrier.containers.get(0);
-            shipmentMoved(lp.getShipment());
-            lp.unsetShipment();
+            container = platform.getShipment().carrier.containers.get(0);
+            shipmentMoved(platform.getShipment());
+            platform.unsetShipment();
         } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
             //dit is een seaship platform
             if(!platform.containers.isEmpty()){
@@ -398,14 +397,17 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //dit is een storage platform
             Storage storage = (Storage) platform;
             Point3 pos = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
-            //placeCrane(platform,  pos);
-            //storage.removeContainer(instruction.getX(), instruction.getY(), instruction.getZ());
-            //to = container.departureShipment
             
-            //TODO: set 'to' naar departure platform..
+            //Send the agv to the departure platform.
+            for(Platform cplatform : _context.getSimulatorItems().getAllPlatforms())
+            {
+                if(cplatform.hasShipment() && cplatform.getShipment().key == container.departureShipment.key)
+                {
+                    to = cplatform;
+                    toSpot = cplatform.getFreeParkingspot();
+                }
+            }
             
-            System.out.println("Should send the AGV to departure platform.. Make sure to remove the return below this line");
-            return;//return here, else the agv will drive to the platform it came from because 'to' isn't set to departure shipment.
         } else {
             //dit is een train platform
             if(!platform.containers.isEmpty()){
@@ -424,7 +426,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             e.printStackTrace();
         }
         if(toSpot == null)
+        {
+            System.out.println("NO PARKING SPOT");
             return; //TODO: error?
+        }
+            
         moveAGV(agv, to, toSpot);
     }
 
@@ -449,8 +455,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 }
             } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
                 //dit is een lorry platform
-                LorryPlatform lp = (LorryPlatform) platform;
-                if (lp.hasShipment() && lp.getShipment().arrived) {
+                
+                if (platform.hasShipment() && platform.getShipment().arrived) {
                     sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
@@ -503,17 +509,13 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         builder.setId(CommunicationProtocol.newUUID());
         builder.setInstructionType(InstructionType.CRANE_TO_DEPARTMENT);
         builder.setA(platform.getID());
-        if(platform instanceof LorryPlatform){
-            //lorry
-            builder.setB(0);
-            builder.setX(0);
-            builder.setY(0);
-            builder.setZ(0);
-        }
-        else{
-            builder.setB((int)parkingspot.getId());
-            //TODO: find department position
-        }
+
+        builder.setB((int)parkingspot.getId());
+        builder.setX(0);
+        builder.setY(0);
+        builder.setZ(0);
+        //TODO: find department position
+        
         _com.sendInstruction(builder.build());
     }
     

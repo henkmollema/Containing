@@ -69,26 +69,41 @@ public class Tickhandler implements Runnable
             if(s.carrier instanceof Truck)
             {
                 //Assign a loading platform to the truck
-                LorryPlatform lp = LorryPlatform.GetPlatformIDForFreeLorryPlatform(_items.getLorryPlatforms());
+                LorryPlatform lp = LorryPlatform.GetPlatformForFreeLorryPlatform(_items.getLorryPlatforms());
                 if(lp != null){
+                    //continue;
                     platformid = lp.getID();
                     lp.setShipment(s);
                 }else{
                     //TODO: problems or queue?
                 }
+            }else if(s.carrier instanceof Train){
+                if(_items.hasTrainShipment())
+                    continue; //TODO: Fix a queue ?
+                else
+                    _items.setTrainShipment(s);
+            }else if(s.carrier instanceof SeaShip){
+                if(_items.hasSeaShipment())
+                    continue; //TODO: Fix a queue?
+                else
+                    _items.setSeaShipment(s);
+            }else if(s.carrier instanceof InlandShip){
+                if(_items.hasInlandShipment())
+                    continue;
+                else
+                    _items.setInlandShipment(s);
             }
-            
+            s.processed = true;
+            p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
             if(!s.incoming)
             {
                 //TODO: move this to shipment arrived in instructiondispatcher when all shipment types are implemented
                 context.setContainerShouldDepart(s.carrier.containers);
                 System.out.println("Set container batch to should depart..");
             }
-       
-            
-            s.processed = true;
-            p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
-            createProto(s, platformid);
+            else{
+                createProto(s, platformid);
+            }
         }
         
          //Check if new departure containers can be picked up..

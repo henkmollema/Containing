@@ -52,7 +52,15 @@ public class LorryPlatform extends Platform
         return m_lorryShipment;
     }
     
-    public static LorryPlatform GetPlatformIDForFreeLorryPlatform(LorryPlatform[] platforms){
+    public static LorryPlatform GetPlatformbyShipment(Shipment shipment,LorryPlatform[] platforms){
+        for(LorryPlatform p : platforms){
+            if(p.hasShipment() && p.getShipment().key.equals(shipment.key))
+                return p;
+        }
+        return null;
+    }
+    
+    public static LorryPlatform GetPlatformForFreeLorryPlatform(LorryPlatform[] platforms){
         for(LorryPlatform p : platforms){
             if(!p.hasShipment())
                 return p;

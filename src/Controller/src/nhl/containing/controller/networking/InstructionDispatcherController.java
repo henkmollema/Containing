@@ -103,68 +103,69 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      *
      * @param instruction instruction
      */
-    private void shipmentArrived(InstructionProto.Instruction instruction) {
-        if (_items == null) {
+    private void shipmentArrived(InstructionProto.Instruction instruction)
+    {
+        if (_items == null)
+        {
             _items = _sim.getController().getItems();
         }
 
         Shipment shipment = _context.getShipmentByKey(instruction.getMessage());
-        if (shipment == null) { //TODO: handle error
+        if (shipment == null)
+        { //TODO: handle error
             return;
         }
 
-        if(shipment.incoming)
+        //Assign a storage platform to this batch of incomming containers.
+        _context.determineContainerPlatforms(shipment.carrier.containers);
+
+        shipment.arrived = true;
+        //TODO: if truck shipment, check platform id
+        if(shipment.carrier instanceof Truck){
+            LorryPlatform lp = _items.getLorryPlatforms()[instruction.getA() - SimulatorItems.LORRY_BEGIN];
+            AGV agv = _items.getFreeAGV();
+            lp.containers = new ArrayList<>(shipment.carrier.containers);
+            moveAGV(agv, lp, lp.getParkingspots().get(0));
+            placeCrane(lp);
+            return;
+        }
+        // Get the platforms and containers.
+        Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
+        final List<ShippingContainer> allContainers = shipment.carrier.containers;
+
+        // Determine how many containers per crane.
+        int split = allContainers.size() / platformsByCarrier.length;
+        int take = split;
+
+        // Loop variables/
+        int i = 0;
+        int skip = 0;
+
+        for (Platform platform : platformsByCarrier)
         {
-            //Assign a storage platform to this batch of incomming containers.
-            _context.determineContainerPlatforms(shipment.carrier.containers);
-            
-            shipment.arrived = true;
-            //TODO: if truck shipment, check platform id
-
-            try{
-                if(shipment.carrier instanceof Train){
-                    _items.setTrainShipment(shipment);
-                }else if(shipment.carrier instanceof SeaShip){
-                    _items.setSeaShipment(shipment);
-                }else if(shipment.carrier instanceof InlandShip){
-                    _items.setInlandShipment(shipment);
-                }
-            }catch(Exception e){e.printStackTrace();}
-            // Get the platforms and containers.
-            final Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
-            final List<ShippingContainer> allContainers = shipment.carrier.containers;
-
-            // Determine how many containers per crane.
-            int split = allContainers.size() / platformsByCarrier.length;
-            int take = split;
-
-            // Loop variables/
-            int i = 0;
-            int skip = 0;
-
-            for (Platform platform : platformsByCarrier) {
-                if (platform.isBusy()) {
-                    continue;
-                }
+            if (platform.isBusy())
+            {
+                continue;
+            }
 
                 // Get a subset of the containers which get handled by this crane.
-                // We create a copy of the list so the containers don't get removed from the source list.
-                List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
+            // We create a copy of the list so the containers don't get removed from the source list.
+            List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
 
-                // This is the last crane, add the remaining containers as well.
-                if (i == platformsByCarrier.length - 1) {
-                    containers.addAll(allContainers.subList(take, allContainers.size()));
-                }
-
-                // Assign the containers to the platform.
-                platform.containers = containers;
-                placeCrane(platform);
-
-                // Increase loop variables.
-                skip += split;
-                take += split;
-                i++;
+            // This is the last crane, add the remaining containers as well.
+            if (i == platformsByCarrier.length - 1)
+            {
+                containers.addAll(allContainers.subList(take, allContainers.size()));
             }
+
+            // Assign the containers to the platform.
+            platform.containers = containers;
+            placeCrane(platform);
+
+            // Increase loop variables.
+            skip += split;
+            take += split;
+            i++;
         }
     }
 
@@ -332,6 +333,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             p = _items.getTrainPlatforms()[0];
         }else{
             //TODO: Find truck shipment
+            p = LorryPlatform.GetPlatformbyShipment(shipment, _items.getLorryPlatforms());
         }
         shipment.containersMoved = true;
         InstructionProto.Instruction.Builder instruction = InstructionProto.Instruction.newBuilder();
@@ -361,9 +363,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         platform.unsetBusy();
         ShippingContainer container = _context.getContainerById(instruction.getB());
-        Platform to = to = _context.getStoragePlatformByContainer(container);
+        Platform to = _context.getStoragePlatformByContainer(container); //<-- hier klopt iets niet dus?
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
-        Parkingspot toSpot = toSpot = Platform.findFreeParkingspot(to);
+        Parkingspot toSpot = toSpot = Platform.findFreeParkingspot(to); //<--- hier gaat het telkens fout, platform is wss null
         container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform

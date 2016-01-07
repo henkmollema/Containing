@@ -235,11 +235,8 @@ public class SimulatorItems
     /**
      * Sets a shipment as current train shipment
      * @param shipment shipment
-     * @throws Exception when already occupied
      */
-    public void setTrainShipment(Shipment shipment) throws Exception{
-        if(hasTrainShipment())
-            throw new Exception("Occupied");
+    public void setTrainShipment(Shipment shipment){
         m_trainShipment = shipment;
     }
     
@@ -269,11 +266,8 @@ public class SimulatorItems
     /**
      * Sets a shipment as current seaship shipment
      * @param shipment shipment
-     * @throws Exception when already occupied
      */
-    public void setSeaShipment(Shipment shipment) throws Exception{
-        if(hasSeaShipment())
-            throw new Exception("Occupied");
+    public void setSeaShipment(Shipment shipment){
         m_seashipShipment = shipment;
     }
     
@@ -303,11 +297,8 @@ public class SimulatorItems
     /**
      * Sets current inland shipment
      * @param shipment shipment
-     * @throws Exception when already occupied
      */
-    public void setInlandShipment(Shipment shipment)throws Exception{
-        if(hasInlandShipment())
-            throw new Exception("Occupied");
+    public void setInlandShipment(Shipment shipment){
         m_inlandShipment = shipment;
     }
     

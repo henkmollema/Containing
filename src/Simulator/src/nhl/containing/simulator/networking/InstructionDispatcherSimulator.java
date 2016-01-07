@@ -321,18 +321,33 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
     }
     
-    private void handleLorry(boolean arriving, InstructionProto.Instruction inst) {
-        Tuple<PlatformLorry,Vehicle> lorryTuple = World().getLorryPlatforms().get(inst.getA() - World.LORRY_BEGIN);
+    private void handleLorry(boolean arriving,final InstructionProto.Instruction inst) {
+        final Tuple<PlatformLorry,Vehicle> lorryTuple = World().getLorryPlatforms().get(inst.getA() - World.LORRY_BEGIN);
         if (arriving) {
-            //lorryTuple.b
-            p("Truck arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
-            SimulatorClient.sendTaskDone(0, 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
+            Container container = new Container(new RFID(inst.getContainers(0)));
+            container.show();
+            lorryTuple.b.setContainer(container);
+            lorryTuple.b.state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
+
+                @Override
+                public void done(Vehicle v) {
+                    p("Truck arrived with " + inst.getContainersCount() + " containers.");
+                    SimulatorClient.sendTaskDone(lorryTuple.a.getPlatformID(), 0, InstructionType.SHIPMENT_ARRIVED, inst.getMessage());
+                }
+            });
          
         } else {
-            p("Truck departed with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Vertrek:\n vrachtwagen\n" + inst.getContainersCount() + " container(s).");
-            SimulatorClient.sendTaskDone(0, 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
+            lorryTuple.b.setContainer(null);
+            lorryTuple.b.state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
+
+                @Override
+                public void done(Vehicle v) {
+                    p("Truck for department arrived for " + inst.getContainersCount() + " containers.");
+                    SimulatorClient.sendTaskDone(lorryTuple.a.getPlatformID(), 0, InstructionType.DEPARTMENT_ARRIVED, inst.getMessage());
+                }
+            });
         }      
     }
     

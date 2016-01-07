@@ -379,7 +379,7 @@ public class World extends Behaviour {
                     return;
                 //TEMPFIX
                 Container c = m_train.setContainer(new Point3(0,0,x), null);
-                Vector3f pos = c.transform.position();
+                Vector3f pos = c.transform.position(); //<-- container is null??
                 Quaternion rot = c.transform.rotation();
                   
                 s.a.setContainer(Point3.zero(), c);

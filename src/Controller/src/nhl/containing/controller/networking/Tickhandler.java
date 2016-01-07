@@ -10,8 +10,8 @@ import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
+import nhl.containing.controller.simulation.LorryPlatform;
 import nhl.containing.controller.simulation.Parkingspot;
-import nhl.containing.controller.simulation.Platform;
 import nhl.containing.controller.simulation.SavedInstruction;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
@@ -74,7 +74,7 @@ public class Tickhandler implements Runnable
             if(s.carrier instanceof Truck)
             {
                 //Assign a loading platform to the truck
-                Platform lp = _items.GetPlatformIDForFreeLorryPlatform();
+                LorryPlatform lp = _items.GetPlatformIDForFreeLorryPlatform();
                 if(lp != null){
                     platformid = lp.getID();
                     lp.setShipment(s);

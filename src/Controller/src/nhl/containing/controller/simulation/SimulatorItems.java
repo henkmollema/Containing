@@ -35,14 +35,13 @@ public class SimulatorItems
     private Platform[] m_trainPlatforms = new Platform[TRAIN_CRANE_COUNT];
     private Shipment m_trainShipment = null;
     
-    private List<Platform> m_allPlatforms = new ArrayList<>();
     private Platform[] m_seaPlatforms = new Platform[SEA_SHIP_CRANE_COUNT];
     private Shipment m_seashipShipment = null;
     
     private Platform[] m_inlandPlatforms = new Platform[INLAND_SHIP_CRANE_COUNT];
     private Shipment m_inlandShipment = null;
     
-    private Platform[] m_lorryPlatforms = new Platform[LORRY_CRANE_COUNT];
+    private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[LORRY_CRANE_COUNT];
     
     private Map<Long,Parkingspot> m_parkingspotsMap = new HashMap<>();
     private List<Parkingspot> m_parkingspots = new ArrayList<>();
@@ -179,7 +178,7 @@ public class SimulatorItems
      * get LorryPlatforms
      * @return Platforms
      */
-    public Platform[] getLorryPlatforms(){
+    public LorryPlatform[] getLorryPlatforms(){
         return m_lorryPlatforms;
     }
     
@@ -363,7 +362,7 @@ public class SimulatorItems
     private void addTrainPlatform(int id){
         Platform nPlatform = new Platform(id);
         m_trainPlatforms[id - TRAIN_BEGIN] = nPlatform;
-        m_allPlatforms.add(nPlatform);
+
     }
     
     /**
@@ -373,7 +372,7 @@ public class SimulatorItems
     private void addSeashipPlatform(int id){
         Platform nPlatform = new Platform(id);
         m_seaPlatforms[id - SEASHIP_BEGIN] = nPlatform;
-        m_allPlatforms.add(nPlatform);
+
     }
     
     /**
@@ -383,7 +382,6 @@ public class SimulatorItems
     private void addInlandPlatform(int id){
         Platform nPlatform = new Platform(id);
         m_inlandPlatforms[id] = nPlatform;
-        m_allPlatforms.add(nPlatform);
     }
     
     /**
@@ -391,18 +389,15 @@ public class SimulatorItems
      * @param id if of lorryPlatform
      */
     private void addLorryPlatform(int id){
-        Platform nPlatform = new Platform(id);
+        LorryPlatform nPlatform = new LorryPlatform(id);
         m_lorryPlatforms[id - LORRY_BEGIN] = nPlatform;
-        m_allPlatforms.add(nPlatform);
+
     }   
     
-    public List<Platform> getAllPlatforms()
-    {
-        return m_allPlatforms;
-    }
+
     
-    public Platform GetPlatformIDForFreeLorryPlatform(){
-        for(Platform p : m_lorryPlatforms){
+    public LorryPlatform GetPlatformIDForFreeLorryPlatform(){
+        for(LorryPlatform p : m_lorryPlatforms){
             if(!p.hasShipment())
                 return p;
         }

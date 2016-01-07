@@ -382,9 +382,10 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             }
         } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
             //dit is een lorry platform
-            container = platform.getShipment().carrier.containers.get(0);
-            shipmentMoved(platform.getShipment());
-            platform.unsetShipment();
+            LorryPlatform lp = (LorryPlatform) platform;
+            container = lp.getShipment().carrier.containers.get(0);
+            shipmentMoved(lp.getShipment());
+            lp.unsetShipment();
         } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
             //dit is een seaship platform
             if(!platform.containers.isEmpty()){
@@ -398,13 +399,15 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             Storage storage = (Storage) platform;
             Point3 pos = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
             
-            //Send the agv to the departure platform.
-            for(Platform cplatform : _context.getSimulatorItems().getAllPlatforms())
+            if(container.departureShipment.carrier instanceof Truck)
             {
-                if(cplatform.hasShipment() && cplatform.getShipment().key == container.departureShipment.key)
+                for(LorryPlatform cplatform : _context.getSimulatorItems().getLorryPlatforms())
                 {
-                    to = cplatform;
-                    toSpot = cplatform.getFreeParkingspot();
+                    if(cplatform.hasShipment() && cplatform.getShipment().key == container.departureShipment.key)
+                    {
+                        to = cplatform;
+                        toSpot = cplatform.getFreeParkingspot();
+                    }
                 }
             }
             
@@ -455,8 +458,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 }
             } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
                 //dit is een lorry platform
-                
-                if (platform.hasShipment() && platform.getShipment().arrived) {
+                LorryPlatform lp = (LorryPlatform) platform;
+                if (lp.hasShipment() && lp.getShipment().arrived) {
                     sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {

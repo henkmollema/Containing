@@ -26,13 +26,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>13</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>KreukBV</bedrijf>

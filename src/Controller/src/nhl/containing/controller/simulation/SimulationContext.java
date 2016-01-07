@@ -38,6 +38,11 @@ public class SimulationContext
         return shouldDepartContainers;
     }
     
+    public List<ShippingContainer> getDepartingContainers()
+    {
+        return departingContainers;
+    }
+    
     public void setContainerShouldDepart(List<ShippingContainer> containers)
     {
         shouldDepartContainers.addAll(containers);

@@ -10,6 +10,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Line;
 import java.util.HashMap;
 import java.util.Map;
+import nhl.containing.simulator.framework.Mathf;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.world.World;
@@ -248,6 +249,7 @@ public class AgvPath /*extends Behaviour*/ {
         }
     }
     
+    /*
     private static Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {
         Vector3f[] p = new Vector3f[ids.length + 2];
         p[0] = new Vector3f(from);
@@ -260,13 +262,27 @@ public class AgvPath /*extends Behaviour*/ {
         
         return p;
     }
-    
+    */
     public static Vector3f[] getPath(int[] ids,Vector3f to){
         Vector3f[] p = new Vector3f[ids.length + 1];
-        p[p.length - 1] = new Vector3f(to);
         for(int i = 0; i < ids.length; i++){
             p[i] = m_hashNodes.get(ids[i]).position();
         }
+        
+        /* Uncomment this when no other angle clipping option
+         * and Vector3f[] p = new Vector3f[ids.length + 2];
+         * 
+        if (p.length > 2) {
+            Vector3f lm3 = p[p.length - 3].clone().subtract(to);
+            p[p.length - 1] = new Vector3f(
+                    (Mathf.abs(lm3.x) >  Mathf.abs(lm3.y)) ? p[p.length - 3].x : to.x,
+                    to.x,
+                    (Mathf.abs(lm3.x) <= Mathf.abs(lm3.y)) ? p[p.length - 3].y : to.y
+                    );
+        }
+        */
+        
+        p[p.length - 1] = new Vector3f(to);
         return p;
     }
     

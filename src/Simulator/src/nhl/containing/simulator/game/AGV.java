@@ -40,14 +40,15 @@ public final class AGV extends MovingItem {
     
     // Fields
     private static float m_distance = 20.0f;
-    private static float m_rotationSpeed = 4.0f;
+    private static float m_rotationSpeed = 0.01f;
     
     // Members
     private boolean m_waiting = false;
     private boolean m_instructionSend = true;
     private int m_parkingspot;
-    private Vector3f m_previousPosition = null;
+    private Vector3f m_targetDirection = null;
     private Vector3f m_previousDirection = Utilities.zero();
+    private Vector3f m_previousPosition = null;
     
     // Components
     private Spatial m_spatial;
@@ -59,6 +60,9 @@ public final class AGV extends MovingItem {
         this.register(SimulationItemType.AGV);
         initSpots(Point3.one());
         Main.register(this);
+        
+        //path().setPathf(Utilities.zero(), AgvPath.getPath(new int[]{0, 1, 3}, new Vector3f(0.0f, 0.0f, 0.0f)));
+        path().setPathf(Utilities.zero(), new Vector3f(50.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f), new Vector3f(0.0f, 0.0f, 50.0f), new Vector3f(100.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f));
     }
     
     public void setParkingspotID(int id){
@@ -74,27 +78,33 @@ public final class AGV extends MovingItem {
             ParkingSpot p = (ParkingSpot)Main.getTransform(m_parkingspot);
             p.agv(this);
         }
-        position(path().getPosition().add(transformOffset));
-        //lookDirection(spatialOffset);
         
-        if (m_previousPosition != null) {
-            Vector3f change = position().subtract(m_previousPosition).divide(Time.deltaTime());
-            float length = change.length();
+        Vector3f v = path().getPosition();
+        position(v.clone().add(transformOffset));
+        
+        Vector3f t = path().getTargetPosition();
+        if (m_previousPosition == null) {
+            m_previousPosition = position();
+            return;
+        }
+        if (t != null) {
+            m_targetDirection = v.subtract(m_previousPosition).divide(Time.deltaTime());
+            m_previousPosition = new Vector3f(v);
+        }
+        if (m_targetDirection != null) {
+            float length = m_targetDirection.subtract(m_previousDirection).length() / Time.timeScale();
+            if (length < 0.01f)
+                return;
             
-            if (length > 0.01f) {
-                
-                Vector3f n = change.divide(length);
-                n = Interpolate.ease(
-                        EaseType.Linear, 
-                        m_previousDirection, 
-                        n, 
-                        Time.deltaTime() * m_rotationSpeed * path().m_speed / length);
-                m_previousDirection = n;
-                
-                lookDirection(n);
-                m_previousPosition = position();
-            }
-        } else m_previousPosition = position();
+            Vector3f d = Interpolate.ease(
+                EaseType.Linear, 
+                m_previousDirection, 
+                m_targetDirection, 
+                m_rotationSpeed * path().m_speed / length);
+            
+            m_previousDirection = new Vector3f(d).normalize();
+            lookDirection(m_previousDirection);
+        }
     }
     
     private void init() {

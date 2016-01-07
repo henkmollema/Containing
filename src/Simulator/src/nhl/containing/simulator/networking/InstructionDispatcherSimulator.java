@@ -180,9 +180,13 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         for(int i = 0; i < instruction.getRouteCount(); i++){
             route[i] = instruction.getRoute(i);
         }
+        
+        
+        
+        
         //TEMPFIX for agv
         AGV agv = Main.getAgv(instruction.getA() + 1);
-        Vector3f[] path = AgvPath.getPath(route,Main.getTransform(instruction.getB()).position());
+        Vector3f[] path = AgvPath.getPath(route, Main.getTransform(instruction.getB()).position());
         agv.path().setPath(path);
         agv.setParkingspotID(instruction.getB());
     }
@@ -208,6 +212,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             seaPlatform.take(point, 0);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
             //dit is een storage platform
+            PlatformStorage storagePlatform =  World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
+            storagePlatform.take(point, instruction.getB());
             //TODO: stuur naar platform een crane move direction (Don't send place crane ready)
         }else{
             //dit is een train platform

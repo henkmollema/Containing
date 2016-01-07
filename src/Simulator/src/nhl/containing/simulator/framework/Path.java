@@ -200,6 +200,15 @@ public class Path {
         
         return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
     }
+    
+    public Vector3f getTargetPosition() {
+        if (m_nodes == null || m_targetNode < 0 || m_targetNode >= m_nodes.length)
+            return null;
+        return m_nodes[m_targetNode].clone();
+    }
+    public Vector3f getPosition(int index) {
+        return m_nodes[index].clone();
+    }
     /**
      * Get current target node
      * @return 

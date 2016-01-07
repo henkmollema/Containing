@@ -78,13 +78,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>11</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>KreukBV</bedrijf>
@@ -130,13 +130,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>3</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>KaspersTransportBV</bedrijf>
@@ -182,13 +182,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>7</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>HerkTransport</bedrijf>
@@ -234,13 +234,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>3</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>DHL</bedrijf>
@@ -286,13 +286,13 @@
             </eigenaar>
             <vertrek>
                 <datum>
-                    <d>4</d>
+                    <d>1</d>
                     <m>12</m>
                     <j>04</j>
                 </datum>
                 <tijd>
-                    <van>0.00</van>
-                    <tot>0.10</tot>
+                    <van>0.20</van>
+                    <tot>0.30</tot>
                 </tijd>
                 <soort_vervoer>vrachtauto</soort_vervoer>
                 <bedrijf>TransportCargo</bedrijf>

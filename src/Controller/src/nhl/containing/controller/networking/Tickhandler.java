@@ -7,15 +7,18 @@ package nhl.containing.controller.networking;
 
 import java.util.Date;
 import nhl.containing.controller.Simulator;
+import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
 import nhl.containing.controller.simulation.InlandShip;
 import nhl.containing.controller.simulation.LorryPlatform;
 import nhl.containing.controller.simulation.Parkingspot;
+import nhl.containing.controller.simulation.SavedInstruction;
 import nhl.containing.controller.simulation.SeaShip;
 import nhl.containing.controller.simulation.Shipment;
 import nhl.containing.controller.simulation.ShippingContainer;
 import nhl.containing.controller.simulation.SimulationContext;
 import nhl.containing.controller.simulation.SimulatorItems;
+import nhl.containing.controller.simulation.Storage;
 import nhl.containing.controller.simulation.Train;
 import nhl.containing.controller.simulation.Truck;
 import nhl.containing.networking.protobuf.InstructionProto.Container;
@@ -33,6 +36,7 @@ public class Tickhandler implements Runnable
 
     private final Instruction _instruction;
     private SimulatorItems _items;
+    private InstructionDispatcherController _dispatcher;
     /**
      * Constructor
      *
@@ -42,6 +46,7 @@ public class Tickhandler implements Runnable
     {
         _instruction = instruction;
         _items = Simulator.instance().getController().getItems();
+        _dispatcher = ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher());
     }
 
     /**
@@ -60,7 +65,7 @@ public class Tickhandler implements Runnable
 
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
-        p("Ingame time: " + date.toString());
+        //p("Ingame time: " + date.toString());
         int platformid = -1;
         // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
@@ -106,21 +111,32 @@ public class Tickhandler implements Runnable
             }
         }
         
-         //Check if new departure containers can be picked up..
+        //Check if new departure containers can be picked up (if open parkingspots at platforms)..
         for(ShippingContainer cont : context.getShouldDepartContainers())
         {
-            Parkingspot ps = context.getStoragePlatformByContainer(cont).getFreeParkingspot();
+            Storage platform = context.getStoragePlatformByContainer(cont);
+            Parkingspot ps = platform.getFreeParkingspot();
             if(ps != null)
             {
-                System.out.println("setMoveAGV for departing container..");
-                ((InstructionDispatcherController)Simulator.instance().server().simCom().dispatcher()).moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
+                p("setMoveAGV for departing container..");
+                //Assign departing container to the parkingspot where an agv will arive when available
+                context.parkingspot_Containertopickup.put(ps, cont);
+                _dispatcher.moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
                 context.setContainerDeparting(cont);
             }
             else
             {
-                System.out.println("Cant find parking spot!!");
+                p("Cant find parking spot!!");
             }
         }
+        AGV freeagv = context.getSimulatorItems().getFreeAGV();
+        while(freeagv != null)
+        {
+            SavedInstruction inst = _dispatcher.m_agvInstructions.poll();
+            _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
+            freeagv = context.getSimulatorItems().getFreeAGV();
+        }
+            //            
     }
 
     /**

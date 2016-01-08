@@ -6,7 +6,9 @@ package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
+import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Utilities;
+import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
@@ -27,7 +29,9 @@ public class PlatformInland extends Platform {
 
     @Override
     protected void createPlatform() {
-        
+        m_crane = WorldCreator.createSeaCrane(this);
+        initSpots(new Point3());
+        updateOuter();
     }
     
 }

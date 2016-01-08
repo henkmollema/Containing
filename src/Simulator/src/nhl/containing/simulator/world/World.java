@@ -208,7 +208,6 @@ public class World extends Behaviour {
                     new Vector3f(0.0f, 0.0f, 0.0f)
                 }
                 );
-        m_inlandShip.rotate(0,-93,0);
     }
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);

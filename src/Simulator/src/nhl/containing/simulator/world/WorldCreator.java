@@ -151,8 +151,8 @@ public final class WorldCreator {
         return new Crane(
                 parent,                                         // Parent
                 createDefaultCranePath(_basePosition),          // Node 1
-                "TrainCrane.obj",                               // Crane model name
-                "TrainCraneHook.obj",                           // Hook model name
+                "zeeKraan.obj",                               // Crane model name
+                "zeeKraanHook.obj",                           // Hook model name
                 MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
                 MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
                 3.0f,                                           // Attach Time
@@ -174,8 +174,8 @@ public final class WorldCreator {
         return new Crane(
                 parent,                                         // Parent
                 createDefaultCranePath(_basePosition),          // Node 1
-                "TrainCrane.obj",                               // Crane model name
-                "TrainCraneHook.obj",                           // Hook model name
+                "zeeKraan.obj",                               // Crane model name
+                "zeeKraanHook.obj",                           // Hook model name
                 MaterialCreator.diffuse(ColorRGBA.Blue, 0.3f),  // Crane model Material
                 MaterialCreator.diffuse(ColorRGBA.Red, 0.4f),   // Hook model Material
                 3.0f,                                           // Attach Time
@@ -265,16 +265,16 @@ public final class WorldCreator {
         Vehicle v = new Vehicle(
                 new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
-                "henk/Voertuigen/seaShip.obj", // front model
+                "henk/Voertuigen/barge.obj", // front model
                 1.0f, // front scale
                 new Vector3f(0.0f, 0.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
-        
+        v.rotate(0,-93,0);
+        v.containerOffset(new Vector3f(-10.0f, 2.2f, -30.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);
-        
         return v;
     }
     public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {

@@ -167,28 +167,28 @@ public class SimulationContext
             {
                 for(int y = 0; y < storagePlaces[0][0].length; y++)
                 {
-                    StorageItem sp, spbeneath;
+                    StorageItem sp, spbeneath = null;
                     
                     if(farside)
                     {
                         sp = storagePlaces[x][y][storagePlaces[0].length - z];
-                        spbeneath = storagePlaces[x][y-1][storagePlaces[0].length - z];
+                        if(y > 0) spbeneath = storagePlaces[x][y-1][storagePlaces[0].length - z];
                     }
                     else
                     {
                         sp = storagePlaces[x][y][z];
-                        spbeneath = storagePlaces[x][y-1][z];
+                        if(y > 0) spbeneath = storagePlaces[x][y-1][z];
                     }
                     
-                    if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
+                    if(y > 0 && spbeneath.isEmpty()) break; //No container beneath, so can not be placed here.
                     
                     //If there's no container on this spot 
-                    if(storagePlaces[x][y][z].isEmpty())
+                    if(sp.isEmpty())
                     {
                         if(y > 0)
                         {
                             //check the container beneath it.
-                            if(storagePlaces[x][y - 1][z].getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
+                            if(spbeneath.getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
                             {
                                 break; //Container can not be placed here, because the container beneath departs earlier
                             }

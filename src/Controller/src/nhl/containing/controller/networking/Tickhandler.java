@@ -113,9 +113,7 @@ public class Tickhandler implements Runnable
                 context.setContainerShouldDepart(s.carrier.containers);
                 System.out.println("Set container batch to should depart..");
             }
-            else{
-                createProto(s, platformid);
-            }
+            createProto(s, platformid);
         }
         
         //Check if new departure containers can be picked up (if open parkingspots at platforms)..

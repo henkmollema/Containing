@@ -11,7 +11,6 @@ import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.framework.Point3;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -41,7 +40,7 @@ public class World extends Behaviour {
     
     public static final float WORLD_HEIGHT =  0.0f;
     public static final float WORLD_DEPTH = -150.0f;
-    public static final float WATER_LEVEL = - 5.0f;
+    public static final float WATER_LEVEL = -5.0f;
     public static final float LAND_HEIGHT_EXTEND = 100.0f;
     
     public static final int AGV_COUNT = 100;//100;
@@ -192,13 +191,13 @@ public class World extends Behaviour {
             offset.x -= 10.0f;
         }
         
-        Vector3f _dest = new Vector3f(0.0f, 0.0f, 0.0f);
+        Vector3f _dest = new Vector3f(-500f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         m_inlandShip = WorldCreator.createInland(
                 new Vector3f[] {
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
+                    new Vector3f(-500f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 200f),
+                    //new Vector3f(0.0f, 0.0f, 0.0f),
+                    //new Vector3f(0.0f, 0.0f, 0.0f),
+                    //new Vector3f(0.0f, 0.0f, 0.0f),
                     new Vector3f(_dest)
                 }, 
                 new Vector3f[] {
@@ -209,6 +208,7 @@ public class World extends Behaviour {
                     new Vector3f(0.0f, 0.0f, 0.0f)
                 }
                 );
+        m_inlandShip.rotate(0,-93,0);
     }
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
@@ -447,7 +447,7 @@ public class World extends Behaviour {
     
     private void createSea()
     {
-        Geometry waterplane = WorldCreator.createWaterPlane(new Vector3f(-8000,-30,8000), 16000, 40, 0.05f, 0.05f, 6f);
+        Geometry waterplane = WorldCreator.createWaterPlane(new Vector3f(-8000,WATER_LEVEL,8000), 16000, 40, 0.05f, 0.05f, 6f);
         Main.instance().getRootNode().attachChild(waterplane);
     }
     

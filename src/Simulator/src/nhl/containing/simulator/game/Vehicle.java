@@ -224,9 +224,9 @@ public class Vehicle extends MovingItem
         clear();
         
         int size = containers.length;
-        Point3 max = new Point3(
-            m_containerSpots.length, 
-            m_containerSpots[0].length, 
+        Point3 max = new Point3( 
+            m_containerSpots.length,
+            m_containerSpots[0].length,
             m_containerSpots[0][0].length
         );
         

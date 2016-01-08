@@ -196,9 +196,9 @@ public class Vehicle extends MovingItem
     
     public void init(List<InstructionProto.Container> containers){
         Container[] c = new Container[containers.size()];
-        for(InstructionProto.Container container : containers){
-            c[container.getX()] = new Container(new RFID(container));
-            c[container.getX()].show();
+        for(int i = 0; i < c.length;i++){
+            c[i] = new Container(new RFID(containers.get(i)));
+            c[i].show();
         }
         init(c);
     }
@@ -216,7 +216,7 @@ public class Vehicle extends MovingItem
     public void init(Container... containers)
     {
         if (m_containerSpots.length < 1) {
-            System.out.println("Contianerspots don't have a size");
+            System.out.println("Containerspots don't have a size");
             return;
         }
         

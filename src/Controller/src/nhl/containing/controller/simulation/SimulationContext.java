@@ -111,7 +111,7 @@ public class SimulationContext
                if(container.departureShipment.carrier instanceof Truck)
                {
                    //Set it in the platforms closest to the lorry platforms
-                   storagePlatform = _simulatorItems.getStorages()[_simulatorItems.getStorages().length - j];
+                   storagePlatform = _simulatorItems.getStorages()[SimulatorItems.STORAGE_CRANE_COUNT - j - 1];
                }
                else
                {

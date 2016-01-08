@@ -27,6 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.*;
 import nhl.containing.simulator.game.AGV;
 import nhl.containing.simulator.game.AgvPath;
+import nhl.containing.simulator.game.ParkingSpot;
 
 /**
  * Main class
@@ -74,6 +75,7 @@ public class Main extends SimpleApplication {
     private static List<Transform> m_transforms = new ArrayList<>();
     private static Map<Long, AGV> m_agvs = new HashMap<>();
     private static Map<Long, Container> m_containers = new HashMap<>();
+    private static Map<Long, ParkingSpot> m_parkingspots = new HashMap<>();
     
     // Lines
     private static List<Line3D> m_lines = new ArrayList<>();
@@ -155,8 +157,9 @@ public class Main extends SimpleApplication {
         // Update lines
         for (Line3D l : m_lines)
             l.UpdateMesh();
-        for (AGV agv : m_agvs.values())
-            agv.update();
+        if (Time.timeScale() > 0.0f)
+            for (AGV agv : m_agvs.values())
+                agv.update();
         updateTimescale();
         
         if (m_camera != null)
@@ -212,6 +215,13 @@ public class Main extends SimpleApplication {
         }
         return -1;
     }
+    public static long register(ParkingSpot spot) {
+        if (!m_parkingspots.containsValue(spot)) {
+            m_parkingspots.put(Long.valueOf(m_transformID), spot);
+            return m_transformID;
+        }
+        return -1;
+    }
     /**
      * Register line
      * @param line 
@@ -238,6 +248,9 @@ public class Main extends SimpleApplication {
      */
     public static boolean unregister(Transform transform) {
         return m_transforms.remove(transform);
+    }
+    public static boolean unregister(ParkingSpot spot) {
+        return m_parkingspots.values().remove(spot);
     }
     /**
      * Unregister AGV
@@ -287,6 +300,9 @@ public class Main extends SimpleApplication {
     
     public static AGV getAgv(long id){
         return m_agvs.get(id);
+    }
+    public static ParkingSpot getParkingSpot(long id){
+        return m_parkingspots.get(id);
     }
 
     /**

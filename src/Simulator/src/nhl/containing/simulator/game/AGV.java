@@ -29,7 +29,7 @@ public final class AGV extends MovingItem {
     
     // Constants
     private static final Vector3f startPosition = new Vector3f(-10f, 0f, 625);
-    private static final Vector3f transformOffset = new Vector3f(0.0f, 2.0f, 0.0f);
+    private static final Vector3f transformOffset = new Vector3f(0.0f, 5.0f, 0.0f);
     private static final Vector3f spatialOffset = new Vector3f(0.0f, 0.0f, 0.0f);
     private static final float spatialScale = 2.2f;
     private static final Vector3f containerOffset = new Vector3f(-1.2f, 0.4f, -6.0f);
@@ -62,7 +62,7 @@ public final class AGV extends MovingItem {
         Main.register(this);
         
         //path().setPathf(Utilities.zero(), AgvPath.getPath(new int[]{0, 1, 3}, new Vector3f(0.0f, 0.0f, 0.0f)));
-        path().setPathf(Utilities.zero(), new Vector3f(50.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f), new Vector3f(0.0f, 0.0f, 50.0f), new Vector3f(100.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f));
+        //path().setPathf(Utilities.zero(), new Vector3f(50.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f), new Vector3f(0.0f, 0.0f, 50.0f), new Vector3f(100.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f));
     }
     
     public void setParkingspotID(int id){
@@ -70,7 +70,16 @@ public final class AGV extends MovingItem {
         m_parkingspot = id;
     }
     
+    //private boolean ff = true;//testing
+    
     public void update() {
+        /*Testing
+        if (ff) {
+            Vector3f[] p = AgvPath.getPath(new int[]{0, 1, 10, 18, 19, 20, 21, 13, 12, 11, 10, 9, 0}, Main.instance().getWorld().getLorryPlatforms().get(0).a.getParkingSpot());
+            path().setPathf(p[0], p);
+            ff = false;
+        }*/
+        
         path().update();
         if(path().atLast() && !m_instructionSend){
             m_instructionSend = true;
@@ -78,7 +87,6 @@ public final class AGV extends MovingItem {
             ParkingSpot p = (ParkingSpot)Main.getTransform(m_parkingspot);
             p.agv(this);
         }
-        
         Vector3f v = path().getPosition();
         position(v.clone().add(transformOffset));
         
@@ -103,6 +111,7 @@ public final class AGV extends MovingItem {
                 m_rotationSpeed * path().m_speed / length);
             
             m_previousDirection = new Vector3f(d).normalize();
+            
             lookDirection(m_previousDirection);
         }
     }

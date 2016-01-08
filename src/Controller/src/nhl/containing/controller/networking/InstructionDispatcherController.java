@@ -473,7 +473,22 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 //dit is een storage platform
                 Storage storage = (Storage) platform;
                 ShippingContainer container = p.getAGV().getContainer();
-                position = _context.determineContainerPosition(container);
+                
+                boolean farside; //Moet hij aan de overkant (ten opzichte van 0,0,0) geplaatst worden
+                if(container.departureShipment.carrier instanceof Truck)
+                {
+                    farside = true;
+                }
+                else if(container.departureShipment.carrier instanceof Train)
+                {
+                    farside = false;
+                }
+                else if(container.departureShipment.carrier instanceof InlandShip)
+                {
+                    farside = true;
+                }
+                
+                position = _context.determineContainerPosition(container, farside);
                 try {
                     storage.setContainer(container, position);
                     sendCraneToStorage(storage, p, position);

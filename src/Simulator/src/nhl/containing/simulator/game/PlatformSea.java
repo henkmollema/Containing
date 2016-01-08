@@ -24,7 +24,7 @@ public class PlatformSea extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this,Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_SEASHIP, 4, 5)
+            new ParkingSpot(this,Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_SEASHIP, 4, 5, true)
         };
     }
 

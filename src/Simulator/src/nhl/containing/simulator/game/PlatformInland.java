@@ -21,7 +21,7 @@ public class PlatformInland extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
-            new ParkingSpot(this, Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_INLANDSHIP, 2, 3)
+            new ParkingSpot(this, Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_INLANDSHIP, 2, 3, false)
         };
     }
 

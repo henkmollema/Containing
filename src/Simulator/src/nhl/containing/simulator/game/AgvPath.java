@@ -262,27 +262,30 @@ public class AgvPath /*extends Behaviour*/ {
         
         return p;
     }
-    */
-    public static Vector3f[] getPath(int[] ids,Vector3f to){
+    * 
+    * 
+    public static Vector3f[] getPath(int[] ids, Vector3f to){
         Vector3f[] p = new Vector3f[ids.length + 1];
         for(int i = 0; i < ids.length; i++){
             p[i] = m_hashNodes.get(ids[i]).position();
         }
         
-        /* Uncomment this when no other angle clipping option
-         * and Vector3f[] p = new Vector3f[ids.length + 2];
-         * 
-        if (p.length > 2) {
-            Vector3f lm3 = p[p.length - 3].clone().subtract(to);
-            p[p.length - 1] = new Vector3f(
-                    (Mathf.abs(lm3.x) >  Mathf.abs(lm3.y)) ? p[p.length - 3].x : to.x,
-                    to.x,
-                    (Mathf.abs(lm3.x) <= Mathf.abs(lm3.y)) ? p[p.length - 3].y : to.y
-                    );
-        }
-        */
-        
         p[p.length - 1] = new Vector3f(to);
+        return p;
+    }
+    */
+    public static Vector3f[] getPath(int[] ids, ParkingSpot to){
+        Vector3f[] p = new Vector3f[ids.length + 2];
+        for(int i = 0; i < ids.length; i++){
+            p[i] = m_hashNodes.get(ids[i]).position();
+        }
+        
+        Vector3f oo = (p.length > 2) ? p[p.length - 3].clone() : to.position();
+        Vector3f pos = to.position();
+        if (to.snap2x()) pos.x = oo.x; else pos.z = oo.z;
+        
+        p[p.length - 2] = new Vector3f(pos);
+        p[p.length - 1] = new Vector3f(to.position());
         return p;
     }
     

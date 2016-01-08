@@ -232,7 +232,7 @@ public class AgvPath /*extends Behaviour*/ {
     private static void debugPath() {
         for (int i = 0; i < nodes.length; i++) {
             for (int j : nodes[i].connections()) {
-                Vector3f offset = new Vector3f(0.0f, 20.0f, 0.0f);
+                Vector3f offset = new Vector3f(0.0f, 5.0f, 0.0f);
                 
                 Line a = new Line(nodes[i].position().add(offset), nodes[j].position().add(offset));
                 Geometry g = new Geometry("Colored Box", a); 

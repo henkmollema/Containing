@@ -24,8 +24,6 @@ public class Train extends Vehicle {
     private List<Spatial> m_wagonInactivePool = new ArrayList<>();
     private List<Spatial> m_wagonActivePool = new ArrayList<>();
     
-    public List<Container> m_containers2take;
-    public List<Container> m_containers2bring;
     private boolean isDone = false;
     
     public Train(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
@@ -40,26 +38,7 @@ public class Train extends Vehicle {
     private final float wagonSize = -60.0f;
     private final float containersPerWagon = 2.44f;
     
-    public void init(List<InstructionProto.Container> containers){
-        Container[] c = new Container[containers.size()];
-        for(InstructionProto.Container container : containers){
-            c[container.getX()] = new Container(new RFID(container));
-            c[container.getX()].show();
-        }
-        init(c);
-    }
-    
-    public void init(int size)
-    {
-        Container[] c = new Container[size];
-        
-        for (int i = 0; i < c.length; i++) {
-            c[i] = new Container(new RFID());
-            c[i].show();
-        }
-        
-        init(c);
-    }
+    @Override
     public void init(Container... containers)
     {
         clear();

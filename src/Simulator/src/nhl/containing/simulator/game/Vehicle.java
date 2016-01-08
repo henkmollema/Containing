@@ -7,6 +7,8 @@ package nhl.containing.simulator.game;
 import com.jme3.material.Material;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import java.util.List;
+import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
@@ -190,5 +192,61 @@ public class Vehicle extends MovingItem
     public interface VehicleStateApplied
     {
         void done(Vehicle v);
+    }
+    
+    public void init(List<InstructionProto.Container> containers){
+        Container[] c = new Container[containers.size()];
+        for(InstructionProto.Container container : containers){
+            c[container.getX()] = new Container(new RFID(container));
+            c[container.getX()].show();
+        }
+        init(c);
+    }
+    public void init(int size)
+    {
+        Container[] c = new Container[size];
+        
+        for (int i = 0; i < c.length; i++) {
+            c[i] = new Container(new RFID());
+            c[i].show();
+        }
+        
+        init(c);
+    }
+    public void init(Container... containers)
+    {
+        if (m_containerSpots.length < 1) {
+            System.out.println("Contianerspots don't have a size");
+            return;
+        }
+        
+        
+        clear();
+        
+        int size = containers.length;
+        Point3 max = new Point3(
+            m_containerSpots.length, 
+            m_containerSpots[0].length, 
+            m_containerSpots[0][0].length
+        );
+        
+        position(Utilities.zero());
+        initSpots(new Point3(max));
+        //max.add(Point3.one());
+        
+        for (int x = 1; x <= max.x; x++) {
+            for (int y = 1; y <= max.y; y++){
+                for (int z = 1; z <= max.z; z++) {
+                    
+                    if (--size < 0)
+                        break;
+                    
+                    setContainer(new Point3(x, y, z), containers[size], false);
+                }
+            }
+        }
+        updateOuter();
+        
+        System.out.println("adafsaasdf: " + (getContainer(2, 2, 2) == null));
     }
 }

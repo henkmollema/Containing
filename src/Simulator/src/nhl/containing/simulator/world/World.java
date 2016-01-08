@@ -177,11 +177,12 @@ public class World extends Behaviour {
             m_lorryCells.get(i).a.getParkingSpot(0).agv(null);
         }
         
-        //m_train.state(Vehicle.VehicleState.ToLoad);
+        m_train.state(Vehicle.VehicleState.ToLoad);
         m_train.init(30);
         m_train.init(10);
         
-        //m_seaShip.state(Vehicle.VehicleState.ToLoad);
+        m_seaShip.init(1000);
+        m_seaShip.state(Vehicle.VehicleState.ToLoad);
     }
     
     private void createInlandCell() {

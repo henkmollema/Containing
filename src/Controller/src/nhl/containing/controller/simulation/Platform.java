@@ -20,6 +20,8 @@ public class Platform
     public List<ShippingContainer> containers = new ArrayList<>();
     protected boolean busy = false;
     
+    
+    
     public void removeContainerAtPosition(Point3 pos)
     {
         for(int i = 0; i < containers.size(); i++)

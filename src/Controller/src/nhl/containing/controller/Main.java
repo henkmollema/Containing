@@ -1,11 +1,6 @@
 package nhl.containing.controller;
 
-import java.awt.Dimension;
-import java.awt.Point;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import nhl.containing.controller.simulation.Node;
 
 @SuppressWarnings("all")
 public class Main
@@ -42,38 +37,6 @@ public class Main
         });
 
         run();
-        /*
-        Node[] nodes =
-        {
-            new Node(0, 1.0f, 1.0f, Arrays.asList(new Integer[]{1,2})),
-            new Node(1, 2.0f, 2.0f, Arrays.asList(new Integer[]{0,3})),
-            new Node(2, 3.0f, 3.0f, Arrays.asList(new Integer[]{0,3})),
-            new Node(3, 4.0f, 4.0f, Arrays.asList(new Integer[]{2,1}))
-        };
-        PathFinder.initPath(nodes);
-        int[] path = PathFinder.getPath(0, 3);
-        for (int i : path)
-        {
-            System.out.println("node " + i);
-        }
-        /*
-        int size = 100;
-        long start = System.currentTimeMillis();
-        PathFinder.initPath(new Dimension(size, size));
-        long end = System.currentTimeMillis();
-        long elapsed = end - start;
-        System.out.println("grid gegenereerd in: " + String.valueOf(elapsed) + " ms");
-        start = System.currentTimeMillis();
-        int[] path = PathFinder.getPath(0, (int)Math.pow(size, 2) - 1, 5.0f);
-        end = System.currentTimeMillis();
-        for (int i : path)
-        {
-            System.out.println("node " + i);
-        }
-        System.out.println("grid gegenereerd in: " + String.valueOf(elapsed) + " ms");
-        System.out.println("pad gegenereerd in: " + String.valueOf(end - start) + " ms");
-        System.out.println("Pad is " + String.valueOf(path.length) + " lang");
-        /**/
     }
 
     /**

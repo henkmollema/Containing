@@ -351,7 +351,9 @@ public class SimulatorItems
      * @param id id of trainPlatform
      */
     private void addTrainPlatform(int id){
-        m_trainPlatforms[id - TRAIN_BEGIN] = new Platform(id);
+        Platform nPlatform = new Platform(id);
+        m_trainPlatforms[id - TRAIN_BEGIN] = nPlatform;
+
     }
     
     /**
@@ -359,7 +361,9 @@ public class SimulatorItems
      * @param id if of seashipPlatform
      */
     private void addSeashipPlatform(int id){
-        m_seaPlatforms[id - SEASHIP_BEGIN] = new Platform(id);
+        Platform nPlatform = new Platform(id);
+        m_seaPlatforms[id - SEASHIP_BEGIN] = nPlatform;
+
     }
     
     /**
@@ -367,7 +371,8 @@ public class SimulatorItems
      * @param id id of inlandPlatform
      */
     private void addInlandPlatform(int id){
-        m_inlandPlatforms[id] = new Platform(id);
+        Platform nPlatform = new Platform(id);
+        m_inlandPlatforms[id] = nPlatform;
     }
     
     /**
@@ -375,6 +380,19 @@ public class SimulatorItems
      * @param id if of lorryPlatform
      */
     private void addLorryPlatform(int id){
-        m_lorryPlatforms[id - LORRY_BEGIN] = new LorryPlatform(id);
-    }    
+        LorryPlatform nPlatform = new LorryPlatform(id);
+        m_lorryPlatforms[id - LORRY_BEGIN] = nPlatform;
+
+    }   
+    
+
+    
+    public LorryPlatform GetPlatformIDForFreeLorryPlatform(){
+        for(LorryPlatform p : m_lorryPlatforms){
+            if(!p.hasShipment())
+                return p;
+        }
+        return null;
+    }
+
 }

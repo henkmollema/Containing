@@ -6,6 +6,7 @@
 package nhl.containing.controller.networking;
 
 import java.util.Date;
+import nhl.containing.controller.Point3;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
@@ -74,19 +75,25 @@ public class Tickhandler implements Runnable
             if(s.carrier instanceof Truck)
             {
                 //Assign a loading platform to the truck
-                LorryPlatform lp = LorryPlatform.GetPlatformForFreeLorryPlatform(_items.getLorryPlatforms());
+                LorryPlatform lp = _items.GetPlatformIDForFreeLorryPlatform();
                 if(lp != null){
                     //continue;
                     platformid = lp.getID();
                     lp.setShipment(s);
                 }else{
                     //TODO: problems or queue?
+                    continue;
                 }
             }else if(s.carrier instanceof Train){
                 if(_items.hasTrainShipment())
                     continue; //TODO: Fix a queue ?
                 else
                     _items.setTrainShipment(s);
+                for (int i = 0; i < s.carrier.containers.size(); i++){
+                    ShippingContainer sc = s.carrier.containers.get(i);
+                    if (sc.position.y > 0 || sc.position.z > 0 || sc.position.x != i)
+                        sc.position = new Point3(i, 0, 0);
+                }
             }else if(s.carrier instanceof SeaShip){
                 if(_items.hasSeaShipment())
                     continue; //TODO: Fix a queue?

@@ -26,6 +26,7 @@ public class PlatformLorry extends Platform {
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
             new ParkingSpot(this, Utilities.zero(),m_platformid,SimulationItemType.PARKINGSPOT_LORRY, 0, 1)
+
         };
     }
 

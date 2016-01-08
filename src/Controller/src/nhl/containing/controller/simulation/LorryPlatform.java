@@ -11,7 +11,7 @@ package nhl.containing.controller.simulation;
  */
 public class LorryPlatform extends Platform
 {
-    private Shipment m_lorryShipment = null;
+    private Shipment m_Shipment = null;
     
     /**
      * Constructor
@@ -21,19 +21,19 @@ public class LorryPlatform extends Platform
         super(id);
     }
     
-    /**
+     /**
      * Sets a shipment to the lorry platform
      * @param shipment shipment
      */
     public void setShipment(Shipment shipment){
-        m_lorryShipment = shipment;
+        m_Shipment = shipment;
     }
     
     /**
      * Unsets a shipment
      */
     public void unsetShipment(){
-        m_lorryShipment = null;
+        m_Shipment = null;
     }
     
     /**
@@ -41,7 +41,7 @@ public class LorryPlatform extends Platform
      * @return true when has shipment, otherwise false
      */
     public boolean hasShipment(){
-        return m_lorryShipment != null;
+        return m_Shipment != null;
     }
     
     /**
@@ -49,8 +49,8 @@ public class LorryPlatform extends Platform
      * @return shipment
      */
     public Shipment getShipment(){
-        return m_lorryShipment;
-    }
+        return m_Shipment;
+    } 
     
     public static LorryPlatform GetPlatformbyShipment(Shipment shipment,LorryPlatform[] platforms){
         for(LorryPlatform p : platforms){

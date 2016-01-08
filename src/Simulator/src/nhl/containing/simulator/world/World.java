@@ -44,7 +44,7 @@ public class World extends Behaviour {
     public static final float WATER_LEVEL = - 5.0f;
     public static final float LAND_HEIGHT_EXTEND = 100.0f;
     
-    public static final int AGV_COUNT = 8;//100;
+    public static final int AGV_COUNT = 100;//100;
     public static final float LANE_WIDTH = 10.0f;
     public static final int LANE_COUNT = 4;
     
@@ -379,8 +379,10 @@ public class World extends Behaviour {
                     return;
                 //TEMPFIX
                 Container c = m_train.setContainer(new Point3(0,0,x), null);
-                Vector3f pos = c.transform.position(); //<-- container is null??
-                Quaternion rot = c.transform.rotation();
+                if(c == null)
+                    p("oops.. container is null");
+                //Vector3f pos = c.transform.position(); //<-- container is null??
+                //Quaternion rot = c.transform.rotation();
                   
                 s.a.setContainer(Point3.zero(), c);
                 s.a.take(Point3.zero(), 0);

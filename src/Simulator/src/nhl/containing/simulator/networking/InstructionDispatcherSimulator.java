@@ -266,7 +266,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (arriving) {
             p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
-
+            for(InstructionProto.Container container : inst.getContainersList()){
+                Container c = new Container(new RFID(container));
+                c.show();
+                World().getInlandShip().setContainer(new Point3(inst.getX(),inst.getY(),inst.getZ()), c);
+            }
             // Let the ship arrive at the platform.
             World().getInlandShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {

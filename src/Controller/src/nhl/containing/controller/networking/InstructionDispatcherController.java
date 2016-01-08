@@ -474,7 +474,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 Storage storage = (Storage) platform;
                 ShippingContainer container = p.getAGV().getContainer();
                 
-                boolean farside; //Moet hij aan de overkant (ten opzichte van 0,0,0) geplaatst worden
+                boolean farside = false; //Moet hij aan de overkant (ten opzichte van 0,0,0) geplaatst worden
                 if(container.departureShipment.carrier instanceof Truck)
                 {
                     farside = true;

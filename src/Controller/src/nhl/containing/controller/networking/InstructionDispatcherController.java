@@ -89,7 +89,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         agv.getContainer().currentCategory = AppDataProto.ContainerCategory.STORAGE;
         agv.unsetContainer();
         spot.removeAGV();
-        
         agv.stop(); //set the agv to not busy so it can take a new job in the tickhandler
     }
 
@@ -143,7 +142,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 continue;
             }
 
-                // Get a subset of the containers which get handled by this crane.
+            // Get a subset of the containers which get handled by this crane.
             // We create a copy of the list so the containers don't get removed from the source list.
             List<ShippingContainer> containers = new ArrayList<>(allContainers.subList(skip, take));
 
@@ -171,6 +170,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      * @param platform platform
      */
     private void placeCrane(Platform platform) { placeCrane(platform, null, 0);}
+    
     private void placeCrane(Platform platform, Point3 containerPos, long parkingSpot) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
@@ -269,30 +269,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         platform.setBusy();
     }
 
-    /**[NOT USED?]
-     * Sends Move AGV command to sea/inland/train platform
-     *
-     * @param agv agv
-     * @param to to platform
-     * @param nodeid id van to node
-     */
-    public void moveAGV(AGV agv, Platform to, int nodeid){
-        int[] route = PathFinder.getPath(agv.getNodeID(), nodeid);
-        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
-        builder.setId(CommunicationProtocol.newUUID());
-        builder.setA(agv.getID());
-        for (int r : route) {
-            builder.addRoute(r);
-        }
-        builder.setInstructionType(InstructionType.MOVE_AGV);
-        _com.sendInstruction(builder.build());
-        try {
-            agv.setBusy();
-            to.getParkingspots().get(0).setAGV(agv);
-            agv.setNodeID(nodeid);
-        }catch(Exception e){e.printStackTrace();} 
-    }
-
     /**
      * Sends Move AGV command
      *
@@ -339,7 +315,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }else if(shipment.carrier instanceof Train){
             p = _items.getTrainPlatforms()[0];
         }else{
-            //TODO: Find truck shipment
             p = LorryPlatform.GetPlatformbyShipment(shipment, _items.getLorryPlatforms());
         }
         shipment.containersMoved = true;

@@ -186,7 +186,8 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         
         //TEMPFIX for agv
         AGV agv = Main.getAgv(instruction.getA() + 1);
-        Vector3f[] path = AgvPath.getPath(route, Main.getParkingSpot(instruction.getB()));
+        ParkingSpot p = Main.getParkingSpot(instruction.getB() + 1);
+        Vector3f[] path = AgvPath.getPath(route,p );
         agv.path().setPath(path);
         agv.setParkingspotID(instruction.getB());
     }

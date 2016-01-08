@@ -161,18 +161,18 @@ public class SimulationContext
         StorageItem[][][] storagePlaces = platform.getStoragePlaces();
         
         // storagePlaces array size = [5][5][45] where y is stack
-        for(int z = 0; z < storagePlaces[0].length; z++)
+        for(int z = 0; z < storagePlaces[0][0].length; z++)
         {
             for(int x = 0; x < storagePlaces.length; x++)
             {
-                for(int y = 0; y < storagePlaces[0][0].length; y++)
+                for(int y = 0; y < storagePlaces[0].length; y++)
                 {
                     StorageItem sp, spbeneath = null;
                     
                     if(farside)
                     {
-                        sp = storagePlaces[x][y][storagePlaces[0].length - z];
-                        if(y > 0) spbeneath = storagePlaces[x][y-1][storagePlaces[0].length - z];
+                        sp = storagePlaces[x][y][storagePlaces[0][0].length - z - 1];
+                        if(y > 0) spbeneath = storagePlaces[x][y-1][storagePlaces[0][0].length - z - 1];
                     }
                     else
                     {
@@ -193,8 +193,11 @@ public class SimulationContext
                                 break; //Container can not be placed here, because the container beneath departs earlier
                             }
                         }
+                        Point3 retVal = null;
+                        if(farside) retVal = new Point3(x,y,storagePlaces[0][0].length - z - 1);
+                        else retVal = new Point3(x,y,z);
                         
-                        return new Point3(x,y,z);
+                        return retVal;
                     }
                 }
             }

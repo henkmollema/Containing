@@ -263,7 +263,7 @@ public final class WorldCreator {
     
     public static Vehicle createInland(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
-                new Point3(),
+                new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
                 "henk/Voertuigen/seaShip.obj", // front model
                 1.0f, // front scale
@@ -279,7 +279,7 @@ public final class WorldCreator {
     }
     public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
-                new Point3(),
+                new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
                 "henk/Voertuigen/seaShip.obj", // front model
                 4.0f, // front scale
@@ -287,6 +287,7 @@ public final class WorldCreator {
         );
         v.state(Vehicle.VehicleState.Disposed);
         v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
+        v.containerOffset(new Vector3f(0.0f, 16.0f, 0.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);

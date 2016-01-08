@@ -73,7 +73,7 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
     vector<node > nodes       { get_copy()       };
     vector<node*> open_list   { vector<node*>(0) };
     vector<node*> closed_list { vector<node*>(0) };
-    cout << "init" << endl;
+    //cout << "init" << endl;
     // clone target and from
     node* current{ &nodes[from->id()] };
     while (1)
@@ -85,7 +85,7 @@ vector<int> road_map::get_path(node* from, node* to, float speed)
 
         if (current->id() == to->id())
         { // Path completed
-            cout << "path completed" << endl;
+            //cout << "path completed" << endl;
             vector<int> path{ vector<int>(0) };
             while (current != NULL)
             { // set path

@@ -99,13 +99,24 @@ public class SimulationContext
      */
     public void determineContainerPlatforms(List<ShippingContainer> containers)
     {   
+        
+        
         for(int i = 0; i < containers.size(); i++)
         {
             ShippingContainer container = containers.get(i);
             
             for(int j = 0; j < SimulatorItems.STORAGE_CRANE_COUNT; j++)
             {
-               Storage storagePlatform = _simulatorItems.getStorages()[j];
+               Storage storagePlatform;
+               if(container.departureShipment.carrier instanceof Truck)
+               {
+                   //Set it in the platforms closest to the lorry platforms
+                   storagePlatform = _simulatorItems.getStorages()[_simulatorItems.getStorages().length - j];
+               }
+               else
+               {
+                   storagePlatform = _simulatorItems.getStorages()[j];
+               }
                
                if(canBePlacedInStoragePlatform(container, storagePlatform)){
                    container_StoragePlatform.put(container, storagePlatform);
@@ -144,7 +155,7 @@ public class SimulationContext
         return true;
     }
     
-    public Point3 determineContainerPosition(ShippingContainer c)
+    public Point3 determineContainerPosition(ShippingContainer c, boolean farside)
     {
         Storage platform = this.getStoragePlatformByContainer(c);
         StorageItem[][][] storagePlaces = platform.getStoragePlaces();
@@ -156,6 +167,19 @@ public class SimulationContext
             {
                 for(int y = 0; y < storagePlaces[0][0].length; y++)
                 {
+                    StorageItem sp, spbeneath;
+                    
+                    if(farside)
+                    {
+                        sp = storagePlaces[x][y][storagePlaces[0].length - z];
+                        spbeneath = storagePlaces[x][y-1][storagePlaces[0].length - z];
+                    }
+                    else
+                    {
+                        sp = storagePlaces[x][y][z];
+                        spbeneath = storagePlaces[x][y-1][z];
+                    }
+                    
                     if(y > 0 && storagePlaces[x][y - 1][z].isEmpty()) break; //No container beneath, so can not be placed here.
                     
                     //If there's no container on this spot 

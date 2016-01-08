@@ -31,6 +31,13 @@ public class Point3 {
         return new Point3(1, 1, 1);
     }
     /**
+     * [1, 1, 1]
+     * @return 
+     */
+    public static Point3 onei() {
+        return new Point3(-1, -1, -1);
+    }
+    /**
      * [0, 1, 0]
      * @return 
      */

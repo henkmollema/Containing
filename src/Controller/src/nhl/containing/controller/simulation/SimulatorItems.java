@@ -20,10 +20,10 @@ import nhl.containing.networking.protobuf.SimulationItemProto.*;
  */
 public class SimulatorItems
 {
-    public static final int SEA_SHIP_CRANE_COUNT = 8;
+    public static final int SEA_SHIP_CRANE_COUNT = 10;
     public static final int TRAIN_CRANE_COUNT = 4;
     public static final int LORRY_CRANE_COUNT = 20;
-    public static final int INLAND_SHIP_CRANE_COUNT = 1;
+    public static final int INLAND_SHIP_CRANE_COUNT = 8;
     public static final int STORAGE_CRANE_COUNT = 72;
     
     public static final int STORAGE_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;

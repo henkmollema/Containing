@@ -223,7 +223,8 @@ public class Vehicle extends MovingItem
         
         clear();
         
-        int size = containers.length;
+        int size = 0;
+        int maxSize = containers.length;
         Point3 max = new Point3( 
             m_containerSpots.length,
             m_containerSpots[0].length,
@@ -234,14 +235,14 @@ public class Vehicle extends MovingItem
         initSpots(new Point3(max));
         //max.add(Point3.one());
         
-        for (int x = 1; x <= max.x; x++) {
-            for (int y = 1; y <= max.y; y++){
-                for (int z = 1; z <= max.z; z++) {
+        for (int x = 0; x < max.x; x++) {
+            for (int y = 0; y < max.y; y++){
+                for (int z = 0; z < max.z; z++) {
                     
-                    if (--size < 0)
+                    if (size == maxSize)
                         break;
-                    
                     setContainer(new Point3(x, y, z), containers[size], false);
+                    size++;
                 }
             }
         }

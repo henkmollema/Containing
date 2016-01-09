@@ -347,7 +347,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         ShippingContainer container = _context.getContainerById(instruction.getB());
         Platform to = _context.getStoragePlatformByContainer(container); //<-- hier klopt iets niet dus?
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
-        Parkingspot toSpot = toSpot = Platform.findFreeParkingspot(to); //<--- hier gaat het telkens fout, platform is wss null
+        Parkingspot toSpot = Platform.findFreeParkingspot(to); //<--- hier gaat het telkens fout, platform is wss null
         container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform
@@ -380,7 +380,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             {
                 for(LorryPlatform cplatform : _context.getSimulatorItems().getLorryPlatforms())
                 {
-                    if(cplatform.hasShipment() && cplatform.getShipment().key == container.departureShipment.key)
+                    if(cplatform.hasShipment() && cplatform.getShipment().key.equals(container.departureShipment.key))
                     {
                         to = cplatform;
                         toSpot = cplatform.getFreeParkingspot();

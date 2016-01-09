@@ -72,9 +72,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     public void rawUpdate() {
         if (m_safeFrames < SAFE_FRAMES) {
             m_safeFrames++;
-            //if(m_safeFrames == SAFE_FRAMES) {
-                //handleTrain(true, null, 15);
-            //}
             return;
         }
         
@@ -222,7 +219,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         for(int i = 0; i < instruction.getRouteCount(); i++){
             route[i] = instruction.getRoute(i);
         }
-        //TEMPFIX for agv
         AGV agv = Main.getAgv(instruction.getA() + 1);
         ParkingSpot p = Main.getParkingSpot(instruction.getB() + 1);
         Vector3f[] path = AgvPath.getPath(route,p );

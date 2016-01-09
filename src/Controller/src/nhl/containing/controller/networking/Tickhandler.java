@@ -89,11 +89,11 @@ public class Tickhandler implements Runnable
                     continue; //TODO: Fix a queue ?
                 else
                     _items.setTrainShipment(s);
-                for (int i = 0; i < s.carrier.containers.size(); i++){
-                    ShippingContainer sc = s.carrier.containers.get(i);
-                    if (sc.position.y > 0 || sc.position.z > 0 || sc.position.x != i)
-                        sc.position = new Point3(i, 0, 0);
-                }
+//                for (int i = 0; i < s.carrier.containers.size(); i++){
+//                    ShippingContainer sc = s.carrier.containers.get(i);
+//                    if (sc.position.y > 0 || sc.position.z > 0 || sc.position.x != i)
+//                        sc.position = new Point3(i, 0, 0);
+//                }
             }else if(s.carrier instanceof SeaShip){
                 if(_items.hasSeaShipment())
                     continue; //TODO: Fix a queue?

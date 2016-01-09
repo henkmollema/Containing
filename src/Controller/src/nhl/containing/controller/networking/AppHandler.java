@@ -227,7 +227,7 @@ public class AppHandler implements Runnable
                 }
                 break;
             case 3:
-                //unkown graph [WIP]
+                //none , for compatibility with the app
                 break;
             case 4:
                 //containerlist

@@ -174,19 +174,6 @@ public class MainActivity extends AppCompatActivity implements ContainersFragmen
     }
 
     /**
-     * Setup the home fragment
-     */
-    private void setupHomeFragment()
-    {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        GraphFragment gf = new GraphFragment();
-        fragment = gf;
-        ft.replace(R.id.frame, gf);
-        ft.commit();
-    }
-
-    /**
      * Checks if connected to the right network
      * @param network id of the connectivity
      */

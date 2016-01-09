@@ -94,4 +94,15 @@
     </string-array>
     <string name="communicator_no_data">Er is nog geen data gevonden</string>
     <string name="containerlist_no_items">Geen containers gevonden</string>
+    <string name="qr_data_dialog_message">Weet u zeker dat u deze gegevens wil opslaan?\n IP-adres: %1$s \n Poort: %2$s</string>
+    <string name="qr_data_dialog_neg_button">Nee</string>
+    <string name="qr_data_dialog_pos_button">Ja</string>
+    <string name="qr_data_dialog_title">Accepteer Gegevens</string>
+    <string name="qr_failed">QR-scan gefaald</string>
+    <string name="qr_permission_positive_button">Ik begrijp het</string>
+    <string name="qr_permission_request_message">De camera permissies zijn nodig voor het scannen van de QR code.\n Als u ervoor kiest om de permissie niet toe te staan dan kunt u niet gebruik maken van de QR scanner.</string>
+    <string name="qr_permission_request_title">Camera Permissie</string>
+    <string name="qr_succes">QR scan succecvol voltooid</string>
+    <string name="qr_title">QR scan</string>
+    <string name="title_activity_qrscanner">QR Scanner</string>
 </resources>

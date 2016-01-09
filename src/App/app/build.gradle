@@ -37,7 +37,8 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.protobuf:protobuf-java:2.6.1'
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile(name: 'Syncfusion.SfChart.Android', ext: 'aar')
     compile files('libs/Networking.jar')
-    compile 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
 }

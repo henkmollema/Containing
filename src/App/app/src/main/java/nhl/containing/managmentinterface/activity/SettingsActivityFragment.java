@@ -1,12 +1,14 @@
 package nhl.containing.managmentinterface.activity;
 
 import android.content.SharedPreferences;
+import android.support.v7.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import nhl.containing.managmentinterface.R;
 
@@ -15,10 +17,24 @@ import nhl.containing.managmentinterface.R;
  */
 public class SettingsActivityFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private EditTextPreference m_connectionHost;
+    private EditTextPreference m_connectionPort;
     /**
      * Required empty constructor
      */
     public SettingsActivityFragment() {
+    }
+
+    /**
+     * on create
+     * @param savedInstanceState saved instance
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        m_connectionHost = (EditTextPreference)findPreference("Connection_Host");
+        m_connectionPort = (EditTextPreference)findPreference("Connection_Port");
     }
 
     /**
@@ -73,6 +89,10 @@ public class SettingsActivityFragment extends PreferenceFragmentCompat implement
         if(key.equals("Refresh_Network")){
             if(MainActivity.getInstance() != null)
                 MainActivity.getInstance().checkNetwork();
+        }else if(key.equals("Connection_Host")){
+            m_connectionHost.setText(sharedPreferences.getString("Connection_Host",m_connectionHost.getText()));
+        }else if(key.equals("Connection_Port")){
+            m_connectionPort.setText(sharedPreferences.getString("Connection_Port",m_connectionPort.getText()));
         }
     }
 }

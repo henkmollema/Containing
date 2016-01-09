@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.SettingsActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <item android:id="@+id/action_QR"
+          android:title="@string/qr_title"
+          android:icon="@drawable/ic_qr_scanner"
+          app:showAsAction="ifRoom"
+        />
 </menu>

@@ -6,6 +6,7 @@ package nhl.containing.controller.networking;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.networking.messaging.StreamHelper;
@@ -85,9 +86,18 @@ public class SimHandler implements Runnable
         p("initializing Simulator data");
         try
         {
+            String ipadress = "127.0.0.1";
+            try{
+                InetAddress address = InetAddress.getLocalHost();
+                ipadress = address.getHostAddress();
+            }catch (Exception ex)
+            {
+                ex.printStackTrace();
+            }
             Instruction okayMessage = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
                     .setInstructionType(InstructionType.CLIENT_CONNECTION_OKAY)
+                    .setMessage(ipadress + ":" + Server.PORT)
                     .build();
 
             StreamHelper.writeMessage(_socket.getOutputStream(), okayMessage.toByteArray());

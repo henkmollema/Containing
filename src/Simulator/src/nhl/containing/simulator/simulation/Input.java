@@ -226,9 +226,11 @@ public class Input extends Behaviour {
                 
             new Button("Button1", new MouseButtonTrigger(MouseInput.BUTTON_LEFT)),  // 14
             new Button("Button2", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE)),// 15
-            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT))  // 16
+            new Button("Button3", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT)),  // 16
+            new Button("L", new KeyTrigger(KeyInput.KEY_L))
+                
         };
-        
+        m_buttons[17].setOnDownCallback(new Callback(Main.instance(), "showQR"));
         m_buttons[10].setOnDownCallback(new Callback(Main.instance(), "togglePause"     ));
         m_buttons[11].setOnDownCallback(new Callback(Main.instance(), "resetTimescale"  ));
         m_buttons[12].setOnDownCallback(new Callback(Main.camera()  , "toggleCameraMode"));
@@ -301,7 +303,7 @@ public class Input extends Behaviour {
     }
     
     /**
-     * Input listner
+     * Input listener
      */
     private class InternalListener implements ActionListener, AnalogListener {
         

@@ -17,6 +17,8 @@ import nhl.containing.networking.protocol.InstructionType;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.game.AgvPath;
+import nhl.containing.simulator.simulation.Main;
+import nhl.containing.simulator.world.World;
 
 /**
  * Providers interaction with the client.
@@ -192,7 +194,7 @@ public class SimulatorClient implements Runnable
             {
                 throw new IOException("Server did not respond with Client OK.");
             }
-
+            Main.gui().makeQR(i.getMessage());
             // Send metadata to controller.            
             byte[] message = metaList.build().toByteArray();
             StreamHelper.writeMessage(output, message);

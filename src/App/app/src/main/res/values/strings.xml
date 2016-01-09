@@ -142,4 +142,17 @@
         <item>30</item>
     </string-array>
     <string name="container_title_arrival">Arrival Information</string>
+    <string name="title_activity_qrscanner">QR Scanner</string>
+
+    <string name="qr_title">QR scan</string>
+    <string name="qr_failed">QR scan has failed</string>
+    <string name="qr_succes">QR scan succeeded</string>
+    <string name="qr_permission_request_title">Camera Permission</string>
+    <string name="qr_permission_request_message">The camera permissions are necessary for scanning the QR code.\n If you choose to cancel the request, you can\'t use the QR scanner.</string>
+    <string name="qr_permission_positive_button">I understand</string>
+
+    <string name="qr_data_dialog_title">Accept Data</string>
+    <string name="qr_data_dialog_message">Are you sure you want to save the data?\n IP-address: %1$s \n Port: %2$s</string>
+    <string name="qr_data_dialog_pos_button">Yes</string>
+    <string name="qr_data_dialog_neg_button">No</string>
 </resources>

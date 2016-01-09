@@ -365,6 +365,14 @@ public class Main extends SimpleApplication {
     }
     
     /**
+     * Hides or shows the QR code
+     */
+    public void showQR(){
+        m_gui.showQR();
+    }
+    
+    
+    /**
      * Pause/Unpause
      */
     public void togglePause() {
@@ -459,6 +467,15 @@ public class Main extends SimpleApplication {
     public static BitmapFont guiFont(BitmapFont font) {
         return instance().guiFont = font;
     }
+    
+    /**
+     * Gets Gui class
+     * @return Gui
+     */
+    public static GUI gui(){
+        return instance().m_gui;
+    }
+    
     /**
      * Get Sietse input
      * @return 

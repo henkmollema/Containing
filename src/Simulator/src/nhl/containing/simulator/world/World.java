@@ -51,10 +51,13 @@ public class World extends Behaviour {
     public static final float STORAGE_WIDTH = 600.0f;
     
     public static final float EXTENDS = 100.0f;
-    public static final int SEA_SHIP_CRANE_COUNT = 8;
+    public static final int SEA_SHIP_CRANE_COUNT = 10;
+    public static final int SEA_SHIP_COUNT = 2;
     public static final int TRAIN_CRANE_COUNT = 4;
     public static final int LORRY_CRANE_COUNT = 20;
-    public static final int INLAND_SHIP_CRANE_COUNT = 1;
+    public static final int INLAND_SHIP_CRANE_COUNT = 8;
+    public static final int INLAND_SHIP_COUNT = 2;
+    
     
     public static final int STORAGE_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
     public static final int SEASHIP_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
@@ -81,9 +84,8 @@ public class World extends Behaviour {
     
     // Vehicles
     private Train m_train;
-    private Vehicle m_seaShip;
-    private Vehicle m_inlandShip;
-    
+    private List<Tuple<Vehicle, Vector3f>> m_seaShips = new ArrayList<>(); // Vehicle, Inland parking position
+    private List<Tuple<Vehicle, Vector3f>> m_inlandShips = new ArrayList<>(); // Vehicle, Inland parking position
     private List<Tuple<Integer, Container>> m_containersFromTrain = null;
     private List<Container> m_containersToTrain = null;
     
@@ -97,17 +99,17 @@ public class World extends Behaviour {
     @Override
     public void start() {
         createSky();
-        createSea();
+        createSeap();
         createGround();
-        createInlandCell();
+        createInland();
         createLorryCell();
-        createSeaCell();
+        createSea();
         createStorageCell();
         createTrainCell();
         createAGV();
         Main.getSimClient().Start();
         
-        //test();
+        test();
     }
     
     @Override
@@ -147,8 +149,8 @@ public class World extends Behaviour {
             }
         }
         trainUpdate();
-        m_inlandShip.update();
-        m_seaShip.update();        
+        updateInland();
+        updateSea();    
     }
     
     private void createAGV() {
@@ -180,11 +182,28 @@ public class World extends Behaviour {
         m_train.init(30);
         m_train.init(10);
         
-        m_seaShip.init(1000);
-        m_seaShip.state(Vehicle.VehicleState.ToLoad);
+        //m_seaShip.init(1000);
+        //m_seaShip.state(Vehicle.VehicleState.ToLoad);
     }
     
-    private void createInlandCell() {
+    private void updateInland() {
+        for (int i = 0; i < m_inlandShips.size(); i++) {
+            m_inlandShips.get(i).a.update();
+        }
+    }
+    private void createInland() {
+        m_inlandShips = new ArrayList<>();
+        Vector3f bPos = new Vector3f();
+        float bOff = 200.0f;
+        
+        for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
+            Tuple<Vehicle, Vector3f> t = new Tuple<>(null, new Vector3f(bPos));
+            createInlandCell(t);
+            bPos.x += bOff;
+            m_inlandShips.add(t);
+        }
+    }
+    private void createInlandCell(Tuple<Vehicle, Vector3f> v) {
         Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
             m_inlandCells.add(new PlatformInland(offset,i));
@@ -192,23 +211,18 @@ public class World extends Behaviour {
         }
         
         Vector3f _dest = new Vector3f(-500f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
-        m_inlandShip = WorldCreator.createInland(
-                new Vector3f[] {
-                    new Vector3f(-500f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 200f),
-                    //new Vector3f(0.0f, 0.0f, 0.0f),
-                    //new Vector3f(0.0f, 0.0f, 0.0f),
-                    //new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(_dest)
-                }, 
-                new Vector3f[] {
-                    new Vector3f(_dest),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(0.0f, 0.0f, 0.0f)
-                }
-                );
+        v.a = WorldCreator.createInland(
+            new Vector3f[] {
+                new Vector3f(_dest),
+                new Vector3f(v.b)
+            }, 
+            new Vector3f[] {
+                new Vector3f(v.b),
+                new Vector3f(-_dest.x, _dest.y, _dest.z)
+            }
+        );
     }
+    
     private void createLorryCell() {
         Vector3f offset = new Vector3f(STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         for (int i = 0; i < LORRY_CRANE_COUNT; ++i) {
@@ -226,28 +240,46 @@ public class World extends Behaviour {
             offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;
         }
     }
-    private void createSeaCell() {
+    
+    private void updateSea() {
+        for (int i = 0; i < m_seaShips.size(); i++) {
+            m_seaShips.get(i).a.update();
+        }
+    }
+    private void createSea() {
+        m_seaShips = new ArrayList<>();
+        Vector3f bPos = new Vector3f(-STORAGE_LENGTH - 400.0f, 0.0f, 0.0f);
+        float bOff = 200.0f;
+        
+        for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
+            Tuple<Vehicle, Vector3f> t = new Tuple<>(null, new Vector3f(bPos));
+            createSeaCell(t);
+            bPos.x += bOff;
+            m_seaShips.add(t);
+        }
+        
         Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
         int begin = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
         for (int i = 0; i < 1; ++i) {
             m_seaCells.add(new PlatformSea(offset,i + begin));
             offset.z -= 10.0f;
         }
-        
-        Vector3f _dest = new Vector3f(-STORAGE_LENGTH - 400.0f, 0.0f, 0.0f);
-        m_seaShip = WorldCreator.createSea(
+    }
+    private void createSeaCell(Tuple<Vehicle, Vector3f> v) {
+        v.a = WorldCreator.createSea(
                 new Vector3f[]{
                     new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, 3000.0f),
                     new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, 1000.0f),
-                    new Vector3f(_dest)
+                    new Vector3f(v.b)
                 },
                 new Vector3f[] {
-                    new Vector3f(_dest),
-                    new Vector3f(0.0f, 0.0f, 0.0f),
-                    new Vector3f(200.0f, 0.0f, 0.0f),
+                    new Vector3f(v.b),
+                    new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, -1000.0f),
+                    new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, -3000.0f),
                 }
                 );
     }
+    
     private void createStorageCell() {
         Vector3f offset = new Vector3f(-LANE_WIDTH / 2 - STORAGE_LENGTH, WORLD_HEIGHT, -STORAGE_WIDTH + 50.0f);
         int begin = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
@@ -414,12 +446,12 @@ public class World extends Behaviour {
     }
     
     
-    public Vehicle getSeaShip() {
-        return m_seaShip;
+    public Vehicle getSeaShip(int index) {
+        return m_seaShips.get(index).a;
     }
 
-    public Vehicle getInlandShip() {
-        return m_inlandShip;
+    public Vehicle getInlandShip(int index) {
+        return m_inlandShips.get(index).a;
     }
     
     private void createTrainCell() {
@@ -444,7 +476,7 @@ public class World extends Behaviour {
         Main.instance().getAssetManager(), "Textures/BrightSky.dds", false));
     }
     
-    private void createSea()
+    private void createSeap()
     {
         Geometry waterplane = WorldCreator.createWaterPlane(new Vector3f(-8000,WATER_LEVEL,8000), 16000, 40, 0.05f, 0.05f, 6f);
         Main.instance().getRootNode().attachChild(waterplane);

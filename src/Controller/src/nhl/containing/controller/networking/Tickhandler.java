@@ -198,7 +198,8 @@ public class Tickhandler implements Runnable
                 container.currentCategory = AppHandler.getCategory(shipment.carrier);
             }
             containerBuilder.setOwnerName(container.ownerName);
-            containerBuilder.setContainerNumber(container.containerNumber);
+            // todo: hier ook container nummer mee sturen?
+            containerBuilder.setContainerNumber(container.id);            
             containerBuilder.setLength(container.length);
             containerBuilder.setWidth(container.width);
             containerBuilder.setHeight(container.height);

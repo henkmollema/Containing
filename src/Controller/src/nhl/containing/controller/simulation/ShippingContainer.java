@@ -9,6 +9,8 @@ import nhl.containing.networking.protobuf.AppDataProto;
  */
 public class ShippingContainer
 {
+    public int id;
+    
     /**
      * The name of the owner.
      */

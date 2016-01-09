@@ -236,7 +236,7 @@ public class AppHandler implements Runnable
                 {
                     if(container.arrivalShipment.processed && !container.departureShipment.processed)
                     {
-                        itemBuilder.setID(container.containerNumber);
+                        itemBuilder.setID(container.id);
                         builder.addItems(itemBuilder.build());
                     }
                 }
@@ -248,7 +248,7 @@ public class AppHandler implements Runnable
                     ShippingContainer container = context.getContainerById(instruction.getB());
                     ContainerInfo.Builder infoBuilder = ContainerInfo.newBuilder();
                     infoBuilder.setEigenaar(container.ownerName);
-                    infoBuilder.setID(container.containerNumber);
+                    infoBuilder.setID(container.id);
                     infoBuilder.setGewichtLeeg(container.weightEmpty);
                     infoBuilder.setGewichtVol(container.weightLoaded);
                     infoBuilder.setInhoud(container.content);

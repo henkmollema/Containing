@@ -23,6 +23,7 @@ public class SimulationContext
 {
     private final Map<String, Shipment> shipments = new HashMap<>();
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
+    private int _containerCount = 0;
     private List<Shipment> allShipments;
     private Shipment firstShipment;
     
@@ -360,6 +361,7 @@ public class SimulationContext
             {
                 // Add container data.
                 c = new ShippingContainer();
+                c.id = ++context._containerCount;
                 c.position = new Point3(arrival.position);
                 c.containerNumber = r.containerNumber;
                 c.content = r.content;

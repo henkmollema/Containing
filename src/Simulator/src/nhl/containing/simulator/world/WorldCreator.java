@@ -265,12 +265,12 @@ public final class WorldCreator {
         Vehicle v = new Vehicle(
                 new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
-                "henk/Voertuigen/barge.obj", // front model
+                "elo/low/ship/seaship.j3o",//"henk/Voertuigen/barge.obj", // front model
                 1.0f, // front scale
-                new Vector3f(0.0f, 0.0f, 0.0f) // front offset
+                new Vector3f(20.0f, 5.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
-        v.rotate(0,-93,0);
+        v.rotate(0,-90/*3*/,0);
         v.containerOffset(new Vector3f(-10.0f, 2.2f, -30.0f));
         v.from = from;
         v.to = to;
@@ -281,13 +281,13 @@ public final class WorldCreator {
         Vehicle v = new Vehicle(
                 new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
-                "henk/Voertuigen/seaShip.obj", // front model
-                4.0f, // front scale
-                new Vector3f(0.0f, 0.0f, 0.0f) // front offset
+                "elo/medium/ship/seaship.j3o", // front model
+                1.0f, // front scale
+                new Vector3f(20.0f, 5.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
-        v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
-        v.containerOffset(new Vector3f(0.0f, 16.0f, 0.0f));
+        //v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
+        v.containerOffset(new Vector3f(0.0f, 0.0f, 0.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);
@@ -304,7 +304,7 @@ public final class WorldCreator {
 
         // we set the water plane
         Vector3f waterLocation=new Vector3f(0,-9,0);
-        waterProcessor.setPlane(new Plane(Vector3f.UNIT_Y, waterLocation.dot(Vector3f.UNIT_Y)));
+        waterProcessor.setPlane(new Plane(Vector3f.UNIT_Y.clone(), waterLocation.dot(Vector3f.UNIT_Y.clone())));
         Main.instance().getViewPort().addProcessor(waterProcessor);
 
         // we set wave properties
@@ -318,9 +318,9 @@ public final class WorldCreator {
 
         // we create the water geometry from the quad
         Geometry waterPlane=new Geometry("water", quad);
-        waterPlane.setLocalRotation(new Quaternion().fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X));
+        waterPlane.setLocalRotation(new Quaternion().fromAngleAxis(-FastMath.HALF_PI, Vector3f.UNIT_X.clone()));
         waterPlane.setLocalTranslation(location);
-        waterPlane.setShadowMode(ShadowMode.Receive);
+        waterPlane.setShadowMode(ShadowMode.Off);
         waterPlane.setMaterial(waterProcessor.getMaterial());
 
         return waterPlane;

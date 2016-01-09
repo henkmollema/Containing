@@ -145,14 +145,56 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private void handleShipmentMoved(InstructionProto.Instruction instruction){
         GUI().setContainerText("");
         if(instruction.getA() < World.LORRY_BEGIN){
+            
+            
+            
+            
+            
+            
+            
+            // TODO: 
+            // COMMENTS IN ENGLISH
+            // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            
+            
+            
+            
+            
+            
+            Integer index = null;
+            index = index == null ? 0 : index;
+            
             //dit is een inlandship platform
-            World().getInlandShip().state(Vehicle.VehicleState.ToOut);
+            World().getInlandShip(index).state(Vehicle.VehicleState.ToOut);
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             Tuple<PlatformLorry,Vehicle> lp = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN);
         }else if(instruction.getA() < World.STORAGE_BEGIN){
+            
+            
+            
+            
+            
+            
+            
+            
+            // TODO: 
+            // COMMENTS IN ENGLISH
+            // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            
+            
+            
+            
+            
+            
+            
+            Integer index = null;
+            index = index == null ? 0 : index;
+            
+            
             //dit is een seaship platform
-            World().getSeaShip().state(Vehicle.VehicleState.ToOut);
+            World().getSeaShip(index).state(Vehicle.VehicleState.ToOut);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
             //dit is een storage platform
             //nothing to do
@@ -260,12 +302,29 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     
     private void handleInland(boolean arriving,final InstructionProto.Instruction inst) {
         
+        
+        
+        
+        
+        // TODO: 
+        // COMMENTS IN ENGLISH
+        // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+        
+        
+        
+        
+        
+        Integer index = null;
+        index = index == null ? 0 : index; // or use id but that method needs to be created
+        
+        
         if (arriving) {
             p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
-            World().getInlandShip().init(inst.getContainersList());
+            World().getInlandShip(index).init(inst.getContainersList());
             // Let the ship arrive at the platform.
-            World().getInlandShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+            World().getInlandShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {
                 @Override
                 public void done(Vehicle v)
@@ -279,7 +338,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             GUI().setContainerText("Vertrek:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
-            World().getInlandShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+            World().getInlandShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {
                 @Override
                 public void done(Vehicle v)
@@ -293,12 +352,29 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     
     private void handleSea(boolean arriving,final InstructionProto.Instruction inst) {
         
+        
+        
+        
+        
+        // TODO: 
+        // COMMENTS IN ENGLISH
+        // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        
+        
+        
+        
+        
+        
+        Integer index = null;
+        index = index == null ? 0 : index; // or use id but that method needs to be created
+        
+        
         if (arriving) {
             p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
-            World().getSeaShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+            World().getSeaShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {
                 @Override
                 public void done(Vehicle v)
@@ -312,7 +388,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             GUI().setContainerText("Vertrek:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
-            World().getSeaShip().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
+            World().getSeaShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {
                 @Override
                 public void done(Vehicle v)

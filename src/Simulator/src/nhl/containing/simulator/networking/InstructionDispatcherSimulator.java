@@ -142,54 +142,14 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private void handleShipmentMoved(InstructionProto.Instruction instruction){
         GUI().setContainerText("");
         if(instruction.getA() < World.LORRY_BEGIN){
-            
-            
-            
-            
-            
-            
-            
-            // TODO: 
-            // COMMENTS IN ENGLISH
-            // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            
-            
-            
-            
-            
-            
-            
-            Integer index = null;
-            index = index == null ? 0 : index;
-            
+            Integer index = instruction.getB();
             //dit is een inlandship platform
             World().getInlandShip(index).state(Vehicle.VehicleState.ToOut);
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             Tuple<PlatformLorry,Vehicle> lp = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN);
         }else if(instruction.getA() < World.STORAGE_BEGIN){
-            
-            
-            
-            
-            
-            
-            
-            
-            // TODO: 
-            // COMMENTS IN ENGLISH
-            // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            
-            
-            
-            
-            
-            
-            
-            Integer index = null;
-            index = index == null ? 0 : index;
-            
-            
+            Integer index = instruction.getB();
             //dit is een seaship platform
             World().getSeaShip(index).state(Vehicle.VehicleState.ToOut);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
@@ -297,24 +257,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     }
     
     private void handleInland(boolean arriving,final InstructionProto.Instruction inst) {
-        
-        
-        
-        
-        
-        // TODO: 
-        // COMMENTS IN ENGLISH
-        // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        
-        
-        
-        
-        
-        
-        Integer index = null;
-        index = index == null ? 0 : index; // or use id but that method needs to be created
-        
-        
+        Integer index = inst.getA();
         if (arriving) {
             p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
@@ -347,24 +290,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     }
     
     private void handleSea(boolean arriving,final InstructionProto.Instruction inst) {
-        
-        
-        
-        
-        
-        // TODO: 
-        // COMMENTS IN ENGLISH
-        // GET INDEX OF INLAND SHIP---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        
-        
-        
-        
-        
-        
-        Integer index = null;
-        index = index == null ? 0 : index; // or use id but that method needs to be created
-        
-        
+       Integer index = inst.getA();
         if (arriving) {
             p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setContainerText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");

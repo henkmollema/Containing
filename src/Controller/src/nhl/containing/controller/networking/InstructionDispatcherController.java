@@ -115,6 +115,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
 
         shipment.arrived = true;
         //TODO: if truck shipment, check platform id
+        Platform[] platformsByCarrier;
         if(shipment.carrier instanceof Truck){
             LorryPlatform lp = _items.getLorryPlatforms()[instruction.getA() - SimulatorItems.LORRY_BEGIN];
             AGV agv = _items.getFreeAGV();
@@ -122,11 +123,17 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             moveAGV(agv, lp, lp.getParkingspots().get(0));
             placeCrane(lp);
             return;
+        }else if(shipment.carrier instanceof SeaShip){
+            //Get right platforms
+            platformsByCarrier = _items.getSeaPlatformsByShipment(shipment);
+        }else if(shipment.carrier instanceof InlandShip){
+            //Get right platforms
+            platformsByCarrier = _items.getInlandPlatformsByShipment(shipment);
+        }else{
+            platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
         }
         // Get the platforms and containers.
-        Platform[] platformsByCarrier = _items.getPlatformsByCarrier(shipment.carrier);
         final List<ShippingContainer> allContainers = shipment.carrier.containers;
-
         // Determine how many containers per crane.
         int split = allContainers.size() / platformsByCarrier.length;
         int take = split;
@@ -307,11 +314,14 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         if (shipment == null) {
             return; //TODO: handle error
         }
+        int index = -1;
         Platform p = null;
         if(shipment.carrier instanceof SeaShip){
-            p = _items.getSeaShipPlatforms()[0];
+            p = _items.getSeaPlatformsByShipment(shipment)[0];
+            index = p.getID() - SimulatorItems.SEASHIP_BEGIN < SimulatorItems.SEA_SHIP_CRANE_COUNT / 2 ? 0 : 1;
         }else if(shipment.carrier instanceof InlandShip){
-            p = _items.getInlandPlatforms()[0];
+            p = _items.getInlandPlatformsByShipment(shipment)[0];
+            index = p.getID() < SimulatorItems.INLAND_SHIP_CRANE_COUNT / 2 ? 0 : 1;
         }else if(shipment.carrier instanceof Train){
             p = _items.getTrainPlatforms()[0];
         }else{
@@ -321,6 +331,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         InstructionProto.Instruction.Builder instruction = InstructionProto.Instruction.newBuilder();
         instruction.setId(CommunicationProtocol.newUUID());
         instruction.setA(p.getID());
+        if(index != -1)
+            instruction.setB(index);
         instruction.setMessage(shipment.key);
         instruction.setInstructionType(InstructionType.SHIPMENT_MOVED);
         _com.sendInstruction(instruction.build());
@@ -351,11 +363,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform
+            Platform[] platforms = _items.getInlandPlatformsByShipment(container.arrivalShipment);
             if(!platform.containers.isEmpty()){
                 placeCrane(platform);
-            }else if (!Platform.checkIfBusy(_items.getInlandPlatforms()) && Platform.checkIfShipmentDone(_items.getInlandPlatforms())) {
-                shipmentMoved(_items.getInlandShipment());
-                _items.unsetInlandShipment();
+            }else if (!Platform.checkIfBusy(platforms) && Platform.checkIfShipmentDone(platforms)) {
+                shipmentMoved(container.arrivalShipment);
+                _items.unsetInlandShipment(container.arrivalShipment);
             }
         } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
             //dit is een lorry platform
@@ -365,11 +378,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             lp.unsetShipment();
         } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
             //dit is een seaship platform
+            Platform[] platforms = _items.getSeaPlatformsByShipment(container.arrivalShipment);
             if(!platform.containers.isEmpty()){
                 placeCrane(platform);
-            }else if (!Platform.checkIfBusy(_items.getSeaShipPlatforms()) && Platform.checkIfShipmentDone(_items.getSeaShipPlatforms())) {
-                shipmentMoved(_items.getSeaShipment());
-                _items.unsetSeaShipment();
+            }else if (!Platform.checkIfBusy(platforms) && Platform.checkIfShipmentDone(platforms)) {
+                shipmentMoved(container.arrivalShipment);
+                _items.unsetSeaShipment(container.arrivalShipment);
             }
         } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
             //dit is een storage platform
@@ -430,7 +444,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         if (p.getAGV().hasContainer()) {
             if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
-                if (_items.hasInlandShipment() && _items.getInlandShipment().arrived) {
+                int index = platform.getID() - SimulatorItems.INLAND_SHIP_CRANE_COUNT < SimulatorItems.INLAND_SHIP_CRANE_COUNT / 2 ? 0 : 1;
+                if (_items.hasInlandShipment(index) && _items.getInlandShipment(index).arrived) {
                     sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.SEASHIP_BEGIN) {
@@ -441,7 +456,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 }
             } else if (platform.getID() < SimulatorItems.STORAGE_BEGIN) {
                 //dit is een seaship platform
-                if (_items.hasSeaShipment() && _items.getSeaShipment().arrived) {
+                int index = platform.getID() - SimulatorItems.SEA_SHIP_CRANE_COUNT < SimulatorItems.SEA_SHIP_CRANE_COUNT / 2 ? 0 : 1;
+                if (_items.hasSeaShipment(index) && _items.getSeaShipment(index).arrived) {
                     sendCraneToDepartment(platform, p);
                 }
             } else if (platform.getID() < SimulatorItems.TRAIN_BEGIN) {
@@ -471,8 +487,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                     e.printStackTrace();
                 }
             } else {
-                //dit is een train platform
-                if (_items.hasTrainShipment() && _items.getInlandShipment().arrived) {
+                if (_items.hasTrainShipment() && _items.getTrainShipment().arrived) {
                     sendCraneToDepartment(platform, p);
                     
                 }

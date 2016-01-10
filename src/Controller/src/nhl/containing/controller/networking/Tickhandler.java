@@ -67,18 +67,19 @@ public class Tickhandler implements Runnable
         // Determine the current date/time.
         Date date = new Date(first.date.getTime() + time);
         //p("Ingame time: " + date.toString());
-        int platformid = -1;
+        int id;
         // Get shipments by date.
         //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
+            id = -1;
             if(s.carrier instanceof Truck)
             {
                 //Assign a loading platform to the truck
-                LorryPlatform lp = _items.GetPlatformIDForFreeLorryPlatform();
+                LorryPlatform lp = _items.GetFreeLorryPlatform();
                 if(lp != null){
                     //continue;
-                    platformid = lp.getID();
+                    id = lp.getID();
                     lp.setShipment(s);
                 }else{
                     //TODO: problems or queue?
@@ -89,21 +90,26 @@ public class Tickhandler implements Runnable
                     continue; //TODO: Fix a queue ?
                 else
                     _items.setTrainShipment(s);
-//                for (int i = 0; i < s.carrier.containers.size(); i++){
-//                    ShippingContainer sc = s.carrier.containers.get(i);
-//                    if (sc.position.y > 0 || sc.position.z > 0 || sc.position.x != i)
-//                        sc.position = new Point3(i, 0, 0);
-//                }
             }else if(s.carrier instanceof SeaShip){
-                if(_items.hasSeaShipment())
-                    continue; //TODO: Fix a queue?
-                else
-                    _items.setSeaShipment(s);
-            }else if(s.carrier instanceof InlandShip){
-                if(_items.hasInlandShipment())
+                for(int i =0 ; i < SimulatorItems.SEASHIP_COUNT; i++){
+                    if(!_items.hasSeaShipment(i)){
+                        _items.setSeaShipment(i,s);
+                        id = i;
+                        break;
+                    }
+                }
+                if(id == -1)
                     continue;
-                else
-                    _items.setInlandShipment(s);
+            }else if(s.carrier instanceof InlandShip){
+                for(int i =0 ; i < SimulatorItems.INLANDSHIP_COUNT; i++){
+                    if(!_items.hasInlandShipment(i)){
+                        _items.setInlandShipment(i,s);
+                        id = i;
+                        break;
+                    }
+                }
+                if(id == -1)
+                    continue;
             }
             s.processed = true;
             p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
@@ -113,7 +119,7 @@ public class Tickhandler implements Runnable
                 context.setContainerShouldDepart(s.carrier.containers);
                 System.out.println("Set container batch to should depart..");
             }
-            createProto(s, platformid);
+            createProto(s, id);
         }
         
         //Check if new departure containers can be picked up (if open parkingspots at platforms)..
@@ -140,8 +146,7 @@ public class Tickhandler implements Runnable
             SavedInstruction inst = _dispatcher.m_agvInstructions.poll();
             _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
             freeagv = context.getSimulatorItems().getFreeAGV();
-        }
-            //            
+        }         
     }
 
     /**
@@ -149,12 +154,12 @@ public class Tickhandler implements Runnable
      *
      * @param shipment shipment
      */
-    private void createProto(Shipment shipment, int platformid)
+    private void createProto(Shipment shipment, int id)
     {
         shipment.count = shipment.carrier.containers.size();
         Instruction.Builder builder = Instruction.newBuilder();
-        if(platformid != -1)
-            builder.setA(platformid);
+        if(id != -1)
+            builder.setA(id);
         builder.setId(CommunicationProtocol.newUUID());
         builder.setMessage(shipment.key);
         int type = 0;

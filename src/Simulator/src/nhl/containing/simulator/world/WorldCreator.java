@@ -16,7 +16,6 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
@@ -265,13 +264,13 @@ public final class WorldCreator {
         Vehicle v = new Vehicle(
                 new Point3(6, 3, 2).add(Point3.one()),
                 10.0f,// speed
-                "elo/low/ship/seaship.j3o",//"henk/Voertuigen/barge.obj", // front model
+                "elo/high/ship/seaship.j3o",//"henk/Voertuigen/barge.obj", // front model
                 1.0f, // front scale
                 new Vector3f(20.0f, 5.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
         v.rotate(0,-90/*3*/,0);
-        v.containerOffset(new Vector3f(-10.0f, 2.2f, -30.0f));
+        v.containerOffset(new Vector3f(0.0f, 2.2f, -30.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);

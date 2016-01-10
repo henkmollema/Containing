@@ -25,6 +25,8 @@ public class SimulatorItems
     public static final int LORRY_CRANE_COUNT = 20;
     public static final int INLAND_SHIP_CRANE_COUNT = 8;
     public static final int STORAGE_CRANE_COUNT = 72;
+    public static final int SEASHIP_COUNT = 2;
+    public static final int INLANDSHIP_COUNT  = 2;
     
     public static final int STORAGE_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
     public static final int SEASHIP_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
@@ -36,10 +38,10 @@ public class SimulatorItems
     private Shipment m_trainShipment = null;
     
     private Platform[] m_seaPlatforms = new Platform[SEA_SHIP_CRANE_COUNT];
-    private Shipment m_seashipShipment = null;
+    private Shipment[] m_seashipShipment = new Shipment[2];
     
     private Platform[] m_inlandPlatforms = new Platform[INLAND_SHIP_CRANE_COUNT];
-    private Shipment m_inlandShipment = null;
+    private Shipment[] m_inlandShipment = new Shipment[2];
     
     private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[LORRY_CRANE_COUNT];
     
@@ -257,64 +259,152 @@ public class SimulatorItems
     
     /**
      * Gets current seashipment
+     * @param index index of the seashipping
      * @return shipment
      */
-    public Shipment getSeaShipment(){
-        return m_seashipShipment;
+    public Shipment getSeaShipment(int index){
+        if(index >= m_seashipShipment.length)
+            return null;
+        return m_seashipShipment[index];
     }
     
     /**
      * Sets a shipment as current seaship shipment
+     * @param index of the sea shipping
      * @param shipment shipment
      */
-    public void setSeaShipment(Shipment shipment){
-        m_seashipShipment = shipment;
+    public void setSeaShipment(int index,Shipment shipment){
+        if(index >= m_seashipShipment.length)
+            return;
+        m_seashipShipment[index] = shipment;
     }
     
     /**
      * Unsets current seashipment
+     * @param index index of the sea shipping
      */
-    public void unsetSeaShipment(){
-        m_seashipShipment = null;
+    public void unsetSeaShipment(int index){
+        if(index >= m_seashipShipment.length)
+            return;
+        m_seashipShipment[index] = null;
+    }
+    
+    /**
+     * Unsets current sea shipment
+     * @param shipment shipment to unset
+     */
+    public void unsetSeaShipment(Shipment shipment){
+        for(int i = 0; i < m_seashipShipment.length; i++){
+            if(hasSeaShipment(i) && m_seashipShipment[i].key.equals(shipment.key))
+                m_seashipShipment = null;
+        }
     }
     
     /**
      * Check if there is a current seaships shipment
+     * @param index index of the sea shipping
      * @return true when there is a shipment, otherwise false
      */
-    public boolean hasSeaShipment(){
-        return m_seashipShipment != null;
+    public boolean hasSeaShipment(int index){
+        if(index >= m_seashipShipment.length)
+            return false;
+        return m_seashipShipment[index] != null;
     }
     
     /**
      * Gets current inlandshipment
+     * @param index of the inland shipping
      * @return shipment
      */
-    public Shipment getInlandShipment(){
-        return m_inlandShipment;
+    public Shipment getInlandShipment(int index){
+        if(index >= m_inlandShipment.length)
+            return null;
+        return m_inlandShipment[index];
     }
     
     /**
      * Sets current inland shipment
+     * @param index of the inland shipping
      * @param shipment shipment
      */
-    public void setInlandShipment(Shipment shipment){
-        m_inlandShipment = shipment;
+    public void setInlandShipment(int index,Shipment shipment){
+        if(index >= m_inlandShipment.length)
+            return;
+        m_inlandShipment[index] = shipment;
     }
     
     /**
      * Unsets current inland shipment
+     * @param index of the inland shipping
      */
-    public void unsetInlandShipment(){
-        m_inlandShipment = null;
+    public void unsetInlandShipment(int index){
+        if(index >= m_inlandShipment.length)
+            return;
+        m_inlandShipment[index] = null;
+    }
+    
+    /**
+     * Unsets current inland shipment
+     * @param shipment shipment to unset
+     */
+    public void unsetInlandShipment(Shipment shipment){
+        for(int i = 0; i < m_inlandShipment.length; i++){
+            if(hasInlandShipment(i) && m_inlandShipment[i].key.equals(shipment.key))
+                m_inlandShipment[i] = null;
+        }
     }
     
     /**
      * Checks if there is a current inland shipment
+     * @param index of the inland shipping
      * @return true when there is a current inland shipment, otherwise false
      */
-    public boolean hasInlandShipment(){
-        return m_inlandShipment != null;
+    public boolean hasInlandShipment(int index){
+        if(index >= m_inlandShipment.length)
+            return false;
+        return m_inlandShipment[index] != null;
+    }    
+    
+    /**
+     * Gets the platforms by the right inland shipment
+     * @param shipment shipment
+     * @return platforms
+     */
+    public Platform[] getInlandPlatformsByShipment(Shipment shipment){
+        Platform[] platforms = new Platform[INLAND_SHIP_CRANE_COUNT / 2];
+        int begin;
+        if(hasInlandShipment(0) && m_inlandShipment[0].key.equals(shipment.key)){
+            begin = 0;
+        }else if(hasInlandShipment(1) && m_inlandShipment[1].key.equals(shipment.key)){
+            begin = INLAND_SHIP_CRANE_COUNT / 2;
+        }else{
+            return null;
+        }
+        for(int i = 0;i < (INLAND_SHIP_CRANE_COUNT / 2);i++){
+            platforms[i] = m_inlandPlatforms[i +  begin];
+        }
+        return platforms;
+    }
+    
+    /**
+     * Gets the platforms by the right sea shipment
+     * @param shipment shipment
+     * @return platforms
+     */
+    public Platform[] getSeaPlatformsByShipment(Shipment shipment){
+        Platform[] platforms = new Platform[SEA_SHIP_CRANE_COUNT / 2];
+        int begin;
+        if(hasSeaShipment(0) && m_seashipShipment[0].key.equals(shipment.key)){
+            begin = 0;
+        }else if(hasSeaShipment(1) && m_seashipShipment[1].key.equals(shipment.key)){
+            begin = SEA_SHIP_CRANE_COUNT / 2;
+        }else{
+            return null;
+        }
+        for(int i = 0;i < (SEA_SHIP_CRANE_COUNT / 2);i++){
+            platforms[i] = m_inlandPlatforms[i +  begin];
+        }
+        return platforms;
     }
     
     /**
@@ -385,9 +475,11 @@ public class SimulatorItems
 
     }   
     
-
-    
-    public LorryPlatform GetPlatformIDForFreeLorryPlatform(){
+    /**
+     * Gets a free lorryplatform
+     * @return lorry platform
+     */
+    public LorryPlatform GetFreeLorryPlatform(){
         for(LorryPlatform p : m_lorryPlatforms){
             if(!p.hasShipment())
                 return p;

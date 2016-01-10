@@ -193,7 +193,7 @@ public class World extends Behaviour {
     }
     private void createInland() {
         m_inlandShips = new ArrayList<>();
-        Vector3f bPos = new Vector3f();
+        Vector3f bPos = new Vector3f(500f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         float bOff = 200.0f;
         
         for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
@@ -209,7 +209,6 @@ public class World extends Behaviour {
             m_inlandCells.add(new PlatformInland(offset,i));
             offset.x -= 10.0f;
         }
-        
         Vector3f _dest = new Vector3f(-500f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         v.a = WorldCreator.createInland(
             new Vector3f[] {

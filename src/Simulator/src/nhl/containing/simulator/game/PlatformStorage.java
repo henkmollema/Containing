@@ -38,7 +38,7 @@ public final class PlatformStorage extends Platform {
      * @param offset  
      */
     public PlatformStorage(Vector3f offset,int id) {
-        super(offset,id);
+        super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_STORAGE);
     }
     

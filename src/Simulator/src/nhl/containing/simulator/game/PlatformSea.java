@@ -17,7 +17,7 @@ import nhl.containing.simulator.world.WorldCreator;
 public class PlatformSea extends Platform {
 
     public PlatformSea(Vector3f offset,int id) {
-        super(offset,id);
+        super(offset,id, false);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_SEASHIP);
     }
     

@@ -17,7 +17,7 @@ import nhl.containing.simulator.framework.Utilities;
 public class PlatformLorry extends Platform {
 
     public PlatformLorry(Vector3f offset,int id) {
-        super(offset,id);
+        super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_LORRY);
         initSpots(Point3.one());
     }

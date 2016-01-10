@@ -16,7 +16,7 @@ import nhl.containing.simulator.world.WorldCreator;
 public class PlatformTrain extends Platform {
 
     public PlatformTrain(Vector3f offset,int id) {
-        super(offset,id);
+        super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_TRAIN);
         initSpots(new Point3(1, 1, 1));
     }

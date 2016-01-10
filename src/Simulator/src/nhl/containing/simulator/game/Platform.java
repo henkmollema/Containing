@@ -25,6 +25,7 @@ public abstract class Platform extends ContainerCarrier {
     private List<CraneAction> m_queue = new ArrayList<>();  // Action queue
     private CraneAction m_currentAction;                    // Current action
     private boolean m_firstFrame = true;                    // Is first frame
+    private boolean m_snapX;
     
     /**
      * Constructor
@@ -36,12 +37,13 @@ public abstract class Platform extends ContainerCarrier {
 //        this.position(offset);
 //    }
     
-    public Platform(Vector3f offset, int id){
+    public Platform(Vector3f offset, int id, boolean snapX){
         super();
         m_platformid = id;
         m_parkingSpots = _parkingSpots();
         createPlatform();
         this.position(offset);
+        m_snapX = snapX;
     }
     
     private ParkingSpot[] _parkingSpots() {
@@ -141,6 +143,17 @@ public abstract class Platform extends ContainerCarrier {
         
         // Add action to queue
         m_queue.add(new CraneAction(_container, new CraneTarget(point), new CraneTarget(spot)));
+        
+        // I AM NOT SURE WHERE TO PLACE THIS CODE
+        // ON CALLING TAKE OR WHEN THE QUEUE GETS THE INSTRUCTION
+        if (m_parkingSpots != null && m_parkingSpots.length == 1) {
+            Vector3f v = m_parkingSpots[0].position();
+            if (m_snapX)
+                v.x = _container.transform.position().x;
+            else
+                v.z =  _container.transform.position().z;
+            m_parkingSpots[0].position(v);
+        }
     }
     /**
      * 

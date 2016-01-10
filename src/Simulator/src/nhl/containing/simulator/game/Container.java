@@ -28,7 +28,8 @@ public class Container {
      */
     public Container(RFID id) {
         this.m_rfid = id;
-        this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        //this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
+        this.m_material = MaterialCreator.getRandomContainerMaterial();
         m_id = Main.register(this);
         show();
     }

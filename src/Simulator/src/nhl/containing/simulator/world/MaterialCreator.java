@@ -11,6 +11,9 @@ import nhl.containing.simulator.framework.Mathf;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.texture.Texture;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  *
@@ -19,6 +22,9 @@ import com.jme3.texture.Texture;
 public final class MaterialCreator {
     
     private static final float DEFAULT_SPECULAR = 2.0f;
+    static Random rnd = new Random();
+    
+    private static Map<Integer, Material> containerMaterials = new HashMap<Integer, Material>();
     
     /**
      * Return unshaded blue material
@@ -162,6 +168,19 @@ public final class MaterialCreator {
         return m;
     }
     
+    public static Material getContainerMaterial(int n)
+    {
+        if(!containerMaterials.containsKey(n))
+            containerMaterials.put(n, unshaded("Textures/container/"+n+".png", ColorRGBA.White));
+        
+        return containerMaterials.get(n);
+    }
+    
+    public static Material getRandomContainerMaterial()
+    {
+        return getContainerMaterial(rnd.nextInt(46));
+    }
+    
     /**
      * diffuse white color
      * @return 
@@ -201,7 +220,7 @@ public final class MaterialCreator {
             return unshaded(colorDiffuse);
         }
         
-        Material m = new Material(Main.assets(), "Common/MatDefs/Light/Lighting.j3md"); 
+        Material m = new Material(Main.assets(), "Common/MatDefs/Light/Lighting.j3md");
         m.setBoolean("UseMaterialColors", true); 
         m.setColor("Ambient", colorAmbient.clone());
         m.setColor("Diffuse", colorDiffuse.clone());

@@ -33,6 +33,21 @@ import nhl.containing.simulator.game.Vehicle;
  * @author sietse
  */
 public final class WorldCreator {
+    
+    
+    public static Spatial createContainer(Node parent)
+    {
+        if (parent == null) 
+            parent = Main.root();
+
+        Spatial container = Main.assets().loadModel("models/henk/Container/containerUvFix.obj");
+        container.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        container.scale(2f);
+         
+        parent.attachChild(container);
+        return container;
+    }
+    
     /**
      * Create box with the size of a container
      * @param parent

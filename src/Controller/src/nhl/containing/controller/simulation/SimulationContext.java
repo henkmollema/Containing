@@ -30,7 +30,7 @@ public class SimulationContext
     private SimulatorItems _simulatorItems;
     
     private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
-    private Map<ShippingContainer, Storage> container_StoragePlatform = new HashMap<>();
+    private Map<Integer, Storage> container_StoragePlatform = new HashMap<>();
     private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
     private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
     public Map<Parkingspot, ShippingContainer> parkingspot_Containertopickup = new HashMap<>();
@@ -89,7 +89,7 @@ public class SimulationContext
     
     public Storage getStoragePlatformByContainer(ShippingContainer container)
     {
-        return container_StoragePlatform.get(container);
+        return container_StoragePlatform.get(container.id);
     }
     
     /**
@@ -120,7 +120,7 @@ public class SimulationContext
                }
                
                if(canBePlacedInStoragePlatform(container, storagePlatform)){
-                   container_StoragePlatform.put(container, storagePlatform);
+                   container_StoragePlatform.put(container.id, storagePlatform);
                    break;
                }     
             }
@@ -137,13 +137,12 @@ public class SimulationContext
      */
     public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
     {
-        Iterator it = container_StoragePlatform.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+        for (Map.Entry pair : container_StoragePlatform.entrySet()) {
             Storage currentPlatform = (Storage) pair.getValue();
             if(currentPlatform.getID() == storage.getID())
             {
-                ShippingContainer currentContainer = (ShippingContainer)pair.getKey();
+                int idx = (Integer)pair.getKey();
+                ShippingContainer currentContainer = containers.get(idx);
                 
                 //If departure times differ less than minInterval they can't be in the same platform
                 if(Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
@@ -151,7 +150,6 @@ public class SimulationContext
                     return false;
                 }
             }
-            //it.remove(); // avoids a ConcurrentModificationException
         }
         return true;
     }
@@ -375,7 +373,7 @@ public class SimulationContext
                 c.weightEmpty = r.weightEmpty;
                 c.width = r.width;
 
-                context.containers.put(r.containerNumber, c);
+                context.containers.put(c.id, c);
             }
             else
             {

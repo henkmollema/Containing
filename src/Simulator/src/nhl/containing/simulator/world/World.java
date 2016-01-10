@@ -14,6 +14,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.util.SkyFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class World extends Behaviour {
     public static final float TRAIN_CRANE_DISTANCE = 10.0f;
     
     public static Vector3f containerSize() {
-        return new Vector3f(2.438f, 2.438f, 12.192f);
+        return new Vector3f(2.4375f, 2.591f, 12.192f);
     }
     
     // Main
@@ -108,7 +109,7 @@ public class World extends Behaviour {
         createTrainCell();
         createAGV();
         Main.getSimClient().Start();
-        
+
         //test();
     }
     

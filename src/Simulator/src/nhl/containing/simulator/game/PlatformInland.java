@@ -17,7 +17,7 @@ import nhl.containing.simulator.world.WorldCreator;
 public class PlatformInland extends Platform {
 
     public PlatformInland(Vector3f offset,int id) {
-        super(offset,id);
+        super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_INLANDSHIP);
     }
     @Override

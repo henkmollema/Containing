@@ -29,7 +29,7 @@ public final class AGV extends MovingItem {
     
     // Constants
     private static final Vector3f startPosition = new Vector3f(-10f, 0f, 625);
-    private static final Vector3f transformOffset = new Vector3f(0.0f, 5.0f, 0.0f);
+    private static final Vector3f transformOffset = new Vector3f(0.0f, 1.7f, -5f);
     private static final Vector3f spatialOffset = new Vector3f(0.0f, 0.0f, 0.0f);
     private static final float spatialScale = 2.2f;
     private static final Vector3f containerOffset = new Vector3f(-1.2f, 0.4f, -6.0f);

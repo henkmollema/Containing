@@ -25,7 +25,7 @@ public class CommunicationProtocol {
     
     private List<Instruction> resendBuffer;
 
-    volatile boolean safeMode = true; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
+    volatile boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     
     final List<String> pendingAcknowelegeInst;
     final List<String> pendingAcknowelegeResp;

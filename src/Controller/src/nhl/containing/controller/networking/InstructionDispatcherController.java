@@ -345,9 +345,9 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         platform.unsetBusy();
         ShippingContainer container = _context.getContainerById(instruction.getB());
-        Platform to = _context.getStoragePlatformByContainer(container); //<-- hier klopt iets niet dus?
+        Platform to = _context.getStoragePlatformByContainer(container);
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
-        Parkingspot toSpot = Platform.findFreeParkingspot(to); //<--- hier gaat het telkens fout, platform is wss null
+        Parkingspot toSpot = Platform.findFreeParkingspot(to);
         container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform

@@ -59,7 +59,7 @@ public class ContainerPool {
      */
     private static Transform create() {
         Transform t = new Transform();
-        WorldCreator.createBox(t);
+        WorldCreator.createContainer(t);
         return t;
     }
 }

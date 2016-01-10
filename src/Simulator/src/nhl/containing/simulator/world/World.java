@@ -109,12 +109,7 @@ public class World extends Behaviour {
         createTrainCell();
         createAGV();
         Main.getSimClient().Start();
-        
-        Spatial test = WorldCreator.createContainer(null);
-        test.setMaterial(MaterialCreator.getRandomContainerMaterial());
-       
-        //test. new Vector3f(World.containerSize().x, -10, 0.0f) // front offset
-        
+
         //test();
     }
     

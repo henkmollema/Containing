@@ -170,13 +170,10 @@ public final class MaterialCreator {
     
     public static Material getContainerMaterial(int n)
     {
-        if(containerMaterials.containsKey(n))
-            return containerMaterials.get(n);
-        else
-        {
+        if(!containerMaterials.containsKey(n))
             containerMaterials.put(n, unshaded("Textures/container/"+n+".png", ColorRGBA.White));
-            return containerMaterials.get(n);
-        }
+        
+        return containerMaterials.get(n);
     }
     
     public static Material getRandomContainerMaterial()

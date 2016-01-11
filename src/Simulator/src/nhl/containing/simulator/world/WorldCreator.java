@@ -16,6 +16,7 @@ import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Quad;
 import com.jme3.water.SimpleWaterProcessor;
@@ -24,7 +25,6 @@ import nhl.containing.simulator.framework.LoopMode;
 import nhl.containing.simulator.framework.Path;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Transform;
-import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 

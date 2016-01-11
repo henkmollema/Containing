@@ -6,7 +6,6 @@
 package nhl.containing.controller.networking;
 
 import java.util.Date;
-import nhl.containing.controller.Point3;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;

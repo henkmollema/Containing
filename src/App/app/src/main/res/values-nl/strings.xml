@@ -81,8 +81,8 @@
     <string-array name="graph_items">
         <item>Trein</item>
         <item>Vrachtwagen</item>
-        <item>Zeeschip</item>
         <item>binnenvaartschip</item>
+        <item>Zeeschip</item>
         <item>Opslag</item>
         <item>AGV</item>
         <item>Overige</item>

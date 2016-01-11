@@ -25,7 +25,7 @@ public class AppHandler implements Runnable
     private Server server;
     private ContainerCategory[] categories = new ContainerCategory[]
     {
-        ContainerCategory.TRAIN, ContainerCategory.TRUCK, ContainerCategory.INLANDSHIP, ContainerCategory.SEASHIP, ContainerCategory.STORAGE, ContainerCategory.AGV, ContainerCategory.REMAINDER
+        ContainerCategory.TRAIN, ContainerCategory.TRUCK,ContainerCategory.SEASHIP,ContainerCategory.INLANDSHIP, ContainerCategory.STORAGE, ContainerCategory.AGV, ContainerCategory.REMAINDER
     };
 
     /**
@@ -164,10 +164,10 @@ public class AppHandler implements Runnable
                                         numbers[1]++;
                                         break;
                                     case SEASHIP:
-                                        numbers[2]++;
+                                        numbers[3]++;
                                         break;
                                     case INLANDSHIP:
-                                        numbers[3]++;
+                                        numbers[2]++;
                                         break;
                                     case STORAGE:
                                         numbers[4]++;

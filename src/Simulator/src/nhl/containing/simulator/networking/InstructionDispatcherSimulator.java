@@ -130,9 +130,48 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             case InstructionType.SHIPMENT_MOVED:
                 handleShipmentMoved(inst);
                 break;
+            case InstructionType.CRANE_TO_DEPARTMENT:
+                handleCraneToDepartment(inst);
+                break;
         }
 
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
+    }
+    
+    /* Places a container from the AGV to the department storage */
+    private void handleCraneToDepartment(InstructionProto.Instruction instruction)
+    {
+        int spot = instruction.getB();
+        Point3 point = new Point3(instruction.getX(), instruction.getY(), instruction.getZ());
+        
+        if(instruction.getA() < World.LORRY_BEGIN){
+            //dit is een inlandship platform
+            PlatformInland inlandPlatform = World().getInlandPlatforms().get(instruction.getA());
+            inlandPlatform.place(spot, point);
+        }else if(instruction.getA() < World.SEASHIP_BEGIN){
+            //dit is een lorry platform
+            PlatformLorry lorryPlatform = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN).a;
+            lorryPlatform.place(spot, point);
+        }else if(instruction.getA() < World.STORAGE_BEGIN){
+            //dit is een seaship platform
+            PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);
+            seaPlatform.place(spot, point);
+        }else if(instruction.getA() < World.TRAIN_BEGIN){
+            //dit is een storage platform
+            PlatformStorage storagePlatform =  World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
+            storagePlatform.place(spot, point);
+            //TODO: stuur naar platform een crane move direction (Don't send place crane ready)
+        }else{
+            //dit is een train platform
+            /*Tuple<PlatformTrain,Vector2f> trainPlatform = World().getTrainPlatforms().get(instruction.getA() - World.TRAIN_BEGIN);
+            World().sendTrainTake(trainPlatform, point.x); //TODO whole pos?
+            int test = (int)trainPlatform.a.getParkingSpot().id();
+            SimulatorClient.sendTaskDone(trainPlatform.a.getPlatformID(),test, InstructionType.PLACE_CRANE_READY);*/
+            
+        }
+        
+        
+        
     }
     
     /**
@@ -329,6 +368,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             Container container = new Container(new RFID(inst.getContainers(0)));
             container.show();
             lorryTuple.b.setContainer(container);
+            lorryTuple.b.needsContainer = true;
             lorryTuple.b.state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
 
                 @Override

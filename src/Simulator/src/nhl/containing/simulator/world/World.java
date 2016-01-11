@@ -139,13 +139,14 @@ public class World extends Behaviour {
                 }
             } else if (s.b.state() == Vehicle.VehicleState.Waiting) {
                 // check if can go away
-                if (s.a.crane().isUp() /*&& !s.b.needsContainer*/) {
-                    if (true /*&& !s.b.needsContainer*/) {
-                        s.b.state(Vehicle.VehicleState.ToOut);
-                    } else if (true /*s.b.neededContainer() == s.b.getContainer()*/) {
-                        s.b.state(Vehicle.VehicleState.ToOut);
-                    }
-                }
+                
+//                if (s.a.crane().isUp() /*&& !s.b.needsContainer*/) {
+//                    if (!s.b.sto) {
+//                        s.b.state(Vehicle.VehicleState.ToOut);
+//                    } else if (true /*s.b.neededContainer() == s.b.getContainer()*/) {
+//                        s.b.state(Vehicle.VehicleState.ToOut);
+//                    }
+//                }
             }
         }
         trainUpdate();

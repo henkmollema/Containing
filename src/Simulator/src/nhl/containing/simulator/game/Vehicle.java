@@ -43,6 +43,7 @@ public class Vehicle extends MovingItem
     private VehicleState m_currentState;                        // Current vehicle state
     private boolean _busy;                                      // Is busy
     private VehicleStateApplied _callback;                      // Callback on done
+    public boolean needsContainer;
 
     /**
      * Constructor

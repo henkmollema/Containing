@@ -82,11 +82,30 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      * @param instruction instruction
      */
     private void craneToStorageReady(InstructionProto.Instruction instruction){
-        Storage storage = _items.getStorages()[instruction.getA() - SimulatorItems.STORAGE_BEGIN];
-        storage.unsetBusy();
-        Parkingspot spot = storage.getParkingspots().get(instruction.getB());
+        Platform platform = null;
+        
+        if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
+            //dit is een inlandship platform
+            platform = _items.getInlandPlatforms()[instruction.getA()];
+        }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
+            //dit is een lorry platform
+            platform = _items.getLorryPlatforms()[instruction.getA() - SimulatorItems.LORRY_BEGIN];
+        } else if (instruction.getA() < SimulatorItems.STORAGE_BEGIN) {
+            //dit is een seaship platform
+            platform = _items.getSeaShipPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
+        }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
+            //dit is een storage platform
+            platform =  _items.getStorages()[instruction.getA() - SimulatorItems.STORAGE_BEGIN];
+        } else {
+            //dit is een train platform
+            platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
+
+        }
+        
+        platform.unsetBusy();
+        Parkingspot spot = platform.getParkingspots().get(instruction.getB());
         AGV agv = spot.getAGV();
-        agv.getContainer().currentCategory = AppDataProto.ContainerCategory.STORAGE;
+        agv.getContainer().currentCategory = AppDataProto.ContainerCategory.REMAINDER;
         agv.unsetContainer();
         spot.removeAGV();
         agv.stop(); //set the agv to not busy so it can take a new job in the tickhandler
@@ -520,7 +539,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         builder.setInstructionType(InstructionType.CRANE_TO_DEPARTMENT);
         builder.setA(platform.getID());
 
-        builder.setB((int)parkingspot.getId());
+        builder.setB(0); //<- when departing parkingspot is always 0
         builder.setX(0);
         builder.setY(0);
         builder.setZ(0);
@@ -547,9 +566,28 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         _com.sendInstruction(builder.build());
     }
     
-    private void departmentArrived(InstructionProto.Instruction inst) {
-        //inst
+private void departmentArrived(InstructionProto.Instruction instruction) {
+     Platform platform = null;
+    if(instruction.getA() < SimulatorItems.LORRY_BEGIN){
+        //dit is een inlandship platform
+        platform = _items.getInlandPlatforms()[instruction.getA()];
+    }else if(instruction.getA() < SimulatorItems.SEASHIP_BEGIN){
+        //dit is een lorry platform
+        LorryPlatform lp = _items.getLorryPlatforms()[instruction.getA() - SimulatorItems.LORRY_BEGIN];
+        lp.getShipment().arrived = true;
+
+    } else if (instruction.getA() < SimulatorItems.STORAGE_BEGIN) {
+        //dit is een seaship platform
+        platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
+    }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
+        //dit is een storage platform
+
+    } else {
+        //dit is een train platform
+        platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
+
     }
+}
 
     @Override
     public void forwardResponse(InstructionProto.InstructionResponse resp) {

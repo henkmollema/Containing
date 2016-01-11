@@ -450,4 +450,24 @@ public final class Mathf {
         
         return __new;
     }
+    
+    public static float inverseLerp(float from, float to, float value) {
+        if (from < to) {
+            if (value < from)
+                return 0f;
+            if (value > to)
+                return 1f;
+
+            value -= from;
+            value /= to - from;
+            return value;
+        }
+        if (from <= to)
+            return 0f;
+        if (value < to)
+            return 1f;
+        if (value > from)
+            return 0f;
+        return (1f - ((value - to) / (from - to)));
+    }
 }

@@ -38,6 +38,7 @@ public class Main extends SimpleApplication {
 
     // Node Keys
     public static final String TRANSFORM_ID_KEY = "TRANSFORM_KEY";
+    public static final String AGV_INFO_KEY = "AGV_INFO_KEY";
     
     // Singleton
     private static Main m_instance;
@@ -74,6 +75,7 @@ public class Main extends SimpleApplication {
     private static long m_transformID = 0;
     private static List<Transform> m_transforms = new ArrayList<>();
     private static Map<Long, AGV> m_agvs = new HashMap<>();
+    private static Transform m_agvNode;
     private static Map<Long, Container> m_containers = new HashMap<>();
     private static Map<Long, ParkingSpot> m_parkingspots = new HashMap<>();
     
@@ -131,6 +133,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         m_instance = this; // init singleton
+        m_agvNode = new Transform();
         m_executor = Executors.newSingleThreadExecutor();
         initBehaviours();
         flyCam.setEnabled(false);
@@ -300,6 +303,9 @@ public class Main extends SimpleApplication {
     
     public static AGV getAgv(long id){
         return m_agvs.get(id);
+    }
+    public static Transform getAgvNode() {
+        return m_agvNode;
     }
     public static ParkingSpot getParkingSpot(long id){
         return m_parkingspots.get(id);

@@ -241,6 +241,10 @@ public class Point2 {
             a.y / b);
     }
     
+    /**
+     * Converts to readable string
+     * @return 
+     */
     @Override
     public String toString() {
         return "[" + x + ", " + y + "]";

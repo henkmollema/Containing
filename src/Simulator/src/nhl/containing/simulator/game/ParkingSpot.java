@@ -14,17 +14,21 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class ParkingSpot extends Transform {
     
-    private AGV m_agv;      // Container carrier
-    private int m_arrivalPathID;
-    private int m_departPathID;
-    private boolean m_snap2X = false;
+    private AGV m_agv;                  // Container carrier
+    private int m_arrivalPathID;        // Node where to arrive to get to this
+    private int m_departPathID;         // Node where to depart get get away from this
+    private boolean m_snap2X = false;   // Snap to X (flase -> Snap to Z)
     
      /**
-     * Constructor
-     * @param parent Platform
-     * @param offset Offset to Platform
-     * @param id id of the parent of this parkingspot
-     */
+      * Constructor
+      * @param parent
+      * @param offset
+      * @param id
+      * @param type
+      * @param arrival
+      * @param depart
+      * @param snap2x 
+      */
     public ParkingSpot(Transform parent,Vector3f offset,int id,SimulationItemType type, int arrival, int depart, boolean snap2x){
         super(parent);
         m_agv = null;
@@ -39,8 +43,12 @@ public class ParkingSpot extends Transform {
     
     /**
      * Constructor
-     * @param parent Platform
-     * @param offset Offset to Platform
+     * @param parent
+     * @param offset
+     * @param type
+     * @param arrival
+     * @param depart
+     * @param snap2x 
      */
     public ParkingSpot(Transform parent, Vector3f offset, SimulationItemType type, int arrival, int depart, boolean snap2x) {
         super(parent);
@@ -54,22 +62,43 @@ public class ParkingSpot extends Transform {
         m_snap2X = snap2x;
     }
     
+    /**
+     * Get arrival node id
+     * @return 
+     */
     public int arrivalID() {
         return m_arrivalPathID;
     }
+    /**
+     * Get depart node id
+     * @return 
+     */
     public int departID() {
         return m_departPathID;
     }
+    /**
+     * Set arrival id
+     * @param i 
+     */
     public void arrivalID(int i) {
         m_arrivalPathID = i;
     }
+    /**
+     * Set depart id
+     * @param i 
+     */
     public void departID(int i) {
         m_departPathID = i;
     }
+    /**
+     * Is napped to X axis
+     * if false it is snapped
+     * to Z axis
+     * @return 
+     */
     public boolean snap2x() {
         return m_snap2X;
     }
-    
     
     /**
      * Get AGV
@@ -89,7 +118,7 @@ public class ParkingSpot extends Transform {
      * Visualize the parkingspot
      */
     private void create() {
-        // TODO: Maybe shadow caster or decal
+        // OPTIONAL: Maybe shadow caster or decal or something with stencils
         WorldCreator.createBox(this, Utilities.one(), ColorRGBA.Black);
     }
 }

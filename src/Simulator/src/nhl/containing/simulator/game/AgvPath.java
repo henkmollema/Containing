@@ -10,7 +10,6 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Line;
 import java.util.HashMap;
 import java.util.Map;
-import nhl.containing.simulator.framework.Mathf;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.MaterialCreator;
 import nhl.containing.simulator.world.World;
@@ -21,8 +20,12 @@ import nhl.containing.simulator.world.World;
  */
 public class AgvPath /*extends Behaviour*/ {
     
+    //private static final int LEFT   = 0x1;
+    //private static final int RIGHT  = 0x2;
+    //private static final int UP     = 0x4;
+    //private static final int DOWN   = 0x8;
+    
     private static boolean m_initialized = false;
-    private static boolean m_nodesSend = false;
     private static int currentID = 0;
     
     public static class AgvNode {
@@ -54,16 +57,12 @@ public class AgvPath /*extends Behaviour*/ {
         }
     }
     
-    //public List<Tuple<Integer, Vector3f[]>> m_results = new ArrayList<>();
     private static AgvNode[] nodes = null;
-    
-    public static AgvNode[] getNodes() {
-        if (nodes == null)
-            init();
-        return nodes;
-    }
-    
     private static Map<Integer,AgvNode> m_hashNodes = new HashMap<>();
+    
+    /**
+     * Initialize nodes
+     */
     public static void init() {
         if (m_initialized)
             return;
@@ -117,7 +116,7 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(left - ext, -up - ext)),       //  6
             new AgvNode(new Vector2f(-left + ext, -up - ext)),      //  7
             
-            // 
+            // Road Up Upper
             new AgvNode(new Vector2f(left + road, up + road)),      //  8
             new AgvNode(new Vector2f(left - iof, up + road)),       //  9
             new AgvNode(new Vector2f(iof, up + road)),              // 10
@@ -127,7 +126,7 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(-left + iof, up + road)),      // 14
             new AgvNode(new Vector2f(-left - road, up + road)),     // 15
             
-            // 
+            // Road Up lower
             new AgvNode(new Vector2f(left, up)),                    // 16
             new AgvNode(new Vector2f(left - iof, up)),              // 17
             new AgvNode(new Vector2f(iof, up)),                     // 18
@@ -137,15 +136,15 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(-left + iof, up)),             // 22
             new AgvNode(new Vector2f(-left, up)),                   // 23
             
-            //
+            // Road Right upper
             new AgvNode(new Vector2f(-left, up - iof)),             // 24
             new AgvNode(new Vector2f(-left - road, up - iof)),      // 25
             
-            //
+            // Road Right lower
             new AgvNode(new Vector2f(-left, -up + iof)),            // 26
             new AgvNode(new Vector2f(-left - road, -up + iof)),     // 27
             
-            // 
+            // Road Down upper
             new AgvNode(new Vector2f(left, -up)),                   // 28
             new AgvNode(new Vector2f(left - iof, -up)),             // 29
             new AgvNode(new Vector2f(road / 2.0f, -up)),            // 30
@@ -153,7 +152,7 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(-left + iof, -up)),            // 32
             new AgvNode(new Vector2f(-left, -up)),                  // 33
             
-            // 
+            // Road Down lower
             new AgvNode(new Vector2f(left + road, -up - road)),     // 34
             new AgvNode(new Vector2f(left - iof, -up - road)),      // 35
             new AgvNode(new Vector2f(road / 2.0f, -up - road)),     // 36
@@ -229,9 +228,15 @@ public class AgvPath /*extends Behaviour*/ {
         // Show lines in play
         debugPath();
     }
+    
+    /**
+     * Show lines in play mode
+     */
     private static void debugPath() {
         for (int i = 0; i < nodes.length; i++) {
             for (int j : nodes[i].connections()) {
+                
+                // Path offset
                 Vector3f offset = new Vector3f(0.0f, 5.0f, 0.0f);
                 
                 Line a = new Line(nodes[i].position().add(offset), nodes[j].position().add(offset));
@@ -243,37 +248,31 @@ public class AgvPath /*extends Behaviour*/ {
         }
     }
     
+    /**
+     * Send nodes to controller
+     */
     private static void sendNodes() {
         for(AgvNode node : nodes){
             Main.instance().getSimClient().addNode(node);
         }
     }
     
-    /*
-    private static Vector3f[] getPath(int[] ids, Vector3f from, Vector3f to) {
-        Vector3f[] p = new Vector3f[ids.length + 2];
-        p[0] = new Vector3f(from);
-        p[p.length - 1] = new Vector3f(to);
-        
-        // or i = ids.length - 1; i >= 0; i--
-        for (int i = 0; i < ids.length; i++) {
-            p[i + 1] = m_hashNodes.get(ids[i]).position();
-        }
-        
-        return p;
+    /**
+     * Get all nodes
+     * @return 
+     */
+    public static AgvNode[] getNodes() {
+        if (nodes == null)
+            init();
+        return nodes;
     }
-    * 
-    * 
-    public static Vector3f[] getPath(int[] ids, Vector3f to){
-        Vector3f[] p = new Vector3f[ids.length + 1];
-        for(int i = 0; i < ids.length; i++){
-            p[i] = m_hashNodes.get(ids[i]).position();
-        }
-        
-        p[p.length - 1] = new Vector3f(to);
-        return p;
-    }
-    */
+    
+    /**
+     * Convert id path to Vector path
+     * @param ids
+     * @param to
+     * @return 
+     */
     public static Vector3f[] getPath(int[] ids, ParkingSpot to){
         Vector3f[] p = new Vector3f[ids.length + 2];
         for(int i = 0; i < ids.length; i++){
@@ -289,6 +288,11 @@ public class AgvPath /*extends Behaviour*/ {
         return p;
     }
     
+    /**
+     * Convert id path to vector path
+     * @param ids
+     * @return 
+     */
     public static Vector3f[] getPath(int[] ids){
         Vector3f[] p = new Vector3f[ids.length];
         for(int i = 0; i < ids.length; i++){
@@ -296,36 +300,4 @@ public class AgvPath /*extends Behaviour*/ {
         }
         return p;
     }
-    
-    /*
-    public void getPath(AGV target, AgvNode to) {
-        // Send this somewhere
-        
-        // To send, the two custom nodes
-        
-    }
-    
-    public void nodesHasBeenSend() {
-        m_initialized = true;
-    }
-    
-    @Override
-    public void rawUpdate() {
-        if (!m_initialized) {
-            // 
-            if (!m_nodesSend) {
-                // Send nodes
-                m_nodesSend = true;
-            }
-            return;
-        }
-        
-        while(m_results.size() > 0) {
-            //
-            AGV selected = new AGV(); // GetAGV by id
-            selected.path().setPath(m_results.get(0).b);
-            m_results.remove(0);
-        }
-    }
-    * */
 }

@@ -90,9 +90,22 @@ public final class Interpolate {
         return ease(type, start, target, t, 1.0f);
     }
     
+    /**
+     * Ease between 0 and 1
+     * @param type
+     * @param elapsedTime
+     * @param duration
+     * @return 
+     */
     public static float ease01(EaseType type, float elapsedTime, float duration) {
         return ease(type, 0.0f, 1.0f, elapsedTime, duration);
     }
+    /**
+     * Ease between 0 and 1 where duration is 1
+     * @param type
+     * @param elapsedTime
+     * @return 
+     */
     public static float ease01(EaseType type, float elapsedTime) {
         return ease(type, 0.0f, 1.0f, elapsedTime, 1.0f);
     }
@@ -135,7 +148,7 @@ public final class Interpolate {
         elapsedTime = clampTime(elapsedTime, duration, 1.0f);
         return (target - start) * elapsedTime * elapsedTime + start;
     }
-
+    
     public static float easeOutQuad(float start, float target, float elapsedTime, float duration) {
         // clamp elapsedTime so that it cannot be greater than duration
         elapsedTime = clampTime(elapsedTime, duration, 1.0f);

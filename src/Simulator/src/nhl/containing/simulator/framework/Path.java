@@ -19,24 +19,24 @@ import com.jme3.math.Vector3f;
 public class Path {
     
     // Main
-    public Vector3f[] m_nodes = new Vector3f[0];       // Path node positions
-    public Vector3f m_previousPosition = Utilities.zero();// Previous position, used for switching between nodes
-    public int m_targetNode = 0;                      // Target node
+    public Vector3f[] m_nodes = new Vector3f[0];            // Path node positions
+    public Vector3f m_previousPosition = Utilities.zero();  // Previous position, used for switching between nodes
+    public int m_targetNode = 0;                            // Target node
     
     // Settings
-    public boolean m_manual = false;                   // Manual update
-    public boolean m_useTimeInsteadOfSpeed = false;    // true -> Use time based | false -> Use speed based
+    public boolean m_manual = false;                        // Manual update
+    public boolean m_useTimeInsteadOfSpeed = false;         // true -> Use time based | false -> Use speed based
     
     // Behaviours
-    public float m_speed = 1.0f;                       // Speed
-    public float m_waitTime = 0.0f;                    // Wait time at node
-    public LoopMode m_loopMode = LoopMode.Loop;        // Loop mode
-    public EaseType m_easeType = EaseType.Linear;      // Ease type (interpolation type)
-    public Callback m_callback = null;                 // Callback at node
+    public float m_speed = 1.0f;                            // Speed
+    public float m_waitTime = 0.0f;                         // Wait time at node
+    public LoopMode m_loopMode = LoopMode.Loop;             // Loop mode
+    public EaseType m_easeType = EaseType.Linear;           // Ease type (interpolation type)
+    public Callback m_callback = null;                      // Callback at node
     
     // Other
-    private float m_timer = 0.0f;                       // Move timer
-    private boolean m_goBack = false;                   // Go inverse direction
+    private float m_timer = 0.0f;                           // Move timer
+    private boolean m_goBack = false;                       // Go inverse direction
     
     
     /**
@@ -76,7 +76,11 @@ public class Path {
             return;
         
         if (m_timer < 1.0f) { // Stage 1: move
+            
+            // Raise timer (by time or speed)
             m_timer += m_useTimeInsteadOfSpeed ? Time.deltaTime() / m_speed : Time.deltaTime() * Mathf.min(Utilities.NaNSafeFloat(m_speed / Utilities.distance(m_previousPosition, m_nodes[m_targetNode])), 1.0f);
+            
+            // Timer finished
             if (m_timer >= 1.0f && m_callback != null)
                 m_callback.invoke();
         }
@@ -94,6 +98,8 @@ public class Path {
      * Set target to next point
      */
     public void next() {
+        
+        // override previous position with current position
         savePosition();
         
         if (m_manual)
@@ -103,9 +109,14 @@ public class Path {
             return;
         
         switch(m_loopMode) {
-            case Loop: m_targetNode = (m_targetNode + 1) % m_nodes.length; break;
-            case Once: if (m_targetNode < m_nodes.length - 1) m_targetNode++; break;
-            case PingPong:
+            case Loop: // Loop index
+                m_targetNode = (m_targetNode + 1) % m_nodes.length; 
+                break;
+            case Once: // Stop when at last node
+                if (m_targetNode < m_nodes.length - 1) 
+                    m_targetNode++; 
+                break;
+            case PingPong: // Pingpong index
                 if (m_goBack) {
                     if (--m_targetNode < 0) {
                         m_targetNode = 1;
@@ -201,11 +212,20 @@ public class Path {
         return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
     }
     
+    /**
+     * Get the target position
+     * @return 
+     */
     public Vector3f getTargetPosition() {
         if (m_nodes == null || m_targetNode < 0 || m_targetNode >= m_nodes.length)
             return null;
         return m_nodes[m_targetNode].clone();
     }
+    /**
+     * Get position in index
+     * @param index
+     * @return 
+     */
     public Vector3f getPosition(int index) {
         return m_nodes[index].clone();
     }
@@ -216,6 +236,10 @@ public class Path {
     public int getTargetIndex() {
         return m_targetNode;
     }
+    /**
+     * Check if target is last target in the array
+     * @return 
+     */
     public boolean targetIsLast() {
         return (m_targetNode == (m_nodes.length - 1));
     }

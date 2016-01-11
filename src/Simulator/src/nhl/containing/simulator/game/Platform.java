@@ -9,9 +9,6 @@ import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.networking.SimulatorClient;
 /**
- * TODO: replace() line 193!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * also check line 206
- * 
  * Loading platform, also controls its crane
  * 
  * @author sietse
@@ -20,23 +17,19 @@ public abstract class Platform extends ContainerCarrier {
     
     protected Crane m_crane;                                // Crane
     protected ParkingSpot[] m_parkingSpots;                 // AGV parking spots
-    protected int m_platformid;
+    protected int m_platformid;                             // ID
     
     private List<CraneAction> m_queue = new ArrayList<>();  // Action queue
     private CraneAction m_currentAction;                    // Current action
     private boolean m_firstFrame = true;                    // Is first frame
-    private boolean m_snapX;
+    private boolean m_snapX;                                // Snap to X axis
     
     /**
      * Constructor
+     * @param offset
+     * @param id
+     * @param snapX 
      */
-//    public Platform(Vector3f offset) {
-//        super();
-//        m_parkingSpots = _parkingSpots(-1);
-//        createPlatform();
-//        this.position(offset);
-//    }
-    
     public Platform(Vector3f offset, int id, boolean snapX){
         super();
         m_platformid = id;
@@ -46,13 +39,24 @@ public abstract class Platform extends ContainerCarrier {
         m_snapX = snapX;
     }
     
+    /**
+     * get parkingpots at init
+     * @return 
+     */
     private ParkingSpot[] _parkingSpots() {
         return parkingSpots();
     }
-    
+    /**
+     * Get size of parkingspots
+     * @return 
+     */
     public int parkingSpotLength() {
         return m_parkingSpots == null ? -1 : m_parkingSpots.length;
     }
+    /**
+     * Get first available parkingspot
+     * @return 
+     */
     public ParkingSpot getParkingSpot() {
         int i;
         for (i = 0; i < m_parkingSpots.length; i++) {
@@ -96,6 +100,10 @@ public abstract class Platform extends ContainerCarrier {
         return m_platformid;
     }
     
+    /**
+     * Get crane
+     * @return 
+     */
     public Crane crane() {
         return m_crane;
     }
@@ -105,24 +113,17 @@ public abstract class Platform extends ContainerCarrier {
     public void update() {
         
         if (m_crane != null && m_crane.targetIsLast())
-            //if (!m_currentAction.isTake())
-            //System.out.println("TEST");
             m_crane.paused = !m_currentAction.isTake() && m_currentAction.to.storageSpot == null && m_parkingSpots[m_currentAction.to.parkingSpot].agv() == null;
         
         // Init
-        if (m_firstFrame) {
-            // First frame, init
-            if (m_crane != null) {
-                m_crane.onTargetCallback = new Callback(this, "onCrane");
-                m_firstFrame = false;
-            }
+        if (m_firstFrame && m_crane != null) {
+            m_crane.onTargetCallback = new Callback(this, "onCrane");
+            m_firstFrame = false;
         }
         
         // Update crane
-        if (m_crane != null) {
-            // Update crane
+        if (m_crane != null)
             m_crane._update();
-        }
     }
     
     /**
@@ -156,7 +157,7 @@ public abstract class Platform extends ContainerCarrier {
         }
     }
     /**
-     * 
+     * Place conainer at spot
      * @param parkingSpot
      * @param point 
      */
@@ -184,9 +185,8 @@ public abstract class Platform extends ContainerCarrier {
             m_currentAction.finish();
             
             // Check if need to do the placing
-            if (m_currentAction.setPath()) {
+            if (m_currentAction.setPath())
                 return;
-            }
         } getNext();
     }
     /**
@@ -212,9 +212,6 @@ public abstract class Platform extends ContainerCarrier {
         public final CraneTarget to;            // Placing place
         private int m_onTargetIndex = 0;        // Index to check if need to take or place
         
-        public boolean isTake() {
-            return m_onTargetIndex <= 1;
-        }
         /**
          * Constructor
          * NOTE: No input may have "null" value
@@ -302,6 +299,14 @@ public abstract class Platform extends ContainerCarrier {
             return true;
         }
         /**
+         * Is take action
+         * @return 
+         */
+        public boolean isTake() {
+            return m_onTargetIndex <= 1;
+        }
+        
+        /**
          * Calls on action finish
          * Container parents swap
          */
@@ -384,10 +389,5 @@ public abstract class Platform extends ContainerCarrier {
             storageSpot = null;
             parkingSpot = spot + 0;
         }
-    }
-    
-    private static void p(String s)
-    {
-        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 }

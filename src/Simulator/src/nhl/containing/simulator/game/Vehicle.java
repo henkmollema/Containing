@@ -23,6 +23,9 @@ import nhl.containing.simulator.world.MaterialCreator;
  */
 public class Vehicle extends MovingItem
 {
+    /**
+     * State of vehicle
+     */
     public enum VehicleState
     {
         Disposed,
@@ -30,39 +33,54 @@ public class Vehicle extends MovingItem
         ToLoad,
         ToOut
     }
-    private boolean m_initialized = false;
-    private final static String BASE_MODEL_PATH = "models/";
-    public Spatial m_frontSpatial;
-    public Material m_frontMaterial;
-    private Vector3f m_frontOffset;
-    public Vector3f[] from;
-    public Vector3f[] to;
-    private VehicleState m_currentState;
-    private boolean _busy;
-    private VehicleStateApplied _callback;
+    private boolean m_initialized = false;                      // Is initialized
+    private final static String BASE_MODEL_PATH = "models/";    // Base model path
+    public Spatial m_frontSpatial;                              // Vehicle spatial
+    public Material m_frontMaterial;                            // Vehicle material
+    private Vector3f m_frontOffset;                             // Vehicle spatial offset
+    public Vector3f[] from;                                     // Arrival path
+    public Vector3f[] to;                                       // Depart path
+    private VehicleState m_currentState;                        // Current vehicle state
+    private boolean _busy;                                      // Is busy
+    private VehicleStateApplied _callback;                      // Callback on done
 
-    public Vehicle(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset)
-    {
+    /**
+     * Constructor
+     * @param size
+     * @param speed
+     * @param frontModel
+     * @param frontScale
+     * @param frontOffset 
+     */
+    public Vehicle(Point3 size, float speed, String frontModel, float frontScale, Vector3f frontOffset) {
         super(size, speed);
         init(frontModel, frontScale, frontOffset);
     }
     
-    public void setFrontOffset(Vector3f frontOffset)
-    {
+    /**
+     * Set spatial offset
+     * @param frontOffset 
+     */
+    public void setFrontOffset(Vector3f frontOffset) {
         m_frontSpatial.setLocalTranslation(frontOffset);
     }
 
-    private void init(String frontModel, float frontScale, Vector3f frontOffset)
-    {
+    /**
+     * Offset
+     * @param frontModel
+     * @param frontScale
+     * @param frontOffset 
+     */
+    private void init(String frontModel, float frontScale, Vector3f frontOffset) {
         m_frontOffset = frontOffset == null ? Utilities.zero() : frontOffset;
 
-        if (!Utilities.nullOrEmpty(frontModel))
-        {
+        if (!Utilities.nullOrEmpty(frontModel)) {
+            
+            // Set material
             if (m_frontMaterial == null)
-            {
                 m_frontMaterial = MaterialCreator.unshadedRandom();
-            }
 
+            // Init spatial
             m_frontSpatial = Main.assets().loadModel(BASE_MODEL_PATH + frontModel);
             m_frontSpatial.setMaterial(m_frontMaterial);
             m_frontSpatial.scale(frontScale);
@@ -79,23 +97,23 @@ public class Vehicle extends MovingItem
         path().m_useTimeInsteadOfSpeed = false;
     }
 
+    /**
+     * On new state
+     */
     public void onVehicle()
     {
         switch (m_currentState)
         {
             case ToLoad:
-                if (path().atLast())
-                {
+                if (path().atLast()) {
                     onWaitingStart();
                     state(VehicleState.Waiting);
                 }
                 break;
             case ToOut:
-                if (path().atLast())
-                {
+                if (path().atLast()) {
                     state(VehicleState.Disposed);
-                    if (_busy && _callback != null)
-                    {
+                    if (_busy && _callback != null) {
                         _busy = false;
                         _callback.done(this);
                         _callback = null;
@@ -105,10 +123,13 @@ public class Vehicle extends MovingItem
         }
     }
 
+    /**
+     * Update vehicle
+     */
     public void update()
     {
-        if (!m_initialized)
-        {
+        // Wait one frame
+        if (!m_initialized) {
             m_initialized = true;
             return;
         }
@@ -130,8 +151,18 @@ public class Vehicle extends MovingItem
 
     }
     
+    /**
+     * On waiting start default (used as virtual void)
+     */
     public void onWaitingStart() { onDone(); }
-    public void onWaitingUpdate(){ }
+    /**
+     * On waiting update (used as virtual void)
+     */
+    public void onWaitingUpdate() { }
+    
+    /**
+     * Called when can go away
+     */
     protected void onDone() {
         if (_busy && _callback != null) {
             _busy = false;
@@ -140,18 +171,24 @@ public class Vehicle extends MovingItem
         }
     }
     
-    public void state(VehicleState state)
-    {
+    /**
+     * Set state
+     * @param state 
+     */
+    public void state(VehicleState state) {
         state(state, null);
     }
 
+    /**
+     * Set state
+     * @param state
+     * @param callback 
+     */
     public void state(VehicleState state, VehicleStateApplied callback)
     {
         if (m_currentState == state)
-        {
             return;
-        }
-
+        
         switch (state)
         {
             case Disposed:
@@ -159,8 +196,7 @@ public class Vehicle extends MovingItem
                 _busy = false;
                 break;
             case ToLoad:
-                if (!_busy && callback != null)
-                {
+                if (!_busy && callback != null) {
                     _busy = true;
                     _callback = callback;
                 }
@@ -168,8 +204,7 @@ public class Vehicle extends MovingItem
                 path().setPathf(from[0], from);
                 break;
             case ToOut:
-                if (!_busy && callback != null)
-                {
+                if (!_busy && callback != null) {
                     _busy = true;
                     _callback = callback;
                 }
@@ -181,20 +216,26 @@ public class Vehicle extends MovingItem
         m_currentState = state;
     }
 
-    public VehicleState state()
-    {
+    /**
+     * Get state
+     * @return 
+     */
+    public VehicleState state() {
         return m_currentState;
     }
 
     /**
      * Callback when a vehicle arrives in a certain state.
      */
-    public interface VehicleStateApplied
-    {
+    public interface VehicleStateApplied {
         void done(Vehicle v);
     }
     
-    public void init(List<InstructionProto.Container> containers){
+    /**
+     * init
+     * @param containers 
+     */
+    public void init(List<InstructionProto.Container> containers) {
         Container[] c = new Container[containers.size()];
         for(int i = 0; i < c.length;i++){
             c[i] = new Container(new RFID(containers.get(i)));
@@ -202,8 +243,11 @@ public class Vehicle extends MovingItem
         }
         init(c);
     }
-    public void init(int size)
-    {
+    /**
+     * Init
+     * @param size 
+     */
+    public void init(int size) {
         Container[] c = new Container[size];
         
         for (int i = 0; i < c.length; i++) {
@@ -213,6 +257,10 @@ public class Vehicle extends MovingItem
         
         init(c);
     }
+    /**
+     * Init
+     * @param containers 
+     */
     public void init(Container... containers)
     {
         if (m_containerSpots.length < 1) {
@@ -220,9 +268,10 @@ public class Vehicle extends MovingItem
             return;
         }
         
-        
+        // Clear old containers
         clear();
         
+        // Get max
         int size = 0;
         int maxSize = containers.length;
         Point3 max = new Point3( 
@@ -231,9 +280,9 @@ public class Vehicle extends MovingItem
             m_containerSpots[0][0].length
         );
         
+        // reset
         position(Utilities.zero());
         initSpots(new Point3(max));
-        //max.add(Point3.one());
         
         for (int x = 0; x < max.x; x++) {
             for (int y = 0; y < max.y; y++){
@@ -241,13 +290,15 @@ public class Vehicle extends MovingItem
                     
                     if (size == maxSize)
                         break;
+                    
+                    // Set container
                     setContainer(new Point3(x, y, z), containers[size], false);
                     size++;
                 }
             }
         }
-        updateOuter();
         
-        System.out.println("adafsaasdf: " + (getContainer(2, 2, 2) == null));
+        // Set culling
+        updateOuter();
     }
 }

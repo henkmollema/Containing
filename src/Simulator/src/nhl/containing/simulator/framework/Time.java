@@ -13,21 +13,22 @@ import nhl.containing.simulator.simulation.Main;
  * @author sietse
  */
 public final class Time {
-    private static float m_timeScale = 1.0f;
-    private static float m_fixedTimeScale = 0.02f; // 50 fps (fps = 1.0 / m_fixedTimeScale)
-    private static float m_deltaTime = 0.0f; // Time between the previous and the current frame
-    private static float m_time = 0.0f; // Time in simulator
+    private static float m_timeScale = 1.0f;                    // Current time scale
+    private static float m_fixedTimeScale = 0.02f;              // 50 fps (fps = 1.0 / m_fixedTimeScale)
+    private static float m_deltaTime = 0.0f;                    // Time between the previous and the current frame
+    private static float m_time = 0.0f;                         // Time in simulator
     
-    private static final float MIN_FIXED_TIME_SCALE = 0.005f;
-    
-    private static final float TIME_SEND_INTERVAL = 1f;
-    private static float m_deltaSum = 0;
+    private static final float MIN_FIXED_TIME_SCALE = 0.005f;   // Minimum fixed time scale
+    private static final float TIME_SEND_INTERVAL = 1f;         // Time interfal when sending to controller
+    private static float m_deltaSum = 0;                        // Send timer
     
     /**
      * Update time, only call this from main
      * @param deltaTime 
      */
     public static void _updateTime(float deltaTime) {
+        
+        // Add deltatime to total time
         float _addedTime = deltaTime * m_timeScale;
         m_deltaTime = deltaTime;
         m_time += _addedTime;
@@ -35,6 +36,7 @@ public final class Time {
         if(SimulatorClient.controllerCom != null) {
             m_deltaSum += _addedTime;
             
+            // Send
             if(m_deltaSum >= TIME_SEND_INTERVAL) {
                 Main.instance().simClient().sendTimeUpdate();
                 m_deltaSum = 0;

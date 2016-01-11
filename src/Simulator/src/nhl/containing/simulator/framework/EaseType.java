@@ -1,7 +1,7 @@
 package nhl.containing.simulator.framework;
 
 /**
- *
+ * Formula used for interpolating
  * @author sietse
  */
 public enum EaseType {

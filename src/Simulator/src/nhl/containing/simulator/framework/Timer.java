@@ -8,7 +8,7 @@ import nhl.containing.simulator.framework.Callback;
 import nhl.containing.simulator.framework.Time;
 
 /**
- *
+ * Timer
  * @author sietse
  */
 public class Timer {

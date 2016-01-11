@@ -16,10 +16,20 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformInland extends Platform {
 
+    /**
+     * Constructor
+     * @param offset
+     * @param id 
+     */
     public PlatformInland(Vector3f offset,int id) {
         super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_INLANDSHIP);
     }
+    
+    /**
+     * Parkingsots
+     * @return 
+     */
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
@@ -27,6 +37,9 @@ public class PlatformInland extends Platform {
         };
     }
 
+    /**
+     * Create its platform
+     */
     @Override
     protected void createPlatform() {
         m_crane = WorldCreator.createSeaCrane(this);

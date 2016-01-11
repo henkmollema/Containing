@@ -30,7 +30,7 @@ public final class Crane extends MovingItem {
     private Transform m_frame;                              // Frame that hold the hook
     private Transform m_hook;                               // Hook, that holds the container
     private Line3D m_rope;                                  // Rope between hook and frame
-    private Timer m_attachTimer;  // For attach and detach containers
+    private Timer m_attachTimer;                            // For attach and detach containers
     
     // Objects
     private Spatial m_frameSpatial;                         // Frame spatial
@@ -39,28 +39,38 @@ public final class Crane extends MovingItem {
     // Offsets
     protected Vector3f m_frameOffset = Utilities.zero();    // Local frame offset, from the crane transform
     protected Vector3f m_hookOffset = Utilities.zero();     // Local hook offset, from the frame transform
-    protected Vector3f m_ropeOffset = Utilities.zero();
+    protected Vector3f m_ropeOffset = Utilities.zero();     // Rope oofset
     
     // Settings
-    private final String m_craneModelName;
-    private final String m_hookModelName;
-    private final Material m_craneModelMaterial;
-    private final Material m_hookModelMaterial;
-    private final float m_attachTime;
-    private final float m_ropeHeight;
-    private final Vector3f m_basePosition;
+    private final String m_craneModelName;                  // Name of frame
+    private final String m_hookModelName;                   // Name of hook
+    private final Material m_craneModelMaterial;            // Material of frame
+    private final Material m_hookModelMaterial;             // Material of hook
+    private final float m_attachTime;                       // Attack timer
+    private final float m_ropeHeight;                       // Heiht of rope
+    private final Vector3f m_basePosition;                  // Base position
     public Callback onTargetCallback;                       // Method when arriving at destination
-    public boolean paused = false;
+    public boolean paused = false;                          // Is crane waiting
     
     /**
      * Constructor
      * @param parent
+     * @param cranePath
+     * @param craneModelName
+     * @param hookModelName
+     * @param craneModelMaterial
+     * @param hookModelMaterial
+     * @param attachTime
+     * @param ropeHeight
      * @param basePosition
      * @param craneOffset
      * @param hookOffset
+     * @param ropeOffset
      * @param containerOffset
      * @param craneSpatialOffset
-     * @param hookSpatialOffset 
+     * @param hookSpatialOffset
+     * @param craneScale
+     * @param hookScale 
      */
     public Crane(
             Transform parent,
@@ -147,7 +157,10 @@ public final class Crane extends MovingItem {
         awake();
     }
     
-    
+    /**
+     * Get base position
+     * @return 
+     */
     public Vector3f basePosition(){
         return new Vector3f(m_basePosition);
     }
@@ -262,12 +275,16 @@ public final class Crane extends MovingItem {
         path().setPath(newPath);
     }
     
+    /**
+     * Check if hook is up
+     * @return 
+     */
     public boolean isUp() {
         return Mathf.inRange(path().getPosition().y, m_basePosition.y, 0.01f);
     }
     
     /**
-     * 
+     * First frame when setting container
      * @param c 
      */
     @Override

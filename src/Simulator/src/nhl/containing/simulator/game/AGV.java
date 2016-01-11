@@ -44,8 +44,6 @@ public final class AGV extends MovingItem {
         return m_register.get(id);
     }
     
-    
-    
     // Constants
     private static final Vector3f startPosition = new Vector3f(-10f, 0f, 625);
     private static final Vector3f transformOffset = new Vector3f(0.0f, 1.7f, -5f);
@@ -74,11 +72,13 @@ public final class AGV extends MovingItem {
     private float m_raycastTimer;
     private final float m_raycastRate = 1.0f;
     
-    
     // Components
     private Spatial m_spatial;
     private AgvData m_info;
     
+    /**
+     * Constructor
+     */
     public AGV() {
         super(Main.getAgvNode(), loadedSpeed, unloadedSpeed);
         init();
@@ -88,44 +88,47 @@ public final class AGV extends MovingItem {
         
         m_info = new AgvData();
         setUserData(Main.AGV_INFO_KEY, m_info.id);
-        
-        //path().setPathf(Utilities.zero(), AgvPath.getPath(new int[]{0, 1, 3}, new Vector3f(0.0f, 0.0f, 0.0f)));
-        //path().setPathf(Utilities.zero(), new Vector3f(50.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f), new Vector3f(0.0f, 0.0f, 50.0f), new Vector3f(100.0f, 0.0f, 0.0f), new Vector3f(50.0f, 0.0f, 50.0f));
     }
     
+    /**
+     * Set the agv parkingspot
+     * @param id 
+     */
     public void setParkingspotID(int id){
         m_instructionSend = false;
         m_parkingspot = id;
     }
-    
-    //private boolean ff = true;//testing
-    
+    /**
+     * Update 
+     */
     public void update() {
-        /*Testing
-        if (ff) {
-            Vector3f[] p = AgvPath.getPath(new int[]{0, 1, 10, 18, 19, 20, 21, 13, 12, 11, 10, 9, 0}, Main.instance().getWorld().getLorryPlatforms().get(0).a.getParkingSpot());
-            path().setPathf(p[0], p);
-            ff = false;
-        }*/
         
+        // Update raycasting (m_raycastRate)
         m_raycastTimer += Time.deltaTime();
         if (m_raycastTimer >= m_raycastRate) {
             raycast();
             m_raycastTimer = 0.0f;
         }
+        
+        // Update user data
         updateData();
         
-        
+        // Update position and rotation
         path().update();
         if(path().atLast() && !m_instructionSend){
+            
+            // Path is finished
             m_instructionSend = true;
             SimulatorClient.sendTaskDone((int)m_id, 0, InstructionType.AGV_READY);
             ParkingSpot p = (ParkingSpot)Main.getTransform(m_parkingspot);
             p.agv(this);
         }
+        
+        // Get and set new position
         Vector3f v = path().getPosition();
         position(v.clone().add(transformOffset));
         
+        // Determine rotation
         Vector3f t = path().getTargetPosition();
         if (m_previousPosition == null) {
             m_previousPosition = position();
@@ -154,7 +157,7 @@ public final class AGV extends MovingItem {
     
     private void init() {
         
-        // 
+        // Set spatial
         position(Utilities.zero());
         m_spatial = Main.assets().loadModel(model);
         m_spatial.setMaterial(material);
@@ -163,7 +166,7 @@ public final class AGV extends MovingItem {
         m_spatial.setLocalTranslation(new Vector3f(spatialOffset));
         m_spatial.setUserData(Main.AGV_INFO_KEY, m_info);
         
-        //
+        // Set container offset
         containerOffset(new Vector3f(containerOffset));
         
         // Init path
@@ -175,28 +178,42 @@ public final class AGV extends MovingItem {
         path.m_previousPosition = new Vector3f(startPosition);
         path(path);
     }
+    
+    /**
+     * Raycasting
+     */
     private void raycast() {
         if (m_targetDirection == null)
             return;
         
+        // Raycast
         CollisionResults results = new CollisionResults();
         Ray ray = new Ray(position(), m_targetDirection.clone());
         Main.getAgvNode().collideWith(ray, results);
         
+        // Check for all hits
         for (int i = 0; i < results.size(); i++) {
+            
+            // IS in range
             float dist = results.getCollision(i).getDistance();
             if (dist <= m_distance) {
                 Integer index = results.getCollision(i).getGeometry().getUserData(Main.AGV_INFO_KEY);
                 if (index == null)
                     continue;
                 
+                // Set new speed
                 path().setSpeed(getData(index).speed * Mathf.inverseLerp(m_stopDistance, m_distance, dist));
                 return;
             }
         }
         
+        // Set default speed
         path().setSpeed(getContainer() == null ? unloadedSpeed: loadedSpeed);
     }
+    
+    /**
+     * Update user data
+     */
     private void updateData() {
         m_info.speed = path().m_speed + 0.0f;
     }

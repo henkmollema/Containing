@@ -11,7 +11,6 @@ public class TrainHelper
 {
     public static void attachWagonToTrain(Vehicle v, int amount)
     {
-        final int size = 30;
         
         // todo: set the front offset to allow more wagons.
         //v.setFrontOffset(new Vector3f(World.containerSize().x, -10, (amount * 3.3333f) + 2 * size * World.containerSize().z));

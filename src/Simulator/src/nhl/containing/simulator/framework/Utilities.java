@@ -16,14 +16,47 @@ import java.util.List;
  * @author sietse
  */
 public final class Utilities {
-    public static final Vector3f zero()    { return new Vector3f( 0.0f,  0.0f,  0.0f).clone(); }
-    public static final Vector3f one()     { return new Vector3f( 1.0f,  1.0f,  1.0f).clone(); }
-    public static final Vector3f up()      { return new Vector3f( 0.0f,  1.0f,  0.0f).clone(); }
-    public static final Vector3f down()    { return new Vector3f( 0.0f, -1.0f,  0.0f).clone(); }
-    public static final Vector3f left()    { return new Vector3f(-1.0f,  0.0f,  0.0f).clone(); }
-    public static final Vector3f right()   { return new Vector3f( 1.0f,  0.0f,  0.0f).clone(); }
-    public static final Vector3f forward() { return new Vector3f( 0.0f,  0.0f,  1.0f).clone(); }
-    public static final Vector3f back()    { return new Vector3f( 0.0f,  0.0f, -1.0f).clone(); }
+    
+    /**
+     * [0,0,0]
+     * @return 
+     */
+    public static Vector3f zero()    { return new Vector3f( 0.0f,  0.0f,  0.0f).clone(); }
+    /**
+     * [1,1,1]
+     * @return 
+     */
+    public static Vector3f one()     { return new Vector3f( 1.0f,  1.0f,  1.0f).clone(); }
+    /**
+     * [0,1,0]
+     * @return 
+     */
+    public static Vector3f up()      { return new Vector3f( 0.0f,  1.0f,  0.0f).clone(); }
+    /**
+     * [0,-1,0]
+     * @return 
+     */
+    public static Vector3f down()    { return new Vector3f( 0.0f, -1.0f,  0.0f).clone(); }
+    /**
+     * [-1,0,0]
+     * @return 
+     */
+    public static Vector3f left()    { return new Vector3f(-1.0f,  0.0f,  0.0f).clone(); }
+    /**
+     * [1,0,0]
+     * @return 
+     */
+    public static Vector3f right()   { return new Vector3f( 1.0f,  0.0f,  0.0f).clone(); }
+    /**
+     * [0,0,1]
+     * @return 
+     */
+    public static Vector3f forward() { return new Vector3f( 0.0f,  0.0f,  1.0f).clone(); }
+    /**
+     * [0,0,-1]
+     * @return 
+     */
+    public static Vector3f back()    { return new Vector3f( 0.0f,  0.0f, -1.0f).clone(); }
     
     /**
      * zero's out the y axis
@@ -35,7 +68,7 @@ public final class Utilities {
     }
     
     /**
-     * 
+     * Converts word rotation to local rotation
      * @param spatial
      * @param rotation 
      */
@@ -119,7 +152,11 @@ public final class Utilities {
         
         return __new;
     }
-    
+    /**
+     * Converts euler angles to quaternion
+     * @param v
+     * @return 
+     */
     public static Quaternion euler2Quaternion(Vector3f v) {
         Quaternion q = new Quaternion();
         return q.fromAngles(v.x * Mathf.Deg2Rad, v.y * Mathf.Deg2Rad, v.x * Mathf.Deg2Rad);

@@ -27,7 +27,6 @@ public final class PlatformStorage extends Platform {
     private final int m_departIDLeftTop = 19;
     
     //left side down
-    
     private final int m_arrivalIDLeftDown = 30;
     private final int m_departIDLeftDown = 28;
     

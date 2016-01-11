@@ -4,14 +4,11 @@
  */
 package nhl.containing.simulator.world;
 
-import com.jme3.math.Quaternion;
 import com.jme3.scene.Spatial;
 import nhl.containing.simulator.framework.Transform;
 import java.util.ArrayList;
 import java.util.List;
-import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.Container;
-import nhl.containing.simulator.simulation.Main;
 
 /**
  *

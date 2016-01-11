@@ -5,7 +5,7 @@ import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Transform;
 
 /**
- *
+ * Used for everything that moves
  * @author sietse
  */
 public class MovingItem extends ContainerCarrier {
@@ -50,6 +50,11 @@ public class MovingItem extends ContainerCarrier {
         this.m_empySpeed = emptySpeed;
         this.m_loadedSpeed = loadedSpeed;
     }
+    /**
+     * Constructor
+     * @param size
+     * @param speed 
+     */
     public MovingItem(Point3 size, float speed) {
         super(null, size);
         this.m_empySpeed = this.m_loadedSpeed = speed;

@@ -5,13 +5,11 @@
  */
 package nhl.containing.simulator.world;
 
+import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.framework.Transform;
-import com.jme3.light.*;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.control.LightControl;
-import com.jme3.shadow.DirectionalLightShadowRenderer;
 
 /**
  *

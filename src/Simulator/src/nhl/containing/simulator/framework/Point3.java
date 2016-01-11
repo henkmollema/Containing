@@ -134,7 +134,7 @@ public class Point3 {
     }
     
     /**
-     * 
+     * Converts to vector3f
      * @return 
      */
     public Vector3f toVector3f() {
@@ -142,42 +142,42 @@ public class Point3 {
     }
     
     /**
-     * 
+     * magnitude of point squared (integer)
      * @return 
      */
     public int sqrmagnitude() {
         return (x * x + y * y + z * z);
     }
     /**
-     * 
+     * magnitude of point squared (float)
      * @return 
      */
     public float sqrmagnitudef() {
         return sqrmagnitude();
     }
     /**
-     * 
+     * magnitude of point
      * @return 
      */
     public float magnitude() {
         return Mathf.sqrt(sqrmagnitudef());
     }
     /**
-     * 
+     * current + up
      * @return 
      */
     public Point3 above() {
         return new Point3(this.x, this.y + 1, this.z);
     }
     /**
-     * 
+     * current - up (current + down)
      * @return 
      */
     public Point3 below() {
         return new Point3(this.x, this.y - 1, this.z);
     }
     /**
-     * 
+     * adds point to point
      * @param v 
      */
     public Point3 add(Point3 v) {
@@ -187,7 +187,7 @@ public class Point3 {
         return this;
     }
     /**
-     * 
+     * substracts
      * @param v 
      */
     public Point3 sbstract(Point3 v) {
@@ -197,7 +197,7 @@ public class Point3 {
         return this;
     }
     /**
-     * 
+     * multiplies point by point
      * @param v 
      */
     public Point3 scale(Point3 v) {
@@ -207,7 +207,7 @@ public class Point3 {
         return this;
     }
     /**
-     * 
+     * multiplie
      * @param i 
      */
     public Point3 multiply(int i) {
@@ -217,7 +217,7 @@ public class Point3 {
         return this;
     }
     /**
-     * 
+     * devide
      * @param i 
      */
     public Point3 devide(int i) {
@@ -228,7 +228,7 @@ public class Point3 {
     }
     
     /**
-     * 
+     * sums two points
      * @param a
      * @param b
      * @return 
@@ -240,7 +240,7 @@ public class Point3 {
             a.z + b.z);
     }
     /**
-     * 
+     * substracts
      * @param a
      * @param b
      * @return 
@@ -252,7 +252,7 @@ public class Point3 {
             a.z - b.z);
     }
     /**
-     * 
+     * multiplies two points
      * @param a
      * @param b
      * @return 
@@ -264,7 +264,7 @@ public class Point3 {
             a.z * b.z);
     }
     /**
-     * 
+     * multiplie
      * @param a
      * @param b
      * @return 
@@ -276,7 +276,7 @@ public class Point3 {
             a.z * b);
     }
     /**
-     * 
+     * devide
      * @param a
      * @param b
      * @return 
@@ -288,6 +288,10 @@ public class Point3 {
             a.z / b);
     }
     
+    /**
+     * Convert to readable string
+     * @return 
+     */
     @Override
     public String toString() {
         return ("[" + x + ", " + y + ", " + z + "]");

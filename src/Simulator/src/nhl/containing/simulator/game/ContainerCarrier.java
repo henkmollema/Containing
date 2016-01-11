@@ -9,7 +9,7 @@ import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.world.ContainerPool;
 
 /**
- *
+ * Object that can carry a container(s)
  * @author sietse
  */
 public class ContainerCarrier extends Transform {
@@ -41,7 +41,7 @@ public class ContainerCarrier extends Transform {
         }
     }
     
-    public boolean invZ = false;
+    public boolean invZ = false;                                                // Invert Z axis
     private Vector3f m_containerOffset = Utilities.zero();                      // Offset
     protected ContainerSpot[][][] m_containerSpots = new ContainerSpot[0][][];  // All container spots
     
@@ -83,6 +83,7 @@ public class ContainerCarrier extends Transform {
      */
     public void containerOffset(Vector3f v) {
         
+        // Get the new position
         Vector3f _move = new Vector3f(m_containerOffset);
         m_containerOffset = new Vector3f(v);
         _move = _move.subtract(new Vector3f(m_containerOffset));
@@ -99,6 +100,10 @@ public class ContainerCarrier extends Transform {
         }
     }
     
+    /**
+     * Get size
+     * @return 
+     */
     public Point3 size() {
         for (int x = 0; x < m_containerSpots.length; ++x)
         for (int y = 0; y < m_containerSpots[x].length; ++y)
@@ -152,33 +157,40 @@ public class ContainerCarrier extends Transform {
         Vector3f _baseOffset = new Vector3f(m_containerOffset);
         _baseOffset = _baseOffset.add(World.containerSize());
         
+        // Create new X stack
         m_containerSpots = new ContainerSpot[stack.x][][];
         for (int i = 0; i < m_containerSpots.length; ++i) {
+            
+            // Create new Y stack
             m_containerSpots[i] = new ContainerSpot[stack.y][];
             for (int j = 0; j < m_containerSpots[i].length; ++j) {
+                
+                // Create new Z stack
                 m_containerSpots[i][j] = new ContainerSpot[stack.z];
                 for (int k = 0; k < m_containerSpots[i][j].length; ++k) {
                     
-                    // Set spot
+                    // Set position
                     Vector3f _newPosition = new Vector3f(i * 2, j * 2, k * (invZ ? -2 : 2));
                     _newPosition = _newPosition.mult(World.containerSize());
                     _newPosition = _newPosition.add(_baseOffset);
                     
-                    if (m_containerSpots[i][j][k] != null) {
+                    // Remove old containers
+                    if (m_containerSpots[i][j][k] != null)
                         ContainerPool.dispose(m_containerSpots[i][j][k].container);
-                    }
                     
+                    // Set
                     m_containerSpots[i][j][k] = new ContainerSpot(_newPosition);
-                    
-                    // Remove this, its for testing purposes
-                    //setContainer(new Point3(i, j, k), new Container(new RFID()), false);
                 }
             }
         }
         
+        // Update culling
         updateOuter();
     }
     
+    /**
+     * Clear all containing containers
+     */
     protected final void clear() {
         for (int x = 0; x < m_containerSpots      .length; ++x)
         for (int y = 0; y < m_containerSpots[x]   .length; ++y)
@@ -257,6 +269,12 @@ public class ContainerCarrier extends Transform {
     public Container setContainer(Container c) {
         return setContainer(Point3.zero(), c, true);
     }
+    /**
+     * Set container at assigned point3
+     * @param point
+     * @param c
+     * @return 
+     */
     public Container setContainer(Point3 point, Container c) {
         return setContainer(point, c, true);
     }

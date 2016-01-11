@@ -9,7 +9,8 @@ import nhl.containing.simulator.framework.Transform;
 import nhl.containing.simulator.framework.Utilities;
 
 /**
- *
+ * Used for testing
+ * TODO: remove when send
  * @author sietse
  */
 public class SimulatorTests {

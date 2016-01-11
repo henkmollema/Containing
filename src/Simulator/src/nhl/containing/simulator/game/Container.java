@@ -2,10 +2,8 @@ package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Transform;
-import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.ContainerPool;
 import nhl.containing.simulator.world.MaterialCreator;
@@ -16,10 +14,10 @@ import nhl.containing.simulator.world.MaterialCreator;
  */
 public class Container {
     
-    public Transform transform = null;
-    private long m_id;
+    public Transform transform = null;  // "Physical" conainer
+    private long m_id;                  // Container id
     
-    private final RFID m_rfid;                // Container properties
+    private final RFID m_rfid;          // Container properties
     private final Material m_material;  // Container material (saved here for pool system)
     
     /**
@@ -28,7 +26,6 @@ public class Container {
      */
     public Container(RFID id) {
         this.m_rfid = id;
-        //this.m_material = MaterialCreator.diffuse(ColorRGBA.randomColor(), 0.5f);
         this.m_material = MaterialCreator.getRandomContainerMaterial();
         m_id = Main.register(this);
         show();
@@ -67,34 +64,47 @@ public class Container {
         m_id = Main.register(this);
         show();
     }
-    public long id()
-    {
+    
+    /**
+     * Get ID
+     * @return 
+     */
+    public long id() {
         return m_id;
     }
+    
+    /**
+     * Get RFID
+     * @return 
+     */
+    public RFID getRFID() {
+        return this.m_rfid;
+    }
+    
+    /**
+     * Show container at position
+     * @param pos 
+     */
     public final void show(Vector3f pos) {
         show();
         transform.position(pos);
     }
+    
+    /**
+     * Show container
+     */
     public final void show() {
         if (transform == null) {
             ContainerPool.get(this);
             transform.setMaterial(this.m_material);
         }
-        
-        //transform.position(Utilities.zero());
-        //transform.getChild(0).setLocalTranslation(Utilities.zero());
-        //transform.getChild(0).setLocalRotation(Quaternion.IDENTITY);
     }
+    /**
+     * Hide container
+     */
     public final void hide() {
         if (transform == null)
             return;
         ContainerPool.dispose(this);
-    }
-    /**
-     * Get ID
-     * @return 
-     */
-    public RFID getRFID() {
-        return this.m_rfid;
     }
 }

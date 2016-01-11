@@ -107,12 +107,19 @@ public class Camera extends Behaviour {
     private int m_safeFrameInit = 0;
     private Vector3f m_tempPos;
     private Quaternion m_tempRot;
+    
+    /**
+     * Call when changing the camera
+     */
     public void startChange() {
         if (m_tempPos == null || m_tempRot == null)
             return;
         Main.cam().setLocation(m_tempPos.clone());
         Main.cam().setRotation(m_tempRot.clone());
     }
+    /**
+     * Call when stop changing the camera
+     */
     public void stopChange() {
         m_tempPos = Main.cam().getLocation().clone();
         m_tempRot = Main.cam().getRotation().clone();
@@ -174,6 +181,9 @@ public class Camera extends Behaviour {
         stopChange();
     }
     
+    /**
+     * first frame
+     */
     private void my_start() {
         
         // Set image fx

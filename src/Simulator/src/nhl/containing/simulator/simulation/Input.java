@@ -87,6 +87,7 @@ public class Input extends Behaviour {
      */
     @Override
     public void rawUpdate() {
+        // If strange behaviour Call start edit camera
         
         // Get raw input !speed! (input/deltatime)
         m_mouseSmoothBuffer.add(rawMouseMove().divide(Time.unscaledDeltaTime()));
@@ -97,6 +98,8 @@ public class Input extends Behaviour {
         m_mouseMove = getSmoothMouseInput(MOUSE_SMOOTH_BUFFER);     // Smoothing mouse
         m_mouseMove = getMouseAcceleration(m_mouseMove);            // Accelerating mouse
         m_mouseMove = m_mouseMove.mult(Time.unscaledDeltaTime());   // Input speed to distance
+        
+        // If strange behaviour Call stop edit camera
     }
     
     /**

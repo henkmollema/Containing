@@ -13,13 +13,12 @@ import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.Sim
 import nhl.containing.simulator.simulation.Main;
 
 /**
- *
+ * Node extention for easier translating/rotating
  * @author sietse
  */
 public class Transform extends Node {
     
-    protected final long m_id;
-    //private Vector3f m_boundExtends = null;
+    protected final long m_id; // ID
     
     /**
      * Constructor

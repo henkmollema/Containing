@@ -451,6 +451,14 @@ public final class Mathf {
         return __new;
     }
     
+    /**
+     * Returns the t value
+     * 0 <= t <= 1
+     * @param from
+     * @param to
+     * @param value
+     * @return 
+     */
     public static float inverseLerp(float from, float to, float value) {
         if (from < to) {
             if (value < from)

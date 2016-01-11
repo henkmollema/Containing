@@ -15,12 +15,21 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformTrain extends Platform {
 
+    /**
+     * Constructor
+     * @param offset
+     * @param id 
+     */
     public PlatformTrain(Vector3f offset,int id) {
         super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_TRAIN);
         initSpots(new Point3(1, 1, 1));
     }
     
+    /**
+     * Get all parkingspots (new)
+     * @return 
+     */
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
@@ -28,6 +37,9 @@ public class PlatformTrain extends Platform {
         };
     }
 
+    /**
+     * create platform
+     */
     @Override
     protected final void createPlatform() {
         m_crane = WorldCreator.createTrainCrane(this);

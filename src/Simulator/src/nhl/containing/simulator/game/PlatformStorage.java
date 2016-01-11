@@ -59,12 +59,12 @@ public final class PlatformStorage extends Platform {
     @Override
     protected ParkingSpot[] parkingSpots() {
         float y_offset = 0.0f;
-        float z_offset = 200.0f;
         
-        int arrivalTop = -1;
-        int departTop = -1;
+        int arrivalTop  = -1;
+        int departTop   = -1;
         int arrivalDown = -1;
-        int departDown = -1;
+        int departDown  = -1;
+        
         if(m_platformid - World.STORAGE_BEGIN <= 35){
             arrivalTop = m_arrivalIDRightTop;
             departTop = m_departIDRightTop;
@@ -78,10 +78,11 @@ public final class PlatformStorage extends Platform {
             departDown = m_departIDLeftDown;
         }
         
+        float ___f = 1110.0f; // -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2
         return new ParkingSpot[] {
             
             // 
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2  * 0.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 0.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
             new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 1.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
             new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 2.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
             new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 3.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
@@ -89,12 +90,12 @@ public final class PlatformStorage extends Platform {
             new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 5.0f, y_offset, -World.containerSize().z),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalDown, departDown, false),
             
             // 
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 0.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 1.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 2.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 3.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 4.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
-            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 5.0f, y_offset, -World.containerSize().z - z_offset + World.STORAGE_WIDTH * 2),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 0.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 1.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 2.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 3.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 4.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
+            new ParkingSpot(this, new Vector3f(World.containerSize().x * 2 * 5.0f, y_offset, ___f),m_platformid,SimulationItemType.PARKINGSPOT_STORAGE, arrivalTop, departTop, false),
         };
     }
 }

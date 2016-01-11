@@ -38,7 +38,7 @@ road_map::road_map()
     
 }
 
-road_map::size()
+int road_map::size()
 {
     return m_nodes.size();
 }

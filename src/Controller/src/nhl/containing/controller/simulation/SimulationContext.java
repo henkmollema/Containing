@@ -6,7 +6,7 @@ import nhl.containing.controller.*;
 /**
  * Encapsulates information about shipments of a simulation instance.
  *
- * <p> 
+ * <p>
  * The {@code formRecordSet} method groups the raw record data from the XML
  * file into {@code Shipment}s. A {@code Shipment} represents an incoming or
  * outgoing shipment by a carrier which carries a certain amount of containers
@@ -26,126 +26,125 @@ public class SimulationContext
     private int _containerCount = 0;
     private List<Shipment> allShipments;
     private Shipment firstShipment;
-    
     private SimulatorItems _simulatorItems;
-    
     private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
     private Map<Integer, Storage> container_StoragePlatform = new HashMap<>();
     private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
     private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
     public Map<Parkingspot, ShippingContainer> parkingspot_Containertopickup = new HashMap<>();
-    
+
     public List<ShippingContainer> getShouldDepartContainers()
     {
         return shouldDepartContainers;
     }
-    
+
     public List<ShippingContainer> getDepartingContainers()
     {
         return departingContainers;
     }
-    
+
     public void setContainerShouldDepart(List<ShippingContainer> containers)
     {
         shouldDepartContainers.addAll(containers);
     }
-    
+
     public void setContainerShouldDepart(ShippingContainer container)
     {
         shouldDepartContainers.add(container);
     }
-    
+
     public void setContainerDeparting(ShippingContainer container)
     {
         shouldDepartContainers.remove(container);
         departingContainers.add(container);
     }
-    
+
     public void setContainerDeparting(List<ShippingContainer> containers)
     {
         shouldDepartContainers.removeAll(containers);
         departingContainers.addAll(containers);
     }
-    
-     public void setContainerDeparted(ShippingContainer container)
+
+    public void setContainerDeparted(ShippingContainer container)
     {
         departingContainers.remove(container);
     }
-    
+
     public void setContainerDeparted(List<ShippingContainer> containers)
     {
         departingContainers.removeAll(containers);
     }
-    
+
     public SimulatorItems getSimulatorItems()
     {
         return _simulatorItems;
     }
-    
+
     public void setSimulatorItems(SimulatorItems simItems)
     {
         _simulatorItems = simItems;
     }
-    
+
     public Storage getStoragePlatformByContainer(ShippingContainer container)
     {
         return container_StoragePlatform.get(container.id);
     }
-    
+
     /**
      * determineContainerPlatforms
-     * Determines the storageplatforms where the given containers will be placed by filling the container_StorageID hashmap
+     * Determines the storageplatforms where the given containers will be placed
+     * by filling the container_StorageID hashmap
      *
      * @param containers
      */
     public void determineContainerPlatforms(List<ShippingContainer> containers)
-    {   
-        
-        
-        for(int i = 0; i < containers.size(); i++)
+    {
+        for (int i = 0; i < containers.size(); i++)
         {
             ShippingContainer container = containers.get(i);
-            
-            for(int j = 0; j < SimulatorItems.STORAGE_CRANE_COUNT; j++)
+
+            for (int j = 0; j < SimulatorItems.STORAGE_CRANE_COUNT; j++)
             {
-               Storage storagePlatform;
-               if(container.departureShipment.carrier instanceof Truck)
-               {
-                   //Set it in the platforms closest to the lorry platforms
-                   storagePlatform = _simulatorItems.getStorages()[SimulatorItems.STORAGE_CRANE_COUNT - j - 1];
-               }
-               else
-               {
-                   storagePlatform = _simulatorItems.getStorages()[j];
-               }
-               
-               if(canBePlacedInStoragePlatform(container, storagePlatform)){
-                   container_StoragePlatform.put(container.id, storagePlatform);
-                   break;
-               }     
+                Storage storagePlatform;
+                if (container.departureShipment.carrier instanceof Truck)
+                {
+                    //Set it in the platforms closest to the lorry platforms
+                    storagePlatform = _simulatorItems.getStorages()[SimulatorItems.STORAGE_CRANE_COUNT - j - 1];
+                }
+                else
+                {
+                    storagePlatform = _simulatorItems.getStorages()[j];
+                }
+
+                if (canBePlacedInStoragePlatform(container, storagePlatform))
+                {
+                    container_StoragePlatform.put(container.id, storagePlatform);
+                    break;
+                }
             }
         }
     }
-    
+
     /**
      * canBePlacedInPlatform
      * Checks if a container can be placed in a given platformID
-     * 
+     *
      * @param c
      * @param storage
-     * @return 
+     * @return
      */
     public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
     {
-        for (Map.Entry pair : container_StoragePlatform.entrySet()) {
+        for (Map.Entry pair : container_StoragePlatform.entrySet())
+        {
             Storage currentPlatform = (Storage) pair.getValue();
-            if(currentPlatform.getID() == storage.getID())
+            if (currentPlatform.getID() == storage.getID())
             {
-                int idx = (Integer)pair.getKey();
+                int idx = (Integer) pair.getKey();
                 ShippingContainer currentContainer = containers.get(idx);
-                
+
                 //If departure times differ less than minInterval they can't be in the same platform
-                if(Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
+                if (Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
                 {
                     return false;
                 }
@@ -153,55 +152,69 @@ public class SimulationContext
         }
         return true;
     }
-    
+
     public Point3 determineContainerPosition(ShippingContainer c, boolean farside)
     {
         Storage platform = this.getStoragePlatformByContainer(c);
         StorageItem[][][] storagePlaces = platform.getStoragePlaces();
-        
+
         // storagePlaces array size = [5][5][45] where y is stack
-        for(int z = 0; z < storagePlaces[0][0].length; z++)
+        for (int z = 0; z < storagePlaces[0][0].length; z++)
         {
-            for(int x = 0; x < storagePlaces.length; x++)
+            for (int x = 0; x < storagePlaces.length; x++)
             {
-                for(int y = 0; y < storagePlaces[0].length; y++)
+                for (int y = 0; y < storagePlaces[0].length; y++)
                 {
                     StorageItem sp, spbeneath = null;
-                    
-                    if(farside)
+
+                    if (farside)
                     {
                         sp = storagePlaces[x][y][storagePlaces[0][0].length - z - 1];
-                        if(y > 0) spbeneath = storagePlaces[x][y-1][storagePlaces[0][0].length - z - 1];
+                        if (y > 0)
+                        {
+                            spbeneath = storagePlaces[x][y - 1][storagePlaces[0][0].length - z - 1];
+                        }
                     }
                     else
                     {
                         sp = storagePlaces[x][y][z];
-                        if(y > 0) spbeneath = storagePlaces[x][y-1][z];
+                        if (y > 0)
+                        {
+                            spbeneath = storagePlaces[x][y - 1][z];
+                        }
                     }
-                    
-                    if(y > 0 && spbeneath.isEmpty()) break; //No container beneath, so can not be placed here.
-                    
-                    //If there's no container on this spot 
-                    if(sp.isEmpty())
+
+                    if (y > 0 && spbeneath.isEmpty())
                     {
-                        if(y > 0)
+                        break; //No container beneath, so can not be placed here.
+                    }
+                    //If there's no container on this spot 
+                    if (sp.isEmpty())
+                    {
+                        if (y > 0)
                         {
                             //check the container beneath it.
-                            if(spbeneath.getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
+                            if (spbeneath.getContainer().departureShipment.date.getTime() < c.departureShipment.date.getTime())
                             {
                                 break; //Container can not be placed here, because the container beneath departs earlier
                             }
                         }
                         Point3 retVal = null;
-                        if(farside) retVal = new Point3(x,y,storagePlaces[0][0].length - z - 1);
-                        else retVal = new Point3(x,y,z);
-                        
+                        if (farside)
+                        {
+                            retVal = new Point3(x, y, storagePlaces[0][0].length - z - 1);
+                        }
+                        else
+                        {
+                            retVal = new Point3(x, y, z);
+                        }
+
                         return retVal;
                     }
                 }
             }
         }
-        
+
         //Can't find space for this container
         return null;
     }
@@ -266,8 +279,10 @@ public class SimulationContext
 
         return firstShipment;
     }
+
     /**
      * Gets a shipment by its key.
+     *
      * @param key The key identifying the shipment.
      * @return A {@code Shipment} or null when not found.
      */
@@ -329,9 +344,9 @@ public class SimulationContext
 
             // Find an existing shipment.
             Shipment arrivalShipment = findShipmentByKey(context.shipments, arrivalKey);
-            if (arrivalShipment == null)
+            if (arrivalShipment == null || arrivalShipment.carrier instanceof Truck)
             {
-                // No existing shipment - create a new shipment.
+                // No existing shipment or a truck shipment - create a new shipment.
                 arrivalShipment = new Shipment(arrivalKey, true);
                 mapShipment(arrivalShipment, arrival);
 
@@ -345,39 +360,42 @@ public class SimulationContext
 
             // Find an existing shipment.
             Shipment departureShipment = findShipmentByKey(context.shipments, departureKey);
-            if (departureShipment == null)
+            if (departureShipment == null || departureShipment.carrier instanceof Truck)
             {
-                // No existing shipment - create a new shipment.
+                // No existing shipment or a truck shipment - create a new shipment.
                 departureShipment = new Shipment(departureKey, false);
                 mapShipment(departureShipment, departure);
 
                 context.shipments.put(departureKey, departureShipment);
             }
 
-            ShippingContainer c;
-            if (!context.containers.containsKey(r.containerNumber))
-            {
-                // Add container data.
-                c = new ShippingContainer();
-                c.id = ++context._containerCount;
-                c.position = new Point3(arrival.position);
-                c.containerNumber = r.containerNumber;
-                c.content = r.content;
-                c.contentDanger = r.contentDanger;
-                c.contentType = r.contentType;
-                c.height = r.height;
-                c.iso = r.iso;
-                c.length = r.length;
-                c.ownerName = r.ownerName;
-                c.weightLoaded = r.weightLoaded;
-                c.weightEmpty = r.weightEmpty;
-                c.width = r.width;
+            // Populate container data.
+            ShippingContainer c = new ShippingContainer();
+            c.id = ++context._containerCount;
+            c.position = new Point3(arrival.position);
+            c.containerNumber = r.containerNumber;
+            c.content = r.content;
+            c.contentDanger = r.contentDanger;
+            c.contentType = r.contentType;
+            c.height = r.height;
+            c.iso = r.iso;
+            c.length = r.length;
+            c.ownerName = r.ownerName;
+            c.weightLoaded = r.weightLoaded;
+            c.weightEmpty = r.weightEmpty;
+            c.width = r.width;
 
-                context.containers.put(c.id, c);
-            }
-            else
+            // Map container to the context by its ID.
+            context.containers.put(c.id, c);
+
+            if (arrivalShipment.carrier instanceof Truck && arrivalShipment.carrier.containers.size() > 0)
             {
-                c = context.containers.get(r.containerNumber);
+                throw new Exception("Attempt to add more than 1 container to truck arrival-shipment");
+            }
+
+            if (departureShipment.carrier instanceof Truck && departureShipment.carrier.containers.size() > 0)
+            {
+                throw new Exception("Attempt to add more than 1 container to truck department-shipment");
             }
 
             // Add to arrival and departure shipment.

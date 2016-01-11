@@ -5,7 +5,9 @@
  */
 package nhl.containing.controller.networking;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
@@ -37,6 +39,8 @@ public class Tickhandler implements Runnable
     private final Instruction _instruction;
     private SimulatorItems _items;
     private InstructionDispatcherController _dispatcher;
+    
+    
     /**
      * Constructor
      *
@@ -125,13 +129,19 @@ public class Tickhandler implements Runnable
         for(ShippingContainer cont : context.getShouldDepartContainers())
         {
             Storage platform = context.getStoragePlatformByContainer(cont);
-            Parkingspot ps = platform.getFreeParkingspot();
+            
+            boolean farside;
+            farside = cont.departureShipment.carrier instanceof Truck || cont.departureShipment.carrier instanceof Train || cont.departureShipment.carrier instanceof InlandShip;
+                     
+            Parkingspot ps = platform.getFreeParkingspot(farside);
+            
             if(ps != null)
             {
                 p("setMoveAGV for departing container..");
                 //Assign departing container to the parkingspot where an agv will arive when available
                 context.parkingspot_Containertopickup.put(ps, cont);
-                _dispatcher.moveAGV(null, context.getStoragePlatformByContainer(cont), ps);
+                _dispatcher.m_agvInstructions.add(new SavedInstruction(null, platform, ps));
+
                 context.setContainerDeparting(cont);
             }
             else
@@ -139,13 +149,28 @@ public class Tickhandler implements Runnable
                 p("Cant find parking spot!!");
             }
         }
-        AGV freeagv = context.getSimulatorItems().getFreeAGV();
-        while(freeagv != null)
+        
+        for(int i = 0; i < _dispatcher.m_agvInstructions.size(); i++)
         {
-            SavedInstruction inst = _dispatcher.m_agvInstructions.poll();
-            _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
-            freeagv = context.getSimulatorItems().getFreeAGV();
-        }         
+            SavedInstruction inst = _dispatcher.m_agvInstructions.get(i);
+            if(!inst.getParkingspot().hasAGV()) //if the target parking spot is free
+            {
+                if(inst.getAGV() == null) //If no agv assigned to this instruction find a free agv
+                {
+                   AGV freeagv = context.getSimulatorItems().getFreeAGV();
+                   if(freeagv != null)
+                   {
+                       _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
+                       _dispatcher.m_agvInstructions.remove(i);
+                       i--;
+                   }
+                }
+                else //send agv to target parkingspot
+                {
+                    _dispatcher.moveAGV(inst.getAGV(), inst.getPlatform(), inst.getParkingspot());
+                }
+            }
+        }
     }
 
     /**

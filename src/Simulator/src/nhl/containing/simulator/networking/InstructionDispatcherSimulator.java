@@ -187,6 +187,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             Tuple<PlatformLorry,Vehicle> lp = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN);
+            lp.b.state(Vehicle.VehicleState.ToOut);
         }else if(instruction.getA() < World.STORAGE_BEGIN){
             Integer index = instruction.getB();
             //dit is een seaship platform

@@ -89,10 +89,16 @@ public class GUI extends Behaviour{
         Main.guiRoot().attachChild(pic);
         Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
+        m_worldInfo = new BitmapText(Main.guiFont(), false);
+        m_worldInfo.setLocalTranslation(screenWidth() - 275, (screenHeight() - 25) + m_worldInfo.getHeight(), 0);
         m_containerInfo = new BitmapText(Main.guiFont(), false);
-        m_containerInfo.setLocalTranslation(screenWidth() - 150, (screenHeight() - 50) + m_containerInfo.getHeight(), 0);
+        m_containerInfo.setLocalTranslation(screenWidth() - 275, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
+        Main.guiRoot().attachChild(m_worldInfo);
         Main.guiRoot().attachChild(m_containerInfo);
- 
+    }
+    public void setWorldText(String text)
+    {
+        m_worldInfo.setText(text);
     }
     public void setContainerText(String text)
     {

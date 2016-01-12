@@ -16,10 +16,10 @@ import nhl.containing.simulator.world.WorldCreator;
  */
 public class PlatformSea extends Platform {
 
-    public PlatformSea(Vector3f offset,int id, Vehicle v) {
+    public PlatformSea(Vector3f offset,int id,Vehicle v) {
         super(offset,id, false);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_SEASHIP);
-        this.v =v;
+        this.v = v;
     }
     
     @Override
@@ -38,6 +38,10 @@ public class PlatformSea extends Platform {
     
     private Point3 m_tempPoint;
     private Vehicle v;
+    
+    public void setVehicle(Vehicle v){
+        this.v = v;
+    }
     
     public void take(Point3 point) {
         Container c = v.setContainer(point, null);

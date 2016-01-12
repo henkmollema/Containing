@@ -109,8 +109,8 @@ public class AgvPath /*extends Behaviour*/ {
             new AgvNode(new Vector2f(-left + ext, up + ext + 60)),       //  3
             
             // Sea
-            new AgvNode(new Vector2f(-left - ext, up - ext)),       //  4
-            new AgvNode(new Vector2f(-left - ext, -up + ext)),      //  5
+            new AgvNode(new Vector2f(-left - ext - 60, up - ext)),       //  4
+            new AgvNode(new Vector2f(-left - ext - 60, -up + ext)),      //  5
             
             // Train
             new AgvNode(new Vector2f(left - ext, -up - ext)),       //  6

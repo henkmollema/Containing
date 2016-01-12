@@ -24,6 +24,7 @@ public class PlatformInland extends Platform {
     public PlatformInland(Vector3f offset,int id, Vehicle v) {
         super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_INLANDSHIP);
+        this.v = v;
     }
     
     /**

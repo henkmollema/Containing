@@ -199,12 +199,6 @@ public class World extends Behaviour {
         m_inlandShips = new ArrayList<>();
         Vector3f bPos = new Vector3f(-150f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         float bOff = 200.0f;
-        
-        /*Vector3f offset = new Vector3f(-100f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 100f);
-        for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
-            m_inlandCells.add(new PlatformInland(offset,i));
-            offset.x -= 150.0f;
-        }*/
         for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
             Tuple<Vehicle, Vector3f> t = new Tuple<>(null, new Vector3f(bPos));
             createInlandCell(t);
@@ -225,11 +219,15 @@ public class World extends Behaviour {
                 new Vector3f(-_dest.x, _dest.y, _dest.z)
             }
         );
-        
-        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        Vector3f offset;
+        if(m_inlandCells.size() == 0)
+            offset = new Vector3f(-150f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 110);
+        else
+            offset = new Vector3f(-750f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 110);
+        int begin = m_inlandCells.size();
         for (int i = 0; i < INLAND_SHIP_CRANE_COUNT / INLAND_SHIP_COUNT; ++i) {
-            m_inlandCells.add(new PlatformInland(offset,i, v.a));
-            offset.x -= 10.0f;
+            m_inlandCells.add(new PlatformInland(offset,i + begin, v.a));
+            offset.x -= 150.0f;
         }
     }
     
@@ -286,11 +284,17 @@ public class World extends Behaviour {
                     new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, -3000.0f),
                 }
                 );
-        Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        int begin = m_inlandCells.size();//INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
+        Vector3f offset;
+        if(m_seaCells.isEmpty())
+            offset = new Vector3f(-STORAGE_LENGTH - 260, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 200);
+        else
+            offset = new Vector3f(-STORAGE_LENGTH - 260, WORLD_HEIGHT , STORAGE_WIDTH + EXTENDS - 775);
+        int begin = m_seaCells.size() + INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
         for (int i = 0; i < SEA_SHIP_CRANE_COUNT / SEA_SHIP_COUNT; ++i) {
-            m_seaCells.add(new PlatformSea(offset,i + begin, v.a));
-            offset.z -= 10.0f;
+            PlatformSea sea = new PlatformSea(offset,i + begin,v.a);
+            sea.rotate(0, -90, 0);
+            m_seaCells.add(sea);
+            offset.z -= 100.0f;
         }
     }
     

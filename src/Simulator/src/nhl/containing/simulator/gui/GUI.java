@@ -76,7 +76,8 @@ public class GUI extends Behaviour{
     public void start() {
         /** Write text on the screen (HUD) */
         //Main.guiRoot().detachAllChildren();
-        int height = 300;
+        int width = 365;
+        int height = 250;
         Picture pic = new Picture("background");
         Material mat = new Material(Main.assets(), "Common/MatDefs/Misc/Unshaded.j3md");
         ColorRGBA colour = ColorRGBA.Black;
@@ -84,16 +85,16 @@ public class GUI extends Behaviour{
         mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         mat.setTransparent(true);
         pic.setMaterial(mat);
-        pic.setWidth(300);
+        pic.setWidth(width);
         pic.setHeight(height);
-        pic.setPosition(screenWidth() - 300, screenHeight() - height);
+        pic.setPosition(screenWidth() - width, screenHeight() - height);
         Main.guiRoot().attachChild(pic);
-        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
+        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Cousine.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         m_worldInfo = new BitmapText(Main.guiFont(), false);
-        m_worldInfo.setLocalTranslation(screenWidth() - 295, (screenHeight() - 25) + m_worldInfo.getHeight(), 0);
+        m_worldInfo.setLocalTranslation(screenWidth() - (width - 5), (screenHeight() - 25) + m_worldInfo.getHeight(), 0);
         m_containerInfo = new BitmapText(Main.guiFont(), false);
-        m_containerInfo.setLocalTranslation(screenWidth() - 295, (screenHeight() - 100) + m_containerInfo.getHeight(), 0);
+        m_containerInfo.setLocalTranslation(screenWidth() - (width - 5), (screenHeight() - 100) + m_containerInfo.getHeight(), 0);
         Main.guiRoot().attachChild(m_worldInfo);
         Main.guiRoot().attachChild(m_containerInfo);
     }

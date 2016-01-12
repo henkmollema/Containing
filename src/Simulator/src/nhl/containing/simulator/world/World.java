@@ -151,7 +151,9 @@ public class World extends Behaviour {
         }
         trainUpdate();
         updateInland();
-        updateSea();    
+        updateSea();
+        
+        //utest();
     }
     
     private void createAGV() {
@@ -179,12 +181,23 @@ public class World extends Behaviour {
             m_lorryCells.get(i).a.getParkingSpot(0).agv(null);
         }
         
-        m_train.state(Vehicle.VehicleState.ToLoad);
-        m_train.init(30);
-        m_train.init(10);
+        //m_train.state(Vehicle.VehicleState.ToLoad);
+        //m_train.init(30);
+        //m_train.init(10);
         
-        //m_seaShip.init(1000);
+        //
+        m_seaShips.get(0).a.state(Vehicle.VehicleState.ToLoad);
+        m_seaShips.get(0).a.init(1000);
         //m_seaShip.state(Vehicle.VehicleState.ToLoad);
+    }
+    
+    //Vehicle.VehicleState __testst = Vehicle.VehicleState.ToLoad;
+    private void utest() {
+        //if (m_seaShips.get(0).a.state() != __testst) {
+            
+           // m_seaCells.get(0).take(Point3.zero());
+           // __testst = m_seaShips.get(0).a.state();
+        //}
     }
     
     private void updateInland() {
@@ -225,8 +238,10 @@ public class World extends Behaviour {
         else
             offset = new Vector3f(-750f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 110);
         int begin = m_inlandCells.size();
+        
         for (int i = 0; i < INLAND_SHIP_CRANE_COUNT / INLAND_SHIP_COUNT; ++i) {
             m_inlandCells.add(new PlatformInland(offset,i + begin, v.a));
+            m_inlandCells.get(m_inlandCells.size() - 1).initSpots(Point3.one());
             offset.x -= 150.0f;
         }
     }
@@ -290,8 +305,10 @@ public class World extends Behaviour {
         else
             offset = new Vector3f(-STORAGE_LENGTH - 240, WORLD_HEIGHT , STORAGE_WIDTH + EXTENDS - 775);
         int begin = m_seaCells.size() + INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
+        
         for (int i = 0; i < SEA_SHIP_CRANE_COUNT / SEA_SHIP_COUNT; ++i) {
             PlatformSea sea = new PlatformSea(offset,i + begin,v.a);
+            sea.initSpots(new Point3(1, 1, 1));
             sea.rotate(0, -90, 0);
             m_seaCells.add(sea);
             offset.z -= 100.0f;

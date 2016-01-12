@@ -59,7 +59,7 @@ public final class Time {
      */
     public static void setTimeScale(float t) {
         m_timeScale = Mathf.max(t, 0.0f);
-        System.out.println("New time scale: " + t);
+        //System.out.println("New time scale: " + t);
     }
     /**
      * Set fixedtimescale

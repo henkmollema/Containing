@@ -321,4 +321,5 @@ JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_changeNumberInC
 JNIEXPORT void JNICALL Java_nhl_containing_controller_PathFinder_cleanup(JNIEnv *, jclass)
 {
     delete roadmap;
+    roadmap = NULL;
 }

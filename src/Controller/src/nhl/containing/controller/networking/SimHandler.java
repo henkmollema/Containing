@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import nhl.containing.controller.PathFinder;
 import nhl.containing.controller.simulation.SimulatorItems;
 import nhl.containing.networking.messaging.StreamHelper;
 import nhl.containing.networking.protobuf.InstructionProto.Instruction;
@@ -61,6 +62,7 @@ public class SimHandler implements Runnable
             else
             {
                 p("Lost connection during instructionloop");
+                PathFinder.cleanup();
             }
         }
         else

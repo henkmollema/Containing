@@ -28,15 +28,7 @@ public class PathFinder
     
     public static void initPath(List<Node> nodes)
     {
-        try
-        {
-            initPath(nodes.toArray(new Node[nodes.size()]));
-        }
-        catch(Exception e)
-        {
-            
-            e.printStackTrace();
-        }
+        initPath(nodes.toArray(new Node[nodes.size()]));
     }
     
     public static int[] getPath(int from, int to)

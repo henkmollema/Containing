@@ -153,7 +153,7 @@ public class ContainerCarrier extends Transform {
      * Initalize the spots
      * @param stack 
      */
-    protected final void initSpots(Point3 stack) {
+    public final void initSpots(Point3 stack) {
         Vector3f _baseOffset = new Vector3f(m_containerOffset);
         _baseOffset = _baseOffset.add(World.containerSize());
         

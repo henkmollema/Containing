@@ -300,7 +300,7 @@ public final class WorldCreator {
         );
         v.state(Vehicle.VehicleState.Disposed);
         //v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
-        v.containerOffset(new Vector3f(0.0f, 0.0f, 0.0f));
+        v.containerOffset(new Vector3f(0.0f, 2.2f, 0.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);

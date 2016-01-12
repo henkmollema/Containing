@@ -378,6 +378,6 @@ public class SimulatorClient implements Runnable
 
     private static void p(String s)
     {
-        System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
+        //System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 }

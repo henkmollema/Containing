@@ -76,6 +76,8 @@ public class GUI extends Behaviour{
     public void start() {
         /** Write text on the screen (HUD) */
         //Main.guiRoot().detachAllChildren();
+        int width = 365;
+        int height = 250;
         Picture pic = new Picture("background");
         Material mat = new Material(Main.assets(), "Common/MatDefs/Misc/Unshaded.j3md");
         ColorRGBA colour = ColorRGBA.Black;
@@ -83,16 +85,16 @@ public class GUI extends Behaviour{
         mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         mat.setTransparent(true);
         pic.setMaterial(mat);
-        pic.setWidth(300);
-        pic.setHeight(150);
-        pic.setPosition(screenWidth() - 300, screenHeight() - 150);
+        pic.setWidth(width);
+        pic.setHeight(height);
+        pic.setPosition(screenWidth() - width, screenHeight() - height);
         Main.guiRoot().attachChild(pic);
-        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Default.fnt"));
+        Main.guiFont(Main.assets().loadFont("Interface/Fonts/Cousine.fnt"));
         Main.guiFont().getCharSet().setRenderedSize(DEFAULT_TEXT_SIZE);
         m_worldInfo = new BitmapText(Main.guiFont(), false);
-        m_worldInfo.setLocalTranslation(screenWidth() - 275, (screenHeight() - 25) + m_worldInfo.getHeight(), 0);
+        m_worldInfo.setLocalTranslation(screenWidth() - (width - 5), (screenHeight() - 25) + m_worldInfo.getHeight(), 0);
         m_containerInfo = new BitmapText(Main.guiFont(), false);
-        m_containerInfo.setLocalTranslation(screenWidth() - 275, (screenHeight() - 75) + m_containerInfo.getHeight(), 0);
+        m_containerInfo.setLocalTranslation(screenWidth() - (width - 5), (screenHeight() - 100) + m_containerInfo.getHeight(), 0);
         Main.guiRoot().attachChild(m_worldInfo);
         Main.guiRoot().attachChild(m_containerInfo);
     }
@@ -106,7 +108,7 @@ public class GUI extends Behaviour{
     }
     public void setContainerInfo(Container container)
     {
-        m_containerInfo.setText(container.toString());
+        m_containerInfo.setText(container.getRFID().getData());
     }
     @Override
     public void rawUpdate() {

@@ -126,10 +126,10 @@ public final class WorldCreator {
                 25.0f,                                          // Rope height
                 new Vector3f(14.0f, 33.0f, World.STORAGE_WIDTH),                // Base position
                 new Vector3f(0.0f,  0.0f, 0.0f),                // Crane offset
-                new Vector3f(0.0f,  0.0f, 0.0f),               // Hook offset
+                new Vector3f(0.0f,  5.2f, -25.0f),               // Hook offset
                 new Vector3f(0.0f, 7.0f, 10.0f),                 // Rope offset
-                new Vector3f(World.containerSize().x, World.containerSize().y,  World.containerSize().z),               // Container offset
-                new Vector3f(15.0f, 0.0f, 20.0f),                // Crane spatial offset
+                new Vector3f(World.containerSize().x, World.containerSize().y + 1.0f,  World.containerSize().z * -0.65f),               // Container offset
+                new Vector3f(15.0f, 0.0f, 10.0f),                // Crane spatial offset
                 new Vector3f(0.0f, -27f - World.containerSize().y / 2.0f, 8.0f +  World.containerSize().z),                 // Hook spatial offset
                 2.3f,                                           // Crane scale
                 2.0f                                            // Hook scale

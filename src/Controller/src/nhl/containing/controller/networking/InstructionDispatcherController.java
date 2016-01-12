@@ -199,6 +199,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     private void placeCrane(Platform platform) { placeCrane(platform, null, 0);}
     
+    /**
+     * Places a crane for the sea/inland storage and train platform
+     * @param platform platform
+     * @param containerPos container position
+     * @param parkingSpot parkingspot
+     */
     private void placeCrane(Platform platform, Point3 containerPos, long parkingSpot) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
@@ -251,6 +257,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
 
         }
         m_agvInstructions.add(new SavedInstruction(null, platform, ps));
+
     }
 
     /**

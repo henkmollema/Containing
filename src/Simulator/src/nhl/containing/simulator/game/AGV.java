@@ -200,6 +200,8 @@ public final class AGV extends MovingItem {
                 Integer index = results.getCollision(i).getGeometry().getUserData(Main.AGV_INFO_KEY);
                 if (index == null)
                     continue;
+                if (index.equals(m_info.id))
+                    continue;
                 
                 // Set new speed
                 path().setSpeed(getData(index).speed * Mathf.inverseLerp(m_stopDistance, m_distance, dist));

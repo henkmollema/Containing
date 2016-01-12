@@ -110,15 +110,25 @@ public class Platform
     }
     
     /**
-     * Gets the first free parkingspot
+     * Gets the 'best' parking spot to use
      * @return parkingspot
      */
-    public Parkingspot getFreeParkingspot(){
-        for(Parkingspot p : parkingspots){
+    int j = 0;
+    public Parkingspot getFreeParkingspot(boolean farside){
+        Parkingspot p = null;
+        int idxHalf = parkingspots.size() /2;
+        int base = (farside ? idxHalf: 0);
+        for(int i = base; i < parkingspots.size() - (farside ? 0 : idxHalf); i++){
+            p = parkingspots.get(i);
             if(!p.hasAGV())
+            {
+                j++;
                 return p;
+            }
+                
         }
-        return null;
+        
+        return parkingspots.get(base + (j%idxHalf));
     }
     
     /**

@@ -26,7 +26,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
     CommunicationProtocol _com;
     private ExecutorService executorService;
     private Queue<Future> futures;
-    public Queue<SavedInstruction> m_agvInstructions = new LinkedList<>();
+    public List<SavedInstruction> m_agvInstructions = new ArrayList<>();
 
     public InstructionDispatcherController(Simulator sim, CommunicationProtocol com) {
         _sim = sim;
@@ -137,9 +137,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         Platform[] platformsByCarrier;
         if(shipment.carrier instanceof Truck){
             LorryPlatform lp = _items.getLorryPlatforms()[instruction.getA() - SimulatorItems.LORRY_BEGIN];
-            AGV agv = _items.getFreeAGV();
             lp.containers = new ArrayList<>(shipment.carrier.containers);
-            moveAGV(agv, lp, lp.getParkingspots().get(0));
+            m_agvInstructions.add(new SavedInstruction(null, lp, lp.getParkingspots().get(0)));
             placeCrane(lp);
             return;
         }else if(shipment.carrier instanceof SeaShip){
@@ -197,6 +196,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     private void placeCrane(Platform platform) { placeCrane(platform, null, 0);}
     
+    /**
+     * Places a crane for the sea/inland storage and train platform
+     * @param platform platform
+     * @param containerPos container position
+     * @param parkingSpot parkingspot
+     */
     private void placeCrane(Platform platform, Point3 containerPos, long parkingSpot) {
         InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
         builder.setId(CommunicationProtocol.newUUID());
@@ -248,6 +253,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.TRAIN_BEGIN];
 
         }
+        //m_agvInstructions.add(new SavedInstruction(agv, platform, ps));
         moveAGV(agv, platform, ps);
     }
 
@@ -320,7 +326,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 agv.setNodeID(spot.getDepartNodeID());
             }catch(Exception e){e.printStackTrace();} 
         }else{
-            m_agvInstructions.add(new SavedInstruction(to, spot));
+            m_agvInstructions.add(new SavedInstruction(null, to, spot));
         }
     }
 
@@ -378,7 +384,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         ShippingContainer container = _context.getContainerById(instruction.getB());
         Platform to = _context.getStoragePlatformByContainer(container);
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
-        Parkingspot toSpot = Platform.findFreeParkingspot(to);
+        boolean farside = container.departureShipment.carrier instanceof Truck || container.departureShipment.carrier instanceof Train || container.departureShipment.carrier instanceof InlandShip;
+        Parkingspot toSpot = to.getFreeParkingspot(farside);
         container.currentCategory = AppDataProto.ContainerCategory.AGV;
         if (platform.getID() < SimulatorItems.LORRY_BEGIN) {
             //dit is een inlandship platform
@@ -416,7 +423,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                     if(cplatform.hasShipment() && cplatform.getShipment().key.equals(container.departureShipment.key))
                     {
                         to = cplatform;
-                        toSpot = cplatform.getFreeParkingspot();
+                        toSpot = cplatform.getFreeParkingspot(farside);
                     }
                 }
             }
@@ -440,11 +447,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         if(toSpot == null)
         {
-            System.out.println("NO PARKING SPOT");
+            System.out.println("NO PARKING SPOT WAITING..");
+            
             return; //TODO: error?
         }
             
-        moveAGV(agv, to, toSpot);
+         m_agvInstructions.add(new SavedInstruction(agv, to, toSpot));
     }
 
     /**
@@ -453,7 +461,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     private void agvReady(InstructionProto.Instruction instruction) {
         //TODO: send Container to place in department shipping
-        System.out.println("agv ready..");
+        //System.out.println("agv ready..");
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
         Point3 position;
@@ -485,19 +493,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 ShippingContainer container = p.getAGV().getContainer();
                 
                 boolean farside = false; //Moet hij aan de overkant (ten opzichte van 0,0,0) geplaatst worden
-                if(container.departureShipment.carrier instanceof Truck)
-                {
-                    farside = true;
-                }
-                else if(container.departureShipment.carrier instanceof Train)
-                {
-                    farside = false;
-                }
-                else if(container.departureShipment.carrier instanceof InlandShip)
-                {
-                    farside = true;
-                }
-                
+                farside = container.departureShipment.carrier instanceof Truck || container.departureShipment.carrier instanceof Train || container.departureShipment.carrier instanceof InlandShip;
+                           
                 position = _context.determineContainerPosition(container, farside);
                 try {
                     storage.setContainer(container, position);
@@ -518,8 +515,12 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             if(platform.getID() >= SimulatorItems.STORAGE_BEGIN && platform.getID() < SimulatorItems.TRAIN_BEGIN)
             {
                 //wanneer een agv zonder container bij een storage platform aan komt
-                //Shipment dummy = new Shipment("IK WIL EEN SHIPMENT MET INCOMMING FALSE", false);
                ShippingContainer pickup = _context.parkingspot_Containertopickup.get(p);
+               if (pickup == null)
+               {
+                   System.err.println("No container for parking spot " + p.getId());
+                   return;
+               }
                placeCrane(platform, pickup.position, platform.getParkingspotIndex(p));
                System.out.println("calling placeCrane..");
                 //placecrane//System.out.println("calling craneToAGV..");

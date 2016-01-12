@@ -131,6 +131,7 @@ public abstract class Platform extends ContainerCarrier {
      * @param point Container carrier container position
      * @param carrier The container carrier (target)
      */
+    Point3 lastpoint = null;
     public void take(Point3 point, int spot) {
         
         // Get container
@@ -141,7 +142,7 @@ public abstract class Platform extends ContainerCarrier {
             System.out.println("Null reference: selected container not available!");
             return;
         }
-        
+        lastpoint = point;
         // Add action to queue
         m_queue.add(new CraneAction(_container, new CraneTarget(point), new CraneTarget(spot)));
         
@@ -179,6 +180,8 @@ public abstract class Platform extends ContainerCarrier {
      * On crane action finished
      */
     public void onCrane() {
+         try
+          {
         if (m_currentAction != null) 
         {
             // Finish the action
@@ -188,6 +191,11 @@ public abstract class Platform extends ContainerCarrier {
             if (m_currentAction.setPath())
                 return;
         } getNext();
+          }
+         catch(Exception e)
+         {
+             e.printStackTrace();
+         }
     }
     /**
      * Get the next action in queue

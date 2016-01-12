@@ -19,7 +19,7 @@ public final class Time {
     private static float m_time = 0.0f;                         // Time in simulator
     
     private static final float MIN_FIXED_TIME_SCALE = 0.005f;   // Minimum fixed time scale
-    private static final float TIME_SEND_INTERVAL = 1f;         // Time interfal when sending to controller
+    private static final float TIME_SEND_INTERVAL = 10f;         // Time interfal when sending to controller
     private static float m_deltaSum = 0;                        // Send timer
     
     /**

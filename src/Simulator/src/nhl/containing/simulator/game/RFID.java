@@ -54,4 +54,8 @@ public class RFID {
     public RFID(){
         this(InstructionProto.Container.getDefaultInstance());
     }
+    public String getData()
+    {
+        return String.format("%-25s", "Weight: ") + String.valueOf(weightFull) + '\n' + String.format("%-25s", "Content: ") + content + '\n' + String.format("%-25s", "Danger: ") + contentDanger + '\n' + String.format("%-25s", "Content Type: ") + contentType + '\n' + String.format("%-25s", "ISO: ") + iso + '\n' + String.format("%-25s", "Department date: ") + String.valueOf(departmentDate) + '\n' + String.format("%-25s", "Department company: ") + departmentCompany + '\n' + String.format("%-25s", "Transport: ") + departmentTransport;
+    }
 }

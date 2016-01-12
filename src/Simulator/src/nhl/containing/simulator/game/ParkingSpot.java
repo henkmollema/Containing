@@ -112,7 +112,13 @@ public class ParkingSpot extends Transform {
      * @param _agv 
      */
     public void agv(AGV _agv) {
+        if(_agv == null)
+        {
+            System.err.println(this.id() + " left by AGV: " + m_agv.id());
+        }
+        
         this.m_agv = _agv;
+        
     }
     /**
      * Visualize the parkingspot

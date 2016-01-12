@@ -122,6 +122,8 @@ public final class AGV extends MovingItem {
             SimulatorClient.sendTaskDone((int)m_id, 0, InstructionType.AGV_READY);
             ParkingSpot p = (ParkingSpot)Main.getTransform(m_parkingspot);
             p.agv(this);
+            
+            System.err.println(p.id() + " parkingspot occupied by: " + this.id());
         }
         
         // Get and set new position

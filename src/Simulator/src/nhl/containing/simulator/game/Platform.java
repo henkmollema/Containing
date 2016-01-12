@@ -357,7 +357,15 @@ public abstract class Platform extends ContainerCarrier {
                     else
                         ps = m_parkingSpots[to.parkingSpot];
                         
-                    ps.agv().setContainer(c);
+                    try
+                    {
+                        ps.agv().setContainer(c);
+                    }
+                    catch(Exception e)
+                    {
+                        System.err.println(ps.id() + " parkingspot failed");
+                        e.printStackTrace();
+                    }
                     //TODO: Add the right B item
                     SimulatorClient.sendTaskDone((int)ps.agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
                     ps.agv(null);

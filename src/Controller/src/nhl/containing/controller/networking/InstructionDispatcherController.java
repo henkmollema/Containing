@@ -319,7 +319,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     public void moveAGV(AGV agv, Platform to, Parkingspot spot) {
         if(agv != null){
-            
+            System.err.println("Sent AGV: " + agv.getID() + " TO PARKINGSPOT: " + spot.getId());
             InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
             builder.setId(CommunicationProtocol.newUUID());
             builder.setB((int)spot.getId());

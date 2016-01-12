@@ -5,9 +5,7 @@
  */
 package nhl.containing.controller.networking;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import nhl.containing.controller.Simulator;
 import nhl.containing.controller.simulation.AGV;
 import nhl.containing.controller.simulation.Carrier;
@@ -125,8 +123,9 @@ public class Tickhandler implements Runnable
         }
         
         //Check if new departure containers can be picked up (if open parkingspots at platforms)..
-        for(ShippingContainer cont : context.getShouldDepartContainers())
+        for(int i = 0; i < context.getShouldDepartContainers().size(); i++)
         {
+            ShippingContainer cont = context.getShouldDepartContainers().get(i);
             Storage platform = context.getStoragePlatformByContainer(cont);
             
             boolean farside;
@@ -138,10 +137,12 @@ public class Tickhandler implements Runnable
             {
                 p("setMoveAGV for departing container..");
                 //Assign departing container to the parkingspot where an agv will arive when available
-                context.parkingspot_Containertopickup.put(ps, cont);
-                _dispatcher.m_agvInstructions.add(new SavedInstruction(null, platform, ps));
-
+                SavedInstruction pickupinst = new SavedInstruction(null, platform, ps);
+                
+                _dispatcher.m_agvInstructions.add(pickupinst);
+                context.instruction_Containertopickup.put(pickupinst, cont);
                 context.setContainerDeparting(cont);
+                i--;
             }
             else
             {
@@ -161,21 +162,28 @@ public class Tickhandler implements Runnable
                    agv = context.getSimulatorItems().getFreeAGV();
                    if(agv == null)
                        continue;
-                   /*if(freeagv != null)
+                   if(agv != null)
                    {
-                       _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
+                       ShippingContainer containerToPickup = context.instruction_Containertopickup.get(inst);
+                       context.instruction_Containertopickup.remove(inst);
+                       if(containerToPickup != null)
+                       {
+                           context.agv_Containertopickup.put(agv, containerToPickup);
+                       }
+                       
+                       _dispatcher.moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
                        _dispatcher.m_agvInstructions.remove(i);
                        i--;
-                   }*/
+                   }
                 }
                 else //send agv to target parkingspot
                 {
-                    agv = inst.getAGV();
-                   // _dispatcher.moveAGV(inst.getAGV(), inst.getPlatform(), inst.getParkingspot());
+                    _dispatcher.moveAGV(inst.getAGV(), inst.getPlatform(), inst.getParkingspot());
+                    _dispatcher.m_agvInstructions.remove(i);
+                    i--;
+
                 }
-                _dispatcher.moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
-                _dispatcher.m_agvInstructions.remove(i);
-                i--;
+                
             }
         }
         /*

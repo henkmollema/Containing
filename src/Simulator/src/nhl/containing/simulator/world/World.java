@@ -197,9 +197,13 @@ public class World extends Behaviour {
     }
     private void createInland() {
         m_inlandShips = new ArrayList<>();
-        Vector3f bPos = new Vector3f(-200f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
+        Vector3f bPos = new Vector3f(-150f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         float bOff = 200.0f;
-        
+        Vector3f offset = new Vector3f(-100f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 100f);
+        for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
+            m_inlandCells.add(new PlatformInland(offset,i));
+            offset.x -= 150.0f;
+        }
         for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
             Tuple<Vehicle, Vector3f> t = new Tuple<>(null, new Vector3f(bPos));
             createInlandCell(t);
@@ -208,11 +212,6 @@ public class World extends Behaviour {
         }
     }
     private void createInlandCell(Tuple<Vehicle, Vector3f> v) {
-        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        for (int i = 0; i < INLAND_SHIP_CRANE_COUNT / INLAND_SHIP_COUNT; ++i) {
-            m_inlandCells.add(new PlatformInland(offset,i));
-            offset.x -= 10.0f;
-        }
         Vector3f _dest = new Vector3f(-200f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         v.a = WorldCreator.createInland(
             new Vector3f[] {

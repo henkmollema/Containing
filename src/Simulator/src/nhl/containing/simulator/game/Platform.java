@@ -151,7 +151,7 @@ public abstract class Platform extends ContainerCarrier {
         if (m_parkingSpots != null && m_parkingSpots.length == 1) {
             Vector3f v = m_parkingSpots[0].position();
             if (m_snapX)
-                v.x = _container.transform.position().x;
+                v.z =  _container.transform.position().z + 25;
             else
                 v.z =  _container.transform.position().z;
             m_parkingSpots[0].position(v);
@@ -361,7 +361,7 @@ public abstract class Platform extends ContainerCarrier {
                     //TODO: Add the right B item
                     SimulatorClient.sendTaskDone((int)ps.agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
                     ps.agv(null);
-
+                    
                 }
             }
         }

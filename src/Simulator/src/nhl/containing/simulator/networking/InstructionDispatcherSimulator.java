@@ -239,8 +239,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             //dit is een inlandship platform
             PlatformInland inlandPlatform = World().getInlandPlatforms().get(instruction.getA());
             inlandPlatform.take(point);
-            int index = instruction.getA() < World.INLAND_SHIP_CRANE_COUNT / 2 ? 0 : 1;
-            //World().sendInlandTake(inlandPlatform, new Point3(instruction.getX(), instruction.getY(), instruction.getZ()), index);
             SimulatorClient.sendTaskDone(inlandPlatform.getPlatformID(), (int)inlandPlatform.getParkingSpot().id(), InstructionType.PLACE_CRANE_READY);
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
@@ -250,6 +248,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             //dit is een seaship platform
             PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);
             seaPlatform.take(point);
+            SimulatorClient.sendTaskDone(seaPlatform.getPlatformID(), (int)seaPlatform.getParkingSpot().id(), InstructionType.PLACE_CRANE_READY);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
             //dit is een storage platform
             PlatformStorage storagePlatform =  World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
@@ -339,7 +338,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if (arriving) {
             p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
             GUI().setWorldText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
-
+            World().getSeaShip(index).init(inst.getContainersList());
             // Let the ship arrive at the platform.
             World().getSeaShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {

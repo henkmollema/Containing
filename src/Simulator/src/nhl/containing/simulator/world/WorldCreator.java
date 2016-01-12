@@ -283,7 +283,7 @@ public final class WorldCreator {
                 new Vector3f(20.0f, 5.0f, 0.0f) // front offset
         );
         v.state(Vehicle.VehicleState.Disposed);
-        v.rotate(0,-90/*3*/,0);
+        v.rotate(0,-90,0);
         v.containerOffset(new Vector3f(0.0f, 2.2f, -30.0f));
         v.from = from;
         v.to = to;
@@ -292,7 +292,7 @@ public final class WorldCreator {
     }
     public static Vehicle createSea(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
-                new Point3(6, 3, 2).add(Point3.one()),
+                new Point3(20, 6, 16),
                 10.0f,// speed
                 "elo/medium/ship/seaship.j3o", // front model
                 1.0f, // front scale
@@ -300,7 +300,7 @@ public final class WorldCreator {
         );
         v.state(Vehicle.VehicleState.Disposed);
         //v.m_frontSpatial.rotate(0.0f, -0.07f, 0.0f);
-        v.containerOffset(new Vector3f(0.0f, 0.0f, 0.0f));
+        v.containerOffset(new Vector3f(-2.5f, 2.2f, -110.0f));
         v.from = from;
         v.to = to;
         v.path().setPosition(from[0]);

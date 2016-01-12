@@ -1,6 +1,7 @@
 package nhl.containing.controller.networking;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -179,7 +180,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             {
                 containers.addAll(allContainers.subList(take, allContainers.size()));
             }
-
+            Collections.reverse(containers);
             // Assign the containers to the platform.
             platform.containers = containers;
             placeCrane(platform);
@@ -218,10 +219,15 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         
         platform.removeContainerAtPosition(containerPos);
         builder.setB((int)parkingSpot);
-        
-        builder.setX(containerPos.x);
-        builder.setY(containerPos.y);
-        builder.setZ(containerPos.z);
+        if(platform.getID() >= SimulatorItems.SEASHIP_BEGIN && platform.getID() < SimulatorItems.STORAGE_BEGIN){
+            builder.setX(containerPos.x);
+            builder.setY(containerPos.z);
+            builder.setZ(containerPos.y);
+        }else{
+            builder.setX(containerPos.x);
+            builder.setY(containerPos.y);
+            builder.setZ(containerPos.z);
+        }
         builder.setInstructionType(InstructionType.PLACE_CRANE);
         _com.sendInstruction(builder.build());
         platform.setBusy();
@@ -244,7 +250,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             //do nothing
         } else if (instruction.getA() < SimulatorItems.STORAGE_BEGIN) {
             //dit is een seaship platform
-            platform = _items.getTrainPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
+            platform = _items.getSeaShipPlatforms()[instruction.getA() - SimulatorItems.SEASHIP_BEGIN];
         }else if(instruction.getA() < SimulatorItems.TRAIN_BEGIN){
             //dit is een storage platform
             //Stuur hier de agv naar het department platform..

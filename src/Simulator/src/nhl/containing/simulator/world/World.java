@@ -220,7 +220,7 @@ public class World extends Behaviour {
             }
         );
         Vector3f offset;
-        if(m_inlandCells.size() == 0)
+        if(m_inlandCells.isEmpty())
             offset = new Vector3f(-150f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 110);
         else
             offset = new Vector3f(-750f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS + 110);
@@ -259,10 +259,10 @@ public class World extends Behaviour {
     }
     private void createSea() {
         m_seaShips = new ArrayList<>();
-        Vector3f bPos = new Vector3f(-STORAGE_LENGTH - 400.0f, 0.0f, 0.0f);
+        Vector3f bPos = new Vector3f(-STORAGE_LENGTH - 370, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 400);
         float bOff = 200.0f;
         
-        for (int i = 0; i < INLAND_SHIP_COUNT; i++) {
+        for (int i = 0; i < SEA_SHIP_COUNT; i++) {
             Tuple<Vehicle, Vector3f> t = new Tuple<>(null, new Vector3f(bPos));
             createSeaCell(t);
             bPos.x += bOff;
@@ -274,21 +274,21 @@ public class World extends Behaviour {
     private void createSeaCell(Tuple<Vehicle, Vector3f> v) {
         v.a = WorldCreator.createSea(
                 new Vector3f[]{
-                    new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, 3000.0f),
-                    new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, 1000.0f),
+                    //new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, 3000.0f),
+                    //new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, 1000.0f),
                     new Vector3f(v.b)
                 },
                 new Vector3f[] {
                     new Vector3f(v.b),
-                    new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, -1000.0f),
-                    new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, -3000.0f),
+                    //new Vector3f(-STORAGE_LENGTH - 500.0f, 0.0f, -1000.0f),
+                    //new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, -3000.0f),
                 }
                 );
         Vector3f offset;
         if(m_seaCells.isEmpty())
-            offset = new Vector3f(-STORAGE_LENGTH - 260, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 200);
+            offset = new Vector3f(-STORAGE_LENGTH - 240, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 200);
         else
-            offset = new Vector3f(-STORAGE_LENGTH - 260, WORLD_HEIGHT , STORAGE_WIDTH + EXTENDS - 775);
+            offset = new Vector3f(-STORAGE_LENGTH - 240, WORLD_HEIGHT , STORAGE_WIDTH + EXTENDS - 775);
         int begin = m_seaCells.size() + INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
         for (int i = 0; i < SEA_SHIP_CRANE_COUNT / SEA_SHIP_COUNT; ++i) {
             PlatformSea sea = new PlatformSea(offset,i + begin,v.a);
@@ -484,11 +484,13 @@ public class World extends Behaviour {
     }
     
     private void createTrainCell() {
-        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, -800.0f);
+        Vector3f offset = new Vector3f(-100.0f, WORLD_HEIGHT, -730.0f);
         int begin = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT + STORAGE_SIZE.y;
         for (int i = 0; i < TRAIN_CRANE_COUNT; ++i) {
-            m_trainCells.add(new Tuple(new PlatformTrain(offset,i + begin), new Vector2f(10.0f, 0.0f)));
-            offset.x -= 80.0f;
+            Tuple<PlatformTrain,Vector2f> train = new Tuple(new PlatformTrain(offset,i + begin), new Vector2f(10.0f, 0.0f));
+            train.a.rotate(0.0f, -90.0f, 0.0f);
+            m_trainCells.add(train);
+            offset.x += 150.0f;
         }
         
         final float zOff = -STORAGE_WIDTH - EXTENDS - LANE_WIDTH * LANE_COUNT;

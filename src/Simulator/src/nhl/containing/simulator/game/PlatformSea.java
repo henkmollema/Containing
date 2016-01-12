@@ -32,7 +32,7 @@ public class PlatformSea extends Platform {
     @Override
     protected void createPlatform() {
        m_crane = WorldCreator.createSeaCrane(this);
-        initSpots(new Point3());
+        initSpots(Point3.one());
         updateOuter();
     }
     

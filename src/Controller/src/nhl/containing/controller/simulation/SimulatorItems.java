@@ -115,8 +115,9 @@ public class SimulatorItems
         }
         for(Storage s : m_storages){
             Collections.reverse(s.parkingspots);
-        }
-        PathFinder.initPath(m_Nodes);
+        }try{
+            PathFinder.initPath(m_Nodes);
+        }catch(Exception e){e.printStackTrace();}      
     }
     
     /**
@@ -402,7 +403,7 @@ public class SimulatorItems
             return null;
         }
         for(int i = 0;i < (SEA_SHIP_CRANE_COUNT / 2);i++){
-            platforms[i] = m_inlandPlatforms[i +  begin];
+            platforms[i] = m_seaPlatforms[i +  begin];
         }
         return platforms;
     }
@@ -451,8 +452,7 @@ public class SimulatorItems
      * @param id if of seashipPlatform
      */
     private void addSeashipPlatform(int id){
-        Platform nPlatform = new Platform(id);
-        m_seaPlatforms[id - SEASHIP_BEGIN] = nPlatform;
+        m_seaPlatforms[id - SEASHIP_BEGIN] = new Platform(id);
 
     }
     

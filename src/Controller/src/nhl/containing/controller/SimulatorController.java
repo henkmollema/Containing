@@ -12,28 +12,22 @@ import nhl.containing.controller.simulation.*;
  */
 public class SimulatorController
 {
-    private final Database _db;
     private SimulationContext _context;
     private SimulatorItems _simitems;
-
-    public SimulatorController()
-    {
-        _db = new Database();
-    }
 
     public SimulationContext getContext()
     {
         return _context;
     }
-    
+
     public void setItems(SimulatorItems items)
     {
         _simitems = items;
         _context.setSimulatorItems(items);
-        
     }
-    
-    public SimulatorItems getItems(){
+
+    public SimulatorItems getItems()
+    {
         return _simitems;
     }
 
@@ -56,12 +50,11 @@ public class SimulatorController
         writeAnalyzeResults();
 
         // Warm-up the simulation context.
-        
         _context.getShipments();
         _context.getFirstShipment();
 
+        // Create a simulator instance.
         Simulator sim = new Simulator(this);
-        
         sim.start();
     }
 
@@ -126,16 +119,5 @@ public class SimulatorController
         }
 
         return null;
-    }
-
-    /**
-     * Marks the specified record object as processed
-     *
-     * @param record The record object to mark as processed.
-     */
-    public void markAsProcessed(Record record)
-    {
-        // todo: mark as processed in db.
-        _db.saveRecord(record);
     }
 }

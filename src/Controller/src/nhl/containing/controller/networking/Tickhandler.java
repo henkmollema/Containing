@@ -85,12 +85,11 @@ public class Tickhandler implements Runnable
                     id = lp.getID();
                     lp.setShipment(s);
                 }else{
-                    //TODO: problems or queue?
                     continue;
                 }
             }else if(s.carrier instanceof Train){
                 if(_items.hasTrainShipment())
-                    continue; //TODO: Fix a queue ?
+                    continue;
                 else
                     _items.setTrainShipment(s);
             }else if(s.carrier instanceof SeaShip){
@@ -150,27 +149,40 @@ public class Tickhandler implements Runnable
             }
         }
         
-        for(int i = 0; i < _dispatcher.m_agvInstructions.size(); i++)
-        {
+        
+        int i = -1;
+        while(++i < _dispatcher.m_agvInstructions.size()) {
             SavedInstruction inst = _dispatcher.m_agvInstructions.get(i);
             if(!inst.getParkingspot().hasAGV()) //if the target parking spot is free
             {
+                AGV agv = null;
                 if(inst.getAGV() == null) //If no agv assigned to this instruction find a free agv
                 {
-                   AGV freeagv = context.getSimulatorItems().getFreeAGV();
-                   if(freeagv != null)
+                   agv = context.getSimulatorItems().getFreeAGV();
+                   if(agv == null)
+                       continue;
+                   /*if(freeagv != null)
                    {
                        _dispatcher.moveAGV(freeagv, inst.getPlatform(), inst.getParkingspot());
                        _dispatcher.m_agvInstructions.remove(i);
                        i--;
-                   }
+                   }*/
                 }
                 else //send agv to target parkingspot
                 {
-                    _dispatcher.moveAGV(inst.getAGV(), inst.getPlatform(), inst.getParkingspot());
+                    agv = inst.getAGV();
+                   // _dispatcher.moveAGV(inst.getAGV(), inst.getPlatform(), inst.getParkingspot());
                 }
+                _dispatcher.moveAGV(agv, inst.getPlatform(), inst.getParkingspot());
+                _dispatcher.m_agvInstructions.remove(i);
+                i--;
             }
         }
+        /*
+        for(int i = 0; i < _dispatcher.m_agvInstructions.size(); i++)
+        {
+            
+        }*/
     }
 
     /**

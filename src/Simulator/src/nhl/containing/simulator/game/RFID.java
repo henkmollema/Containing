@@ -56,6 +56,6 @@ public class RFID {
     }
     public String getData()
     {
-        return String.format("%-25s", "Weight: ") + String.valueOf(weightFull) + '\n' + String.format("%-25s", "Content: ") + content + '\n' + String.format("%-25s", "Danger: ") + contentDanger + '\n' + String.format("%-25s", "Content Type: ") + contentType + '\n' + String.format("%-25s", "ISO: ") + iso + '\n' + String.format("%-25s", "Department date: ") + String.valueOf(departmentDate) + '\n' + String.format("%-25s", "Department company: ") + departmentCompany + '\n' + String.format("%-25s", "Transport: ") + departmentTransport;
+        return String.format("%-20s", "Weight: ") + String.valueOf(weightFull) + "ton" + '\n' + String.format("%-20s", "Content: ") + content + '\n' + String.format("%-20s", "Danger: ") + contentDanger + '\n' + String.format("%-20s", "Content Type: ") + contentType + '\n' + String.format("%-20s", "ISO: ") + iso + '\n' + String.format("%-20s", "Department date: ") + String.valueOf(departmentDate) + '\n' + String.format("%-20s", "Department company: ") + departmentCompany + '\n' + String.format("%-20s", "Transport: ") + departmentTransport;
     }
 }

@@ -41,7 +41,7 @@ public final class WorldCreator {
             parent = Main.root();
 
         Spatial container = Main.assets().loadModel("models/henk/Container/containerUvFix.obj");
-        container.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
+        //container.setShadowMode(RenderQueue.ShadowMode.CastAndReceive);
         container.scale(2f);
          
         parent.attachChild(container);

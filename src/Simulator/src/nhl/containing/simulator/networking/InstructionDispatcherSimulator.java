@@ -179,7 +179,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
      * @param instruction  instruction
      */
     private void handleShipmentMoved(InstructionProto.Instruction instruction){
-        GUI().setContainerText("");
+        GUI().setWorldText("");
         if(instruction.getA() < World.LORRY_BEGIN){
             Integer index = instruction.getB();
             //dit is een inlandship platform
@@ -267,7 +267,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             int size = inst == null ? testsize : inst.getContainersCount(); 
            
             p("Train arrived with " + size + " containers.");
-            GUI().setContainerText("Aankomst:\nTrein\n" + size + " container(s)");
+            GUI().setWorldText("Aankomst:\nTrein\n" + size + " container(s)");
             //TODO: remove testing compatibility
             if(inst == null)
                 World().getTrain().init(size);
@@ -282,7 +282,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             } 
         } else {
             p("Train departed with " + inst.getContainersCount() + " containers.");
-            GUI().setContainerText("Vertrek:\nTrein\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Vertrek:\nTrein\n" + inst.getContainersCount() + " container(s)");
 
             World().getTrain().state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
             {
@@ -300,7 +300,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         Integer index = inst.getA();
         if (arriving) {
             p("Inland ship arrived with " + inst.getContainersCount() + " containers.");
-            GUI().setContainerText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Aankomst:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
             World().getInlandShip(index).init(inst.getContainersList());
             // Let the ship arrive at the platform.
             World().getInlandShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
@@ -314,7 +314,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             });
         } else {
             p("Inland ship departed with " + inst.getContainersCount() + " containers.");
-            GUI().setContainerText("Vertrek:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Vertrek:\nBinnenvaartschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
             World().getInlandShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
@@ -333,7 +333,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
        Integer index = inst.getA();
         if (arriving) {
             p("Sea ship arrived with " + inst.getContainersCount() + " containers.");
-            GUI().setContainerText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Aankomst:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
             World().getSeaShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
@@ -347,7 +347,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             });
         } else {
             p("Sea ship departed with " + inst.getContainersCount() + " containers.");
-            GUI().setContainerText("Vertrek:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Vertrek:\nZeeschip\n" + inst.getContainersCount() + " container(s)");
 
             // Let the ship arrive at the platform.
             World().getSeaShip(index).state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied()
@@ -365,7 +365,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private void handleLorry(boolean arriving,final InstructionProto.Instruction inst) {
         final Tuple<PlatformLorry,Vehicle> lorryTuple = World().getLorryPlatforms().get(inst.getA() - World.LORRY_BEGIN);
         if (arriving) {
-            GUI().setContainerText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
+            GUI().setWorldText("Aankomst:\nVrachtwagen\n" + inst.getContainersCount() + " container(s)");
             Container container = new Container(new RFID(inst.getContainers(0)));
             container.show();
             lorryTuple.b.setContainer(container);
@@ -380,7 +380,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
             });
          
         } else {
-            GUI().setContainerText("Vertrek:\n vrachtwagen\n" + inst.getContainersCount() + " container(s).");
+            GUI().setWorldText("Vertrek:\n vrachtwagen\n" + inst.getContainersCount() + " container(s).");
             lorryTuple.b.setContainer(null);
             lorryTuple.b.state(Vehicle.VehicleState.ToLoad, new Vehicle.VehicleStateApplied() {
 

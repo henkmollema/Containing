@@ -454,7 +454,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     private void agvReady(InstructionProto.Instruction instruction) {
         //TODO: send Container to place in department shipping
-        System.out.println("agv ready..");
+        //System.out.println("agv ready..");
         Platform platform = _items.getPlatformByAGVID(instruction.getA());
         Parkingspot p = platform.getParkingspotForAGV(instruction.getA());
         Point3 position;
@@ -509,6 +509,11 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             {
                 //wanneer een agv zonder container bij een storage platform aan komt
                ShippingContainer pickup = _context.parkingspot_Containertopickup.get(p);
+               if (pickup == null)
+               {
+                   System.err.println("No container for parking spot " + p.getId());
+                   return;
+               }
                placeCrane(platform, pickup.position, platform.getParkingspotIndex(p));
                System.out.println("calling placeCrane..");
                 //placecrane//System.out.println("calling craneToAGV..");

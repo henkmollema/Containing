@@ -221,9 +221,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
         AGV agv = Main.getAgv(instruction.getA() + 1);
         ParkingSpot p = Main.getParkingSpot(instruction.getB() + 1);
+        //p.agv(agv);
+        agv.setParkingspotID(instruction.getB());
+        
         Vector3f[] path = AgvPath.getPath(route,p );
         agv.path().setPath(path);
-        agv.setParkingspotID(instruction.getB());
     }
     
     
@@ -240,7 +242,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             PlatformLorry lorryPlatform = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN).a;
-            lorryPlatform.take(point, 0);
+            //lorryPlatform.take(point, 0);
         }else if(instruction.getA() < World.STORAGE_BEGIN){
             //dit is een seaship platform
             PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);

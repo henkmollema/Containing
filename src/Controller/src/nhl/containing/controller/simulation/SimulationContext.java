@@ -21,6 +21,7 @@ import nhl.containing.controller.*;
  */
 public class SimulationContext
 {
+    private static SimulationContext instance;
     private final Map<String, Shipment> shipments = new HashMap<>();
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
     private int _containerCount = 0;
@@ -31,8 +32,19 @@ public class SimulationContext
     private Map<Integer, Storage> container_StoragePlatform = new HashMap<>();
     private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
     private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
-    public Map<Parkingspot, ShippingContainer> parkingspot_Containertopickup = new HashMap<>();
+    public Map<SavedInstruction, ShippingContainer> instruction_Containertopickup = new HashMap<>();
+    public Map<AGV, ShippingContainer> agv_Containertopickup = new HashMap<>();
 
+    public SimulationContext()
+    {
+        instance = this;
+    }
+    
+    public static SimulationContext instance()
+    {
+        return instance;
+    }
+    
     public List<ShippingContainer> getShouldDepartContainers()
     {
         return shouldDepartContainers;

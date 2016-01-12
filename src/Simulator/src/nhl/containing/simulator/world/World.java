@@ -208,11 +208,7 @@ public class World extends Behaviour {
         }
     }
     private void createInlandCell(Tuple<Vehicle, Vector3f> v) {
-        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
-            m_inlandCells.add(new PlatformInland(offset,i));
-            offset.x -= 10.0f;
-        }
+        
         Vector3f _dest = new Vector3f(-500f, WORLD_HEIGHT -2f, STORAGE_WIDTH + EXTENDS + 200f);
         v.a = WorldCreator.createInland(
             new Vector3f[] {
@@ -224,6 +220,12 @@ public class World extends Behaviour {
                 new Vector3f(-_dest.x, _dest.y, _dest.z)
             }
         );
+        
+        Vector3f offset = new Vector3f(0.0f, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        for (int i = 0; i < INLAND_SHIP_CRANE_COUNT; ++i) {
+            m_inlandCells.add(new PlatformInland(offset,i, v.a));
+            offset.x -= 10.0f;
+        }
     }
     
     private void createLorryCell() {
@@ -264,12 +266,7 @@ public class World extends Behaviour {
             m_seaShips.add(t);
         }
         
-        Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
-        int begin = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
-        for (int i = 0; i < 1; ++i) {
-            m_seaCells.add(new PlatformSea(offset,i + begin));
-            offset.z -= 10.0f;
-        }
+        
     }
     private void createSeaCell(Tuple<Vehicle, Vector3f> v) {
         v.a = WorldCreator.createSea(
@@ -284,6 +281,12 @@ public class World extends Behaviour {
                     new Vector3f(-STORAGE_LENGTH - 1000.0f, 0.0f, -3000.0f),
                 }
                 );
+        Vector3f offset = new Vector3f(-STORAGE_LENGTH, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS);
+        int begin = m_inlandCells.size();//INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
+        for (int i = 0; i < SEA_SHIP_CRANE_COUNT / SEA_SHIP_COUNT; ++i) {
+            m_seaCells.add(new PlatformSea(offset,i + begin, v.a));
+            offset.z -= 10.0f;
+        }
     }
     
     private void createStorageCell() {

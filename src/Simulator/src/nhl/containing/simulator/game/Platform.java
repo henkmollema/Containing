@@ -210,6 +210,7 @@ public abstract class Platform extends ContainerCarrier {
             m_crane.setPath();
     }
     
+    public void _onStoragePlace() { }
     /**
      * A crane action
      * Take and place
@@ -345,6 +346,7 @@ public abstract class Platform extends ContainerCarrier {
                     Container c = m_crane.setContainer(null);
                     setContainer(to.storageSpot, c);
                     updateOuter();
+                    _onStoragePlace();
                     SimulatorClient.sendTaskDone(m_platformid, from.parkingSpot, InstructionType.CRANE_TO_STORAGE_READY, to.storageSpot);
                 } else { 
                     // Crane to AGV
@@ -363,6 +365,7 @@ public abstract class Platform extends ContainerCarrier {
                 }
             }
         }
+        
         
         /**
          * Check if need to replace

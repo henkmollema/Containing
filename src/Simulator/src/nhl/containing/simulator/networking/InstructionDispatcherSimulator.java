@@ -147,7 +147,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if(instruction.getA() < World.LORRY_BEGIN){
             //dit is een inlandship platform
             PlatformInland inlandPlatform = World().getInlandPlatforms().get(instruction.getA());
-            inlandPlatform.place(spot, point);
+            inlandPlatform.place(point);
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             PlatformLorry lorryPlatform = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN).a;
@@ -155,7 +155,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }else if(instruction.getA() < World.STORAGE_BEGIN){
             //dit is een seaship platform
             PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);
-            seaPlatform.place(spot, point);
+            seaPlatform.place(point);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
             //dit is een storage platform
             PlatformStorage storagePlatform =  World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);
@@ -236,7 +236,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         if(instruction.getA() < World.LORRY_BEGIN){
             //dit is een inlandship platform
             PlatformInland inlandPlatform = World().getInlandPlatforms().get(instruction.getA());
-            inlandPlatform.take(point, 0);
+            inlandPlatform.take(point);
         }else if(instruction.getA() < World.SEASHIP_BEGIN){
             //dit is een lorry platform
             PlatformLorry lorryPlatform = World().getLorryPlatforms().get(instruction.getA() - World.LORRY_BEGIN).a;
@@ -244,7 +244,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }else if(instruction.getA() < World.STORAGE_BEGIN){
             //dit is een seaship platform
             PlatformSea seaPlatform = World().getSeaPlatforms().get(instruction.getA() - World.SEASHIP_BEGIN);
-            seaPlatform.take(point, 0);
+            seaPlatform.take(point);
         }else if(instruction.getA() < World.TRAIN_BEGIN){
             //dit is een storage platform
             PlatformStorage storagePlatform =  World().getStoragePlatforms().get(instruction.getA() - World.STORAGE_BEGIN);

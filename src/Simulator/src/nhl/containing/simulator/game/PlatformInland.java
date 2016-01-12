@@ -21,7 +21,7 @@ public class PlatformInland extends Platform {
      * @param offset
      * @param id 
      */
-    public PlatformInland(Vector3f offset,int id) {
+    public PlatformInland(Vector3f offset,int id, Vehicle v) {
         super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_INLANDSHIP);
     }
@@ -47,4 +47,22 @@ public class PlatformInland extends Platform {
         updateOuter();
     }
     
+    private Point3 m_tempPoint;
+    private Vehicle v;
+    
+    public void take(Point3 point) {
+        Container c = v.setContainer(point, null);
+        setContainer(c);
+        super.take(Point3.zero(), 0);
+    }
+    public void place(Point3 point) {
+        m_tempPoint = new Point3(point);
+        super.place(0, Point3.zero());
+    }
+    
+    @Override
+    public void _onStoragePlace() {
+        Container c = setContainer(null);
+        v.setContainer(m_tempPoint, c);
+    }
 }

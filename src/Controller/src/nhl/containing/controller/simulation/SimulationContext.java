@@ -145,8 +145,25 @@ public class SimulationContext
      * @param storage
      * @return
      */
+    
     public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
     {
+        int sameShipmentCount = 0;
+        int maxsameShipment = 0;
+        if(c.departureShipment.carrier instanceof SeaShip)
+        {
+            maxsameShipment = 50;
+        }
+        if(c.departureShipment.carrier instanceof Truck)
+        {
+            maxsameShipment = 0;
+        }
+        if(c.departureShipment.carrier instanceof Train)
+        {
+            maxsameShipment = 5;
+        }
+        
+        
         for (Map.Entry pair : container_StoragePlatform.entrySet())
         {
             Storage currentPlatform = (Storage) pair.getValue();
@@ -158,7 +175,10 @@ public class SimulationContext
                 //If departure times differ less than minInterval they can't be in the same platform
                 if (Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
                 {
-                    return false;
+                    if(sameShipmentCount > maxsameShipment)
+                        return false;
+                    
+                    sameShipmentCount++;
                 }
             }
         }

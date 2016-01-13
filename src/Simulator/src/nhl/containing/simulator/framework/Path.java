@@ -208,8 +208,11 @@ public class Path {
     public boolean atLast(float range) {
         if (m_nodes.length < 1)
             return true;
+        if(targetIsLast())
+            return m_timer >= 1.0f;
+        return false;
         
-        return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
+        //return (new Vector3f(m_nodes[m_nodes.length - 1]).distanceSquared(getPosition()) < range * range);
     }
     
     /**

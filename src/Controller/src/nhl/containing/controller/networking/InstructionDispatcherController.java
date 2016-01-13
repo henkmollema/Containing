@@ -54,7 +54,8 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 //rdataBuilder.setMessage(_sim.parseCommand(message));
                 break;
             case InstructionType.CLIENT_TIME_UPDATE:
-                futures.add(executorService.submit(new Tickhandler(inst)));
+                //futures.add(executorService.submit(new Tickhandler(inst)));
+                new Tickhandler(inst).run();
                 break;
             case InstructionType.SHIPMENT_ARRIVED:
                 shipmentArrived(inst);
@@ -329,12 +330,14 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             for(int r : route){
                 builder.addRoute(r);
             }
-            _com.sendInstruction(builder.build());
+            
             try {
                 agv.setBusy();
                 spot.setAGV(agv);
                 agv.setNodeID(spot.getDepartNodeID());
             }catch(Exception e){e.printStackTrace();} 
+            
+            _com.sendInstruction(builder.build());
         }else{
             m_agvInstructions.add(new SavedInstruction(null, to, spot));
         }

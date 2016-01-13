@@ -221,6 +221,7 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
         AGV agv = Main.getAgv(instruction.getA() + 1);
         ParkingSpot p = Main.getParkingSpot(instruction.getB() + 1);
+        p.future_agv = agv;
         //p.agv(agv);
         agv.setParkingspotID(instruction.getB());
         

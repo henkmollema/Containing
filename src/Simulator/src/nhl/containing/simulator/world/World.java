@@ -475,7 +475,7 @@ public class World extends Behaviour {
      * @param point 
      */
     public void sendStoragePlace(PlatformStorage storage,int index, Point3 point){
-        Container c = storage.getParkingSpot(index).agv().getContainer();
+        Container c = storage.getParkingSpot(index).future_agv.getContainer();
         storage.place(index, point);
     }
     

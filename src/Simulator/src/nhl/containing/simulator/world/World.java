@@ -323,7 +323,7 @@ public class World extends Behaviour {
     }
     private void createSea() {
         m_seaShips = new ArrayList<>();
-        Vector3f bPos = new Vector3f(-STORAGE_LENGTH - 370, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 400);
+        Vector3f bPos = new Vector3f(-STORAGE_LENGTH - 400, WORLD_HEIGHT, STORAGE_WIDTH + EXTENDS - 400);
         float bOff = 200.0f;
         
         for (int i = 0; i < SEA_SHIP_COUNT; i++) {

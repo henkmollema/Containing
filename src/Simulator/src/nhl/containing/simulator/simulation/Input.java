@@ -257,6 +257,8 @@ public class Input extends Behaviour {
      */
     public void pickObject() {
         
+        if (Main.camera().cameraMode() == CameraMode.Fly)
+            return;
         // Raycast hits
         CollisionResults hit = new CollisionResults();
         

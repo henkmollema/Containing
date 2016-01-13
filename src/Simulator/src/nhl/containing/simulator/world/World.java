@@ -28,7 +28,9 @@ import nhl.containing.simulator.game.PlatformSea;
 import nhl.containing.simulator.game.PlatformTrain;
 import nhl.containing.simulator.framework.Point2;
 import nhl.containing.simulator.framework.Tuple;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.game.AgvPath;
+import nhl.containing.simulator.game.Crane;
 import nhl.containing.simulator.game.RFID;
 import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
@@ -358,7 +360,10 @@ public class World extends Behaviour {
         for (int i = 0; i < SEA_SHIP_CRANE_COUNT / SEA_SHIP_COUNT; ++i) {
             PlatformSea sea = new PlatformSea(offset,i + begin,v.a);
             sea.initSpots(new Point3(1, 1, 1));
-            sea.rotate(0, -90, 0);
+            //sea.rotate(0, -90, 0);
+            sea.crane().m_frameSpatial.setLocalRotation(Utilities.euler2Quaternion(new Vector3f(0.0f, -90.0f, 0.0f)));
+            sea.crane().m_hookSpatial.setLocalRotation(Utilities.euler2Quaternion(new Vector3f(0.0f, -90.0f, 0.0f)));
+            sea.crane().hookMovementAxis = Crane.Y_AXIS | Crane.Z_AXIS;
             m_seaCells.add(sea);
             offset.z -= 100.0f;
         }

@@ -12,6 +12,8 @@ import nhl.containing.simulator.world.World;
 
 /**
  *
+ * Train vehicle
+ * 
  * @author sietse
  */
 public class Train extends Vehicle {

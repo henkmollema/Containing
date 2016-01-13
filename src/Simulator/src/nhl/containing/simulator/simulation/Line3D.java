@@ -1,20 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 
-import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.framework.Mathf;
 import nhl.containing.simulator.framework.Transform;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
-import com.jme3.scene.Node;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.util.BufferUtils;
 import java.util.ArrayList;
@@ -23,7 +16,7 @@ import java.util.List;
 import nhl.containing.simulator.framework.Utilities;
 
 /**
- *
+ * Renders a line
  * @author Jens
  */
 public final class Line3D extends Transform {

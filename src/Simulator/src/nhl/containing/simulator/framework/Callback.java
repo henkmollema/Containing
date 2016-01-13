@@ -6,8 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Callback class is a reflection
- * simplefier, useage: 
+ * Callback class is a reflection simplefier
+ * useage: 
  *      new Callback(<class or object>, "<name of methods>"...)
  * And than use invoke to call the methods
  * @author sietse

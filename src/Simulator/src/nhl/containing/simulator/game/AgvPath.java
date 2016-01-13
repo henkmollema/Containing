@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector2f;
@@ -16,6 +12,8 @@ import nhl.containing.simulator.world.World;
 
 /**
  *
+ * class for managing AGV path
+ * 
  * @author sietse
  */
 public class AgvPath /*extends Behaviour*/ {

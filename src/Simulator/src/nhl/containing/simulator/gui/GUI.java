@@ -198,29 +198,4 @@ public class GUI extends Behaviour{
         m_QRCode.setWidth(300);
         m_QRCode.setPosition(screenWidth() /2 - 200, screenHeight() /2 - 200);
     }
-    
-    
-    /*
-    public static long register(GuiItem item) {
-        if (!m_items.contains(item)) {
-            boolean _isAdded = false;
-            for (int i = 0; i < m_items.size(); ++i) {
-                if (m_items.get(i).layer() > item.layer()) {
-                    _isAdded = true;
-                    m_items.add(i, item);
-                    break;
-                }
-            }
-            if (!_isAdded) {
-                m_items.add(item);
-            }
-        } else {
-            return -1l;
-        }
-        return m_idCounter++;
-    }
-    public static boolean unregister(GuiItem item) {
-        return m_items.remove(item);
-    }
-    * */
 }

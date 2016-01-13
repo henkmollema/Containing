@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.material.Material;
@@ -19,6 +15,8 @@ import nhl.containing.simulator.world.MaterialCreator;
 
 /**
  *
+ * Vehicle
+ * 
  * @author sietse
  */
 public class Vehicle extends MovingItem

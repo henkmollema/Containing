@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
@@ -12,10 +8,15 @@ import nhl.containing.simulator.world.WorldCreator;
 
 /**
  *
+ * A platform for inland ships
+ * 
  * @author sietse
  */
 public class PlatformInland extends Platform {
 
+    private Point3 m_tempPoint;     // Saved point to place a container
+    private Vehicle v;              // Target ship
+    
     /**
      * Constructor
      * @param offset
@@ -48,19 +49,27 @@ public class PlatformInland extends Platform {
         updateOuter();
     }
     
-    private Point3 m_tempPoint;
-    private Vehicle v;
-    
+    /**
+     * Take container from ship
+     * @param point 
+     */
     public void take(Point3 point) {
         Container c = v.setContainer(point, null);
         setContainer(c);
         super.take(Point3.zero(), 0);
     }
+    /**
+     * Place container on ship
+     * @param point 
+     */
     public void place(Point3 point) {
         m_tempPoint = new Point3(point);
         super.place(0, Point3.zero());
     }
     
+    /**
+     * Called when container is placed
+     */
     @Override
     public void _onStoragePlace() {
         Container c = setContainer(null);

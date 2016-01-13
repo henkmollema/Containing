@@ -4,6 +4,9 @@ import nhl.containing.simulator.simulation.Main;
 
 /**
  * This is a class that updates
+ * So the only thing needed is registering in Main.java
+ * And the awake/start/update are automaticly updted
+ * 
  * You will need to register the object
  * to Main.java (Main.register(<behaviour_class>)) Or
  * in the main class itsself, or create the object and call "_init"

@@ -4,7 +4,7 @@ import java.util.Date;
 import nhl.containing.networking.protobuf.InstructionProto;
 
 /**
- * TODO: add all id stuff
+ * Contianer info
  * @author sietse
  */
 public class RFID {
@@ -51,11 +51,14 @@ public class RFID {
     /**
      * For testing compatibility
      */
-    public RFID(){
+    public RFID() {
         this(InstructionProto.Container.getDefaultInstance());
     }
-    public String getData()
-    {
+    /**
+     * Get data
+     * @return 
+     */
+    public String getData() {
         return String.format("%-20s", "Weight: ") + String.valueOf(weightFull) + "ton" + '\n' + String.format("%-20s", "Content: ") + content + '\n' + String.format("%-20s", "Danger: ") + contentDanger + '\n' + String.format("%-20s", "Content Type: ") + contentType + '\n' + String.format("%-20s", "ISO: ") + iso + '\n' + String.format("%-20s", "Department date: ") + String.valueOf(departmentDate) + '\n' + String.format("%-20s", "Department company: ") + departmentCompany + '\n' + String.format("%-20s", "Transport: ") + departmentTransport;
     }
 }

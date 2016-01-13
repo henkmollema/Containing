@@ -164,7 +164,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         // Loop variables/
         int i = 0;
         int skip = 0;
-
+        Collections.reverse(allContainers);
         for (Platform platform : platformsByCarrier)
         {
             if (platform.isBusy())
@@ -181,7 +181,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             {
                 containers.addAll(allContainers.subList(take, allContainers.size()));
             }
-            Collections.reverse(containers);
+            //Collections.reverse(containers);
             
             // Assign the containers to the platform.
             platform.containers = containers;
@@ -281,7 +281,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      */
     public void moveAGV(AGV agv, Platform to, Parkingspot spot) {
         if(agv != null){
-            System.err.println("Sent AGV: " + agv.getID() + " TO PARKINGSPOT: " + spot.getId());
             InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
             builder.setId(CommunicationProtocol.newUUID());
             builder.setB((int)spot.getId());

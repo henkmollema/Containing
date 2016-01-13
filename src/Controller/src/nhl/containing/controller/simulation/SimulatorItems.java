@@ -296,8 +296,10 @@ public class SimulatorItems
      */
     public void unsetSeaShipment(Shipment shipment){
         for(int i = 0; i < m_seashipShipment.length; i++){
-            if(hasSeaShipment(i) && m_seashipShipment[i].key.equals(shipment.key))
-                m_seashipShipment = null;
+            if(hasSeaShipment(i) && m_seashipShipment[i].key.equals(shipment.key)){
+                m_seashipShipment[i] = null;
+                break;
+            }
         }
     }
     

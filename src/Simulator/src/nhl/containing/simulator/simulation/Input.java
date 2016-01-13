@@ -239,6 +239,7 @@ public class Input extends Behaviour {
         m_buttons[12].setOnDownCallback(new Callback(Main.camera()  , "toggleCameraMode"));
         m_buttons[13].setOnDownCallback(new Callback(Main.instance(), "exit"            ));
         m_buttons[14].setOnDownCallback(new Callback(this           , "pickObject"      ));
+        m_buttons[16].setOnDownCallback(new Callback(this           , "unpickObject"      ));
         
         Main.inputManager().addMapping("-Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, false));
         Main.inputManager().addMapping("+Wheel", new MouseAxisTrigger(MouseInput.AXIS_WHEEL, true));
@@ -252,10 +253,17 @@ public class Input extends Behaviour {
         
         Main.inputManager().addListener(m_listener, m_mappings.toArray(new String[m_mappings.size()]));
     }
+    
+    public void unpickObject() {
+        Main.camera().setTarget(null);
+    }
     /**
      * Raycasting to follow selected transform
      */
     public void pickObject() {
+        
+        if (Main.camera().cameraMode() == CameraMode.Fly)
+            return;
         
         // Raycast hits
         CollisionResults hit = new CollisionResults();

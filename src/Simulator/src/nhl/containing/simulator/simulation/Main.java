@@ -134,7 +134,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         m_instance = this; // init singleton
         m_agvNode = new Transform();
-        m_executor = Executors.newSingleThreadExecutor();
+        m_executor = Executors.newWorkStealingPool(); //Executors.newSingleThreadExecutor();
         initBehaviours();
         flyCam.setEnabled(false);
         //_agvPath = new AgvPath();
@@ -153,17 +153,22 @@ public class Main extends SimpleApplication {
 
         if (m_camera != null)
             m_camera.stopChange();
-            
-        Time._updateTime(tpf);
+           
         updateBehaviours();
         
+        Time._updateTime(tpf);
+        
+        
         // Update lines
-        for (Line3D l : m_lines)
-            l.UpdateMesh();
+        /*for (Line3D l : m_lines)
+            l.UpdateMesh();*/
         if (Time.timeScale() > 0.0f)
             for (AGV agv : m_agvs.values())
                 agv.update();
+        
+        
         updateTimescale();
+        
         
         if (m_camera != null)
             m_camera.startChange();

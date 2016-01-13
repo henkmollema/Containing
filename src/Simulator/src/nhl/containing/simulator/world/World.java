@@ -16,7 +16,10 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.util.SkyFactory;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.Future;
 import nhl.containing.simulator.game.AGV;
 import nhl.containing.simulator.game.Container;
 import nhl.containing.simulator.game.PlatformInland;
@@ -112,15 +115,61 @@ public class World extends Behaviour {
         //test();
     }
     
+    class InlandUpdater implements Runnable
+    {
+        PlatformInland s;
+        public InlandUpdater(PlatformInland s)
+        {
+            this.s = s;
+        }
+        @Override
+        public void run()
+        {
+            s.update();
+        }
+    }
+    class SeaUpdater implements Runnable
+    {
+        PlatformSea s;
+        public SeaUpdater(PlatformSea s)
+        {
+            this.s = s;
+        }
+        @Override
+        public void run()
+        {
+            s.update();
+        }
+    }
+    class StorageUpdater implements Runnable
+    {
+        PlatformStorage s;
+        public StorageUpdater(PlatformStorage s)
+        {
+            this.s = s;
+        }
+        @Override
+        public void run()
+        {
+            s.update();
+        }
+    }
     @Override
     public void update() {
         if (m_waitFrames++ < FRAMES_TO_WAIT)
             return;
-        
-        for(PlatformInland  s : m_inlandCells  ) s.update();
-        for(PlatformSea     s : m_seaCells     ) s.update();
-        for(PlatformStorage s : m_storageCells ) s.update();
-        
+        Queue<Future<?>> queue = new LinkedList<>();
+        for(PlatformInland  s : m_inlandCells  ) queue.add(Main.executorService().submit(new InlandUpdater(s)));// s.update();
+        for(PlatformSea     s : m_seaCells     ) queue.add(Main.executorService().submit(new SeaUpdater(s)));//s.update();
+        for(PlatformStorage s : m_storageCells ) queue.add(Main.executorService().submit(new StorageUpdater(s)));//s.update();
+        while (!queue.isEmpty())
+        {
+            try
+            { 
+                queue.poll().get();
+            }
+            catch (Exception ex) { }
+ }
         for(Tuple<PlatformLorry, Vehicle> s : m_lorryCells) {
             Vehicle.VehicleState st = s.b.state();
             
@@ -476,7 +525,7 @@ public class World extends Behaviour {
      * @param point 
      */
     public void sendStoragePlace(PlatformStorage storage,int index, Point3 point){
-        Container c = storage.getParkingSpot(index).agv().getContainer();
+        Container c = storage.getParkingSpot(index).future_agv.getContainer();
         storage.place(index, point);
     }
     

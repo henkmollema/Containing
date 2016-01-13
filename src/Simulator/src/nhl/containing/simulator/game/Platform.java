@@ -112,8 +112,21 @@ public abstract class Platform extends ContainerCarrier {
      */
     public void update() {
         
-        if (m_crane != null && m_crane.targetIsLast())
-            m_crane.paused = !m_currentAction.isTake() && m_currentAction.to.storageSpot == null && m_parkingSpots[m_currentAction.to.parkingSpot].agv() == null;
+        if (m_crane != null && m_crane.targetIsLast() && m_currentAction != null && m_currentAction.to.parkingSpot != null)
+        {
+            m_crane.paused = (!m_currentAction.isTake()) &&  m_parkingSpots[m_currentAction.to.parkingSpot].agv() == null;
+            if(!m_crane.paused)
+            {
+                try
+                {
+                  //System.out.println("unpaused for: " + m_parkingSpots[m_currentAction.to.parkingSpot].id());  
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
         
         // Init
         if (m_firstFrame && m_crane != null) {
@@ -184,12 +197,17 @@ public abstract class Platform extends ContainerCarrier {
           {
         if (m_currentAction != null) 
         {
+            
+             
+            
             // Finish the action
             m_currentAction.finish();
             
             // Check if need to do the placing
             if (m_currentAction.setPath())
                 return;
+            
+           
         } getNext();
           }
          catch(Exception e)
@@ -220,6 +238,7 @@ public abstract class Platform extends ContainerCarrier {
         public final CraneTarget from;          // Taking place
         public final CraneTarget to;            // Placing place
         private int m_onTargetIndex = 0;        // Index to check if need to take or place
+        private boolean hasFinished = false;    //Has finished method been called
         
         /**
          * Constructor
@@ -340,6 +359,9 @@ public abstract class Platform extends ContainerCarrier {
                 }
             } else { // Place
                 
+                
+                //hasFinished = true;
+                
                 if (to.storageSpot != null) {
                     
                     // Crane to storage
@@ -352,14 +374,13 @@ public abstract class Platform extends ContainerCarrier {
                     // Crane to AGV
                     Container c = m_crane.setContainer(null);
                     ParkingSpot ps = null;
-                    if(to.parkingSpot == null)
-                         ps = m_parkingSpots[0];
-                    else
-                        ps = m_parkingSpots[to.parkingSpot];
+      
+                    ps = m_parkingSpots[to.parkingSpot];
+                    
                         
                     try
                     {
-                        ps.agv().setContainer(c);
+                        ps.future_agv.setContainer(c);
                     }
                     catch(Exception e)
                     {
@@ -367,7 +388,8 @@ public abstract class Platform extends ContainerCarrier {
                         e.printStackTrace();
                     }
                     //TODO: Add the right B item
-                    SimulatorClient.sendTaskDone((int)ps.agv().id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
+                    
+                    SimulatorClient.sendTaskDone((int)ps.future_agv.id(),c.getRFID().id, InstructionType.CRANE_TO_AGV_READY,from.storageSpot);
                     ps.agv(null);
                     
                 }

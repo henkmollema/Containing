@@ -18,6 +18,7 @@ public class ParkingSpot extends Transform {
     private int m_arrivalPathID;        // Node where to arrive to get to this
     private int m_departPathID;         // Node where to depart get get away from this
     private boolean m_snap2X = false;   // Snap to X (flase -> Snap to Z)
+    public AGV future_agv;
     
      /**
       * Constructor
@@ -114,7 +115,7 @@ public class ParkingSpot extends Transform {
     public void agv(AGV _agv) {
         if(_agv == null)
         {
-            System.err.println(this.id() + " left by AGV: " + m_agv.id());
+            //System.err.println(this.id() + " left by AGV: " + m_agv.id());
         }
         
         this.m_agv = _agv;

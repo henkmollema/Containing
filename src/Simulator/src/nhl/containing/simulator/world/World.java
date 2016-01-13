@@ -112,7 +112,7 @@ public class World extends Behaviour {
         createAGV();
         Main.getSimClient().Start();
 
-        //test();
+        test();
     }
     
     class InlandUpdater implements Runnable
@@ -302,11 +302,11 @@ public class World extends Behaviour {
             _temp.a = new PlatformLorry(offset,i + INLAND_SHIP_CRANE_COUNT);
             
             Vector3f _from = new Vector3f(offset);
-            _from = _from.add(new Vector3f(0.0f, 0.0f, 40.0f)); // Base offset
-            Vector3f _to = new Vector3f(_from).add(new Vector3f(0.0f, 0.0f, 800.0f));
+            _from = _from.add(new Vector3f(0.0f, 0.0f, 140.0f)); // Base offset
+            Vector3f _to = new Vector3f(offset).add(new Vector3f(0.0f, 0.0f, 40.0f));
             
             _to.z += 30.0f;
-            _temp.b = WorldCreator.createLorry(_to, _from);
+            _temp.b = WorldCreator.createLorry(_from, _to);
             
             m_lorryCells.add(_temp);
             offset.x -= STORAGE_LENGTH / LORRY_CRANE_COUNT;

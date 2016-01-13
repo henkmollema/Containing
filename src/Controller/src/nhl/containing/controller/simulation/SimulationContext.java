@@ -21,6 +21,11 @@ import nhl.containing.controller.*;
  */
 public class SimulationContext
 {
+    private static final int MAX_SAME_SHIPMENT_SEASHIP = 50;
+    private static final int MAX_SAME_SHIPMENT_TRUCK = 0;
+    private static final int MAX_SAME_SHIPMENT_TRAIN = 5;
+    private static final int MAX_SAME_SHIPMENT_INLANDSHIP = 10;
+    
     private static SimulationContext instance;
     private final Map<String, Shipment> shipments = new HashMap<>();
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
@@ -150,19 +155,22 @@ public class SimulationContext
     {
         int sameShipmentCount = 0;
         int maxsameShipment = 0;
-        boolean isTruckShipment = c.arrivalShipment.carrier instanceof Truck;
         
-        if(c.departureShipment.carrier instanceof SeaShip)
+        if(c.arrivalShipment.carrier instanceof SeaShip)
         {
-            maxsameShipment = 50;
+            maxsameShipment = MAX_SAME_SHIPMENT_SEASHIP;
         }
-        if(c.departureShipment.carrier instanceof Truck)
+        if(c.arrivalShipment.carrier instanceof Truck)
         {
-            maxsameShipment = 0;
+            maxsameShipment = MAX_SAME_SHIPMENT_TRUCK;
         }
-        if(c.departureShipment.carrier instanceof Train)
+        if(c.arrivalShipment.carrier instanceof Train)
         {
-            maxsameShipment = 5;
+            maxsameShipment = MAX_SAME_SHIPMENT_TRAIN;
+        }
+        if(c.arrivalShipment.carrier instanceof InlandShip)
+        {
+            maxsameShipment = MAX_SAME_SHIPMENT_INLANDSHIP;
         }
         
         
@@ -173,32 +181,16 @@ public class SimulationContext
             {
                 int idx = (Integer) pair.getKey();
                 ShippingContainer currentContainer = containers.get(idx);
-
                 
-                if(isTruckShipment)
+                //If arrival times differ less than minInterval
+                if (Math.abs(currentContainer.arrivalShipment.date.getTime() - c.arrivalShipment.date.getTime()) < minInterval)
                 {
-                    //If arrival times differ less than minInterval they can't be in the same platform
-                    if (Math.abs(currentContainer.arrivalShipment.date.getTime() - c.arrivalShipment.date.getTime()) < minInterval)
-                    {
-                        sameShipmentCount++;
-                        
-                        if(sameShipmentCount > maxsameShipment)
-                            return false;
-                        
-                    } 
-                }
-                else 
-                {
-                    //If departure times differ less than minInterval they can't be in the same platform
-                    if (Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
-                    {
-                        sameShipmentCount++;
-                        
-                        if(sameShipmentCount > maxsameShipment)
-                            return false;
-                        
-                    } 
-                }
+                    sameShipmentCount++;
+
+                    if(sameShipmentCount > maxsameShipment)
+                        return false;
+
+                } 
                 
             }
         }
@@ -219,7 +211,7 @@ public class SimulationContext
                 {
                     StorageItem sp, spbeneath = null;
 
-                    if (farside)
+                    if (farside) //If a spot must be chosen at the farside(opposite of 0,0,0) of the storageplatform
                     {
                         sp = storagePlaces[x][y][storagePlaces[0][0].length - z - 1];
                         if (y > 0)
@@ -240,6 +232,7 @@ public class SimulationContext
                     {
                         break; //No container beneath, so can not be placed here.
                     }
+                    
                     //If there's no container on this spot 
                     if (sp.isEmpty())
                     {
@@ -251,8 +244,11 @@ public class SimulationContext
                                 break; //Container can not be placed here, because the container beneath departs earlier
                             }
                         }
+                        
+                        //Spot found!
+                        
                         Point3 retVal = null;
-                        if (farside)
+                        if (farside) //If a spot must be chosen at the farside(opposite of 0,0,0) of the storageplatform
                         {
                             retVal = new Point3(x, y, storagePlaces[0][0].length - z - 1);
                         }
@@ -261,7 +257,7 @@ public class SimulationContext
                             retVal = new Point3(x, y, z);
                         }
 
-                        return retVal;
+                        return retVal; 
                     }
                 }
             }

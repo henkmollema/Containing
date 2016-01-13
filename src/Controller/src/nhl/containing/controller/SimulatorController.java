@@ -15,17 +15,29 @@ public class SimulatorController
     private SimulationContext _context;
     private SimulatorItems _simitems;
 
+    /**
+     * Gets the context
+     * @return context
+     */
     public SimulationContext getContext()
     {
         return _context;
     }
 
+    /**
+     * Sets the simulator items
+     * @param items simulator items
+     */
     public void setItems(SimulatorItems items)
     {
         _simitems = items;
         _context.setSimulatorItems(items);
     }
 
+    /**
+     * Gets the simulator items
+     * @return simulator items
+     */
     public SimulatorItems getItems()
     {
         return _simitems;
@@ -58,6 +70,9 @@ public class SimulatorController
         sim.start();
     }
 
+    /**
+     * Writes the analyzed data
+     */
     private void writeAnalyzeResults()
     {
         p("| Type | Inkomend | Uitgaand | Totaal |");
@@ -73,6 +88,12 @@ public class SimulatorController
         System.out.println(s);
     }
 
+    /**
+     * Parse XML
+     * @param xmlFileName xml filename
+     * @return Recordset
+     * @throws Exception when faulty xml
+     */
     private RecordSet parseXml(String xmlFileName) throws Exception
     {
         String xmlString = readXml(xmlFileName);
@@ -92,6 +113,11 @@ public class SimulatorController
         return recordSet;
     }
 
+    /**
+     * Chechs for duplicate ids
+     * @param recordSet recordset
+     * @return true when duplicate id found, otherwise false
+     */
     private boolean hasDuplicateIds(RecordSet recordSet)
     {
         HashSet<String> hashSet = new HashSet<>();
@@ -106,6 +132,11 @@ public class SimulatorController
         return false;
     }
 
+    /**
+     * Reads the xml to a string
+     * @param xmlFileName xml file name
+     * @return String
+     */
     private String readXml(String xmlFileName)
     {
         try

@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.controller;
 
 /**
- *
+ *  Time class
  * @author sietse
  */
 public final class Time {
@@ -79,6 +74,10 @@ public final class Time {
         return (m_fixedTimeScale * m_timeScale);
     }
     
+    /**
+     * Returns the time
+     * @return 
+     */
     public static double time() {
         return m_time;
     }

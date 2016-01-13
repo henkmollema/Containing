@@ -1,6 +1,5 @@
 package nhl.containing.controller;
 
-import java.util.logging.*;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 

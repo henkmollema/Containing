@@ -218,7 +218,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             container = platform.containers.get(0);
             containerPos = container.position;
         }
-        //platform.removeContainerAtPosition(containerPos);
         platform.containers.remove(0);
         builder.setB((int)parkingSpot);
         if(platform.getID() >= SimulatorItems.SEASHIP_BEGIN && platform.getID() < SimulatorItems.STORAGE_BEGIN){
@@ -245,7 +244,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
      * @param instruction
      */
     private void placeCraneReady(InstructionProto.Instruction instruction) {
-        //AGV agv = _items.getFreeAGV();
         Platform platform = null;
         Parkingspot ps = _items.getParkingspotByID(instruction.getB());
         if(instruction.getA() < SimulatorItems.LORRY_BEGIN){

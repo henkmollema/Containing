@@ -25,6 +25,9 @@ import nhl.containing.simulator.framework.Callback;
  */
 public final class Crane extends MovingItem {
     private final String MODEL_PATH_BASE = "models/henk/Cranes/";
+    public static final int X_AXIS = 0x1;
+    public static final int Y_AXIS = 0x2;
+    public static final int Z_AXIS = 0x4;
     
     // Components
     private Transform m_frame;                              // Frame that hold the hook
@@ -33,8 +36,8 @@ public final class Crane extends MovingItem {
     private Timer m_attachTimer;                            // For attach and detach containers
     
     // Objects
-    private Spatial m_frameSpatial;                         // Frame spatial
-    private Spatial m_hookSpatial;                          // Hook spatial
+    public Spatial m_frameSpatial;                          // Frame spatial
+    public Spatial m_hookSpatial;                           // Hook spatial
     
     // Offsets
     protected Vector3f m_frameOffset = Utilities.zero();    // Local frame offset, from the crane transform
@@ -51,6 +54,7 @@ public final class Crane extends MovingItem {
     private final Vector3f m_basePosition;                  // Base position
     public Callback onTargetCallback;                       // Method when arriving at destination
     public boolean paused = false;                          // Is crane waiting
+    public int hookMovementAxis = X_AXIS | Y_AXIS;          // Which axis the hook moves
     
     /**
      * Constructor
@@ -198,14 +202,29 @@ public final class Crane extends MovingItem {
             
             // Crane
             Vector3f cranePos = new Vector3f(m_frameOffset);
-            cranePos.z += pathPos.z;
-            m_frame.localPosition(cranePos);
-            
-            // Hook
             Vector3f hookPos = new Vector3f(m_hookOffset);
-            hookPos.x += pathPos.x;
-            hookPos.y += pathPos.y;
+            
+            // Set X axis
+            if ((hookMovementAxis & X_AXIS) == X_AXIS)
+                hookPos.x += pathPos.x;
+            else
+                cranePos.x += pathPos.x;
+            
+            // Set Y axis
+            if ((hookMovementAxis & Y_AXIS) == Y_AXIS)
+                hookPos.y += pathPos.y;
+            else
+                cranePos.y += pathPos.y;
+            
+            // Set Z axis
+            if ((hookMovementAxis & Z_AXIS) == Z_AXIS)
+                hookPos.z += pathPos.z;
+            else
+                cranePos.z += pathPos.z;
+            
+            // Set
             m_hook.localPosition(hookPos);
+            m_frame.localPosition(cranePos);
             
             // Rrope
             m_rope.SetPosition(0, Utilities.Horizontal(m_hook.position()).add(new Vector3f(m_ropeOffset)).add(new Vector3f(0.0f, m_ropeHeight, 0.0f)));

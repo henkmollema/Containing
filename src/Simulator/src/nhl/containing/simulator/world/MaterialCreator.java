@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.world;
 
 import com.jme3.asset.TextureKey;
@@ -16,7 +11,8 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- *
+ * Class that creates materials
+ * 
  * @author sietse
  */
 public final class MaterialCreator {

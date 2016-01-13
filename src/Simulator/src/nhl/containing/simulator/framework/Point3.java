@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.framework;
 
 import com.jme3.math.Vector3f;
 
 /**
- *
+ * Vector3f only then in int's
+ * so X, Y and Z axis in int's
  * @author sietse
  */
 public class Point3 {

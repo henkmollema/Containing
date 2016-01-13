@@ -1,13 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.simulation;
 import com.jme3.math.Vector3f;
 import nhl.containing.simulator.framework.Utilities;
 
 /**
- * 
+ * Node data for line renderer
  * @author Jens
  */
 public class Line3DNode {

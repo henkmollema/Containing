@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.game.PlatformStorage;
@@ -36,7 +31,10 @@ import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
- *
+ * The creator and updater of the world
+ * and all its components
+ * (platforms, vehicles, terrain)
+ * 
  * @author sietse
  */
 public class World extends Behaviour {

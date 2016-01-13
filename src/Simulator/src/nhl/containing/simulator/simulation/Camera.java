@@ -1,7 +1,6 @@
 package nhl.containing.simulator.simulation;
 
 import nhl.containing.simulator.framework.Behaviour;
-import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.framework.Mathf;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.framework.Utilities;
@@ -20,6 +19,8 @@ import com.jme3.shadow.DirectionalLightShadowRenderer;
 
 
 /**
+ * Custom camera controller
+ * 
  * Camera controller:
  * 
  * RTS Controller

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
@@ -10,7 +6,7 @@ import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**
- *
+ * Platform extention for train platform
  * @author sietse
  */
 public class PlatformTrain extends Platform {

@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.framework;
 
 import nhl.containing.simulator.networking.SimulatorClient;
 import nhl.containing.simulator.simulation.Main;
 
 /**
- *
+ * Time class to record time, timescale, scaledtime, deltatime
+ * 
  * @author sietse
  */
 public final class Time {

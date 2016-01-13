@@ -1,9 +1,3 @@
-/*
- * Crane
- * 
- * NOTE:
- * Manual updating required
- */
 package nhl.containing.simulator.game;
 
 import nhl.containing.simulator.framework.Timer;
@@ -21,6 +15,8 @@ import com.jme3.scene.*;
 import nhl.containing.simulator.framework.Callback;
 /**
  *
+ * Container crane
+ * 
  * @author sietse
  */
 public final class Crane extends MovingItem {

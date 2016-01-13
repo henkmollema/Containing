@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.game;
 
 import com.jme3.math.Vector3f;
@@ -12,18 +8,27 @@ import nhl.containing.simulator.framework.Utilities;
 
 /**
  *
+ * A platform for a lorry
+ * 
  * @author sietse
  */
 public class PlatformLorry extends Platform {
 
-    
+    /**
+     * Constructor
+     * @param offset
+     * @param id 
+     */
     public PlatformLorry(Vector3f offset,int id) {
         super(offset,id, true);
         this.register(-1,m_platformid,SimulationItemType.PLATFORM_LORRY);
         initSpots(Point3.one());
     }
     
-    
+    /**
+     * Get parkingspots
+     * @return 
+     */
     @Override
     protected ParkingSpot[] parkingSpots() {
         return new ParkingSpot[] {
@@ -31,6 +36,9 @@ public class PlatformLorry extends Platform {
         };
     }
 
+    /**
+     * Create platform
+     */
     @Override
     protected final void createPlatform() {
         m_crane = WorldCreator.createLorryCrane(this);

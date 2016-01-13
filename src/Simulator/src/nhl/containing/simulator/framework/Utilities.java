@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.framework;
 
 import com.jme3.math.Quaternion;
@@ -12,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
+ * Utilities
  * @author sietse
  */
 public final class Utilities {
@@ -21,42 +16,42 @@ public final class Utilities {
      * [0,0,0]
      * @return 
      */
-    public static Vector3f zero()    { return new Vector3f( 0.0f,  0.0f,  0.0f).clone(); }
+    public static Vector3f zero()    { return new Vector3f( 0.0f,  0.0f,  0.0f); }
     /**
      * [1,1,1]
      * @return 
      */
-    public static Vector3f one()     { return new Vector3f( 1.0f,  1.0f,  1.0f).clone(); }
+    public static Vector3f one()     { return new Vector3f( 1.0f,  1.0f,  1.0f); }
     /**
      * [0,1,0]
      * @return 
      */
-    public static Vector3f up()      { return new Vector3f( 0.0f,  1.0f,  0.0f).clone(); }
+    public static Vector3f up()      { return new Vector3f( 0.0f,  1.0f,  0.0f); }
     /**
      * [0,-1,0]
      * @return 
      */
-    public static Vector3f down()    { return new Vector3f( 0.0f, -1.0f,  0.0f).clone(); }
+    public static Vector3f down()    { return new Vector3f( 0.0f, -1.0f,  0.0f); }
     /**
      * [-1,0,0]
      * @return 
      */
-    public static Vector3f left()    { return new Vector3f(-1.0f,  0.0f,  0.0f).clone(); }
+    public static Vector3f left()    { return new Vector3f(-1.0f,  0.0f,  0.0f); }
     /**
      * [1,0,0]
      * @return 
      */
-    public static Vector3f right()   { return new Vector3f( 1.0f,  0.0f,  0.0f).clone(); }
+    public static Vector3f right()   { return new Vector3f( 1.0f,  0.0f,  0.0f); }
     /**
      * [0,0,1]
      * @return 
      */
-    public static Vector3f forward() { return new Vector3f( 0.0f,  0.0f,  1.0f).clone(); }
+    public static Vector3f forward() { return new Vector3f( 0.0f,  0.0f,  1.0f); }
     /**
      * [0,0,-1]
      * @return 
      */
-    public static Vector3f back()    { return new Vector3f( 0.0f,  0.0f, -1.0f).clone(); }
+    public static Vector3f back()    { return new Vector3f( 0.0f,  0.0f, -1.0f); }
     
     /**
      * zero's out the y axis

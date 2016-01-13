@@ -18,7 +18,6 @@ import nhl.containing.simulator.framework.Point3;
 import nhl.containing.simulator.framework.Time;
 import nhl.containing.simulator.game.AgvPath;
 import nhl.containing.simulator.simulation.Main;
-import nhl.containing.simulator.world.World;
 
 /**
  * Providers interaction with the client.

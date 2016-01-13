@@ -9,7 +9,7 @@ import nhl.containing.simulator.simulation.Main;
 import nhl.containing.simulator.world.WorldCreator;
 
 /**
- * TODO: create()
+ * Position/spot where an AGV can wait
  * @author sietse
  */
 public class ParkingSpot extends Transform {

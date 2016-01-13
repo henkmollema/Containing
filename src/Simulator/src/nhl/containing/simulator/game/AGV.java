@@ -26,6 +26,8 @@ import nhl.containing.simulator.world.MaterialCreator;
 
 /**
  *
+ * class for an AGV
+ * 
  * @author sietse
  */
 public final class AGV extends MovingItem {

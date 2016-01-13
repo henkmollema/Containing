@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.world;
 
 import com.jme3.scene.Spatial;
@@ -11,7 +7,8 @@ import java.util.List;
 import nhl.containing.simulator.game.Container;
 
 /**
- *
+ * Pooling containers
+ * 
  * @author sietse
  */
 public class ContainerPool {

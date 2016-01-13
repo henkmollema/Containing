@@ -275,7 +275,6 @@ public abstract class Platform extends ContainerCarrier {
                 
                 // Check where container need to go
                 if (to.storageSpot != null) {
-                    //TODO: get new point here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     to.storageSpot = Point3.zero(); 
                 }
             } else if (to.storageSpot != null) {
@@ -288,7 +287,6 @@ public abstract class Platform extends ContainerCarrier {
                     int _height = getStackHeight(new Point2(to.storageSpot.x, to.storageSpot.z));
                     if (_height < to.storageSpot.y || to.storageSpot.y < 0) {
                         to.storageSpot.y = _height;
-                        // Debug.log("Container Y position fixed");
                     }
                 }
             }

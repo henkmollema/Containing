@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.world;
 
 import nhl.containing.simulator.simulation.Main;
@@ -29,12 +24,16 @@ import nhl.containing.simulator.game.Train;
 import nhl.containing.simulator.game.Vehicle;
 
 /**
- *
+ * Creates instances of vehicles and platforms and boxes/containers
  * @author sietse
  */
 public final class WorldCreator {
     
-    
+    /**
+     * Create container
+     * @param parent
+     * @return 
+     */
     public static Spatial createContainer(Node parent)
     {
         if (parent == null) 
@@ -102,7 +101,11 @@ public final class WorldCreator {
         return boxGeo;
     }
     
-    
+    /**
+     * Create default crane path
+     * @param basePosition
+     * @return 
+     */
     public static Path createDefaultCranePath(Vector3f basePosition) {
         Path path = new Path();
         path.m_useTimeInsteadOfSpeed = false;
@@ -112,6 +115,11 @@ public final class WorldCreator {
         path.m_previousPosition = new Vector3f(basePosition);
         return path;
     }
+    /**
+     * Create storage crane
+     * @param parent
+     * @return 
+     */
     public static Crane createStorageCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
         
@@ -135,6 +143,11 @@ public final class WorldCreator {
                 2.0f                                            // Hook scale
          );
     }
+    /**
+     * Create lorry crane
+     * @param parent
+     * @return 
+     */
     public static Crane createLorryCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
         
@@ -158,6 +171,11 @@ public final class WorldCreator {
                 2.0f                                            // Hook scale
          );
     }
+    /**
+     * Create inland crane
+     * @param parent
+     * @return 
+     */
     public static Crane createInlandCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
         
@@ -181,6 +199,11 @@ public final class WorldCreator {
                 2.0f                                            // Hook scale
          );
     }
+    /**
+     * Create sea crane
+     * @param parent
+     * @return 
+     */
     public static Crane createSeaCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
         
@@ -204,6 +227,11 @@ public final class WorldCreator {
                 2.0f                                            // Hook scale
          );
     }
+    /**
+     * Create train crane
+     * @param parent
+     * @return 
+     */
     public static Crane createTrainCrane(Transform parent) {
         Vector3f _basePosition = new Vector3f(0.0f, 0.0f, 0.0f);
         
@@ -228,6 +256,12 @@ public final class WorldCreator {
          );
     }
     
+    /**
+     * Create lorry
+     * @param from
+     * @param to
+     * @return 
+     */
     public static Vehicle createLorry(Vector3f from, Vector3f to) {
         Vehicle v = new Vehicle(
                 new Point3(1, 1, 1),
@@ -247,7 +281,7 @@ public final class WorldCreator {
     }
     
     /**
-     * 
+     * create traine
      * @param from The point that is out of the map
      * @param to The point that is the loading platform
      * @return 
@@ -274,6 +308,12 @@ public final class WorldCreator {
         return v;
     }
     
+    /**
+     * Create inland ship
+     * @param from
+     * @param to
+     * @return 
+     */
     public static Vehicle createInland(Vector3f[] from, Vector3f[] to) {
         Vehicle v = new Vehicle(
                 new Point3(6, 3, 2).add(Point3.one()),
@@ -309,6 +349,16 @@ public final class WorldCreator {
         return v;
     }
     
+    /**
+     * Create water
+     * @param location
+     * @param size
+     * @param depth
+     * @param distortionScale
+     * @param waveSpeed
+     * @param waveSize
+     * @return 
+     */
     public static Geometry createWaterPlane(Vector3f location, float size, float depth, float distortionScale, float waveSpeed, float waveSize)
     {
         //From: http://wiki.jmonkeyengine.org/doku.php/jme3:advanced:water

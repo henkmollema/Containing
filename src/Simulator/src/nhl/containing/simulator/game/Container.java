@@ -10,6 +10,8 @@ import nhl.containing.simulator.world.MaterialCreator;
 
 /**
  *
+ * Container
+ * 
  * @author sietse
  */
 public class Container {

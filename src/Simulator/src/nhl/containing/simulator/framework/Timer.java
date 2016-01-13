@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.simulator.framework;
 
-import nhl.containing.simulator.framework.Callback;
-import nhl.containing.simulator.framework.Time;
-
 /**
- * Timer
+ * Set lifetime and its a timer
  * @author sietse
  */
 public class Timer {

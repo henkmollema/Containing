@@ -28,7 +28,7 @@ public class SimulationContext
     private List<Shipment> allShipments;
     private Shipment firstShipment;
     private SimulatorItems _simulatorItems;
-    private static final int minInterval = 5 * 60 * 1000; // Five minutes in miliseconds
+    private static final int minInterval = 60 * 1000; // One minutes in miliseconds
     private Map<Integer, Storage> container_StoragePlatform = new HashMap<>();
     private List<ShippingContainer> shouldDepartContainers = new ArrayList<ShippingContainer>();
     private List<ShippingContainer> departingContainers = new ArrayList<ShippingContainer>();
@@ -150,6 +150,8 @@ public class SimulationContext
     {
         int sameShipmentCount = 0;
         int maxsameShipment = 0;
+        boolean isTruckShipment = c.arrivalShipment.carrier instanceof Truck;
+        
         if(c.departureShipment.carrier instanceof SeaShip)
         {
             maxsameShipment = 50;
@@ -167,19 +169,37 @@ public class SimulationContext
         for (Map.Entry pair : container_StoragePlatform.entrySet())
         {
             Storage currentPlatform = (Storage) pair.getValue();
-            if (currentPlatform.getID() == storage.getID())
+            if (currentPlatform.getID() == storage.getID()) //For each container in given storage
             {
                 int idx = (Integer) pair.getKey();
                 ShippingContainer currentContainer = containers.get(idx);
 
-                //If departure times differ less than minInterval they can't be in the same platform
-                if (Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
+                
+                if(isTruckShipment)
                 {
-                    if(sameShipmentCount > maxsameShipment)
-                        return false;
-                    
-                    sameShipmentCount++;
+                    //If arrival times differ less than minInterval they can't be in the same platform
+                    if (Math.abs(currentContainer.arrivalShipment.date.getTime() - c.arrivalShipment.date.getTime()) < minInterval)
+                    {
+                        sameShipmentCount++;
+                        
+                        if(sameShipmentCount > maxsameShipment)
+                            return false;
+                        
+                    } 
                 }
+                else 
+                {
+                    //If departure times differ less than minInterval they can't be in the same platform
+                    if (Math.abs(currentContainer.departureShipment.date.getTime() - c.departureShipment.date.getTime()) < minInterval)
+                    {
+                        sameShipmentCount++;
+                        
+                        if(sameShipmentCount > maxsameShipment)
+                            return false;
+                        
+                    } 
+                }
+                
             }
         }
         return true;

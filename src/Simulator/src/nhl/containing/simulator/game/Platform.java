@@ -164,7 +164,7 @@ public abstract class Platform extends ContainerCarrier {
         if (m_parkingSpots != null && m_parkingSpots.length == 1) {
             Vector3f v = m_parkingSpots[0].position();
             if (m_snapX)
-                v.z =  _container.transform.position().z + 25;
+                v.x =  _container.transform.position().x;
             else
                 v.z =  _container.transform.position().z;
             m_parkingSpots[0].position(v);

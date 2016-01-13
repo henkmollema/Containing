@@ -182,6 +182,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                 containers.addAll(allContainers.subList(take, allContainers.size()));
             }
             Collections.reverse(containers);
+            
             // Assign the containers to the platform.
             platform.containers = containers;
             placeCrane(platform);
@@ -217,10 +218,14 @@ public class InstructionDispatcherController implements InstructionDispatcher {
             container = platform.containers.get(0);
             containerPos = container.position;
         }
-        
-        platform.removeContainerAtPosition(containerPos);
+        //platform.removeContainerAtPosition(containerPos);
+        platform.containers.remove(0);
         builder.setB((int)parkingSpot);
         if(platform.getID() >= SimulatorItems.SEASHIP_BEGIN && platform.getID() < SimulatorItems.STORAGE_BEGIN){
+            if(containerPos.x > 19 || containerPos.y > 15 || containerPos.z > 5){
+                placeCrane(platform);
+                return;
+            }
             builder.setX(containerPos.x);
             builder.setY(containerPos.z);
             builder.setZ(containerPos.y);
@@ -265,50 +270,6 @@ public class InstructionDispatcherController implements InstructionDispatcher {
         }
         m_agvInstructions.add(new SavedInstruction(null, platform, ps));
 
-    }
-
-    /**
-     * Handles crane to AGV instruction type
-     *
-     * @param platform platform
-     * @param shipment shipment
-     * @param parkingspot parkingspot
-     */
-    private void craneToAGV(Platform platform, Shipment shipment, Parkingspot parkingspot) {
-        InstructionProto.Instruction.Builder builder = InstructionProto.Instruction.newBuilder();
-        builder.setId(CommunicationProtocol.newUUID());
-        builder.setA(platform.getID());
-        builder.setB((int) parkingspot.getId());
-        builder.setInstructionType(InstructionType.CRANE_TO_AGV);
-        if(shipment.incoming)
-        {
-            //TODO: get better position
-            Point3 point = shipment.carrier.containers.get(shipment.carrier.containers.size() - shipment.count).position;
-            shipment.count--;
-            builder.setX(point.x);
-            builder.setY(point.y);
-            builder.setZ(point.z);
-        }
-        else
-        {
-//            //Loop door  depart containers, en pak departure container die in dit platform ligt en pak zijn position
-//            for(ShippingContainer cont : _context.getDepartingContainers())
-//            {
-//                if(_context.getStoragePlatformByContainer(cont).getID() == platform.getID())
-//                {
-//                    Point3 point = cont.position;
-//                    builder.setX(point.x);
-//                    builder.setY(point.y);
-//                    builder.setZ(point.z);
-//                    //System.out.println("Found container to pick up! (craneToAGV)");
-//                    _context.setContainerDeparted(cont);  
-//                   break;
-//                }
-//                
-//            }
-        }
-        _com.sendInstruction(builder.build());
-        platform.setBusy();
     }
 
     /**
@@ -538,7 +499,7 @@ public class InstructionDispatcherController implements InstructionDispatcher {
                    _context.agv_Containertopickup.remove(p.getAGV());
                }
                
-               placeCrane(platform, pickup.position, platform.getParkingspotIndex(p));
+               placeCrane(platform, pickup.departPosition, platform.getParkingspotIndex(p));
                System.out.println("calling placeCrane..");
                 
             }

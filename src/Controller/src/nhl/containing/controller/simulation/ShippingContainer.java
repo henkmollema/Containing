@@ -37,7 +37,15 @@ public class ShippingContainer
      */
     public String height;
     
+    /**
+     * Position of the container on the arrival carrier
+     */
     public Point3 position;
+    
+    /**
+     * Position of the container on the storage platform
+     */
+    public Point3 departPosition;
     
     /**
      * Weight of the container when it's empty.

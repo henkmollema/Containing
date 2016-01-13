@@ -19,6 +19,7 @@ public class ParkingSpot extends Transform {
     private int m_departPathID;         // Node where to depart get get away from this
     private boolean m_snap2X = false;   // Snap to X (flase -> Snap to Z)
     public AGV future_agv;
+    public Vector3f defaultOffset = Utilities.zero();
     
      /**
       * Constructor
@@ -34,7 +35,7 @@ public class ParkingSpot extends Transform {
         super(parent);
         m_agv = null;
         create();
-        this.localPosition(offset);
+        this.localPosition(defaultOffset = new Vector3f(offset));
         this.register(id,type,arrival,depart);
         Main.register(this);
         m_arrivalPathID = arrival;
@@ -55,7 +56,7 @@ public class ParkingSpot extends Transform {
         super(parent);
         m_agv = null;
         create();
-        this.localPosition(offset);
+        this.localPosition(defaultOffset = new Vector3f(offset));
         this.register(type,arrival,depart);
         Main.register(this);
         m_arrivalPathID = arrival;

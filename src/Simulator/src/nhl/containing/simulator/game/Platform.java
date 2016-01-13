@@ -159,9 +159,8 @@ public abstract class Platform extends ContainerCarrier {
         // Add action to queue
         m_queue.add(new CraneAction(_container, new CraneTarget(point), new CraneTarget(spot)));
         
-        // I AM NOT SURE WHERE TO PLACE THIS CODE
-        // ON CALLING TAKE OR WHEN THE QUEUE GETS THE INSTRUCTION
         if (m_parkingSpots != null && m_parkingSpots.length == 1) {
+            m_parkingSpots[0].localPosition(m_parkingSpots[0].defaultOffset);
             Vector3f v = m_parkingSpots[0].position();
             if (m_snapX)
                 v.x =  _container.transform.position().x;

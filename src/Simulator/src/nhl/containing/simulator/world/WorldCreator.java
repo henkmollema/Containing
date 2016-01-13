@@ -73,7 +73,7 @@ public final class WorldCreator {
      * @return 
      */
     public static Geometry createBox(Node parent, Vector3f size, ColorRGBA color) {
-        return createBox(parent, size, ColorRGBA.randomColor(), false, false);
+        return createBox(parent, size, color == null ? ColorRGBA.randomColor() : color, false, false);
     }
     /**
      * 

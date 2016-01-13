@@ -329,6 +329,7 @@ public class World extends Behaviour {
         final float _23 = AgvPath.getNodes()[23].position().x;
         
         for (int i = 0; i < STORAGE_SIZE.y; ++i) {
+            
             m_storageCells.add(new PlatformStorage(offset,i + begin));
             
             int upArriveID = -1;

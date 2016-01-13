@@ -1,8 +1,11 @@
 package nhl.containing.simulator.game;
 
+import com.jme3.math.ColorRGBA;
 import nhl.containing.simulator.framework.Point3;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import nhl.containing.networking.protobuf.SimulationItemProto.SimulationItem.*;
+import nhl.containing.simulator.framework.Utilities;
 import nhl.containing.simulator.world.World;
 import nhl.containing.simulator.world.WorldCreator;
 
@@ -49,6 +52,9 @@ public final class PlatformStorage extends Platform {
         m_crane = WorldCreator.createStorageCrane(this);
         initSpots(new Point3(6, 6, World.STORAGE_SIZE.x));
         updateOuter();
+        
+        Geometry g = WorldCreator.createBox(this, new Vector3f(16.0f, 1.0f, 550.0f), new ColorRGBA(0.45f, 0.45f, 0.45f, 1.0f));
+        g.setLocalTranslation(new Vector3f(16.0f, - 0.7f, 550.0f));
     }
 
     /**

@@ -134,7 +134,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         m_instance = this; // init singleton
         m_agvNode = new Transform();
-        m_executor = Executors.newSingleThreadExecutor();
+        m_executor = Executors.newWorkStealingPool(); //Executors.newSingleThreadExecutor();
         initBehaviours();
         flyCam.setEnabled(false);
         //_agvPath = new AgvPath();

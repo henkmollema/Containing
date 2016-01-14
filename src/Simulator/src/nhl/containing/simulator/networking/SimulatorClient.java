@@ -46,11 +46,19 @@ public class SimulatorClient implements Runnable
         return controllerCom;
     }
 
+    /**
+     * Returns a value indicating whether the simulator is running.
+     *
+     * @return true if the simulator is running; otherwise, false.
+     */
     public boolean isConnected()
     {
         return isConnected;
     }
 
+    /**
+     * Stops running the simulator.
+     */
     public void stop()
     {
         shouldRun = false;
@@ -58,12 +66,13 @@ public class SimulatorClient implements Runnable
 
     /**
      * Adds a Simulation item to the metalist
+     *
      * @param id id of the item
      * @param type type of the item
      * @param position position of the item
      * @param parentid parent of the item or -1
      */
-    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position,int parentid)
+    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position, int parentid)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(id);
@@ -77,15 +86,16 @@ public class SimulatorClient implements Runnable
         }
         metaList.addItems(builder.build());
     }
-    
-     /**
+
+    /**
      * Adds a Simulation item to the metalist
+     *
      * @param id id of the item
      * @param type type of the item
      * @param position position of the item
      * @param parentid parent of the item or -1
      */
-    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position,int parentid,int arrival, int depart)
+    public void addSimulationItem(long id, SimulationItem.SimulationItemType type, Vector3f position, int parentid, int arrival, int depart)
     {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(id);
@@ -101,25 +111,30 @@ public class SimulatorClient implements Runnable
         builder.addConnections(depart);
         metaList.addItems(builder.build());
     }
-    
+
     /**
      * Adds a node to the metalist
+     *
      * @param node node
      */
-    public void addNode(AgvPath.AgvNode node){
+    public void addNode(AgvPath.AgvNode node)
+    {
         SimulationItem.Builder builder = SimulationItem.newBuilder();
         builder.setId(node.id());
         builder.setType(SimulationItem.SimulationItemType.NODES);
         builder.setX(node.position().x);
         builder.setY(node.position().y);
-        for(int connection : node.connections()){
+        for (int connection : node.connections())
+        {
             builder.addConnections(connection);
         }
         metaList.addItems(builder.build());
     }
 
     /**
-     * starts the connection when world is build
+     * Marks the simulator read to start.
+     *
+     * Starts the connection when world is build.
      */
     public void Start()
     {
@@ -127,9 +142,12 @@ public class SimulatorClient implements Runnable
     }
 
     /**
-     * Opens a serversocket and waits for a client to connect. This method
-     * should be called on it's own thread as it contains an indefinite loop.
-     * Returns false if setup/connection failed. Returns true if connection was
+     * Opens a serversocket and waits for a client to connect.
+     *
+     * This method should be called on it's own thread as it contains an
+     * indefinite loop.
+     *
+     * @return false if setup/connection failed. Returns true if connection was
      * successfull and closed peacefuly
      */
     private boolean start()
@@ -163,6 +181,7 @@ public class SimulatorClient implements Runnable
 
     /**
      * Sends the metadata to the controller
+     *
      * @return true when succesfull, otherwise false
      */
     private boolean sendSimulatorMetadata()
@@ -184,7 +203,7 @@ public class SimulatorClient implements Runnable
             InputStream input = _socket.getInputStream();
             byte[] ba = StreamHelper.readByteArray(input);
             Instruction i = Instruction.parseFrom(ba);
-            
+
             if (i.getInstructionType() != InstructionType.CLIENT_CONNECTION_OKAY)
             {
                 throw new IOException("Server did not respond with Client OK.");
@@ -223,7 +242,7 @@ public class SimulatorClient implements Runnable
      */
     public void sendTimeUpdate()
     {
-        if(isConnected)
+        if (isConnected)
         {
             Instruction timeUpdate = Instruction.newBuilder()
                     .setId(CommunicationProtocol.newUUID())
@@ -237,11 +256,13 @@ public class SimulatorClient implements Runnable
 
     /**
      * Sends an instruction when task is done
+     *
      * @param a id of first simulation item
      * @param b id of the second simulation item
      * @param type type of the task
      */
-    public static void sendTaskDone(int a, int b, int type){
+    public static void sendTaskDone(int a, int b, int type)
+    {
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
@@ -250,16 +271,18 @@ public class SimulatorClient implements Runnable
                 .build();
         controllerCom.sendInstruction(taskDone);
     }
-    
-     /**
+
+    /**
      * Sends an instruction when task is done
+     *
      * @param a id of first simulation item
      * @param b id of the second simulation item
      * @param type type of the task
      * @param message message
      */
-    public static void sendTaskDone(int a, int b, int type, String message){
-                Instruction taskDone = Instruction.newBuilder()
+    public static void sendTaskDone(int a, int b, int type, String message)
+    {
+        Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
                 .setB(b)
@@ -268,15 +291,17 @@ public class SimulatorClient implements Runnable
                 .build();
         controllerCom.sendInstruction(taskDone);
     }
-    
+
     /**
      * Sends an instruction when task is done
+     *
      * @param a id of the first simulation item
      * @param b id of the second simulation item
      * @param type type of the task
      * @param point a point (for placing containers)
      */
-    public static void sendTaskDone(int a, int b, int type, Point3 point){
+    public static void sendTaskDone(int a, int b, int type, Point3 point)
+    {
         Instruction taskDone = Instruction.newBuilder()
                 .setId(CommunicationProtocol.newUUID())
                 .setA(a)
@@ -288,7 +313,7 @@ public class SimulatorClient implements Runnable
                 .build();
         controllerCom.sendInstruction(taskDone);
     }
-    
+
     private boolean instructionLoop()
     {
         p("Starting the instruction loop..");
@@ -296,12 +321,6 @@ public class SimulatorClient implements Runnable
         {
             InputStream input = _socket.getInputStream();
             OutputStream output = _socket.getOutputStream();
-
-            // Send empty message to start conversation..
-            //StreamHelper.writeMessage(output, new byte[]
-            //{
-            //    0
-            //});
 
             while (shouldRun)
             {

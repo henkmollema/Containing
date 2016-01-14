@@ -22,8 +22,8 @@ import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 
 /**
- * Handles a timer tick
- *
+ * Handles a timer tick recieved from the server.
+ * 
  * @author Niels
  */
 public class Tickhandler implements Runnable
@@ -37,7 +37,7 @@ public class Tickhandler implements Runnable
     /**
      * Constructor
      *
-     * @param instruction
+     * @param instruction the time update instruction to be handled
      */
     public Tickhandler(Instruction instruction)
     {
@@ -47,7 +47,7 @@ public class Tickhandler implements Runnable
     }
 
     /**
-     * Run method of the Runnable
+     * Run method of the Runnable, gets called when the thread starts.
      */
     @Override
     public void run()
@@ -65,7 +65,6 @@ public class Tickhandler implements Runnable
         //p("Ingame time: " + date.toString());
         int id;
         // Get shipments by date.
-        //Shipment[] shipments = context.getShipmentsByDate(date).toArray(new Shipment[0]);
         for (Shipment s : context.getShipmentsByDate(date))
         {
             id = -1;
@@ -110,7 +109,6 @@ public class Tickhandler implements Runnable
             p("Process shipment: " + s.key +" CONTAINERCOUNT: "+s.carrier.containers.size()+" Carrier:" + s.carrier.toString() + " incomming: " + s.incoming);
             if(!s.incoming)
             {
-                //TODO: move this to shipment arrived in instructiondispatcher when all shipment types are implemented
                 context.setContainerShouldDepart(s.carrier.containers);
                 System.out.println("Set container batch to should depart..");
             }
@@ -147,6 +145,7 @@ public class Tickhandler implements Runnable
         
         
         int i = -1;
+        //Work off the agv instruction queue
         while(++i < _dispatcher.m_agvInstructions.size()) {
             SavedInstruction inst = _dispatcher.m_agvInstructions.get(i);
             if(!inst.getParkingspot().hasAGV()) //if the target parking spot is free
@@ -181,17 +180,13 @@ public class Tickhandler implements Runnable
                 
             }
         }
-        /*
-        for(int i = 0; i < _dispatcher.m_agvInstructions.size(); i++)
-        {
-            
-        }*/
     }
 
     /**
-     * Creates the profofiles for a shipment and puts them on the queue
+     * Creates the protobuf object for a shipment and puts them on the queue
      *
      * @param shipment shipment
+     * @param id shipment id
      */
     private void createProto(Shipment shipment, int id)
     {
@@ -293,6 +288,11 @@ public class Tickhandler implements Runnable
         }
     }
 
+    /**
+     * Prints a message to the console
+     *
+     * @param s message
+     */
     private static void p(String s)
     {
         System.out.println("[" + System.currentTimeMillis() + "] Controller: " + s);

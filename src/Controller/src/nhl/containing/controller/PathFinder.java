@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package nhl.containing.controller;
 
 import java.awt.Dimension;
@@ -10,7 +6,8 @@ import java.util.List;
 import nhl.containing.controller.simulation.Node;
 
 /**
- *
+ * Class with native methods for path finding.
+ * 
  * @author Dudecake
  */
 public class PathFinder
@@ -45,18 +42,6 @@ public class PathFinder
     public static native void setOccupied(int orgx, int orgy, boolean occupied);
     
     public static native boolean getOccupied(Point loc);
-    /*
-    public static native void helloFromC();
     
-    public static native double avgFromC(int[] x);
-    
-    public static native int intFromC(int[] x);
-    
-    public static native Integer integerFromC(int x);
-    
-    public static native Point pointInC(int x, int y);
-    
-    public native void changeNumberInC();
-    */
     public static native void cleanup();
 }

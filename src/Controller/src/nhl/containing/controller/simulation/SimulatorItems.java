@@ -11,6 +11,7 @@ import nhl.containing.networking.protobuf.SimulationItemProto.*;
 
 /**
  * Saves all the simulator items
+ *
  * @author Niels
  */
 public class SimulatorItems
@@ -21,8 +22,7 @@ public class SimulatorItems
     public static final int INLAND_SHIP_CRANE_COUNT = 8;
     public static final int STORAGE_CRANE_COUNT = 72;
     public static final int SEASHIP_COUNT = 2;
-    public static final int INLANDSHIP_COUNT  = 2;
-    
+    public static final int INLANDSHIP_COUNT = 2;
     public static final int STORAGE_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT + SEA_SHIP_CRANE_COUNT;
     public static final int SEASHIP_BEGIN = INLAND_SHIP_CRANE_COUNT + LORRY_CRANE_COUNT;
     public static final int LORRY_BEGIN = INLAND_SHIP_CRANE_COUNT;
@@ -39,51 +39,57 @@ public class SimulatorItems
     private Shipment[] m_inlandShipment = new Shipment[2];
     
     private LorryPlatform[] m_lorryPlatforms = new LorryPlatform[LORRY_CRANE_COUNT];
-    
-    private Map<Long,Parkingspot> m_parkingspotsMap = new HashMap<>();
+    private Map<Long, Parkingspot> m_parkingspotsMap = new HashMap<>();
     private List<Parkingspot> m_parkingspots = new ArrayList<>();
     
     private List<Node> m_Nodes = new ArrayList<>();
     private List<AGV> m_AGVs = new ArrayList<>();
-    
+
     /**
      * Creates a Simulatoritems object
+     *
      * @param list list with metadata from simulator
      */
-    public SimulatorItems(SimulatorItemList list){
-        for(int i = list.getItemsList().size() - 1; i > 0; i--){
+    public SimulatorItems(SimulatorItemList list)
+    {
+        for (int i = list.getItemsList().size() - 1; i > 0; i--)
+        {
             SimulationItem item = list.getItemsList().get(i);
-            switch(item.getType()){
+            switch (item.getType())
+            {
                 case AGV:
-                    m_AGVs.add(new AGV((int)item.getId()));
+                    m_AGVs.add(new AGV((int) item.getId()));
                     break;
                 case PLATFORM_STORAGE:
-                    addStorage((int)item.getId());
+                    addStorage((int) item.getId());
                     break;
                 case PLATFORM_TRAIN:
-                    addTrainPlatform((int)item.getId());
+                    addTrainPlatform((int) item.getId());
                     break;
                 case PLATFORM_SEASHIP:
-                    addSeashipPlatform((int)item.getId());
+                    addSeashipPlatform((int) item.getId());
                     break;
                 case PLATFORM_INLANDSHIP:
-                    addInlandPlatform((int)item.getId());
+                    addInlandPlatform((int) item.getId());
                     break;
                 case PLATFORM_LORRY:
-                    addLorryPlatform((int)item.getId());
+                    addLorryPlatform((int) item.getId());
                     break;
                 case PARKINGSPOT_STORAGE:
                 case PARKINGSPOT_TRAIN:
                 case PARKINGSPOT_LORRY:
                 case PARKINGSPOT_SEASHIP:
                 case PARKINGSPOT_INLANDSHIP:
-                    if(item.getConnectionsCount() < 2){
+                    if (item.getConnectionsCount() < 2)
+                    {
                         continue; //TODO error?
                     }
-                    Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()),item.getConnections(0),item.getConnections(1));
+                    Parkingspot spot = new Parkingspot(item.getId(), new Vector3f(item.getX(), item.getY(), item.getZ()), item.getConnections(0), item.getConnections(1));
                     m_parkingspotsMap.put(item.getId(), spot);
-                    if(item.getParentID() != -1){
-                        switch(item.getType()){
+                    if (item.getParentID() != -1)
+                    {
+                        switch (item.getType())
+                        {
                             case PARKINGSPOT_STORAGE:
                                 m_storages[item.getParentID() - STORAGE_BEGIN].addParkingspot(spot);
                                 break;
@@ -104,384 +110,513 @@ public class SimulatorItems
                     m_parkingspots.add(spot);
                     break;
                 case NODES:
-                    m_Nodes.add(new Node((int)item.getId(), item.getX(), item.getY(), item.getConnectionsList()));
+                    m_Nodes.add(new Node((int) item.getId(), item.getX(), item.getY(), item.getConnectionsList()));
                     break;
             }
         }
-        for(Storage s : m_storages){
+        for (Storage s : m_storages)
+        {
             Collections.reverse(s.parkingspots);
-        }try{
+        }
+        try
+        {
             PathFinder.initPath(m_Nodes);
-        }catch(Exception e){e.printStackTrace();}      
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
-    
+
     /**
      * Gets platforms for a specific carrier
+     *
      * @param carrier carrier
      * @return platforms
      */
-    public Platform[] getPlatformsByCarrier(Carrier carrier){
-        if(carrier instanceof Train)
+    public Platform[] getPlatformsByCarrier(Carrier carrier)
+    {
+        if (carrier instanceof Train)
+        {
             return m_trainPlatforms;
-        else if(carrier instanceof Truck)
+        }
+        else if (carrier instanceof Truck)
+        {
             return m_lorryPlatforms;
-        else if(carrier instanceof SeaShip)
+        }
+        else if (carrier instanceof SeaShip)
+        {
             return m_seaPlatforms;
+        }
         else
+        {
             return m_inlandPlatforms;
+        }
     }
-    
+
     /**
      * Gets an parkingspot by an ID
+     *
      * @param id id of parkingspot
      * @return parkingspot
      */
-    public Parkingspot getParkingspotByID(long id){
+    public Parkingspot getParkingspotByID(long id)
+    {
         return m_parkingspotsMap.get(id);
     }
-    
+
     /**
      * Get storages array
+     *
      * @return array of storages
      */
-    public Storage[] getStorages(){
+    public Storage[] getStorages()
+    {
         return m_storages;
     }
-    
+
     /**
      * Get trainPlatforms
+     *
      * @return Platforms
      */
-    public Platform[] getTrainPlatforms(){
+    public Platform[] getTrainPlatforms()
+    {
         return m_trainPlatforms;
     }
-    
+
     /**
      * Get seashipPlatforms
+     *
      * @return Platforms
      */
-    public Platform[] getSeaShipPlatforms(){
+    public Platform[] getSeaShipPlatforms()
+    {
         return m_seaPlatforms;
     }
-    
+
     /**
      * Get inlandPlatforms
+     *
      * @return Platforms
      */
-    public Platform[] getInlandPlatforms(){
+    public Platform[] getInlandPlatforms()
+    {
         return m_inlandPlatforms;
     }
-    
+
     /**
      * get LorryPlatforms
+     *
      * @return Platforms
      */
-    public LorryPlatform[] getLorryPlatforms(){
+    public LorryPlatform[] getLorryPlatforms()
+    {
         return m_lorryPlatforms;
     }
-    
+
     /**
      * get Parkingspots
+     *
      * @return Parkingspots
      */
-    public List<Parkingspot> getParkingspots(){
+    public List<Parkingspot> getParkingspots()
+    {
         return m_parkingspots;
     }
-    
+
     /**
      * Get Nodes
+     *
      * @return Nodes
      */
-    public List<Node> getNodes(){
+    public List<Node> getNodes()
+    {
         return m_Nodes;
     }
-    
+
     /**
      * Get node by a id
+     *
      * @param id id
      * @return node
      */
-    public Node getNode(int id){
-        for(Node n : m_Nodes){
-            if(n.m_id == id)
+    public Node getNode(int id)
+    {
+        for (Node n : m_Nodes)
+        {
+            if (n.m_id == id)
+            {
                 return n;
+            }
         }
         return null;
     }
-    
+
     /**
      * Gets a platform by an AGV ID
+     *
      * @param id id of the agv
      * @return Platform
      */
-    public Platform getPlatformByAGVID(int id){
-        for(Parkingspot p : m_parkingspots){
-            if(p.hasAGV() && p.getAGV().getID() == id)
-                return  p.getPlatform();
+    public Platform getPlatformByAGVID(int id)
+    {
+        for (Parkingspot p : m_parkingspots)
+        {
+            if (p.hasAGV() && p.getAGV().getID() == id)
+            {
+                return p.getPlatform();
+            }
         }
         return null;
     }
-    
+
     /**
      * Gets current train shipment
+     *
      * @return shipment
      */
-    public Shipment getTrainShipment(){
+    public Shipment getTrainShipment()
+    {
         return m_trainShipment;
     }
-    
+
     /**
      * Sets a shipment as current train shipment
+     *
      * @param shipment shipment
      */
-    public void setTrainShipment(Shipment shipment){
+    public void setTrainShipment(Shipment shipment)
+    {
         m_trainShipment = shipment;
     }
-    
+
     /**
      * Unsets a current train shipment
      */
-    public void unsetTrainShipment(){
+    public void unsetTrainShipment()
+    {
         m_trainShipment = null;
     }
-    
+
     /**
      * Checks if there is a current train shipment
+     *
      * @return true when there is a current shipment, otherwise false
      */
-    public boolean hasTrainShipment(){
+    public boolean hasTrainShipment()
+    {
         return m_trainShipment != null;
     }
-    
+
     /**
      * Gets current seashipment
+     *
      * @param index index of the seashipping
      * @return shipment
      */
-    public Shipment getSeaShipment(int index){
-        if(index >= m_seashipShipment.length)
+    public Shipment getSeaShipment(int index)
+    {
+        if (index >= m_seashipShipment.length)
+        {
             return null;
+        }
         return m_seashipShipment[index];
     }
-    
+
     /**
      * Sets a shipment as current seaship shipment
+     *
      * @param index of the sea shipping
      * @param shipment shipment
      */
-    public void setSeaShipment(int index,Shipment shipment){
-        if(index >= m_seashipShipment.length)
+    public void setSeaShipment(int index, Shipment shipment)
+    {
+        if (index >= m_seashipShipment.length)
+        {
             return;
+        }
         m_seashipShipment[index] = shipment;
     }
-    
+
     /**
      * Unsets current seashipment
+     *
      * @param index index of the sea shipping
      */
-    public void unsetSeaShipment(int index){
-        if(index >= m_seashipShipment.length)
+    public void unsetSeaShipment(int index)
+    {
+        if (index >= m_seashipShipment.length)
+        {
             return;
+        }
         m_seashipShipment[index] = null;
     }
-    
+
     /**
      * Unsets current sea shipment
+     *
      * @param shipment shipment to unset
      */
-    public void unsetSeaShipment(Shipment shipment){
-        for(int i = 0; i < m_seashipShipment.length; i++){
-            if(hasSeaShipment(i) && m_seashipShipment[i].key.equals(shipment.key)){
+    public void unsetSeaShipment(Shipment shipment)
+    {
+        for (int i = 0; i < m_seashipShipment.length; i++)
+        {
+            if (hasSeaShipment(i) && m_seashipShipment[i].key.equals(shipment.key))
+            {
                 m_seashipShipment[i] = null;
                 break;
             }
         }
     }
-    
+
     /**
      * Check if there is a current seaships shipment
+     *
      * @param index index of the sea shipping
      * @return true when there is a shipment, otherwise false
      */
-    public boolean hasSeaShipment(int index){
-        if(index >= m_seashipShipment.length)
+    public boolean hasSeaShipment(int index)
+    {
+        if (index >= m_seashipShipment.length)
+        {
             return false;
+        }
         return m_seashipShipment[index] != null;
     }
-    
+
     /**
      * Gets current inlandshipment
+     *
      * @param index of the inland shipping
      * @return shipment
      */
-    public Shipment getInlandShipment(int index){
-        if(index >= m_inlandShipment.length)
+    public Shipment getInlandShipment(int index)
+    {
+        if (index >= m_inlandShipment.length)
+        {
             return null;
+        }
         return m_inlandShipment[index];
     }
-    
+
     /**
      * Sets current inland shipment
+     *
      * @param index of the inland shipping
      * @param shipment shipment
      */
-    public void setInlandShipment(int index,Shipment shipment){
-        if(index >= m_inlandShipment.length)
+    public void setInlandShipment(int index, Shipment shipment)
+    {
+        if (index >= m_inlandShipment.length)
+        {
             return;
+        }
         m_inlandShipment[index] = shipment;
     }
-    
+
     /**
      * Unsets current inland shipment
+     *
      * @param index of the inland shipping
      */
-    public void unsetInlandShipment(int index){
-        if(index >= m_inlandShipment.length)
+    public void unsetInlandShipment(int index)
+    {
+        if (index >= m_inlandShipment.length)
+        {
             return;
+        }
         m_inlandShipment[index] = null;
     }
-    
+
     /**
      * Unsets current inland shipment
+     *
      * @param shipment shipment to unset
      */
-    public void unsetInlandShipment(Shipment shipment){
-        for(int i = 0; i < m_inlandShipment.length; i++){
-            if(hasInlandShipment(i) && m_inlandShipment[i].key.equals(shipment.key))
+    public void unsetInlandShipment(Shipment shipment)
+    {
+        for (int i = 0; i < m_inlandShipment.length; i++)
+        {
+            if (hasInlandShipment(i) && m_inlandShipment[i].key.equals(shipment.key))
+            {
                 m_inlandShipment[i] = null;
+            }
         }
     }
-    
+
     /**
      * Checks if there is a current inland shipment
+     *
      * @param index of the inland shipping
      * @return true when there is a current inland shipment, otherwise false
      */
-    public boolean hasInlandShipment(int index){
-        if(index >= m_inlandShipment.length)
+    public boolean hasInlandShipment(int index)
+    {
+        if (index >= m_inlandShipment.length)
+        {
             return false;
+        }
         return m_inlandShipment[index] != null;
-    }    
-    
+    }
+
     /**
      * Gets the platforms by the right inland shipment
+     *
      * @param shipment shipment
      * @return platforms
      */
-    public Platform[] getInlandPlatformsByShipment(Shipment shipment){
+    public Platform[] getInlandPlatformsByShipment(Shipment shipment)
+    {
         Platform[] platforms = new Platform[INLAND_SHIP_CRANE_COUNT / 2];
         int begin;
-        if(hasInlandShipment(0) && m_inlandShipment[0].key.equals(shipment.key)){
+        if (hasInlandShipment(0) && m_inlandShipment[0].key.equals(shipment.key))
+        {
             begin = 0;
-        }else if(hasInlandShipment(1) && m_inlandShipment[1].key.equals(shipment.key)){
+        }
+        else if (hasInlandShipment(1) && m_inlandShipment[1].key.equals(shipment.key))
+        {
             begin = INLAND_SHIP_CRANE_COUNT / 2;
-        }else{
+        }
+        else
+        {
             return null;
         }
-        for(int i = 0;i < (INLAND_SHIP_CRANE_COUNT / 2);i++){
-            platforms[i] = m_inlandPlatforms[i +  begin];
+        for (int i = 0; i < (INLAND_SHIP_CRANE_COUNT / 2); i++)
+        {
+            platforms[i] = m_inlandPlatforms[i + begin];
         }
         return platforms;
     }
-    
+
     /**
      * Gets the platforms by the right sea shipment
+     *
      * @param shipment shipment
      * @return platforms
      */
-    public Platform[] getSeaPlatformsByShipment(Shipment shipment){
+    public Platform[] getSeaPlatformsByShipment(Shipment shipment)
+    {
         Platform[] platforms = new Platform[SEA_SHIP_CRANE_COUNT / 2];
         int begin;
-        if(hasSeaShipment(0) && m_seashipShipment[0].key.equals(shipment.key)){
+        if (hasSeaShipment(0) && m_seashipShipment[0].key.equals(shipment.key))
+        {
             begin = 0;
-        }else if(hasSeaShipment(1) && m_seashipShipment[1].key.equals(shipment.key)){
+        }
+        else if (hasSeaShipment(1) && m_seashipShipment[1].key.equals(shipment.key))
+        {
             begin = SEA_SHIP_CRANE_COUNT / 2;
-        }else{
+        }
+        else
+        {
             return null;
         }
-        for(int i = 0;i < (SEA_SHIP_CRANE_COUNT / 2);i++){
-            platforms[i] = m_seaPlatforms[i +  begin];
+        for (int i = 0; i < (SEA_SHIP_CRANE_COUNT / 2); i++)
+        {
+            platforms[i] = m_seaPlatforms[i + begin];
         }
         return platforms;
     }
-    
+
     /**
      * Gets a free AGV
+     *
      * @return agv
      */
-    public AGV getFreeAGV(){
-        for(AGV agv : m_AGVs){
-            if(!agv.isBusy())
+    public AGV getFreeAGV()
+    {
+        for (AGV agv : m_AGVs)
+        {
+            if (!agv.isBusy())
+            {
                 return agv;
+            }
         }
         return null;
     }
-    
+
     public AGV getAGV(int agvID)
     {
-        for(AGV agv : m_AGVs){
-            if(agv.getID() == agvID)
+        for (AGV agv : m_AGVs)
+        {
+            if (agv.getID() == agvID)
+            {
                 return agv;
+            }
         }
         return null;
     }
-    
+
     /**
      * Adds a storagePlatform
+     *
      * @param id id of storage
      */
-    private void addStorage(int id){
+    private void addStorage(int id)
+    {
         m_storages[id - STORAGE_BEGIN] = new Storage(id);
     }
-    
+
     /**
      * Adds a trainPlatform
+     *
      * @param id id of trainPlatform
      */
-    private void addTrainPlatform(int id){
+    private void addTrainPlatform(int id)
+    {
         Platform nPlatform = new Platform(id);
         m_trainPlatforms[id - TRAIN_BEGIN] = nPlatform;
 
     }
-    
+
     /**
      * Adds seashipPlatform
+     *
      * @param id if of seashipPlatform
      */
-    private void addSeashipPlatform(int id){
+    private void addSeashipPlatform(int id)
+    {
         m_seaPlatforms[id - SEASHIP_BEGIN] = new Platform(id);
 
     }
-    
+
     /**
      * Adds inlandPlatform
+     *
      * @param id id of inlandPlatform
      */
-    private void addInlandPlatform(int id){
+    private void addInlandPlatform(int id)
+    {
         Platform nPlatform = new Platform(id);
         m_inlandPlatforms[id] = nPlatform;
     }
-    
+
     /**
      * Adds lorryPlatform
+     *
      * @param id if of lorryPlatform
      */
-    private void addLorryPlatform(int id){
+    private void addLorryPlatform(int id)
+    {
         LorryPlatform nPlatform = new LorryPlatform(id);
         m_lorryPlatforms[id - LORRY_BEGIN] = nPlatform;
 
-    }   
-    
+    }
+
     /**
      * Gets a free lorryplatform
+     *
      * @return lorry platform
      */
-    public LorryPlatform GetFreeLorryPlatform(){
-        for(LorryPlatform p : m_lorryPlatforms){
-            if(!p.hasShipment())
+    public LorryPlatform GetFreeLorryPlatform()
+    {
+        for (LorryPlatform p : m_lorryPlatforms)
+        {
+            if (!p.hasShipment())
+            {
                 return p;
+            }
         }
         return null;
     }
-
 }

@@ -4,7 +4,8 @@ import nhl.containing.controller.Point3;
 import nhl.containing.networking.protobuf.AppDataProto;
 
 /**
- *
+ * Information about a shipping container.
+ * 
  * @author henkmollema
  */
 public class ShippingContainer

@@ -12,10 +12,10 @@ import nhl.containing.networking.protobuf.InstructionProto.*;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 import nhl.containing.networking.protocol.InstructionType;
 
-/**
- * Handles the App requests
- *
- * @author Jens
+/** 
+ * AppHandler
+ * Handles the App connection
+ * Processes request from the app and sends data back.
  */
 public class AppHandler implements Runnable
 {
@@ -63,7 +63,7 @@ public class AppHandler implements Runnable
     }
 
     /**
-     * The run function
+     * The run function gets called when the thread starts
      */
     @Override
     public void run()
@@ -100,7 +100,7 @@ public class AppHandler implements Runnable
 
     /**
      * Gets the requests and sends the requested data
-     *
+     * This method runs indefinitly
      * @return false when Error, otherwise true
      */
     public boolean appDataLoop()

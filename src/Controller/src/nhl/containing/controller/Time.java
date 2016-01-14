@@ -1,84 +1,107 @@
 package nhl.containing.controller;
 
 /**
- *  Time class
+ * Time class.
+ *
  * @author sietse
  */
-public final class Time {
+public final class Time
+{
     private static double m_timeScale = 1.0;
     private static double m_fixedTimeScale = 0.02; // 50 fps
     private static double m_deltaTime = 0.0;
     private static double m_time = 0.0;
-    
     private static final double MIN_FIXED_TIME_SCALE = 0.005;
-    
+
     /**
      * Update time, only call this from main
-     * @param deltaTime 
+     *
+     * @param deltaTime
      */
-    public static void _updateTime(double deltaTime) {
+    public static void _updateTime(double deltaTime)
+    {
         m_deltaTime = deltaTime;
         m_time += deltaTime * m_timeScale;
     }
-    
+
     /**
      * Set simulation timescale
-     * @param t 
+     *
+     * @param t
      */
-    public static void setTimeScale(double t) {
+    public static void setTimeScale(double t)
+    {
         m_timeScale = Math.max(t, 0.0);
     }
+
     /**
      * Set fixedtimescale
-     * @param t 
+     *
+     * @param t
      */
-    public static void setFixedTimeScale(double t) {
+    public static void setFixedTimeScale(double t)
+    {
         m_fixedTimeScale = Math.max(MIN_FIXED_TIME_SCALE, t);
     }
-    
+
     /**
      * Get timescale
-     * @return 
+     *
+     * @return
      */
-    public static double timeScale() {
+    public static double timeScale()
+    {
         return m_timeScale;
     }
-    /***
+
+    /**
+     * *
      * Get fixedtmescale
-     * @return 
+     *
+     * @return
      */
-    public static double fixedTimeScale() {
+    public static double fixedTimeScale()
+    {
         return m_fixedTimeScale;
     }
-    
+
     /**
      * Get deltatime unscaled
-     * @return 
+     *
+     * @return
      */
-    public static double unscaledDeltaTime() {
+    public static double unscaledDeltaTime()
+    {
         return m_deltaTime;
     }
+
     /**
      * Get deltatime scaled
-     * @return 
+     *
+     * @return
      */
-    public static double deltaTime() {
+    public static double deltaTime()
+    {
         return (m_deltaTime * m_timeScale);
     }
-    
+
     /**
      * Get fixedDeltatime scaled
-     * @return 
+     *
+     * @return
      */
-    public static double fixedDeltaTime() {
+    public static double fixedDeltaTime()
+    {
         return (m_fixedTimeScale * m_timeScale);
     }
-    
+
     /**
      * Returns the time
-     * @return 
+     *
+     * @return
      */
-    public static double time() {
+    public static double time()
+    {
         return m_time;
     }
 }

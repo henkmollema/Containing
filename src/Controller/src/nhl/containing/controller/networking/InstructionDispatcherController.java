@@ -15,8 +15,8 @@ import nhl.containing.controller.simulation.*;
 import nhl.containing.networking.protobuf.*;
 import nhl.containing.networking.protocol.*;
 
-/**
- *
+/** InstructionDispatcherController
+ * Handles the instructions recieved over the network
  * @author Jens
  */
 public class InstructionDispatcherController implements InstructionDispatcher {

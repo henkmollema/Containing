@@ -114,7 +114,9 @@ public class World extends Behaviour {
 
         //test();
     }
-    
+    /**
+     * nested class so the platforms can be asynchronously updated
+     */
     class InlandUpdater implements Runnable
     {
         PlatformInland s;
@@ -128,6 +130,9 @@ public class World extends Behaviour {
             s.update();
         }
     }
+    /**
+     * nested class so the platforms can be asynchronously updated
+     */
     class SeaUpdater implements Runnable
     {
         PlatformSea s;
@@ -141,6 +146,9 @@ public class World extends Behaviour {
             s.update();
         }
     }
+    /**
+     * nested class so the platforms can be asynchronously updated
+     */
     class StorageUpdater implements Runnable
     {
         PlatformStorage s;

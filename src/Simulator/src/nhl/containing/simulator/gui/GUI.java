@@ -93,14 +93,26 @@ public class GUI extends Behaviour{
         Main.guiRoot().attachChild(m_worldInfo);
         Main.guiRoot().attachChild(m_containerInfo);
     }
+    /**
+     * prints the given text on the screen
+     * @param text the text to be printed
+     */
     public void setWorldText(String text)
     {
         m_worldInfo.setText(text);
     }
+    /**
+     * prints the given text on the screen
+     * @param text the text to be printed
+     */
     public void setContainerText(String text)
     {
         m_containerInfo.setText(text);
     }
+    /**
+     * prints the data from the on the screen
+     * @param container the container of which to set the data
+     */
     public void setContainerInfo(Container container)
     {
         m_containerInfo.setText(container.getRFID().getData());

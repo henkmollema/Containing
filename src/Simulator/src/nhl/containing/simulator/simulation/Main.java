@@ -42,11 +42,19 @@ public class Main extends SimpleApplication {
     
     // Singleton
     private static Main m_instance;
+    /**
+     * returns an instance of Main
+     * @return the instance
+     */
     public static Main instance() {
         return m_instance;
     }
     
     private static ExecutorService m_executor;
+    /**
+     * returns a workstealing executorservice
+     * @return the executor
+     */
     public static ExecutorService executorService() {
         return m_executor;
     }

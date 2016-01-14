@@ -113,12 +113,7 @@ public class ParkingSpot extends Transform {
      * Set AGV
      * @param _agv 
      */
-    public void agv(AGV _agv) {
-        if(_agv == null)
-        {
-            //System.err.println(this.id() + " left by AGV: " + m_agv.id());
-        }
-        
+    public void agv(AGV _agv) {        
         this.m_agv = _agv;
         
     }
@@ -126,7 +121,6 @@ public class ParkingSpot extends Transform {
      * Visualize the parkingspot
      */
     private void create() {
-        // OPTIONAL: Maybe shadow caster or decal or something with stencils
         WorldCreator.createBox(this, Utilities.one(), ColorRGBA.Black);
     }
 }

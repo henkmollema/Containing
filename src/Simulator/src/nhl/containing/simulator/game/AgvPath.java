@@ -224,7 +224,7 @@ public class AgvPath /*extends Behaviour*/ {
             m_hashNodes.put(n.m_id, n);
         }
         // Show lines in play
-        debugPath();
+        //debugPath();
     }
     
     /**

@@ -74,7 +74,7 @@ public class QRScanner extends AppCompatActivity implements ZXingScannerView.Res
 
     /**
      * On option selected on the actionbar
-     * @param item ite
+     * @param item item
      * @return true
      */
     @Override

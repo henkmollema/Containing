@@ -19,7 +19,7 @@ import nhl.containing.simulator.gui.GUI;
 import nhl.containing.simulator.world.World;
 
 /**
- *
+ * Instruction dispatcher for the simulator
  * @author Jens
  */
 public class InstructionDispatcherSimulator extends Behaviour implements InstructionDispatcher
@@ -32,12 +32,24 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private int m_safeFrames = 0;
     
     
+    /**
+     * Gets the Main class
+     * @return main
+     */
     public Main Main() {
         return _sim == null ? (_sim = Main.instance()) : _sim;
     }
+    /**
+     * Gets the GUI class
+     * @return gui
+     */
     public GUI GUI() {
         return m_gui == null ? (m_gui = GUI.instance()) : m_gui;
     }
+    /**
+     * Gets the World class
+     * @return world
+     */
     public World World() {
         return m_world == null ? (m_world = Main().getWorld()) : m_world;
     }
@@ -46,7 +58,10 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
     private Queue<Future> futures;
     private List<InstructionProto.Instruction> m_queue = new ArrayList<>();
     
-    
+    /**
+     * Constructor
+     * @param sim main
+     */
     public InstructionDispatcherSimulator(Main sim)
     {
         futures = new LinkedList<>();
@@ -64,6 +79,9 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         m_queue.add(inst);
     }
     
+    /**
+     * Raw update
+     */
     @Override
     public void rawUpdate() {
         if (m_safeFrames < SAFE_FRAMES) {
@@ -86,6 +104,10 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
     }
     
+    /**
+     * Handles the instruction
+     * @param inst instruction
+     */
     private void handleInstruction(InstructionProto.Instruction inst) {
         InstructionProto.InstructionResponse.Builder responseBuilder = InstructionProto.InstructionResponse.newBuilder();
         switch (inst.getInstructionType())
@@ -134,7 +156,10 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         //_sim.simClient().controllerCom().sendResponse(responseBuilder.build());
     }
     
-    /* Places a container from the AGV to the department storage */
+    /**
+     * Handles crane to department
+     * @param instruction instruction
+     */
     private void handleCraneToDepartment(InstructionProto.Instruction instruction)
     {
         int spot = instruction.getB();
@@ -261,7 +286,12 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
     }
     
-    //TODO: remove int, this is for testing
+    /**
+     * Handles train arriving and departing
+     * @param arriving if train is arriving
+     * @param inst instruction
+     * @param testsize testsize
+     */
     private void handleTrain(boolean arriving,final InstructionProto.Instruction inst, int testsize) {
         if (arriving) {
             
@@ -269,7 +299,6 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
            
             p("Train arrived with " + size + " containers.");
             GUI().setWorldText("Aankomst:\nTrein\n" + size + " container(s)");
-            //TODO: remove testing compatibility
             if(inst == null)
                 World().getTrain().init(size);
             if(inst != null){
@@ -297,6 +326,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
     }
     
+    /**
+     * Handles inland arriving and departing
+     * @param arriving if inland is arriving
+     * @param inst instruction
+     */
     private void handleInland(boolean arriving,final InstructionProto.Instruction inst) {
         Integer index = inst.getA();
         if (arriving) {
@@ -330,6 +364,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }        
     }
     
+    /**
+     * Handles Sea arriving and departing
+     * @param arriving if seaship is arriving
+     * @param inst instruction
+     */
     private void handleSea(boolean arriving,final InstructionProto.Instruction inst) {
        Integer index = inst.getA();
         if (arriving) {
@@ -363,6 +402,11 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }
     }
     
+    /**
+     * Handles Lorry arriving and departing
+     * @param arriving if lorry is arriving
+     * @param inst instruction
+     */
     private void handleLorry(boolean arriving,final InstructionProto.Instruction inst) {
         final Tuple<PlatformLorry,Vehicle> lorryTuple = World().getLorryPlatforms().get(inst.getA() - World.LORRY_BEGIN);
         if (arriving) {
@@ -394,11 +438,19 @@ public class InstructionDispatcherSimulator extends Behaviour implements Instruc
         }      
     }
     
+    /**
+     * Prints string
+     * @param s string
+     */
     private static void p(String s)
     {
         System.out.println("[" + System.currentTimeMillis() + "] Sim: " + s);
     }
 
+    /**
+     * Forwards the response
+     * @param resp response
+     */
     @Override
     public void forwardResponse(InstructionProto.InstructionResponse resp)
     {

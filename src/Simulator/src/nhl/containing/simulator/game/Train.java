@@ -24,6 +24,7 @@ public class Train extends Vehicle {
     private final float wagonScale = 4.0f;                          // Scale
     private final float wagonSize = -60.0f;                         // Size/Offset
     private final float containersPerWagon = 2.44f;                 // Number of contairs fitting on one wagon
+    
     /**
      * Constructror
      * @param size

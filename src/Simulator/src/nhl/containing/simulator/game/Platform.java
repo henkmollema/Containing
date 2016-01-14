@@ -115,17 +115,6 @@ public abstract class Platform extends ContainerCarrier {
         if (m_crane != null && m_crane.targetIsLast() && m_currentAction != null && m_currentAction.to.parkingSpot != null)
         {
             m_crane.paused = (!m_currentAction.isTake()) &&  m_parkingSpots[m_currentAction.to.parkingSpot].agv() == null;
-            if(!m_crane.paused)
-            {
-                try
-                {
-                  //System.out.println("unpaused for: " + m_parkingSpots[m_currentAction.to.parkingSpot].id());  
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
         }
         
         // Init
@@ -227,7 +216,11 @@ public abstract class Platform extends ContainerCarrier {
             m_crane.setPath();
     }
     
+    /**
+     * On storage place
+     */
     public void _onStoragePlace() { }
+    
     /**
      * A crane action
      * Take and place
@@ -323,6 +316,7 @@ public abstract class Platform extends ContainerCarrier {
             
             return true;
         }
+        
         /**
          * Is take action
          * @return 

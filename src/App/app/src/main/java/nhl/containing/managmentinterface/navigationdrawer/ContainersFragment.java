@@ -24,7 +24,7 @@ import nhl.containing.networking.protobuf.InstructionProto;
 import nhl.containing.networking.protocol.*;
 
 /**
- * Fragment for the containerlist
+ * Fragment for the container list
  */
 public class ContainersFragment extends ListFragment {
 

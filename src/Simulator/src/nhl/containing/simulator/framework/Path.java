@@ -3,7 +3,7 @@ package nhl.containing.simulator.framework;
 import com.jme3.math.Vector3f;
 
 /**
- *
+ * The class for the Path
  * @author sietse
  */
 public class Path {

@@ -16,7 +16,7 @@ import nhl.containing.managmentinterface.activity.MainActivity;
 import nhl.containing.managmentinterface.R;
 
 /**
- * Array adapter for the containerlist
+ * Array adapter for the container list
  */
 public class ContainerArrayAdapter extends ArrayAdapter<ContainerListItem>
 {

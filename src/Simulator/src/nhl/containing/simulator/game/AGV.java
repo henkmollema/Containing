@@ -159,6 +159,9 @@ public final class AGV extends MovingItem {
         }
     }
     
+    /**
+     * Inits the AGV
+     */
     private void init() {
         
         // Set spatial

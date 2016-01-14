@@ -42,9 +42,6 @@ public class GUI extends Behaviour{
         return m_instance;
     }
     
-    //private static List<GuiItem> m_items = new ArrayList<GuiItem>();
-    //private static long m_idCounter = 0;
-    
     // Items
     private Picture m_QRCode;
     private boolean visible = false;
@@ -53,7 +50,6 @@ public class GUI extends Behaviour{
     private BitmapText m_worldInfo;
     private BitmapText m_containerInfo; // print con
     // print container details
-    // 
     
     public static Node root() {
         return Main.guiRoot();
@@ -75,7 +71,6 @@ public class GUI extends Behaviour{
     @Override
     public void start() {
         /** Write text on the screen (HUD) */
-        //Main.guiRoot().detachAllChildren();
         int width = 365;
         int height = 250;
         Picture pic = new Picture("background");
@@ -112,12 +107,6 @@ public class GUI extends Behaviour{
     }
     @Override
     public void rawUpdate() {
-        /*
-        for(GuiItem i : m_items) {
-            //Debug.log(i.layer() + "");
-            i._baseUpdate();
-        }
-        * */
     }
     /**
      * Shows the QR code

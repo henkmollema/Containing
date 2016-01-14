@@ -25,7 +25,6 @@ public class SimulationContext
     private static final int MAX_SAME_SHIPMENT_TRUCK = 0;
     private static final int MAX_SAME_SHIPMENT_TRAIN = 5;
     private static final int MAX_SAME_SHIPMENT_INLANDSHIP = 10;
-    
     private static SimulationContext instance;
     private final Map<String, Shipment> shipments = new HashMap<>();
     private final Map<Integer, ShippingContainer> containers = new HashMap<>();
@@ -44,12 +43,12 @@ public class SimulationContext
     {
         instance = this;
     }
-    
+
     public static SimulationContext instance()
     {
         return instance;
     }
-    
+
     public List<ShippingContainer> getShouldDepartContainers()
     {
         return shouldDepartContainers;
@@ -150,30 +149,29 @@ public class SimulationContext
      * @param storage
      * @return
      */
-    
     public boolean canBePlacedInStoragePlatform(ShippingContainer c, Storage storage)
     {
         int sameShipmentCount = 0;
         int maxsameShipment = 0;
-        
-        if(c.arrivalShipment.carrier instanceof SeaShip)
+
+        if (c.arrivalShipment.carrier instanceof SeaShip)
         {
             maxsameShipment = MAX_SAME_SHIPMENT_SEASHIP;
         }
-        if(c.arrivalShipment.carrier instanceof Truck)
+        if (c.arrivalShipment.carrier instanceof Truck)
         {
             maxsameShipment = MAX_SAME_SHIPMENT_TRUCK;
         }
-        if(c.arrivalShipment.carrier instanceof Train)
+        if (c.arrivalShipment.carrier instanceof Train)
         {
             maxsameShipment = MAX_SAME_SHIPMENT_TRAIN;
         }
-        if(c.arrivalShipment.carrier instanceof InlandShip)
+        if (c.arrivalShipment.carrier instanceof InlandShip)
         {
             maxsameShipment = MAX_SAME_SHIPMENT_INLANDSHIP;
         }
-        
-        
+
+
         for (Map.Entry pair : container_StoragePlatform.entrySet())
         {
             Storage currentPlatform = (Storage) pair.getValue();
@@ -181,17 +179,19 @@ public class SimulationContext
             {
                 int idx = (Integer) pair.getKey();
                 ShippingContainer currentContainer = containers.get(idx);
-                
+
                 //If arrival times differ less than minInterval
                 if (Math.abs(currentContainer.arrivalShipment.date.getTime() - c.arrivalShipment.date.getTime()) < minInterval)
                 {
                     sameShipmentCount++;
 
-                    if(sameShipmentCount > maxsameShipment)
+                    if (sameShipmentCount > maxsameShipment)
+                    {
                         return false;
+                    }
 
-                } 
-                
+                }
+
             }
         }
         return true;
@@ -228,11 +228,16 @@ public class SimulationContext
                         }
                     }
 
+                    if (spbeneath == null)
+                    {
+                        break;
+                    }
+
                     if (y > 0 && spbeneath.isEmpty())
                     {
                         break; //No container beneath, so can not be placed here.
                     }
-                    
+
                     //If there's no container on this spot 
                     if (sp.isEmpty())
                     {
@@ -244,10 +249,10 @@ public class SimulationContext
                                 break; //Container can not be placed here, because the container beneath departs earlier
                             }
                         }
-                        
+
                         //Spot found!
-                        
-                        Point3 retVal = null;
+
+                        Point3 retVal;
                         if (farside) //If a spot must be chosen at the farside(opposite of 0,0,0) of the storageplatform
                         {
                             retVal = new Point3(x, y, storagePlaces[0][0].length - z - 1);
@@ -257,7 +262,7 @@ public class SimulationContext
                             retVal = new Point3(x, y, z);
                         }
 
-                        return retVal; 
+                        return retVal;
                     }
                 }
             }

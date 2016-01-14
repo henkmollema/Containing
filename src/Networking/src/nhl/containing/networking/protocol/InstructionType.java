@@ -2,7 +2,6 @@ package nhl.containing.networking.protocol;
 
 /**
  * Contains instruction types.
- *
  * @author henkmollema
  */
 public class InstructionType

@@ -14,7 +14,7 @@ import nhl.containing.networking.protocol.InstructionDispatcher;
 import nhl.containing.networking.protocol.InstructionType;
 
 /**
- *
+ * For handling the connectionflow to the simulator
  * @author Jens
  */
 public class SimHandler implements Runnable

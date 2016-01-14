@@ -9,7 +9,9 @@ import nhl.containing.networking.protobuf.InstructionProto.*;
 
 /**
  * The communication protocol.
- *
+ * Used by both the controller and simulator.
+ * Recieves data and determines what needs to be sent back.
+ * Queues instructions and sends them DATABLOCK_SIZE at a time.
  * @author Jens
  */
 public class CommunicationProtocol {
@@ -25,14 +27,14 @@ public class CommunicationProtocol {
     
     private List<Instruction> resendBuffer;
 
-    volatile boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
-    
+    private static final boolean safeMode = false; //If safemode is enabled, instructions and resoponses will check for acknowelegedment from the reciever
     final List<String> pendingAcknowelegeInst;
     final List<String> pendingAcknowelegeResp;
     
     final List<String> recievedInstructionUUIDs;
     final List<String> recievedResponseUUIDs;
 
+    
     public CommunicationProtocol() {
         instructionQueue = new LinkedList<>();
         responseQueue = new LinkedList<>();
@@ -45,26 +47,11 @@ public class CommunicationProtocol {
                 
         resendBuffer = new ArrayList<>();
     }
-    
-    public int getNumPendingInst()
-    {
-        return pendingAcknowelegeInst.size();
-    }
-    
-    public int getNumPendingResp()
-    {
-        return pendingAcknowelegeResp.size();
-    }
-
-    public static String newUUID() {
-        return UUID.randomUUID().toString();
-    }
-
-    public InstructionDispatcher dispatcher() {
-        return _dispatcher;
-    }
 
     
+    /**
+     * Pushes a new instruction on the queue.
+     */
     public void sendInstruction(Instruction i) {
         if (i != null && instructionQueue != null) {
             synchronized (instructionQueue) {
@@ -75,6 +62,9 @@ public class CommunicationProtocol {
 
     }
 
+     /**
+     * Pushes a new response on the queue.
+     */
     public void sendResponse(InstructionResponse r) {
         if (r != null && responseQueue != null) {
             synchronized (responseQueue) {
@@ -84,10 +74,10 @@ public class CommunicationProtocol {
 
     }
 
-    /** processInput(in) processes the message recieved over the network
+    /** processInput(in) processes the byte array recieved over the network
      * It tries to parse the in byte array back into a datablock and will loop through the instructions and repsonses in it.
      * @param in the byte array of the message recieved i.e. the byte array between START_OF_HEADING and END_OF_TRANSMISSION
-     * @return 
+     * @return byte[] See flushDataBlock method.
      */
     public byte[] processInput(byte[] in) {
         datablockSimulator dbRecieved = null;
@@ -201,9 +191,7 @@ public class CommunicationProtocol {
                     dbBuilder.addInstructions(inst);
                      if(safeMode) pendingAcknowelegeInst.add(inst.getId());
                 }
-                
-                
-               
+
             }
         }
 
@@ -219,7 +207,7 @@ public class CommunicationProtocol {
             }
         }
         
-        //TODO: MAKE THREAD SAFE
+        //When in safemode send what instructions have been recieved so the other side can check if it's messages have been recieved
         if(safeMode)
         {
             dbBuilder.addAllRecievedInstructionUUIDs(recievedInstructionUUIDs);
@@ -229,5 +217,23 @@ public class CommunicationProtocol {
         byte[] ba = dbBuilder.build().toByteArray();
         bytesSent +=  ba.length;
         return ba;
+    }
+    
+     public int getNumPendingInst()
+    {
+        return pendingAcknowelegeInst.size();
+    }
+    
+    public int getNumPendingResp()
+    {
+        return pendingAcknowelegeResp.size();
+    }
+
+    public static String newUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    public InstructionDispatcher dispatcher() {
+        return _dispatcher;
     }
 }

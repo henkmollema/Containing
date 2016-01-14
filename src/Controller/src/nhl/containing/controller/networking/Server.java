@@ -8,8 +8,9 @@ import nhl.containing.networking.protobuf.ClientIdProto.ClientIdentity;
 import nhl.containing.networking.protocol.CommunicationProtocol;
 
 /**
- * Provides interaction with the client.
- *
+ * Server
+ * Handles new connections and spwawns the appropriate handlers/threads.
+ * Provides interaction with the clients.
  * @author Jens
  */
 public class Server implements Runnable
